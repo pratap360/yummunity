@@ -5,7 +5,7 @@
         [opened]="(isHandset$ | async) === false">
       <mat-toolbar>Menu</mat-toolbar>
       <mat-nav-list>
-          <!-- <a mat-list-item routerLink="add-post">Add Rooms</a> -->
+          <a mat-list-item routerLink="add-post">Add Rooms</a>
         <a mat-list-item routerLink="home-feed">
             <mat-icon fontIcon="home"></mat-icon>
             Home</a>
@@ -38,3 +38,27 @@
     </mat-sidenav-content>
   </mat-sidenav-container>
   
+
+<!-- 
+   <mat-toolbar color="primary">
+    <button mat-icon-button aria-label="Menu icon" (click)="toggleMenu()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1>Responsive Material Sidenavigation</h1>
+  </mat-toolbar>
+  <mat-sidenav-container autosize="true">
+    <mat-sidenav [ngClass]="!isCollapsed ? 'expanded' : ''" [mode]="isMobile ? 'over' : 'side'" [opened]="isMobile ? 'false' : 'true'">
+      <mat-nav-list>
+        <a mat-list-item>
+          <span class="entry">
+            <mat-icon>house</mat-icon>
+            <span *ngIf="!isCollapsed">Dashboard</span>
+          </span>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <h2>Content</h2>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container> -->
