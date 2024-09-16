@@ -1,10 +1,37 @@
+
 <mat-card>
     <mat-card-content>
       <div class="header">
-        <P>Sign Into Your Account </P>
-      </div>
+        <img src="/src/assets/yummunity-header.png" alt="yummunity-header">
+        <h2>Yummunity</h2>
+    </div>
+    <div>
+        <h3>Welcome come back again</h3>
+    </div>
       <form (ngSubmit)="onLogin()" name="loginForm" [formGroup]="loginForm">
         <div class="emailInput">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              formControlName="email"
+              matInput
+              placeholder="Enter email address" required
+            />
+            <mat-error *ngIf="!loginForm.controls['email'].valid">
+                Email is required
+              </mat-error>
+          </mat-form-field>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              formControlName="email"
+              matInput
+              placeholder="Enter email address" required
+            />
+            <mat-error *ngIf="!loginForm.controls['email'].valid">
+                Email is required
+              </mat-error>
+          </mat-form-field>
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Email</mat-label>
             <input
@@ -35,12 +62,47 @@
             Password is required
           </mat-error>
         </mat-form-field>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input formControlName="password" matInput [type]=" hide ? 'password' : 'text'" required />
+            <button  mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>
+                {{hide ? 'visibility_off' : 'visibility'}}
+            </mat-icon>
+        </button>
+        <mat-error *ngIf="!loginForm.controls['password'].valid">
+            Password is required
+          </mat-error>
+        </mat-form-field>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Password</mat-label>
+            <input formControlName="password" matInput [type]=" hide ? 'password' : 'text'" required />
+            <button  mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
+            [attr.aria-pressed]="hide">
+            <mat-icon>
+                {{hide ? 'visibility_off' : 'visibility'}}
+            </mat-icon>
+        </button>
+        <mat-error *ngIf="!loginForm.controls['password'].valid">
+            Password is required
+          </mat-error>
+        </mat-form-field>
         </div>
         <button mat-flat-button color="primary">Login</button>
+        <button mat-fab extended><mat-icon>home</mat-icon>Home</button>
       </form>
 
       <div class="button-row">
         <p>Create New Account</p>
       </div>
     </mat-card-content>
+
+    <p>Created with ❤ by <a href="https://paruidev.com" target="_blank">paruidev</a></p>
+    <p>© Yummunity 2024 </p>
   </mat-card>
+  
+
+  <div>
+    <img src="/src/assets/login-bg-pic.jpg" alt="login-bg-pic">
+  </div>

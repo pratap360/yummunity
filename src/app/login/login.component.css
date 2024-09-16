@@ -1,10 +1,25 @@
-mat-card {
-    max-width: 600px;
-    margin: 2em auto;
-    text-align: center;
-    max-height: 600px;
-  }
+/* body {
+    margin: 0;
+    height: 100vh;
+  } */
   
+
+  
+  /* .login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  } */
+
+  mat-card {
+    max-width: 450px;
+    max-height: 832px;
+    text-align: center;
+    border-radius: 0px 45px 45px 0px;
+    /* margin: 2em auto; */
+  }
+
   .header{
     text-align: center;
   
