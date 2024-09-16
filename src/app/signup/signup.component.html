@@ -1,1 +1,24 @@
-<p>signup works!</p>
+<div class="login-container">
+    <div class="login-left">
+      <h2>Login! 👋</h2>
+      <p>How do I get started?</p>
+      <button class="btn btn-google">Sign in with Google</button>
+      <button class="btn btn-apple">Sign in with Apple</button>
+      <p>or Login with Email</p>
+      <form>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="test@atheros.ai">
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" placeholder="******">
+        <button type="submit" class="btn btn-signin">Sign In</button>
+      </form>
+      <p>Already have an account?<a routerLink="login">Login</a></p>
+    </div>
+    <div class="login-right">
+      <div class="login-info">
+        <h3>Why should I login?</h3>
+        <p>By logging in, you can access your personal dashboard, where you can manage your account, view your profile, and much more.</p>
+        <img src="/src/assets/signup-bg-pic.jpg" alt="Signup-page">
+      </div>
+    </div>
+  </div>

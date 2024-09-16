@@ -1,0 +1,91 @@
+.login-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .login-left, .login-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  
+  .login-left {
+    flex-direction: column;
+    background-color: #f5f5f5;
+  }
+  
+  .login-left h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .login-left p {
+    margin-bottom: 1rem;
+  }
+  
+  .login-left form {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login-left form label {
+    margin-top: 1rem;
+  }
+  
+  .login-left form input {
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .login-left .btn {
+    padding: 0.75rem;
+    margin-top: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .login-left .btn-google {
+    background-color: #db4437;
+    color: white;
+  }
+  
+  .login-left .btn-apple {
+    background-color: #000000;
+    color: white;
+  }
+  
+  .login-left .btn-signin {
+    background-color: #4a90e2;
+    color: white;
+  }
+  
+  .login-right {
+    background-color: white;
+  }
+  
+  .login-info {
+    text-align: center;
+  }
+  
+  .login-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .login-info p {
+    margin-bottom: 1rem;
+  }
+  
+  .login-info img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
