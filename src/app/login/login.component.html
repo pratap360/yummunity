@@ -1,12 +1,12 @@
-
+<!-- src\assets\img\yummunity-header.png -->
 <mat-card>
     <mat-card-content>
       <div class="header">
-        <img src="/src/assets/yummunity-header.png" alt="yummunity-header">
-        <h2>Yummunity</h2>
+        <img class="yummunity-header" src="/assets/img/yummunity-header.png" alt="yummunity-header">
+        <h2 class="title">Yummunity</h2>
     </div>
     <div>
-        <h3>Welcome come back again</h3>
+        <h3 class="welcome-title">Welcome , back again</h3>
     </div>
       <form (ngSubmit)="onLogin()" name="loginForm" [formGroup]="loginForm">
         <div class="emailInput">
@@ -21,34 +21,9 @@
                 Email is required
               </mat-error>
           </mat-form-field>
-          <mat-form-field class="full-width" appearance="outline">
-            <mat-label>Email</mat-label>
-            <input
-              formControlName="email"
-              matInput
-              placeholder="Enter email address" required
-            />
-            <mat-error *ngIf="!loginForm.controls['email'].valid">
-                Email is required
-              </mat-error>
-          </mat-form-field>
-          <mat-form-field class="full-width" appearance="outline">
-            <mat-label>Email</mat-label>
-            <input
-              formControlName="email"
-              matInput
-              placeholder="Enter email address" required
-            />
-            <mat-error *ngIf="!loginForm.controls['email'].valid">
-                Email is required
-              </mat-error>
-          </mat-form-field>
         </div>
 
         <div>
-          <span>
-            <a class="text-link" class="aLink" routerLink="/auth/forgot-password">Forgot Password?</a>
-          </span>
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Password</mat-label>
             <input formControlName="password" matInput [type]=" hide ? 'password' : 'text'" required />
@@ -62,47 +37,33 @@
             Password is required
           </mat-error>
         </mat-form-field>
-          <mat-form-field class="full-width" appearance="outline">
-            <mat-label>Password</mat-label>
-            <input formControlName="password" matInput [type]=" hide ? 'password' : 'text'" required />
-            <button  mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
-            [attr.aria-pressed]="hide">
-            <mat-icon>
-                {{hide ? 'visibility_off' : 'visibility'}}
-            </mat-icon>
-        </button>
-        <mat-error *ngIf="!loginForm.controls['password'].valid">
-            Password is required
-          </mat-error>
-        </mat-form-field>
-          <mat-form-field class="full-width" appearance="outline">
-            <mat-label>Password</mat-label>
-            <input formControlName="password" matInput [type]=" hide ? 'password' : 'text'" required />
-            <button  mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
-            [attr.aria-pressed]="hide">
-            <mat-icon>
-                {{hide ? 'visibility_off' : 'visibility'}}
-            </mat-icon>
-        </button>
-        <mat-error *ngIf="!loginForm.controls['password'].valid">
-            Password is required
-          </mat-error>
-        </mat-form-field>
+        <span class="forget-password">
+          <a class="text-link" class="aLink" routerLink="/">Forgot Password?</a>
+        </span>
         </div>
-        <button mat-flat-button color="primary">Login</button>
-        <button mat-fab extended><mat-icon>home</mat-icon>Home</button>
+
       </form>
-
-      <div class="button-row">
-        <p>Create New Account</p>
-      </div>
     </mat-card-content>
+    <div class="button-group">
+      <button mat-raised-button class="login" color="primary">
+        <mat-icon fontIcon="login"></mat-icon>
+Login</button>
+      <button mat-flat-button color="secondary" class="google-login"><fa-icon [icon]="faGoogle"></fa-icon> Log in with Google</button>
+    </div>
+    <div class="button-row">
+      <p>Don't have an account?</p>
+      <a class="text-link" routerLink="/signup">Sign up now</a>
+    </div>
 
-    <p>Created with ❤ by <a href="https://paruidev.com" target="_blank">paruidev</a></p>
-    <p>© Yummunity 2024 </p>
+    <div class="made-by">
+      <p>Created with 
+        <fa-icon [icon]="faHeart"></fa-icon> 
+        by <a href="https://paruidev.com" target="_blank">paruidev</a></p>
+      <p class="copyright">© Yummunity 2024 </p>
+    </div>
   </mat-card>
   
 
-  <div>
-    <img src="/src/assets/login-bg-pic.jpg" alt="login-bg-pic">
+  <div class="login-bg-pic">
+    <!-- <img src="/assets/img/login-bg-pic.jpg" alt="login-bg-pic"> -->
   </div>

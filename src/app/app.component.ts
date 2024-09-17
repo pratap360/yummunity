@@ -4,6 +4,7 @@ import { SideNavBarComponent } from "../components/side-nav-bar/side-nav-bar.com
 import { LoginComponent } from "./login/login.component";
 import { SignupComponent } from "./signup/signup.component";
 
+
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -16,4 +17,5 @@ import { SignupComponent } from "./signup/signup.component";
 })
 export class AppComponent {
   title = 'yummunity';
+
 }

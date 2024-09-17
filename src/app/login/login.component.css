@@ -2,58 +2,167 @@
     margin: 0;
     height: 100vh;
   } */
-  
-
-  
-  /* .login-wrapper {
+/* .login-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100%;
   } */
 
-  mat-card {
-    max-width: 450px;
-    max-height: 832px;
-    text-align: center;
-    border-radius: 0px 45px 45px 0px;
-    /* margin: 2em auto; */
-  }
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-  .header{
-    text-align: center;
-  
-  }
-  .full-width {
-    width: 80%;
-  }
-  
-  .button-row {
-    padding-top: 5px;
-  }
-  
-  .button-row a {
-    margin-right: 8px;
-    text-align: center;
-  }
-  
-  .forget-password{
-    padding-left: 0px;
-  }
-  
-  .emailInput{
-    padding-top: 10px;
-  }
-  
-  .contentBody {
-    padding: 60px 1rem;
-    background :#1b6ca8;
-    display: block;
-  }
-  
-  .aLink{
-    float: right;
-    padding-right: 60px;
-    text-decoration: none;
-  }
-  
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+.title {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  font-size: 30px;
+}
+
+.yummunity-header {
+  height: 48px;
+  width: 48px;
+  margin-right: 10px
+}
+
+mat-card {
+  max-width: 450px;
+  /* max-height: 832px; */
+  max-height: 100%;
+  text-align: center;
+  border-radius: 0px 45px 45px 0px;
+  /* margin: 2em auto; */
+  position: relative;
+  z-index: 1; /* set the z-index to 1 to position the card on top of the image */
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 5px;
+}
+
+.welcome-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 0px;
+  display: grid;
+  justify-content: space-around;
+}
+
+.full-width {
+  width: 80%;
+}
+
+
+.button-row {
+  padding-top: 45px;
+  padding-bottom: 45px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-weight: 300;
+  align-items: flex-start;
+}
+
+.button-row a {
+  text-align: center;
+  color: #007AFF;
+}
+
+.forget-password {
+  padding-left: 0px;
+  margin-left: auto;
+  color: #007AFF;
+}
+
+.emailInput {
+  padding-top: 10px;
+}
+
+.contentBody {
+  padding: 60px 1rem;
+  background: #1b6ca8;
+  display: block;
+}
+
+.aLink {
+  float: right;
+  padding-right: 60px;
+  text-decoration: none;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  align-content: space-around;
+  flex-wrap: wrap;
+  gap: 25px;
+  padding: 30px;
+  margin: 20px;
+
+}
+
+button.login  {
+  width: 250px;
+  height: 50px;
+  padding: 10px;
+}
+
+button.google-login {
+  width: 250px;
+  height: 50px;
+  padding: 10px;
+}
+
+.login-bg-pic {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/assets/img/login-bg-pic.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  z-index: -1; 
+  overflow-x:auto;
+}
+
+
+.made-by {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  padding-left: 20px;
+  padding-right: 20px;
+  font-weight: 300;
+}
+
+.made-by p {
+  font-family: 'roboto', sans-serif;
+  font-size: 12px;
+  color: #007AFF;
+}
+
+.made-by fa-icon {
+  color: #ff1100;
+}
+
+.made-by a {
+  text-decoration: none;
+}
+
+.made-by p.copyright {
+  font-family: 'roboto', sans-serif;
+  font-size: 12px;
+  color: #666666;
+}
