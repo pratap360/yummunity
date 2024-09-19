@@ -37,12 +37,12 @@
     </div>
   </mat-card-title>
     <mat-card-content>
-      <form (ngSubmit)="onLogin()" name="loginForm" [formGroup]="loginForm">
-        <div class="emailInput">
+      <form (ngSubmit)="onSignUp()" name="loginForm" [formGroup]="loginForm">
+        <div class="usernameInput">
           <mat-form-field class="full-width" appearance="outline">
-            <mat-label>Email</mat-label>
+            <mat-label>User Name</mat-label>
             <input
-              formControlName="email"
+              formControlName="username"
               matInput
               placeholder="Enter email address" required
             />
@@ -86,7 +86,7 @@
       </form>
     </mat-card-content>
     <div class="button-group">
-      <button mat-raised-button class="login" color="primary">
+      <button mat-raised-button class="login" color="primary" (click)="onSignUp()" routerLink="/home-feed">
         <mat-icon fontIcon="login"></mat-icon>
 Sign Up</button>
       <button mat-flat-button color="secondary" class="google-login"><fa-icon [icon]="faGoogle"></fa-icon> Sign up with Google</button>
@@ -104,7 +104,7 @@ Sign Up</button>
     </div>
   </mat-card-footer>	
 </mat-card>
-  
+
 
   <div class="login-bg-pic">
   </div>

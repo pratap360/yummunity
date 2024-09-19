@@ -40,13 +40,13 @@
           </mat-error>
         </mat-form-field>
         <span class="forget-password">
-          <a class="text-link" class="aLink" routerLink="/">Forgot Password?</a>
+          <a class="text-link" class="aLink" [routerLink]="['/forget-pwd']">Forgot Password?</a>
         </span>
         </div>
       </form>
     </mat-card-content>
     <div class="button-group">
-      <button mat-raised-button class="login" color="primary">
+      <button mat-raised-button class="login" color="primary" (click)="onLogin()" routerLink="/home-feed">
         <mat-icon fontIcon="login"></mat-icon>
 Login</button>
       <button mat-flat-button color="secondary" class="google-login"><fa-icon [icon]="faGoogle"></fa-icon> Log in with Google</button>

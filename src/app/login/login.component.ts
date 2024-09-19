@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { Router , RouterLink} from '@angular/router';
 
 
@@ -11,6 +11,7 @@ import { faGoogle} from '@fortawesome/free-brands-svg-icons';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { FormGroup,FormControl,Validators } from '@angular/forms';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +32,8 @@ export class LoginComponent implements OnInit {
   hide: boolean = false;
   faGoogle = faGoogle;
   faHeart = faHeart;
+
+  durationInSeconds = 5;
   constructor(private fb: FormBuilder) {
   }
 
@@ -42,10 +45,17 @@ export class LoginComponent implements OnInit {
     password: ['', [Validators.required, Validators.minLength(6)]]
   })
 
+  private _snackBar = inject(MatSnackBar);
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   onLogin() {
     if(!this.loginForm.valid) {
-      return;
+      this._snackBar.open('Login Successfully!!', 'OK', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration: this.durationInSeconds * 1000,
+      });
     }
     console.log(this.loginForm.value);
   }

@@ -1,0 +1,304 @@
+/* .login-container {
+    display: flex;
+    height: 100vh;
+  }
+  
+  .login-left, .login-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+  }
+  
+  .login-left {
+    flex-direction: column;
+    background-color: #f5f5f5;
+  }
+  
+  .login-left h2 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .login-left p {
+    margin-bottom: 1rem;
+  }
+  
+  .login-left form {
+    width: 100%;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login-left form label {
+    margin-top: 1rem;
+  }
+  
+  .login-left form input {
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .login-left .btn {
+    padding: 0.75rem;
+    margin-top: 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .login-left .btn-google {
+    background-color: #db4437;
+    color: white;
+  }
+  
+  .login-left .btn-apple {
+    background-color: #000000;
+    color: white;
+  }
+  
+  .login-left .btn-signin {
+    background-color: #4a90e2;
+    color: white;
+  }
+  
+  .login-right {
+    background-color: white;
+  }
+  
+  .login-info {
+    text-align: center;
+  }
+  
+  .login-info h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  .login-info p {
+    margin-bottom: 1rem;
+  }
+  
+  .login-info img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  } */
+
+
+/* * --- my css --- */
+
+/* body {
+    margin: 0;
+    height: 100vh;
+  } */
+/* .login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  } */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+/* * {
+    overflow-x: hidden;
+  } */
+
+/* Prevent scrolling on the page */
+html,
+body {
+    height: 100%;
+    /* margin: 0; */
+    overflow: hidden;
+}
+
+.title {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 500;
+    font-size: 30px;
+}
+
+.yummunity-header {
+    height: 48px;
+    width: 48px;
+    margin-right: 10px
+}
+
+mat-card {
+    max-width: 450px;
+    height: 100vh;
+    text-align: center;
+    border-radius: 0px 45px 45px 0px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    /* height: 100%; */
+    /* margin: 2em auto; */
+}
+
+/* Default max-height */
+/* mat-card {
+    max-height: 800px;
+  }
+  
+  @media screen and (max-width: 768px) {
+    mat-card {
+      max-height: 250px;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    mat-card {
+      max-height: 200px;
+    }
+  } */
+
+.header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 55px;
+}
+
+.welcome-title {
+    font-family: 'Poppins', sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    display: grid;
+    justify-content: space-around;
+}
+
+.full-width {
+    width: 80%;
+}
+
+
+.button-row {
+    /* padding-top: 45px; */
+    padding-bottom: 45px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: 300;
+    align-items: flex-start;
+}
+
+.button-row a {
+    text-align: center;
+    color: #007AFF;
+}
+
+.forget-password a {
+    float: right;
+    padding-right: 45px;
+    text-decoration: none;
+    font-size: 15px;
+    font-family: 'Roboto';
+    font-weight: 300;
+    color: #007AFF;
+}
+
+.emailInput {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+/* .contentBody {
+    padding: 60px 1rem;
+    background: #1b6ca8;
+    display: block;
+  } */
+
+/* .aLink {
+    float: right;
+    padding-right: 45px;
+    text-decoration: none;
+    font-size: 15px;
+    font-family: 'Roboto';
+    font-weight: 300;
+    color: #007AFF;
+  } */
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: stretch;
+    align-content: space-around;
+    flex-wrap: wrap;
+    gap: 25px;
+    padding: 30px;
+    margin: 20px;
+
+}
+
+button.login {
+    width: 250px;
+    height: 50px;
+    padding: 10px;
+}
+
+button.google-login {
+    width: 250px;
+    height: 50px;
+    padding: 10px;
+}
+
+.login-bg-pic {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('/assets/img/pwd-update.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    /* Keep the background fixed */
+    z-index: -1;
+    overflow-x: auto;
+}
+
+
+.made-by {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-weight: 300;
+}
+
+.made-by p {
+    font-family: 'roboto', sans-serif;
+    font-size: 12px;
+    color: #007AFF;
+}
+
+.made-by fa-icon {
+    color: #ff1100;
+}
+
+.made-by a {
+    text-decoration: none;
+}
+
+.made-by p.copyright {
+    font-family: 'roboto', sans-serif;
+    font-size: 12px;
+    color: #666666;
+}

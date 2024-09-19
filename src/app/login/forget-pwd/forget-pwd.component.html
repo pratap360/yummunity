@@ -1,0 +1,105 @@
+ 
+<mat-card>
+    <mat-card-title>
+        <div class="header">
+          <img class="yummunity-header" src="/assets/img/yummunity-header.png" alt="yummunity-header">
+          <h2 class="title">Yummunity</h2>
+      </div>
+      <div>
+          <!-- <h3 class="welcome-title">Did you forget to Eat ?</h3> -->
+          <h3 class="welcome-title">Did you Eat your Password ?</h3>
+      </div>
+    </mat-card-title>
+      <mat-card-content>
+        <form (ngSubmit)="onforgetPwd()" name="PwdForm" [formGroup]="PwdForm">
+
+          <div class="usernameInput">
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>User Name</mat-label>
+              <input
+                formControlName="username"
+                matInput
+                placeholder="Uniuqe user name" required
+              />
+              <mat-error *ngIf="!PwdFormForm.controls['username'].valid">
+                  Email is required
+                </mat-error>
+            </mat-form-field>
+          </div>
+
+          <div class="emailInput">
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Email</mat-label>
+              <input
+                formControlName="email"
+                matInput
+                placeholder="Enter email address" required
+              />
+              <mat-error *ngIf="!PwdFormForm.controls['email'].valid">
+                  Email is required
+                </mat-error>
+            </mat-form-field>
+          </div>
+  
+          <div>
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Otp</mat-label>
+              <input formControlName="otp" matInput  required />
+          <mat-error *ngIf="!PwdForm.controls['otp'].valid">
+              OTP is required
+            </mat-error>
+          </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>New Password</mat-label>
+              <input formControlName="new_password" matInput [type]=" hide ? 'password' : 'text'" required />
+              <button  mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon>
+                  {{hide ? 'visibility_off' : 'visibility'}}
+              </mat-icon>
+          </button>
+          <mat-error *ngIf="!PwdForm.controls['new_password'].valid">
+              Password is required
+            </mat-error>
+          </mat-form-field>
+          </div>
+
+          <div>
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-label>Confirm Password</mat-label>
+              <input formControlName="confirm_password" matInput [type]=" hide ? 'password' : 'text'" required />
+              <button  mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide Password'"
+              [attr.aria-pressed]="hide">
+              <mat-icon>
+                  {{hide ? 'visibility_off' : 'visibility'}}
+              </mat-icon>
+          </button>
+          <mat-error *ngIf="!PwdForm.controls['confirm_password'].valid">
+              Password is required
+            </mat-error>
+          </mat-form-field>
+          </div>
+        </form>
+      </mat-card-content>
+      <div class="button-group">
+        <button mat-flat-button class="login" color="primary" (click)="onforgetPwd()" routerLink="/login">
+          <mat-icon fontIcon="update"></mat-icon>
+  Update Password</button>
+      </div>
+
+      <mat-card-footer>	
+      <div class="made-by">
+        <p>Created with 
+          <fa-icon [icon]="faHeart"></fa-icon> 
+          by <a href="https://paruidev.com" target="_blank">paruidev</a></p>
+        <p class="copyright">© Yummunity 2024 </p>
+      </div>
+    </mat-card-footer>	
+  </mat-card>
+  
+  
+    <div class="login-bg-pic">
+    </div>

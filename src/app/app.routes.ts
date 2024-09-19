@@ -6,9 +6,12 @@ import { HomeFeedComponent } from './home-feed/home-feed.component';
 import { SearchComponent } from './search/search.component';
 import { NotificationComponent } from './notification/notification.component';
 import { AccountComponent } from './account/account.component';
+import { ForgetPwdComponent } from './login/forget-pwd/forget-pwd.component';
 
 export const routes: Routes = [
+    {path: '', redirectTo: '/login', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
+    {path:'forget-pwd', component: ForgetPwdComponent},
     {path: 'signup', component: SignupComponent},
     {path: 'home-feed', component: HomeFeedComponent},
     {path: 'search', component: SearchComponent},
@@ -18,3 +21,6 @@ export const routes: Routes = [
     
     {path: '**', component: NotFoundComponent},
 ];
+
+
+
