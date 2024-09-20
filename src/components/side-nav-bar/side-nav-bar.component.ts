@@ -10,12 +10,17 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { MatBadgeModule } from '@angular/material/badge';
+import { AccountComponent } from '../../app/account/account.component';
+import { NotificationComponent } from '../../app/notification/notification.component';
+import { SearchComponent } from '../../app/search/search.component';
+import { RecipePostsComponent } from '../recipe-posts/recipe-posts.component';
+import {CommonModule} from '@angular/common';
 @Component({
   selector: 'app-side-nav-bar',
   standalone: true,
   templateUrl: './side-nav-bar.component.html',
   styleUrl: './side-nav-bar.component.css',
-  imports: [
+  imports: [CommonModule,
     MatToolbarModule,
     MatButtonModule,
     MatSidenavModule,
@@ -25,42 +30,24 @@ import { MatBadgeModule } from '@angular/material/badge';
     AsyncPipe,
     RouterOutlet,
     RouterLink,
+    RecipePostsComponent,
+    SearchComponent,
+    NotificationComponent,
+    AccountComponent,
   ]
 })
 export class SideNavBarComponent {
-  private breakpointObserver = inject(BreakpointObserver);
-  @ViewChild(MatSidenav)
-  sidenav!: MatSidenav;
-  isMobile= true;
-  isCollapsed = true;
+  opened: boolean = false;
 
-
-  constructor(private observer: BreakpointObserver) {}
-
-  ngOnInit() {
-    this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
-      if(screenSize.matches){
-        this.isMobile = true;
-      } else {
-        this.isMobile = false;
-      }
-    });
-  }
-
-  toggleMenu() {
-    if(this.isMobile){
-      this.sidenav.toggle();
-      this.isCollapsed = false;
-    } else {
-      this.sidenav.open();
-      this.isCollapsed = !this.isCollapsed;
-    }
+  toggleSidenav() {
+    this.opened = !this.opened;
   }
 
 
-  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
-    .pipe(
-      map(result => result.matches),
-      shareReplay()
-    );
+
+  // ngOnInit() {
+
+  // }
+
+ 
 }

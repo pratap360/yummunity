@@ -1,1 +1,25 @@
-<p>recipe-posts works!</p>
+<!-- <h2 mat-dialog-title>Hi {{data.name}}</h2>
+<mat-dialog-content>
+  <p>What's your favorite animal?</p>
+  <mat-form-field>
+    <mat-label>Favorite Animal</mat-label>
+    <input matInput [(ngModel)]="animal" />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="animal()" cdkFocusInitial>Ok</button>
+</mat-dialog-actions> -->
+
+
+<h2 mat-dialog-title>Add New Recipe</h2>
+<mat-dialog-content>
+  What Type of food you are cooking?
+</mat-dialog-content>
+<mat-dialog-actions>
+
+    <button mat-raised-button mat-dialog-close cdkFocusInitial color="primary">
+     <mat-icon fontIcon="add_circle"></mat-icon>Add Post</button>
+
+    <button mat-button mat-dialog-close><mat-icon fontIcon="cancel"></mat-icon>Cancel</button>
+</mat-dialog-actions>

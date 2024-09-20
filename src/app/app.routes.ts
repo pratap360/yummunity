@@ -12,10 +12,17 @@ export const routes: Routes = [
     {path: '', redirectTo: '/login', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
     {path:'forget-pwd', component: ForgetPwdComponent},
+    // { path: 'login',component: LoginComponent, children: 
+    //     [{path: 'forget-pwd',component: ForgetPwdComponent}]
+    // },
     {path: 'signup', component: SignupComponent},
+
     {path: 'home-feed', component: HomeFeedComponent},
+
     {path: 'search', component: SearchComponent},
+
     {path: 'notfication', component: NotificationComponent},
+    
     {path: 'account', component: AccountComponent},
     
     

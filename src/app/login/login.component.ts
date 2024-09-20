@@ -12,7 +12,8 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { FormGroup,FormControl,Validators } from '@angular/forms';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-
+import { RouterModule } from '@angular/router';
+import { ForgetPwdComponent } from "./forget-pwd/forget-pwd.component";
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -22,8 +23,8 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-    FontAwesomeModule
-  ],
+    FontAwesomeModule,
+    RouterModule, ForgetPwdComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

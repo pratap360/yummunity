@@ -1,14 +1,45 @@
-import { Component,ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
+import { SideNavBarComponent } from '../../components/side-nav-bar/side-nav-bar.component';
+import { SearchComponent } from '../search/search.component';
+import { NotificationComponent } from '../notification/notification.component';
+import { AccountComponent } from '../account/account.component';
+import { RecipePostsComponent } from '../../components/recipe-posts/recipe-posts.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-home-feed',
   standalone: true,
-  imports: [MatCardModule],
+  imports: [
+    MatCardModule,
+    SideNavBarComponent,
+    RecipePostsComponent,
+    SearchComponent,
+    NotificationComponent,
+    AccountComponent,
+    MatCardModule,
+    MatButtonModule,
+    MatInputModule,
+    MatIconModule,
+  ],
   templateUrl: './home-feed.component.html',
   styleUrl: './home-feed.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeFeedComponent {
+  readonly dialog = inject(MatDialog);
 
+
+
+
+  onAddPost(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(RecipePostsComponent, {
+      width: '250px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
 }

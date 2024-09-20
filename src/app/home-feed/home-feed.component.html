@@ -1,6 +1,14 @@
+<app-side-nav-bar></app-side-nav-bar>
+
 <mat-card appearance="outlined" class="container">
     <mat-card-content>
         <p>home-feed works!</p>
     </mat-card-content>
   </mat-card>
   
+
+
+  <button mat-fab extended color="primary" class="add-post" (click)="onAddPost('0ms', '0ms')">
+    <mat-icon>post_add</mat-icon>
+    Add Post
+  </button>
