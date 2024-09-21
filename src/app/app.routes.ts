@@ -21,7 +21,7 @@ export const routes: Routes = [
 
     {path: 'search', component: SearchComponent},
 
-    {path: 'notfication', component: NotificationComponent},
+    {path: 'notifications', component: NotificationComponent},
     
     {path: 'account', component: AccountComponent},
     

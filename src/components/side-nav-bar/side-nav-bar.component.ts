@@ -15,6 +15,7 @@ import { NotificationComponent } from '../../app/notification/notification.compo
 import { SearchComponent } from '../../app/search/search.component';
 import { RecipePostsComponent } from '../recipe-posts/recipe-posts.component';
 import {CommonModule} from '@angular/common';
+import { HomeFeedComponent } from '../../app/home-feed/home-feed.component';
 @Component({
   selector: 'app-side-nav-bar',
   standalone: true,
@@ -30,6 +31,7 @@ import {CommonModule} from '@angular/common';
     AsyncPipe,
     RouterOutlet,
     RouterLink,
+    HomeFeedComponent,
     RecipePostsComponent,
     SearchComponent,
     NotificationComponent,
@@ -37,14 +39,20 @@ import {CommonModule} from '@angular/common';
   ]
 })
 export class SideNavBarComponent {
-  opened: boolean = false;
+  opened: boolean = true;
 
   toggleSidenav() {
     this.opened = !this.opened;
   }
 
 
+  private breakpointObserver = inject(BreakpointObserver);
 
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+    .pipe(
+      map(result => result.matches),
+      shareReplay()
+    );
   // ngOnInit() {
 
   // }

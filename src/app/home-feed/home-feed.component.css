@@ -1,9 +1,46 @@
-.container {
+
+.main-wrapper{
+    display: flex;
+    justify-content: center;
+    /* Center the card horizontally */
+    align-items: center;
+    /* Center the card vertically */
+    min-height: 100%;
+    /* min-height: 100vh; */
+    
+}
+
+.post-container{
     padding: 20px;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    width: 100%;
+    max-width: 760px;
+
 }
+
+
+.content-wrapper {
+    display: flex;
+    justify-content: center;
+    /* Center the card horizontally */
+    align-items: center;
+    /* Center the card vertically */
+    min-height: 100%;
+    /* min-height: 100vh; */
+    
+}
+
+.posts-card {
+    width: 100%;
+    max-width: 600px;
+    /* Or whatever width is appropriate */
+}
+
+
+
+
 
 .add-post {
 
