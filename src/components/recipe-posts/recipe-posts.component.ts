@@ -32,7 +32,7 @@ export class RecipePostsComponent {
   // onNoClick(): void {
   //   this.dialogRef.close();
   // }
-  readonly dialogRef = inject(MatDialogRef<RecipePostsComponent>);
+  // readonly dialogRef = inject(MatDialogRef<RecipePostsComponent>);
 
 
 

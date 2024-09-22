@@ -45,9 +45,19 @@ export class HomeFeedComponent {
 
   onAddPost(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(RecipePostsComponent, {
-      width: '250px',
+      width: '800px',
       enterAnimationDuration,
       exitAnimationDuration,
+    });
+  }
+
+
+
+  openDialog() {
+    const dialogRef = this.dialog.open(RecipePostsComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
     });
   }
 }
