@@ -8,7 +8,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { MatBadgeModule } from '@angular/material/badge';
 import { AccountComponent } from '../../app/account/account.component';
 import { NotificationComponent } from '../../app/notification/notification.component';
@@ -29,6 +29,7 @@ import { HomeFeedComponent } from '../../app/home-feed/home-feed.component';
     MatIconModule,
     MatBadgeModule,
     AsyncPipe,
+    RouterModule ,
     RouterOutlet,
     RouterLink,
     HomeFeedComponent,
