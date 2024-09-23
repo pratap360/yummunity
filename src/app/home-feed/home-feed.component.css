@@ -1,5 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-.main-wrapper{
+.main-wrapper {
     display: flex;
     justify-content: center;
     /* Center the card horizontally */
@@ -7,29 +8,39 @@
     /* Center the card vertically */
     min-height: 100%;
     /* min-height: 100vh; */
-    
+
 }
 
-.post-container{
+.post-container {
     padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 760px;
-
+    height: 99vh;
+    max-width: 800px;
+    background-color: #fff;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 
 .content-wrapper {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     /* Center the card horizontally */
     align-items: center;
     /* Center the card vertically */
     min-height: 100%;
     /* min-height: 100vh; */
-    
+}
+
+.content-wrapper mat-card.posts-card {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .posts-card {
@@ -39,12 +50,42 @@
 }
 
 
-
-
-
 .add-post {
 
     position: fixed;
     bottom: 20px;
     right: 20px;
+}
+
+
+
+.example-card {
+    max-width: 400px;
+}
+
+.example-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+}
+
+.action-buttons {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+    justify-content: space-evenly;
+    padding: 20px;
+    margin: 10px;
+}
+
+.card-content{
+    padding: 10px;
+    margin: 10px;
+    font-size: 18px;
+}
+
+.card-content h3{
+    padding: 10px;
+    font-size: 24px;
+
 }

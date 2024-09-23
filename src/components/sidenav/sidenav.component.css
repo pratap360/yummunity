@@ -33,6 +33,11 @@
   opacity: 0;
 }
 
+mat-toolbar {
+  position: sticky; /* Makes the toolbar sticky */
+  top: 0;           /* Position it at the top of the page */
+  z-index: 1000;    /* Ensure it stays on top of other content */
+  }
 
 .app-toolbar {
 

@@ -5,19 +5,87 @@
 <div class="main-wrapper">
 <mat-card appearance="outlined" class="post-container">
     <mat-card-content>
-        <p>home-feed works!</p>
+        <p>recipe post container</p>
     </mat-card-content>
   </mat-card>
 </div>
 
 
+
   <div class="content-wrapper">
+
     <mat-card appearance="outlined" class="posts-card">
-      <mat-card-content>
-        <p>home-feed works!</p>
+      <mat-card-content class="card-content">
+        <h3>Did you know that ?</h3>
+        <p>A hen lays around 300 to 325 eggs per year, and it takes her 24 to 26 hours to produce each egg</p>
       </mat-card-content>
+      <mat-card-actions class="action-buttons">
+        <button mat-flat-button><mat-icon>favorite</mat-icon>Like</button>
+        <button mat-raised-button><mat-icon>comment</mat-icon>Comment</button>
+        <button mat-raised-button><mat-icon>bookmark</mat-icon>Save</button>
+        <button mat-stroked-button><mat-icon>more_horiz</mat-icon>Read More</button>
+      </mat-card-actions>
     </mat-card>
-  </div>
+
+    <mat-card appearance="outlined" class="posts-card">
+      <mat-card-content class="card-content">
+        <h3>Did you know that ?</h3>
+        <p>egg is not non veg it's a veg</p>
+      </mat-card-content>
+      <mat-card-actions class="action-buttons">
+        <button mat-flat-button><mat-icon>favorite</mat-icon>Like</button>
+        <button mat-raised-button><mat-icon>comment</mat-icon>Comment</button>
+        <button mat-raised-button><mat-icon>bookmark</mat-icon>Save</button>
+        <button mat-stroked-button><mat-icon>more_horiz</mat-icon>Read More</button>
+      </mat-card-actions>
+    </mat-card>
+
+  <!-- </div>
+
+  <div class="content-wrapper"> -->
+  <mat-card class="posts-card" appearance="outlined">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Shiba Inu</mat-card-title>
+      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+    <mat-card-content class="card-content">
+      <p>
+        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+        bred for hunting.
+      </p>
+    </mat-card-content>
+    <mat-card-actions class="action-buttons">
+      <button mat-flat-button><mat-icon>favorite</mat-icon>Like</button>
+      <button mat-raised-button><mat-icon>comment</mat-icon>Comment</button>
+      <button mat-raised-button><mat-icon>bookmark</mat-icon>Save</button>
+      <button mat-stroked-button><mat-icon>more_horiz</mat-icon>Read More</button>
+    </mat-card-actions>
+  </mat-card>
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   <button mat-fab extended color="primary" class="add-post" (click)="onAddPost('0ms', '0ms')">
     <mat-icon>post_add</mat-icon>
