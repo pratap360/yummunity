@@ -1,5 +1,4 @@
-
-.main-wrapper{
+.main-wrapper {
     display: flex;
     justify-content: center;
     /* Center the card horizontally */
@@ -7,15 +6,38 @@
     /* Center the card vertically */
     min-height: 100%;
     /* min-height: 100vh; */
-    
+
 }
 
-.post-container{
+.post-container {
     padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 760px;
-
+    height: 99vh;
+    max-width: 800px;
+    background-color: #fff;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
+
+
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 100vh;  */
+  }
+  
+  .search-bar {
+    /* width: 50%;  */
+    max-width: 730px; 
+  }
+  
+  mat-form-field {
+    width: 100%;
+  }
+  

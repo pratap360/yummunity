@@ -10,7 +10,9 @@ import { AccountComponent } from '../account/account.component';
 import { NotificationComponent } from '../notification/notification.component';
 import { HomeFeedComponent } from '../home-feed/home-feed.component';
 import { RouterModule,RouterOutlet, RouterLink } from '@angular/router';
-
+import { MatFormFieldModule } from '@angular/material/form-field'; 
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 @Component({
   selector: 'app-search',
   standalone: true,
@@ -25,6 +27,9 @@ import { RouterModule,RouterOutlet, RouterLink } from '@angular/router';
     MatButtonModule,
     MatInputModule,
     MatIconModule,
+    MatFormFieldModule,
+    MatListModule,
+    MatDividerModule,
     RouterModule,
     RouterOutlet,
     RouterLink

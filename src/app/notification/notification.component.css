@@ -1,5 +1,4 @@
-
-.main-wrapper{
+.main-wrapper {
     display: flex;
     justify-content: center;
     /* Center the card horizontally */
@@ -7,15 +6,31 @@
     /* Center the card vertically */
     min-height: 100%;
     /* min-height: 100vh; */
-    
+
 }
 
-.post-container{
+.post-container {
     padding: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    max-width: 760px;
+    height: 99vh;
+    max-width: 800px;
+    background-color: #fff;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+div.notification-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+mat-button-toggle{
+    width: 233px;
 
 }

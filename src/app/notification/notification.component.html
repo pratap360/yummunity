@@ -2,10 +2,25 @@
 
 <app-sidenav></app-sidenav>
 
+
+
 <div class="main-wrapper">
-    <mat-card appearance="outlined" class="post-container">
-        <mat-card-content>
-            <p>Notification page works!</p>
-        </mat-card-content>
-      </mat-card>
-    </div>
+  <mat-card appearance="outlined" class="post-container">
+    <mat-card-content>
+
+    </mat-card-content>
+  </mat-card>
+</div>
+
+
+<div class="notification-container">
+
+  <mat-button-toggle-group name="ingredients" aria-label="Ingredients"
+    [hideMultipleSelectionIndicator]="hideMultipleSelectionIndicator()" multiple>
+    <mat-button-toggle value="likes"  matTooltip="Likes" ><mat-icon>favorite</mat-icon></mat-button-toggle>
+    <mat-button-toggle value="comments"  matTooltip="Comments" ><mat-icon>comment</mat-icon></mat-button-toggle>
+    <mat-button-toggle value="following"  matTooltip="Following" ><mat-icon>groups</mat-icon></mat-button-toggle>
+  </mat-button-toggle-group>
+
+
+</div>
