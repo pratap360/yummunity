@@ -10,7 +10,8 @@ import { RecipePostsComponent } from '../../components/recipe-posts/recipe-posts
 import { NotificationComponent } from '../notification/notification.component';
 import { SearchComponent } from '../search/search.component';
 import { HomeFeedComponent } from '../home-feed/home-feed.component';
-
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import {MatTabsModule} from '@angular/material/tabs';
 @Component({
   selector: 'app-account',
   standalone: true,
@@ -24,7 +25,10 @@ import { HomeFeedComponent } from '../home-feed/home-feed.component';
     MatCardModule,
     MatButtonModule,
     MatInputModule,
-    MatIconModule],
+    MatIconModule,
+    MatButtonToggleModule,
+    MatTabsModule
+  ],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

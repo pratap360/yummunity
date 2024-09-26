@@ -139,3 +139,105 @@ h3 {
   height: 100%;
   background-size: cover;
 }
+
+div.profile-info-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+mat-button-toggle{
+  width: 233px;
+  color: #000 !important;
+}
+
+div.profile-tab-container{
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+
+}
+
+
+.profile-tab-icon{
+  margin-right: 8px;
+
+}
+
+.profile-tab {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 80%;
+  max-width: 700px;
+}
+
+
+/* * home-feed css  */
+
+
+.content-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Center the card horizontally */
+  align-items: center;
+  /* Center the card vertically */
+  min-height: 100%;
+  /* min-height: 100vh; */
+}
+
+.content-wrapper mat-card.posts-card {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.posts-card {
+  width: 100%;
+  max-width: 600px;
+  /* Or whatever width is appropriate */
+}
+
+
+.add-post {
+
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+}
+
+
+
+.example-card {
+  max-width: 400px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.action-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  justify-content: space-evenly;
+  padding: 20px;
+  margin: 10px;
+}
+
+.card-content{
+  padding: 10px;
+  margin: 10px;
+  font-size: 18px;
+}
+
+.card-content h3{
+  padding: 10px;
+  font-size: 24px;
+
+}

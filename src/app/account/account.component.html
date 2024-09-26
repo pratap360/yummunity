@@ -40,3 +40,96 @@
     </mat-card>
   </div>
   
+  <div class="profile-info-container">
+  <mat-button-toggle-group name="profile-info" aria-label="profile-info" multiple>
+    <mat-button-toggle disabled="true" value="recipies & blog list"  matTooltip="recipies & blog list" >Recipes & Blog : 10</mat-button-toggle>
+    <mat-button-toggle disabled="true" value="followers"  matTooltip="followers" >Followers: 349</mat-button-toggle>
+    <mat-button-toggle disabled="true" value="rating"  matTooltip="rating" >Yummunity Rating: 4.5</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+
+<div class="profile-tab-container">
+  <mat-tab-group color="accent" class="profile-tab">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="profile-tab-icon">mood</mat-icon>
+        Recipes Shares
+      </ng-template>
+      <!-- ! Content 1 -->
+       
+  <div class="content-wrapper">
+
+    <mat-card appearance="outlined" class="posts-card">
+      <mat-card-content class="card-content">
+        <h3>Did you know that ?</h3>
+        <p>A hen lays around 300 to 325 eggs per year, and it takes her 24 to 26 hours to produce each egg</p>
+      </mat-card-content>
+      <mat-card-actions class="action-buttons">
+        <button mat-flat-button><mat-icon>favorite</mat-icon>Like</button>
+        <button mat-raised-button><mat-icon>comment</mat-icon>Comment</button>
+        <button mat-raised-button><mat-icon>bookmark</mat-icon>Save</button>
+        <button mat-stroked-button><mat-icon>more_horiz</mat-icon>Read More</button>
+      </mat-card-actions>
+    </mat-card>
+
+    <mat-card appearance="outlined" class="posts-card">
+      <mat-card-content class="card-content">
+        <h3>Did you know that ?</h3>
+        <p>egg is not non veg it's a veg</p>
+      </mat-card-content>
+      <mat-card-actions class="action-buttons">
+        <button mat-flat-button><mat-icon>favorite</mat-icon>Like</button>
+        <button mat-raised-button><mat-icon>comment</mat-icon>Comment</button>
+        <button mat-raised-button><mat-icon>bookmark</mat-icon>Save</button>
+        <button mat-stroked-button><mat-icon>more_horiz</mat-icon>Read More</button>
+      </mat-card-actions>
+    </mat-card>
+
+  <!-- </div>
+
+  <div class="content-wrapper"> -->
+  <mat-card class="posts-card" appearance="outlined">
+    <mat-card-header>
+      <div mat-card-avatar class="example-header-image"></div>
+      <mat-card-title>Shiba Inu</mat-card-title>
+      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+    <mat-card-content class="card-content">
+      <p>
+        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
+        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
+        bred for hunting.
+      </p>
+    </mat-card-content>
+    <mat-card-actions class="action-buttons">
+      <button mat-flat-button><mat-icon>favorite</mat-icon>Like</button>
+      <button mat-raised-button><mat-icon>comment</mat-icon>Comment</button>
+      <button mat-raised-button><mat-icon>bookmark</mat-icon>Save</button>
+      <button mat-stroked-button><mat-icon>more_horiz</mat-icon>Read More</button>
+    </mat-card-actions>
+  </mat-card>
+  
+</div>
+
+    </mat-tab>
+  
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="profile-tab-icon">library_books</mat-icon>
+        Blogs
+      </ng-template>
+      Content 2
+    </mat-tab>
+  
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <mat-icon class="profile-tab-icon">bookmarks</mat-icon>
+        Saves
+      </ng-template>
+  
+      Content 3
+    </mat-tab>
+  </mat-tab-group>
+  
+</div>
