@@ -1,3 +1,5 @@
+// ! this side nav bar is depreciated 
+
 import { Component, inject,  ViewChild } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AsyncPipe } from '@angular/common';
