@@ -11,6 +11,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
+import {MatChipsModule} from '@angular/material/chips';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 
 
@@ -29,6 +31,8 @@ import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
     MatButtonModule,
     MatInputModule,
     MatIconModule,
+    MatChipsModule,
+    MatTooltipModule,
     RouterModule,
     RouterOutlet,
     RouterLink
@@ -40,7 +44,7 @@ import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 export class HomeFeedComponent {
   readonly dialog = inject(MatDialog);
 
-
+  longText = `lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum`;
 
 
   onAddPost(enterAnimationDuration: string, exitAnimationDuration: string): void {

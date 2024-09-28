@@ -46,7 +46,7 @@
 .posts-card {
     width: 100%;
     max-width: 600px;
-    /* Or whatever width is appropriate */
+
 }
 
 
@@ -59,11 +59,11 @@
 
 
 
-.example-card {
+/* .example-card {
     max-width: 400px;
-}
+} */
 
-.example-header-image {
+.profile-header-image {
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
     background-size: cover;
 }
@@ -78,14 +78,49 @@
     margin: 10px;
 }
 
-.card-content{
+.card-content {
     padding: 10px;
     margin: 10px;
     font-size: 18px;
 }
 
-.card-content h3{
+.card-content h3 {
     padding: 10px;
     font-size: 24px;
 
 }
+.blog-title{
+    padding: 10px;
+    font-size: 24px;
+}
+
+.blog-card-content{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.blog-text{
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}
+
+.blog-thumbnail{
+    display: flex;
+}
+
+.blog-thumbnail img {
+    width: 100px;
+    height: 100px;
+}
+
+.blog-post-card-footer {
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;    
+}
+

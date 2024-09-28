@@ -133,8 +133,8 @@ h3 {
   right: 10px;
 }
 
-.example-header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+.profile-card-image {
+  background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg');
   width: 100%;
   height: 100%;
   background-size: cover;
@@ -179,7 +179,7 @@ div.profile-tab-container{
 /* * home-feed css  */
 
 
-.content-wrapper {
+.recipes-content-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -188,10 +188,11 @@ div.profile-tab-container{
   /* Center the card vertically */
   min-height: 100%;
   /* min-height: 100vh; */
+  overflow: hidden;
 }
 
-.content-wrapper mat-card.posts-card {
-  margin-top: 20px;
+.recipes-content-wrapper mat-card.posts-card {
+  margin-top: 25px;
   margin-bottom: 20px;
 }
 
@@ -202,21 +203,8 @@ div.profile-tab-container{
 }
 
 
-.add-post {
-
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-}
-
-
-
-.example-card {
-  max-width: 400px;
-}
-
-.example-header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+.profile-header-image {
+  background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg');
   background-size: cover;
 }
 
@@ -241,3 +229,65 @@ div.profile-tab-container{
   font-size: 24px;
 
 }
+
+
+.save-content-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100%;
+  overflow: hidden;
+}
+
+.save-content-wrapper mat-card.posts-card {
+  margin-top: 25px;
+  margin-bottom: 20px;
+}
+
+
+.blogs-content-wrapper{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  margin: 25px;
+}
+
+
+.blog-title{
+  padding: 10px;
+  font-size: 24px;
+}
+
+.blog-card-content{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.blog-text{
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+
+.blog-thumbnail{
+  display: flex;
+}
+
+.blog-thumbnail img {
+  width: 100px;
+  height: 100px;
+}
+
+.blog-post-card-footer {
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;    
+}
+

@@ -12,6 +12,7 @@ import { SearchComponent } from '../search/search.component';
 import { HomeFeedComponent } from '../home-feed/home-feed.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import {MatTabsModule} from '@angular/material/tabs';
+import {MatChipsModule} from '@angular/material/chips';
 @Component({
   selector: 'app-account',
   standalone: true,
@@ -27,12 +28,25 @@ import {MatTabsModule} from '@angular/material/tabs';
     MatInputModule,
     MatIconModule,
     MatButtonToggleModule,
-    MatTabsModule
+    MatTabsModule,
+    MatChipsModule
   ],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountComponent {
+
+ 
+  // account info 
+  MonthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  Month = this.MonthNames[new Date().getMonth()];
+
+
+  // blog post component 
+  blogTitle = 'Summer Chipotle Chicken Cobb Salad with Cilantro Vinaigrette'
+  longText = `This juicy salad tastes like summer! With chipotle chicken, sweet corn, avocado, cilantro vinaigrette, bacon crumbles, and fresh strawberries for a pop of sweetness.`;
+
 
 }

@@ -45,7 +45,7 @@
   <div class="content-wrapper"> -->
   <mat-card class="posts-card" appearance="outlined">
     <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
+      <div mat-card-avatar class="profile-header-image"></div>
       <mat-card-title>Shiba Inu</mat-card-title>
       <mat-card-subtitle>Dog Breed</mat-card-subtitle>
     </mat-card-header>
@@ -64,6 +64,32 @@
       <button mat-stroked-button><mat-icon>more_horiz</mat-icon>Read More</button>
     </mat-card-actions>
   </mat-card>
+
+
+  <mat-card class="posts-card" appearance="outlined">
+    <mat-card-header>
+      <mat-card-title class="blog-title">Blog Title</mat-card-title>
+    </mat-card-header>
+    <mat-card-content class="blog-card-content">
+      <div class="blog-text">
+        <p>{{longText}}</p>
+      </div>
+      <div class="blog-thumbnail">
+        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+      </div>
+    </mat-card-content>
+
+    <mat-card-footer class="blog-post-card-footer">
+      <mat-chip-set aria-label="Chihuahua traits">
+        <mat-chip>charming</mat-chip>
+        <mat-chip>graceful</mat-chip>
+        <mat-chip>sassy</mat-chip>
+      </mat-chip-set>
+      <!-- <a mat-stroked-button href="https://www.google.com/" target="_blank" matTooltip="Open in new tab"><mat-icon>open_in_new</mat-icon>Link</a> -->
+        <a mat-icon-button href="https://www.google.com/" target="_blank" matTooltip="Open in new tab"> <mat-icon>open_in_new</mat-icon></a>
+    </mat-card-footer>
+  </mat-card>
+  
   
 </div>
 
