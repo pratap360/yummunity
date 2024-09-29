@@ -13,6 +13,15 @@ import { RouterModule,RouterOutlet, RouterLink } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field'; 
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
+import {DatePipe} from '@angular/common';
+
+
+export interface Recipes_data {
+  title: string;
+  tag: string;
+}
+
+
 @Component({
   selector: 'app-search',
   standalone: true,
@@ -30,6 +39,7 @@ import { MatListModule } from '@angular/material/list';
     MatFormFieldModule,
     MatListModule,
     MatDividerModule,
+    DatePipe,
     RouterModule,
     RouterOutlet,
     RouterLink
@@ -40,4 +50,28 @@ import { MatListModule } from '@angular/material/list';
 })
 export class SearchComponent {
 
+  trendings: Recipes_data[] = [
+    {title:'Butter Chicken',
+      tag:'#chicken'
+    },
+    {title:'Paneer Butter Masala',
+      tag:'#paneer'
+    },
+    {title:'Kolkata Biryani',
+      tag:'#biryani'
+    },
+    {title:'Egg Curry',
+      tag:'#egg'
+    },
+    
+  ]
+
+
+
+  // users = [
+  //   { name: 'User_name', id: 'user_id', bio: 'user’s bio' },
+  //   { name: 'User_name', id: 'user_id', bio: 'user’s bio' },
+  //   { name: 'User_name', id: 'user_id', bio: 'user’s bio' },
+  //   { name: 'User_name', id: 'user_id', bio: 'user’s bio' }
+  // ];
 }
