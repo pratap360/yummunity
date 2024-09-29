@@ -24,13 +24,84 @@
     transform: translate(-50%, -50%);
 }
 
-div.notification-container{
+div.notification-container {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-mat-button-toggle{
+mat-button-toggle {
     width: 233px;
 
+}
+
+
+
+.notification-activity-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    left: 75px;
+    margin-top: 10px;
+    max-width: 740px;
+    left: 50%;
+    transform: translate(-50%);
+}
+
+.liked-card-notification,
+.commented-card-notification,
+.saved-card-notification,
+.following-card-notification,
+.rated-card-notification {
+    margin: 7px;
+    max-width: 740px;
+}
+
+.profile-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    flex-grow: 1;
+    padding: 0px;
+}
+
+.profile-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+.profile-header-image {
+    background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg');
+    background-size: cover;
+    height: 50px;
+    width: 50px;
+    margin: 12px;
+}
+
+.following-card-notification button {
+    margin-left: auto;
+}
+
+
+.post-image {
+    display: flex;
+    margin-left: auto;
+}
+
+.post-image img {
+    height: 100px;
+    width: 100px;
+    position: relative;
+    border-radius: 10px;
+    object-fit: cover;
+    margin-left: 10px;
+}
+
+.post-text{
+    margin-left: auto;
+    text-align: left;
 }
