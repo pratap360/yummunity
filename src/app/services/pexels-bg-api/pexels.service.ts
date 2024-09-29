@@ -1,26 +1,31 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class PexelsService {
-  private API_URL = 'https://api.pexels.com/v1/search';
-  private API_KEY = 'xzj5QnItQBnTeN6Un9iLqDHBltHCUQA1Vqwb0qs952Vk760lSptyTc8m';  // Replace this with your actual Pexels API key
+  private apiKey = 'xzj5QnItQBnTeN6Un9iLqDHBltHCUQA1Vqwb0qs952Vk760lSptyTc8m';  
+  private apiUrl = 'https://api.pexels.com/v1/search';
 
   constructor(private http: HttpClient) {}
 
-  getRandomFoodImage(): Observable<any> {
+  getRandomFoodImage(): Observable<string | null> {
     const headers = new HttpHeaders({
-      Authorization: this.API_KEY,
+      Authorization: this.apiKey
     });
 
-    const params = {
-      query: 'food',
-      per_page: '1',  // Fetch multiple images to select randomly
-    };
-
-    return this.http.get(this.API_URL, { headers, params });
+    return this.http.get<any>(this.apiUrl, {
+      headers: headers,
+      params: { query: 'foods and people', per_page: '1', orientation: 'landscape' }
+    }).pipe(
+      map(response => response.photos.length > 0 ? response.photos[0].src.large : null),
+      catchError(error => {
+        console.error('Error fetching image from Pexels API', error);
+        return [null];
+      })
+    );
   }
 }
