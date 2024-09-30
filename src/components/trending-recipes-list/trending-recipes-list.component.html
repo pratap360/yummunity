@@ -1,0 +1,13 @@
+<div class="trending-recipes-container">
+    <mat-list>
+      <!-- <div mat-subheader>Trending</div> -->
+      @for (recipie of trendings; track recipie) {
+        <mat-list-item class="trending-recipes-list">
+          <mat-icon matListItemIcon>trending_up</mat-icon>
+          <div matListItemTitle>{{recipie.title}}</div>
+          <div matListItemTitle>{{recipie.tag}}</div>
+        </mat-list-item>
+      }
+    </mat-list>
+  </div>
+  

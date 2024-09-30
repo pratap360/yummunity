@@ -14,26 +14,23 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import {DatePipe} from '@angular/common';
-
-
-export interface Recipes_data {
-  title: string;
-  tag: string;
-}
+import { SearchSuggestionProfileComponent } from '../../components/search-suggestion-profile/search-suggestion-profile.component';
+import { TrendingRecipesListComponent } from "../../components/trending-recipes-list/trending-recipes-list.component";
 
 
 @Component({
   selector: 'app-search',
   standalone: true,
-  imports: [MatCardModule,
+  imports: [
     // SideNavBarComponent,
     SidenavComponent,
     RecipePostsComponent,
     HomeFeedComponent,
     NotificationComponent,
     AccountComponent,
-    MatCardModule,
+    SearchSuggestionProfileComponent,
     MatButtonModule,
+    MatCardModule,
     MatInputModule,
     MatIconModule,
     MatFormFieldModule,
@@ -42,29 +39,15 @@ export interface Recipes_data {
     DatePipe,
     RouterModule,
     RouterOutlet,
-    RouterLink
-  ],
+    RouterLink,
+    TrendingRecipesListComponent
+],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchComponent {
 
-  trendings: Recipes_data[] = [
-    {title:'Butter Chicken',
-      tag:'#chicken'
-    },
-    {title:'Paneer Butter Masala',
-      tag:'#paneer'
-    },
-    {title:'Kolkata Biryani',
-      tag:'#biryani'
-    },
-    {title:'Egg Curry',
-      tag:'#egg'
-    },
-    
-  ]
 
 
 

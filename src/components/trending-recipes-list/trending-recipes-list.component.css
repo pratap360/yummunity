@@ -1,0 +1,12 @@
+.trending-recipes-container {
+    margin-top: 5px;
+    position: relative;
+    z-index: 5;
+    max-width: 740px;
+    left: 50%;
+    transform: translate(-50%);
+  }
+  
+  .trending-recipes-list{
+    height: 80px !important;
+  }

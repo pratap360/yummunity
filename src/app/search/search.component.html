@@ -23,49 +23,15 @@
   
 <p class="suggestions-header">Users whom to follow</p>
 
-<div class="suggestions-container">
 
-  <mat-card class="profile-card" appearance="outlined">
-    <mat-card-header class="profile-header">
-      <div mat-card-avatar class="profile-header-image"></div>
-      <mat-card-title>Pratap Parui</mat-card-title>
-      <mat-card-subtitle>Developer|Food Critics</mat-card-subtitle>
-      <button mat-flat-button><mat-icon>person_add</mat-icon>Follow</button>
-    </mat-card-header>
-    </mat-card>
+<app-search-suggestion-profile></app-search-suggestion-profile>
 
-  <mat-card class="profile-card" appearance="outlined">
-    <mat-card-header class="profile-header">
-      <div mat-card-avatar class="profile-header-image"></div>
-      <mat-card-title>Pratap Parui</mat-card-title>
-      <mat-card-subtitle>Developer|Food Critics</mat-card-subtitle>
-      <button mat-flat-button><mat-icon>person_add</mat-icon>Follow</button>
-    </mat-card-header>
-    </mat-card>
+<app-search-suggestion-profile></app-search-suggestion-profile>
 
-</div>
 
-<div class="suggestions-container">
-
-  <mat-card class="profile-card" appearance="outlined">
-    <mat-card-header class="profile-header">
-      <div mat-card-avatar class="profile-header-image"></div>
-      <mat-card-title>Pratap Parui</mat-card-title>
-      <mat-card-subtitle>Developer|Food Critics</mat-card-subtitle>
-      <button mat-flat-button><mat-icon>person_add</mat-icon>Follow</button>
-    </mat-card-header>
-    </mat-card>
-
-  <mat-card class="profile-card" appearance="outlined">
-    <mat-card-header class="profile-header">
-      <div mat-card-avatar class="profile-header-image"></div>
-      <mat-card-title>Pratap Parui</mat-card-title>
-      <mat-card-subtitle>Developer|Food Critics</mat-card-subtitle>
-      <button mat-flat-button><mat-icon>person_add</mat-icon>Follow</button>
-    </mat-card-header>
-    </mat-card>
-
-</div>
+<!-- <div class="suggestions-container">
+  <app-search-suggestion-profile></app-search-suggestion-profile>
+</div> -->
 
 
 <div class="divider">
@@ -74,40 +40,4 @@
   
 <p class="suggestions-header">Trending Recipes</p>
 
-<div class="trending-recipes-container">
-  <mat-list>
-    <!-- <div mat-subheader>Trending</div> -->
-    @for (recipie of trendings; track recipie) {
-      <mat-list-item class="trending-recipes-list">
-        <mat-icon matListItemIcon>trending_up</mat-icon>
-        <div matListItemTitle>{{recipie.title}}</div>
-        <div matListItemTitle>{{recipie.tag}}</div>
-      </mat-list-item>
-    }
-  </mat-list>
-</div>
-
-    <!-- <mat-list-item role="listitem">
-      <mat-icon matListItemIcon>trending_up</mat-icon>
-      Recipes Name 2 <b>#repicetag</b>
-    </mat-list-item>
-    <mat-list-item role="listitem">
-      <mat-icon matListItemIcon>trending_up</mat-icon>
-      Recipes Name 3 <b>#repicetag</b>
-    </mat-list-item> -->
-
-
-<!-- <div class="profile-card-container">
-  <mat-card class="profile-card" *ngFor="let user of users">
-    <div class="profile-header">
-      <mat-icon class="avatar">A</mat-icon>
-
-      <div class="profile-info">
-        <h3>{{user.name}} / {{user.id}}</h3>
-        <p>{{user.bio}}</p>
-      </div>
-
-      <button mat-button class="follow-button">Follow</button>
-    </div>
-  </mat-card>
-</div> -->
+<app-trending-recipes-list></app-trending-recipes-list>
