@@ -12,85 +12,8 @@
 
 
 
-  <div class="content-wrapper">
-
-    <mat-card appearance="outlined" class="posts-card">
-      <mat-card-content class="card-content">
-        <h3>Did you know that ?</h3>
-        <p>A hen lays around 300 to 325 eggs per year, and it takes her 24 to 26 hours to produce each egg</p>
-      </mat-card-content>
-      <mat-card-actions class="action-buttons">
-        <button mat-flat-button><mat-icon>favorite</mat-icon>Like</button>
-        <button mat-raised-button><mat-icon>comment</mat-icon>Comment</button>
-        <button mat-raised-button><mat-icon>bookmark</mat-icon>Save</button>
-        <button mat-stroked-button><mat-icon>more_horiz</mat-icon>Read More</button>
-      </mat-card-actions>
-    </mat-card>
-
-    <mat-card appearance="outlined" class="posts-card">
-      <mat-card-content class="card-content">
-        <h3>Did you know that ?</h3>
-        <p>egg is not non veg it's a veg</p>
-      </mat-card-content>
-      <mat-card-actions class="action-buttons">
-        <button mat-flat-button><mat-icon>favorite</mat-icon>Like</button>
-        <button mat-raised-button><mat-icon>comment</mat-icon>Comment</button>
-        <button mat-raised-button><mat-icon>bookmark</mat-icon>Save</button>
-        <button mat-stroked-button><mat-icon>more_horiz</mat-icon>Read More</button>
-      </mat-card-actions>
-    </mat-card>
-
-  <!-- </div>
-
-  <div class="content-wrapper"> -->
-  <mat-card class="posts-card" appearance="outlined">
-    <mat-card-header>
-      <div mat-card-avatar class="profile-header-image"></div>
-      <mat-card-title>Shiba Inu</mat-card-title>
-      <mat-card-subtitle>Dog Breed</mat-card-subtitle>
-    </mat-card-header>
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-    <mat-card-content class="card-content">
-      <p>
-        The Shiba Inu is the smallest of the six original and distinct spitz breeds of dog from Japan.
-        A small, agile dog that copes very well with mountainous terrain, the Shiba Inu was originally
-        bred for hunting.
-      </p>
-    </mat-card-content>
-    <mat-card-actions class="action-buttons">
-      <button mat-flat-button><mat-icon>favorite</mat-icon>Like</button>
-      <button mat-raised-button><mat-icon>comment</mat-icon>Comment</button>
-      <button mat-raised-button><mat-icon>bookmark</mat-icon>Save</button>
-      <button mat-stroked-button><mat-icon>more_horiz</mat-icon>Read More</button>
-    </mat-card-actions>
-  </mat-card>
-
-
-  <mat-card class="posts-card" appearance="outlined">
-    <mat-card-header>
-      <mat-card-title class="blog-title">Blog Title</mat-card-title>
-    </mat-card-header>
-    <mat-card-content class="blog-card-content">
-      <div class="blog-text">
-        <p>{{longText}}</p>
-      </div>
-      <div class="blog-thumbnail">
-        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
-      </div>
-    </mat-card-content>
-
-    <mat-card-footer class="blog-post-card-footer">
-      <mat-chip-set aria-label="Chihuahua traits">
-        <mat-chip>charming</mat-chip>
-        <mat-chip>graceful</mat-chip>
-        <mat-chip>sassy</mat-chip>
-      </mat-chip-set>
-      <!-- <a mat-stroked-button href="https://www.google.com/" target="_blank" matTooltip="Open in new tab"><mat-icon>open_in_new</mat-icon>Link</a> -->
-        <a mat-icon-button href="https://www.google.com/" target="_blank" matTooltip="Open in new tab"> <mat-icon>open_in_new</mat-icon></a>
-    </mat-card-footer>
-  </mat-card>
-  
-  
+<div class="content-wrapper">
+  <app-recipe-posts></app-recipe-posts>
 </div>
 
 

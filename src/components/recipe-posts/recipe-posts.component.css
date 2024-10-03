@@ -1,30 +1,86 @@
-.recipe-post-form {
-    min-width: 250px;
-    max-width: 500px;
+mat-card.posts-card {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.posts-card {
     width: 100%;
+    max-width: 600px;
+
 }
 
-.recipe-post-text-area {
-    width: 100%;
-    /* height: 380px; */
+
+.add-post {
+
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
 }
 
-textarea {
-    height: 380px !important; 
-    min-height: 380px !important; 
-    max-height: 380px !important; 
-  }
-  
 
-.post-tittle {
-    font-size: 24px;
-    margin: 15px;
+
+/* .example-card {
+    max-width: 400px;
+} */
+
+.profile-header-image {
+    background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg');
+    background-size: cover;
+}
+
+.action-buttons {
     display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+    justify-content: space-evenly;
+    padding: 20px;
+    margin: 10px;
+}
+
+.card-content {
+    padding: 7px;
+    margin: 10px;
+    font-size: 18px;
+}
+
+/* .card-content h3 {
+    padding: 10px;
+    font-size: 24px;
+
+} */
+.blog-title{
+    padding: 0 16px;
+    font-size: 20px;
+    margin: 5px;
+}
+
+.blog-card-content{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
     align-items: center;
 }
 
-mat-dialog-container {
-    width: 600px;
-    height: 500px;
-
+.blog-text{
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
 }
+
+.blog-thumbnail{
+    display: flex;
+}
+
+.blog-thumbnail img {
+    width: 100px;
+    height: 100px;
+}
+
+.blog-post-card-footer {
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;    
+}
+

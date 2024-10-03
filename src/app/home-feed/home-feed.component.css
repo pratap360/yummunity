@@ -64,7 +64,7 @@
 } */
 
 .profile-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg');
     background-size: cover;
 }
 
@@ -79,19 +79,20 @@
 }
 
 .card-content {
-    padding: 10px;
+    padding: 7px;
     margin: 10px;
     font-size: 18px;
 }
 
-.card-content h3 {
+/* .card-content h3 {
     padding: 10px;
     font-size: 24px;
 
-}
+} */
 .blog-title{
-    padding: 10px;
-    font-size: 24px;
+    padding: 0 16px;
+    font-size: 20px;
+    margin: 5px;
 }
 
 .blog-card-content{

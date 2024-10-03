@@ -3,6 +3,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule,RouterOutlet, RouterLink } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 @Component({
   selector: 'app-search-suggestion-profile',
   standalone: true,
@@ -10,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
     MatCardModule,
     MatIconModule,
     MatButtonModule,
+    MatDividerModule,
     RouterModule,
     RouterOutlet, 
     RouterLink

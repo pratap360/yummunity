@@ -1,0 +1,30 @@
+
+
+<h2 mat-dialog-title>Add New Recipe</h2>
+<mat-dialog-content>
+  <span class="post-tittle"> What Type of food you are cooking?</span>
+  <form class="recipe-post-form">
+    <mat-form-field class="recipe-post-text-area">
+      <mat-label><mat-icon>edit</mat-icon>Write down your Recipe's</mat-label>
+      <textarea matInput #post maxlength="2000" placeholder="what are the health benfits of eating..."></textarea>
+      <mat-hint align="start"><strong>use different text formating</strong> </mat-hint>
+      <mat-hint align="end">{{post.value.length}} / 2000</mat-hint>
+    </mat-form-field>
+
+  </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="start">
+  <!-- <input type="file"/> -->
+  <button mat-flat-button><mat-icon>image</mat-icon>Add Images</button>
+  <button mat-icon-button matTooltip="Add Tags" matTooltipPosition="right" ><mat-icon>tag</mat-icon></button> 
+  <button mat-icon-button matTooltip="Add Health benfits" matTooltipPosition="right" ><mat-icon>health_and_safety</mat-icon></button>
+  <button mat-icon-button matTooltip="Add Overall Ratings" matTooltipPosition="right"><mat-icon>stars</mat-icon></button>
+</mat-dialog-actions>
+
+<mat-dialog-actions align="end">
+  <button mat-raised-button mat-dialog-close cdkFocusInitial color="primary">
+    <mat-icon fontIcon="add_circle"></mat-icon>Add Post</button>
+   <button mat-button mat-dialog-close><mat-icon fontIcon="cancel"></mat-icon>Cancel</button>
+</mat-dialog-actions>

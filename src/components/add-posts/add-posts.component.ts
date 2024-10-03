@@ -5,33 +5,24 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {  MAT_DIALOG_DATA,  MatDialog,  MatDialogActions,  MatDialogClose, MatDialogContent,  MatDialogRef,  MatDialogTitle,} from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatCardModule } from '@angular/material/card';
-import { MatChipsModule } from '@angular/material/chips';
-
 @Component({
-  selector: 'app-recipe-posts',
+  selector: 'app-add-posts',
   standalone: true,
   imports: [
+    MatFormFieldModule,
+    MatInputModule,
     FormsModule,
     MatButtonModule,
-    MatCardModule,
     MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,
-    MatIconModule,
-    MatChipsModule,
-    MatInputModule,
+    MatIconModule
   ],
-  templateUrl: './recipe-posts.component.html',
-  styleUrl: './recipe-posts.component.css',
+  templateUrl: './add-posts.component.html',
+  styleUrl: './add-posts.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class RecipePostsComponent {
-
-    // blog post component 
-    blogTitle = 'Summer Chipotle Chicken Cobb Salad with Cilantro Vinaigrette'
-    longText = `This juicy salad tastes like summer! With chipotle chicken, sweet corn, avocado, cilantro vinaigrette, bacon crumbles, and fresh strawberries for a pop of sweetness.`;
-
+export class AddPostsComponent {
 
 }

@@ -1,7 +1,7 @@
 .trending-recipes-container {
     margin-top: 5px;
     position: relative;
-    z-index: 5;
+    z-index: 0;
     max-width: 740px;
     left: 50%;
     transform: translate(-50%);
@@ -10,3 +10,26 @@
   .trending-recipes-list{
     height: 80px !important;
   }
+
+
+  .divider {
+    margin-top: 5px;
+    position: relative;
+    z-index: 0;
+    max-width: 740px;
+    left: 50%;
+    transform: translate(-50%);
+  }
+  
+  p.suggestions-header {
+    /* position: absolute;
+    top: 20%;
+    left: 15%; */
+    margin-top: 5px;
+    position: relative;
+    z-index: 0;
+    max-width: 740px;
+    left: 50%;
+    transform: translate(-50%);
+  }
+  

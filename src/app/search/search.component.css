@@ -35,7 +35,7 @@
 .search-bar {
   /* width: 50%;  */
   position: relative;
-  z-index: 10;
+  z-index: 0;
   max-width: 730px;
 }
 
@@ -46,7 +46,7 @@ mat-form-field {
 .divider {
   margin-top: 5px;
   position: relative;
-  z-index: 5;
+  z-index: 0;
   max-width: 740px;
   left: 50%;
   transform: translate(-50%);
@@ -58,15 +58,10 @@ p.suggestions-header {
   left: 15%; */
   margin-top: 5px;
   position: relative;
-  z-index: 5;
+  z-index: 0;
   max-width: 740px;
   left: 50%;
   transform: translate(-50%);
 }
 
-.suggestions-container {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  flex-wrap: wrap;
-}
+

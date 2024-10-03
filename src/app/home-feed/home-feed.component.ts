@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { AddPostsComponent } from '../../components/add-posts/add-posts.component';
 
 
 @Component({
@@ -44,11 +45,9 @@ import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 export class HomeFeedComponent {
   readonly dialog = inject(MatDialog);
 
-  longText = `lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum`;
-
 
   onAddPost(enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(RecipePostsComponent, {
+    this.dialog.open(AddPostsComponent, {
       width: '800px',
       enterAnimationDuration,
       exitAnimationDuration,
@@ -56,9 +55,8 @@ export class HomeFeedComponent {
   }
 
 
-
   openDialog() {
-    const dialogRef = this.dialog.open(RecipePostsComponent);
+    const dialogRef = this.dialog.open(AddPostsComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
