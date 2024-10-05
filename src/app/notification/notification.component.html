@@ -14,11 +14,11 @@
 
 <div class="notification-container">
 
-  <mat-button-toggle-group name="ingredients" aria-label="Ingredients"
+  <mat-button-toggle-group name="ingredients" aria-label="Ingredients" 
     [hideMultipleSelectionIndicator]="hideMultipleSelectionIndicator()" multiple>
-    <mat-button-toggle value="likes"  matTooltip="Likes" ><mat-icon>favorite</mat-icon></mat-button-toggle>
-    <mat-button-toggle value="comments"  matTooltip="Comments" ><mat-icon>comment</mat-icon></mat-button-toggle>
-    <mat-button-toggle value="following"  matTooltip="Following" ><mat-icon>groups</mat-icon></mat-button-toggle>
+    <mat-button-toggle value="likes" checked="true"  matTooltip="Likes" ><mat-icon>favorite</mat-icon></mat-button-toggle>
+    <mat-button-toggle value="comments"  checked="true" matTooltip="Comments" ><mat-icon>comment</mat-icon></mat-button-toggle>
+    <mat-button-toggle value="following" checked="true" matTooltip="Following" ><mat-icon>groups</mat-icon></mat-button-toggle>
   </mat-button-toggle-group>
 
 

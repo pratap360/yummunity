@@ -37,7 +37,6 @@ import { PostContainerComponent } from "../../components/post-container/post-con
 export class NotificationComponent {
   // Likes: boolean | undefined;
 
-
   hideSingleSelectionIndicator = signal(false);
   hideMultipleSelectionIndicator = signal(true);
 
