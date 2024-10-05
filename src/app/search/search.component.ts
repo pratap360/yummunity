@@ -16,6 +16,7 @@ import { MatListModule } from '@angular/material/list';
 import {DatePipe} from '@angular/common';
 import { SearchSuggestionProfileComponent } from '../../components/search-suggestion-profile/search-suggestion-profile.component';
 import { TrendingRecipesListComponent } from "../../components/trending-recipes-list/trending-recipes-list.component";
+import { PostContainerComponent } from "../../components/post-container/post-container.component";
 
 
 @Component({
@@ -40,7 +41,8 @@ import { TrendingRecipesListComponent } from "../../components/trending-recipes-
     RouterModule,
     RouterOutlet,
     RouterLink,
-    TrendingRecipesListComponent
+    TrendingRecipesListComponent,
+    PostContainerComponent
 ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',

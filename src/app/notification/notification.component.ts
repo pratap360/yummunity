@@ -12,6 +12,7 @@ import { SidenavComponent } from '../../components/sidenav/sidenav.component';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { PostContainerComponent } from "../../components/post-container/post-container.component";
 @Component({
   selector: 'app-notification',
   standalone: true,
@@ -26,10 +27,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatButtonModule,
     MatInputModule,
     MatIconModule,
-    MatButtonToggleModule, 
+    MatButtonToggleModule,
     MatCheckboxModule,
-    MatTooltipModule
-  ],
+    MatTooltipModule, PostContainerComponent],
   templateUrl: './notification.component.html',
   styleUrl: './notification.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,0 +1,52 @@
+
+mat-card.posts-card {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.posts-card {
+    width: 100%;
+    max-width: 700px;
+
+}
+
+.profile-header-image {
+    background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg');
+    background-size: cover;
+}
+
+.blog-title{
+    padding: 0 16px;
+    font-size: 20px;
+    margin: 5px;
+}
+
+.blog-card-content{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.blog-text{
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}
+
+.blog-thumbnail{
+    display: flex;
+}
+
+.blog-thumbnail img {
+    width: 100px;
+    height: 100px;
+}
+
+.blog-post-card-footer {
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;    
+}
+

@@ -7,6 +7,9 @@ import {  MAT_DIALOG_DATA,  MatDialog,  MatDialogActions,  MatDialogClose, MatDi
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
+import { BlogPostComponent } from "./blog-post/blog-post.component";
+import { TextPostComponent } from "./text-post/text-post.component";
+import { WithImgPostComponent } from "./with-img-post/with-img-post.component";
 
 @Component({
   selector: 'app-recipe-posts',
@@ -15,23 +18,18 @@ import { MatChipsModule } from '@angular/material/chips';
     FormsModule,
     MatButtonModule,
     MatCardModule,
-    MatDialogTitle,
-    MatDialogContent,
-    MatDialogActions,
-    MatDialogClose,
     MatIconModule,
     MatChipsModule,
     MatInputModule,
-  ],
+    BlogPostComponent,
+    TextPostComponent,
+    WithImgPostComponent
+],
   templateUrl: './recipe-posts.component.html',
   styleUrl: './recipe-posts.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RecipePostsComponent {
-
-    // blog post component 
-    blogTitle = 'Summer Chipotle Chicken Cobb Salad with Cilantro Vinaigrette'
-    longText = `This juicy salad tastes like summer! With chipotle chicken, sweet corn, avocado, cilantro vinaigrette, bacon crumbles, and fresh strawberries for a pop of sweetness.`;
 
 
 }

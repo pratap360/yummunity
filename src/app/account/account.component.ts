@@ -13,10 +13,14 @@ import { HomeFeedComponent } from '../home-feed/home-feed.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatChipsModule} from '@angular/material/chips';
+import { BlogPostComponent } from "../../components/recipe-posts/blog-post/blog-post.component";
+import { TextPostComponent } from "../../components/recipe-posts/text-post/text-post.component";
+import { WithImgPostComponent } from "../../components/recipe-posts/with-img-post/with-img-post.component";
+import { PostContainerComponent } from "../../components/post-container/post-container.component";
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [MatCardModule,
+  imports: [
     // SideNavBarComponent,
     SidenavComponent,
     RecipePostsComponent,
@@ -29,8 +33,11 @@ import {MatChipsModule} from '@angular/material/chips';
     MatIconModule,
     MatButtonToggleModule,
     MatTabsModule,
-    MatChipsModule
-  ],
+    MatChipsModule,
+    BlogPostComponent,
+    TextPostComponent, WithImgPostComponent,
+    PostContainerComponent
+],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

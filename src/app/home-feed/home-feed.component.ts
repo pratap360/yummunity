@@ -15,6 +15,7 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { AddPostsComponent } from '../../components/add-posts/add-posts.component';
+import { PostContainerComponent } from "../../components/post-container/post-container.component";
 
 
 @Component({
@@ -36,8 +37,9 @@ import { AddPostsComponent } from '../../components/add-posts/add-posts.componen
     MatTooltipModule,
     RouterModule,
     RouterOutlet,
-    RouterLink
-  ],
+    RouterLink,
+    PostContainerComponent
+],
   templateUrl: './home-feed.component.html',
   styleUrl: './home-feed.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,0 +1,29 @@
+<mat-card class="posts-card" appearance="outlined">
+  <mat-card-header>
+    <div mat-card-avatar class="profile-header-image"></div>
+    <mat-card-title>Pratap Parui</mat-card-title>
+    <mat-card-subtitle>Developer|Food Critics</mat-card-subtitle>
+  </mat-card-header>
+  <div><mat-card-title class="blog-title">{{blogTitle}}</mat-card-title></div>
+  <mat-card-content class="blog-card-content">
+    <div class="blog-text">
+      <p>{{longText}}</p>
+    </div>
+    <div class="blog-thumbnail">
+      <img mat-card-image
+        src="https://pinchofyum.com/cdn-cgi/image/width=680,height=99999,fit=scale-down/wp-content/uploads/Summer-Cobb-Salad-in-Bowl.jpg"
+        alt="Summer Chipotle Chicken">
+    </div>
+  </mat-card-content>
+
+  <mat-card-footer class="blog-post-card-footer">
+    <mat-chip-set aria-label="Chihuahua traits">
+      <mat-chip>Healthy</mat-chip>
+      <mat-chip>Non-Veg</mat-chip>
+      <mat-chip>Chicken recipe</mat-chip>
+    </mat-chip-set>
+    <a mat-icon-button href="https://pinchofyum.com/summer-chipotle-chicken-cobb-salad-with-cilantro-vinaigrette"
+      target="_blank" matTooltip="Open in new tab">
+      <mat-icon>open_in_new</mat-icon></a>
+  </mat-card-footer>
+</mat-card>

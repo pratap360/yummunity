@@ -1,30 +1,4 @@
-.main-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100%;
-  /* flex-direction: column; */
-  /* position: relative; */
 
-}
-
-.post-container {
-  padding: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 99vh;
-  max-width: 800px;
-  background-color: #fff;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  /* height: auto; */
-  /* background-color: hsla(0,0%,0%,0.0); */
-  /* z-index: 1; */
-}
 
 .account-container {
   color: #000;
@@ -177,62 +151,6 @@ div.profile-tab-container{
   z-index: 0; 
 }
 
-
-/* * home-feed css  */
-
-
-.recipes-content-wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  /* Center the card horizontally */
-  align-items: center;
-  /* Center the card vertically */
-  min-height: 100%;
-  /* min-height: 100vh; */
-  overflow: hidden;
-}
-
-.recipes-content-wrapper mat-card.posts-card {
-  margin-top: 25px;
-  margin-bottom: 20px;
-}
-
-.posts-card {
-  width: 100%;
-  max-width: 600px;
-  /* Or whatever width is appropriate */
-}
-
-
-.profile-header-image {
-  background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg');
-  background-size: cover;
-}
-
-.action-buttons {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  box-sizing: border-box;
-  justify-content: space-evenly;
-  padding: 20px;
-  margin: 10px;
-}
-
-.card-content{
-  padding: 10px;
-  margin: 10px;
-  font-size: 18px;
-}
-
-.card-content h3{
-  padding: 10px;
-  font-size: 24px;
-
-}
-
-
 .save-content-wrapper{
   display: flex;
   flex-direction: column;
@@ -246,50 +164,3 @@ div.profile-tab-container{
   margin-top: 25px;
   margin-bottom: 20px;
 }
-
-
-.blogs-content-wrapper{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
-  margin: 25px;
-}
-
-
-.blog-title{
-  padding: 10px;
-  font-size: 24px;
-}
-
-.blog-card-content{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  align-items: center;
-}
-
-.blog-text{
-  display: flex;
-  flex-direction: row;
-  padding: 10px;
-}
-
-.blog-thumbnail{
-  display: flex;
-}
-
-.blog-thumbnail img {
-  width: 100px;
-  height: 100px;
-}
-
-.blog-post-card-footer {
-  padding: 15px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;    
-}
-

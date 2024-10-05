@@ -1,13 +1,13 @@
 <!-- <app-side-nav-bar></app-side-nav-bar> -->
 <app-sidenav></app-sidenav>
-
-
+<app-post-container></app-post-container>
+<!-- 
 <div class="main-wrapper">
   <mat-card appearance="outlined" class="post-container">
     <mat-card-content>
     </mat-card-content>
   </mat-card>
-</div>
+</div> -->
 
 
 
@@ -56,8 +56,9 @@
         Recipes Shares
       </ng-template>
       <!-- ! Content 1 -->
-
-      <div class="recipes-content-wrapper">
+      <app-text-post></app-text-post>
+      <app-with-img-post></app-with-img-post>
+      <!-- <div class="recipes-content-wrapper">
         <mat-card appearance="outlined" class="posts-card">
           <mat-card-content class="card-content">
             <h3>Did you know that ?</h3>
@@ -114,7 +115,7 @@
           </mat-card-actions>
         </mat-card>
 
-      </div>
+      </div> -->
 
     </mat-tab>
 
@@ -124,7 +125,8 @@
         Blogs
       </ng-template>
       <!-- ! Content 2 -->
-      <div class="blogs-content-wrapper">
+      <app-blog-post></app-blog-post>
+      <!-- <div class="blogs-content-wrapper">
         <mat-card class="posts-card" appearance="outlined">
           <mat-card-header>
             <mat-card-title class="blog-title">{{blogTitle}}</mat-card-title>
@@ -149,7 +151,7 @@
               <mat-icon>open_in_new</mat-icon></a>
           </mat-card-footer>
         </mat-card>
-      </div>
+      </div> -->
     </mat-tab>
 
     <mat-tab>
@@ -159,6 +161,9 @@
       </ng-template>
 
       <!-- ! Content 3 -->
+       
+       <!-- ? Need to implement the ngfor here to display the saved posts using boolean value  -->
+
       <div class="save-content-wrapper">
         <mat-card appearance="outlined" class="posts-card">
           <mat-card-content class="card-content">
