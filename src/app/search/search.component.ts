@@ -9,20 +9,23 @@ import { RecipePostsComponent } from '../../components/recipe-posts/recipe-posts
 import { AccountComponent } from '../account/account.component';
 import { NotificationComponent } from '../notification/notification.component';
 import { HomeFeedComponent } from '../home-feed/home-feed.component';
-import { RouterModule,RouterOutlet, RouterLink } from '@angular/router';
-import { MatFormFieldModule } from '@angular/material/form-field'; 
+import { RouterModule, RouterOutlet, RouterLink } from '@angular/router';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
-import {DatePipe} from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { SearchSuggestionProfileComponent } from '../../components/search-suggestion-profile/search-suggestion-profile.component';
-import { TrendingRecipesListComponent } from "../../components/trending-recipes-list/trending-recipes-list.component";
-import { PostContainerComponent } from "../../components/post-container/post-container.component";
-
+import { TrendingRecipesListComponent } from '../../components/trending-recipes-list/trending-recipes-list.component';
+import { PostContainerComponent } from '../../components/post-container/post-container.component';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FormsModule } from '@angular/forms';
+import { MealService } from '../services/mealdb/meal.service';
 
 @Component({
   selector: 'app-search',
   standalone: true,
   imports: [
+    CommonModule,
     // SideNavBarComponent,
     SidenavComponent,
     RecipePostsComponent,
@@ -37,22 +40,53 @@ import { PostContainerComponent } from "../../components/post-container/post-con
     MatFormFieldModule,
     MatListModule,
     MatDividerModule,
+    MatProgressSpinnerModule,
     DatePipe,
+    FormsModule,
     RouterModule,
     RouterOutlet,
     RouterLink,
     TrendingRecipesListComponent,
-    PostContainerComponent
-],
+    PostContainerComponent,
+  ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchComponent {
 
+  searchQuery: string = '';
+  isLoading: boolean = false;
+  meals: any[] = [];
+  isSearchSuggestions: boolean = true;
 
+  constructor(private mealService: MealService) {}
 
+  
+  onSearch() {
+    if (this.searchQuery.trim() === '') {
+      return;
+    }
 
+    this.isLoading = true;
+
+    this.mealService.searchMeals(this.searchQuery).subscribe({
+      next: (response) => {
+        this.meals = response.meals;
+        this.isLoading = false;
+        this.isSearchSuggestions = false;
+      },
+      error: (error) => {
+        console.log(error);
+        this.isLoading = false;
+      }
+    });
+
+  }
+  openMealDetail(meal: any) {
+    window.open(meal.strSource, '_blank'); // Opens the recipe in a new tab
+  }
+  
   // users = [
   //   { name: 'User_name', id: 'user_id', bio: 'user’s bio' },
   //   { name: 'User_name', id: 'user_id', bio: 'user’s bio' },

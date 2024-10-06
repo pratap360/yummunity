@@ -5,21 +5,51 @@
 
   <div class="search-container">
   <mat-form-field appearance="outline" class="search-bar">
-    <input matInput type="search" placeholder="Search here">
-    <button matSuffix mat-icon-button aria-label="Search"><mat-icon>search</mat-icon></button>
+    <input matInput type="search" placeholder="Search here" [(ngModel)]="searchQuery"> 
+    <button matSuffix mat-icon-button aria-label="Search" (click)="onSearch()"><mat-icon>search</mat-icon></button>
   </mat-form-field>
 </div>
 
-<div class="divider">
+
+<mat-spinner *ngIf="isLoading" [diameter]="70"></mat-spinner>
+
+
+<!-- Displaying search results in a mat-card -->
+<div class="meal-container" *ngIf="!isLoading && meals.length > 0">
+  <mat-card *ngFor="let meal of meals" class="meal-card">
+    <mat-card-header>
+      <mat-card-title>{{ meal.strMeal }}</mat-card-title>
+      <mat-card-subtitle>{{ meal.strCategory }}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image [src]="meal.strMealThumb" alt="{{ meal.strMeal }}">
+    <mat-card-content>
+      <p>{{ meal.strInstructions | slice:0:150 }}...</p> <!-- Displaying first 150 characters of the instructions -->
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-button color="primary" (click)="openMealDetail(meal)">View Recipe</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
+
+<!-- Show "No results found" only after loading and when there are no meals -->
+<div class="text-info-spinner" *ngIf="!isLoading && meals.length === 0">
+  No meals found.
+</div>
+
+
+<div class="divider" *ngIf="isSearchSuggestions">
   <mat-divider></mat-divider>
 </div>
   
-<p class="suggestions-header">Users whom to follow</p>
+<p class="suggestions-header" *ngIf="isSearchSuggestions">Users whom to follow</p>
 
 
-<app-search-suggestion-profile></app-search-suggestion-profile>
+<app-search-suggestion-profile *ngIf="isSearchSuggestions"></app-search-suggestion-profile>
 
-<app-search-suggestion-profile></app-search-suggestion-profile>
+<app-search-suggestion-profile *ngIf="isSearchSuggestions"></app-search-suggestion-profile>
+
+
+<app-trending-recipes-list *ngIf="isSearchSuggestions"></app-trending-recipes-list>
 
 
 <!-- <div class="suggestions-container">
@@ -32,5 +62,3 @@
 </div>
   
 <p class="suggestions-header">Trending Recipes</p> -->
-
-<app-trending-recipes-list></app-trending-recipes-list>
