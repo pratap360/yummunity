@@ -21,6 +21,7 @@
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    border: 0px
     /* height: auto; */
     /* background-color: hsla(0,0%,0%,0.0); */
     /* z-index: 1; */

@@ -61,7 +61,7 @@ export class SearchComponent {
   isLoading: boolean = false;
   meals: any[] = [];
   isSearchSuggestions: boolean = true;
-
+  hideShowText: boolean = false;
   constructor(private mealService: MealService) {}
 
   
@@ -81,6 +81,8 @@ export class SearchComponent {
       error: (error) => {
         console.log(error);
         this.isLoading = false;
+        this.hideShowText= true;
+
       }
     });
 
