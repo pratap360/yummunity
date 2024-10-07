@@ -13,6 +13,7 @@ import { RouterModule, RouterOutlet, RouterLink } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
+import {MatGridListModule} from '@angular/material/grid-list';
 import { CommonModule, DatePipe } from '@angular/common';
 import { SearchSuggestionProfileComponent } from '../../components/search-suggestion-profile/search-suggestion-profile.component';
 import { TrendingRecipesListComponent } from '../../components/trending-recipes-list/trending-recipes-list.component';
@@ -41,6 +42,7 @@ import { MealService } from '../services/mealdb/meal.service';
     MatListModule,
     MatDividerModule,
     MatProgressSpinnerModule,
+    MatGridListModule,
     DatePipe,
     FormsModule,
     RouterModule,

@@ -16,6 +16,7 @@
 
 <!-- Displaying search results in a mat-card -->
 <div class="meal-container" *ngIf="!isLoading && meals.length > 0">
+  <mat-grid-list cols="2" gutterSize="20px">
   <mat-card *ngFor="let meal of meals" class="meal-card">
     <mat-card-header>
       <mat-card-title>{{ meal.strMeal }}</mat-card-title>
@@ -29,6 +30,7 @@
       <button mat-button color="primary" (click)="openMealDetail(meal)">View Recipe</button>
     </mat-card-actions>
   </mat-card>
+</mat-grid-list>
 </div>
 
 <!-- Show "No results found" only after loading and when there are no meals -->
