@@ -5,6 +5,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {  MAT_DIALOG_DATA,  MatDialog,  MatDialogActions,  MatDialogClose, MatDialogContent,  MatDialogRef,  MatDialogTitle,} from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCard, MatCardActions, MatCardContent, MatCardHeader } from '@angular/material/card';
 @Component({
   selector: 'app-add-posts',
   standalone: true,
@@ -17,6 +18,10 @@ import { MatIconModule } from '@angular/material/icon';
     MatDialogContent,
     MatDialogActions,
     MatDialogClose,
+    MatCard,
+    MatCardHeader,
+    MatCardContent,
+    MatCardActions,
     MatIconModule
   ],
   templateUrl: './add-posts.component.html',
@@ -24,5 +29,6 @@ import { MatIconModule } from '@angular/material/icon';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AddPostsComponent {
+  canPost: boolean = true;
 
 }
