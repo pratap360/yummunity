@@ -8,11 +8,11 @@
     width: 100%;
 }
 
-textarea {
+/* textarea {
     height: 380px !important; 
     min-height: 380px !important; 
     max-height: 380px !important; 
-  }
+  } */
   
 
 .post-tittle {
@@ -30,14 +30,12 @@ mat-dialog-container {
 
 
 
-.post-card {
+/* .post-card {
     max-width: 600px;
     margin: 0 auto;
     padding: 10px;
-    background-color: #1e1e1e; /* Dark background */
-    color: white;
   }
-  
+   */
   .user-info {
     display: flex;
     align-items: center;
