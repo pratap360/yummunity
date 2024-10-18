@@ -28,6 +28,10 @@ mat-dialog-container {
 
 }
 
+mat-card-title{
+font-size: 1.2rem;
+margin-bottom: 13px;
+}
 
 
 /* .post-card {
@@ -41,8 +45,10 @@ mat-dialog-container {
     align-items: center;
   }
   
-  .user-info mat-icon {
-    margin-right: 8px;
+  .user-info img {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
   }
   
   .full-width-input {

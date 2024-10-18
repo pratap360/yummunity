@@ -7,10 +7,11 @@ import {  MAT_DIALOG_DATA,  MatDialog,  MatDialogActions,  MatDialogClose, MatDi
 import { MatIconModule } from '@angular/material/icon';
 import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardModule } from '@angular/material/card';
 import { UsersService } from '../../app/services/users/users.service';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-add-posts',
   standalone: true,
-  imports: [
+  imports: [CommonModule,
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
@@ -38,9 +39,9 @@ export class AddPostsComponent implements OnInit {
   constructor(private userService: UsersService) { }
 
   ngOnInit(): void {
-    this.userService.getsuggestUsers().subscribe({
-      next: (data) => {
-        this.users = data;
+    this.userService.getUsersdata().subscribe({
+      next: (response) => {
+        this.users = response.data.data;
       },
       error: (error) => {
         console.error('Error fetching users:', error);

@@ -30,8 +30,8 @@ export class SearchSuggestionProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.userService.getsuggestUsers().subscribe({
-      next: (data) => {
-        this.users = data;
+      next: (response) => {
+        this.users = response.data.data;
       },
       error: (error) => {
         console.error('Error fetching users:', error);
