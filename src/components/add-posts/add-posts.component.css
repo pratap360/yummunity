@@ -8,11 +8,12 @@
     width: 100%;
 }
 
-/* textarea {
-    height: 380px !important; 
-    min-height: 380px !important; 
-    max-height: 380px !important; 
-  } */
+textarea {
+    height: auto; 
+    /* height: 380px !important;  */
+    /* min-height: 380px !important; 
+    max-height: 380px !important;  */
+  }
   
 
 .post-tittle {
@@ -68,7 +69,7 @@ margin-bottom: 13px;
     margin-top: 20px;
   }
   
-  .cancel-button, .post-button {
+  .cancel-button {
     color: #aaa; /* Light color for buttons */
   }
   
@@ -81,6 +82,34 @@ margin-bottom: 13px;
     flex-grow: 1;
     box-sizing: content-box;
     margin: 0;
-    overflow: hidden;
+    overflow: auto;
     max-height: 65vh;
+    /* overflow: hidden; */
+}
+
+/* .image-previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.image-preview {
+  max-width: 100px;
+  max-height: 100px;
+} */
+
+
+.slider {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.slider-image {
+  max-width: 80%;
+  text-align: center;
+}
+
+mat-icon-button {
+  background-color: #f1f1f1;
 }

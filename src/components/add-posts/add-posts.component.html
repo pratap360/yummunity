@@ -1,5 +1,3 @@
-
-
 <!-- <h2 mat-dialog-title>Add New Recipe</h2>
 <mat-dialog-content>
   <span class="post-tittle"> What Type of food you are cooking?</span>
@@ -34,7 +32,8 @@
   <span class="post-tittle"> What Type of food you are cooking?</span>
   <mat-card-header *ngFor="let user of users">
     <div class="user-info">
-      <img  mat-card-avatar [src]="user.picture.thumbnail" class="profile-header-image" alt="{{user.name.first}} {{user.name.last}}">
+      <img mat-card-avatar [src]="user.picture.thumbnail" class="profile-header-image"
+        alt="{{user.name.first}} {{user.name.last}}">
       <!-- <h5>{{user.name.first}} {{user.name.last}}</h5> -->
       <mat-card-title>{{user.name.first}} {{user.name.last}}</mat-card-title>
     </div>
@@ -42,13 +41,41 @@
 
   <mat-card-content>
     <mat-form-field appearance="outline" class="full-width-input">
-      <textarea matInput #post maxlength="2000" placeholder="what are the health benfits of eating..." rows="2"></textarea>
+      <textarea matInput #post maxlength="2000" placeholder="what are the health benfits of eating..."
+        rows="3"></textarea>
     </mat-form-field>
-    
-    <div class="action-icons">
-    <button mat-flat-button aria-label="Insert Image">
-      <mat-icon>image</mat-icon>Add Images
+
+    <!-- Image preview without slider-->
+    <!-- <div *ngIf="imagePreviews.length > 0" class="image-previews">
+      <div *ngFor="let image of imagePreviews" class="image-preview">
+      <img [src]="image" alt="Image Preview" style="max-width: 50%; height: auto;">
+      </div>
+    </div> -->
+
+      <!-- Image Slider -->
+  <div *ngIf="imagePreviews.length > 0" class="slider">
+    <button mat-icon-button (click)="prevImage()" [disabled]="currentImageIndex === 0">
+      <mat-icon>arrow_back</mat-icon>
     </button>
+    
+    <div class="slider-image">
+      <img [src]="imagePreviews[currentImageIndex]" alt="Image Preview" style="max-width: 100%; height: auto;">
+    </div>
+    
+    <button mat-icon-button (click)="nextImage()" [disabled]="currentImageIndex === imagePreviews.length - 1">
+      <mat-icon>arrow_forward</mat-icon>
+    </button>
+  </div>
+
+
+    <div class="action-icons">
+      <!-- Hidden file input -->
+      <input mat-flat-button aria-label="Insert Image" #fileInput type="file" accept="image/*" multiple hidden
+        (change)="onSelectedImages($event)">
+      <!-- Button that opens the file input -->
+      <button mat-flat-button type="button" (click)="fileInput.click()">
+        <mat-icon>image</mat-icon>Add Images
+      </button>
       <button mat-icon-button aria-label="Insert Emoji">
         <mat-icon>emoji_emotions</mat-icon>
       </button>
@@ -60,7 +87,7 @@
       </button>
     </div>
   </mat-card-content>
-<!-- </mat-card> -->
+  <!-- </mat-card> -->
 </mat-dialog-content>
 
 <!-- <mat-dialog-actions align="start">

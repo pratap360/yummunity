@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardModule } from '@angular/material/card';
 import { UsersService } from '../../app/services/users/users.service';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-add-posts',
   standalone: true,
@@ -36,7 +38,12 @@ export class AddPostsComponent implements OnInit {
 
   users: any[] = [];
 
-  constructor(private userService: UsersService) { }
+  imagePreviews: string[] = [];
+  currentImageIndex: number = 0;
+  constructor(
+    private userService: UsersService,
+    private http: HttpClient
+  ){}
 
   ngOnInit(): void {
     this.userService.getUsersdata().subscribe({
@@ -48,5 +55,89 @@ export class AddPostsComponent implements OnInit {
       }
     });
   }
+  // onFileSelected(event: any) {
+  //   debugger
+  //   if (event.target.files.lenght > 0) {
+  //     const file = event.target.files[0];
+  //     const formData = new FormData();
+  //     formData.append('file', file);
+  //     this.http.post('apiUrl', formData).subscribe((response: any) => {
+  //       debugger;
+  //     });
+  //   }
+  //   console.log(event);
+  // }
+
+  
+  // onFileSelected(event: Event): void {
+  //   const file = (event.target as HTMLInputElement).files?.[0];
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       this.imagePreviews = reader.result;  // Set the preview
+  //     };
+  //     reader.readAsDataURL(file);  // Read the image file
+  //   }
+  // }
+  // onSelectedImages(event: Event): void {
+  //   const files = (event.target as HTMLInputElement).files;
+  //   if (files) {
+  //     const fileArray = Array.from(files);
+
+  //     // Limit to 4 files
+  //     if (fileArray.length > 4) {
+  //       alert('You can only upload a maximum of 4 images');
+  //       return;
+  //     }
+
+  //     this.imagePreviews = [];  // Clear previous previews
+  //     fileArray.forEach(file => {
+  //       const reader = new FileReader();
+  //       reader.onload = () => {
+  //         this.imagePreviews.push(reader.result as string);  // Add preview to the array
+  //       };
+  //       reader.readAsDataURL(file);  // Read the image file
+  //     });
+  //   }
+  // }
+
+  onSelectedImages(event: Event): void {
+    const files = (event.target as HTMLInputElement).files;
+    if (files) {
+      const fileArray = Array.from(files);
+
+      // Limit to 4 files
+      if (fileArray.length > 4) {
+        alert('You can only upload a maximum of 4 images');
+        return;
+      }
+
+      this.imagePreviews = [];  // Clear previous previews
+      fileArray.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.imagePreviews.push(reader.result as string);  // Add preview to the array
+        };
+        reader.readAsDataURL(file);  // Read the image file
+      });
+
+      this.currentImageIndex = 0;  // Reset the index when new images are uploaded
+    }
+  }
+
+  prevImage(): void {
+    if (this.currentImageIndex > 0) {
+      this.currentImageIndex--;
+    }
+  }
+
+  nextImage(): void {
+    if (this.currentImageIndex < this.imagePreviews.length - 1) {
+      this.currentImageIndex++;
+    }
+  }
+
+
+
 
 }
