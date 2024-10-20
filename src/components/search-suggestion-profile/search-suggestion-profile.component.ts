@@ -6,6 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { UsersService } from '../../app/services/users/users.service';
 import { CommonModule } from '@angular/common';
+import { MatGridListModule } from '@angular/material/grid-list';
 @Component({
   selector: 'app-search-suggestion-profile',
   standalone: true,
@@ -17,6 +18,7 @@ import { CommonModule } from '@angular/common';
     MatDividerModule,
     RouterModule,
     RouterOutlet, 
+    MatGridListModule,
     RouterLink
   ],
   templateUrl: './search-suggestion-profile.component.html',

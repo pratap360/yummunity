@@ -5,17 +5,18 @@
   <p class="suggestions-header">Users whom to follow</p> -->
 
 <div class="suggestions-container">
-    
     <mat-card *ngFor="let user of users" class="profile-card" appearance="outlined">
         <mat-card-header class="profile-header">
-            <img mat-card-avatar [src]="user.picture.medium" class="profile-header-image" alt="{{user.name.first}} {{user.name.last}}">
+            <img mat-card-avatar [src]="user.picture.medium" class="profile-header-image"
+                alt="{{user.name.first}} {{user.name.last}}">
             <mat-card-title>{{user.name.first}} {{user.name.last}}</mat-card-title>
-            <mat-card-subtitle>{{user.email}}</mat-card-subtitle>
+            <mat-card-subtitle>{{user.login.username}}</mat-card-subtitle>
             <button mat-flat-button><mat-icon>person_add</mat-icon>Follow</button>
         </mat-card-header>
     </mat-card>
-    
-    <!-- <mat-card class="profile-card" appearance="outlined">
+</div>
+
+<!-- <mat-card class="profile-card" appearance="outlined">
         <mat-card-header class="profile-header">
             <div mat-card-avatar class="profile-header-image"></div>
             <mat-card-title>Pratap Parui</mat-card-title>
@@ -32,7 +33,3 @@
             <button mat-flat-button><mat-icon>person_add</mat-icon>Follow</button>
         </mat-card-header>
     </mat-card> -->
-
-</div>
-
-
