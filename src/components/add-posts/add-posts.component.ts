@@ -6,6 +6,7 @@ import { MatInputModule } from '@angular/material/input';
 import {  MAT_DIALOG_DATA,  MatDialog,  MatDialogActions,  MatDialogClose, MatDialogContent,  MatDialogRef,  MatDialogTitle,} from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardModule } from '@angular/material/card';
+import {MatTooltipModule} from '@angular/material/tooltip';
 import { UsersService } from '../../app/services/users/users.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -27,6 +28,7 @@ import { HttpClient } from '@angular/common/http';
     MatCardContent,
     MatCardActions,
     MatCardModule,
+    MatTooltipModule,
     MatIconModule
   ],
   templateUrl: './add-posts.component.html',
