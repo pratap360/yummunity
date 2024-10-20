@@ -40,9 +40,11 @@
   </mat-card-header>
 
   <mat-card-content>
-    <mat-form-field appearance="outline" class="full-width-input">
+    <mat-form-field appearance="outline" class="recipe-post-text-area">
       <textarea matInput #post maxlength="2000" placeholder="what are the health benfits of eating..."
-        rows="3"></textarea>
+        rows="2"></textarea>
+        <mat-hint align="start"><strong>use different text formating</strong></mat-hint>
+        <mat-hint align="end">{{post.value.length}} / 2000</mat-hint>
     </mat-form-field>
 
     <!-- Image preview without slider-->

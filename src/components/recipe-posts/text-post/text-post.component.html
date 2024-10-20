@@ -15,13 +15,33 @@
       </ul>
     </mat-card-content>
     <mat-card-actions class="action-buttons">
-      <button mat-flat-button><mat-icon>favorite</mat-icon>Like</button>
-      <button mat-raised-button><mat-icon>comment</mat-icon>Comment</button>
-      <button mat-raised-button><mat-icon>bookmark</mat-icon>Save</button>
-      <button mat-stroked-button><mat-icon>more_horiz</mat-icon>Read More</button>
+      <!-- Like Button -->
+      <button mat-flat-button [color]="liked ? 'warn' : null" (click)="toggleLike()">
+        <mat-icon>favorite</mat-icon>
+        {{ likes }} Like
+      </button>
+  
+      <!-- Comment Button with Modal Popup -->
+      <button mat-raised-button (click)="openCommentModal()">
+        <mat-icon>comment</mat-icon>
+        {{ comments }} Comment
+      </button>
+  
+      <!-- Save Button -->
+      <button mat-raised-button [color]="saved ? 'warn' : null" (click)="toggleSave()">
+        <mat-icon>bookmark</mat-icon>
+        {{ saves }} Save
+      </button>
+  
+      <!-- Read More Button -->
+      <button mat-stroked-button (click)="navigateToPost()">
+        <mat-icon>more_horiz</mat-icon>
+        Read More
+      </button>
     </mat-card-actions>
   </mat-card>
-  
+
+
   <mat-card appearance="outlined" class="posts-card">
     <mat-card-header>
       <div mat-card-avatar class="profile-header-image"></div>
