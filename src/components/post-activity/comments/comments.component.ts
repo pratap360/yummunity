@@ -28,8 +28,8 @@ import { FormsModule } from '@angular/forms';
 export class CommentsComponent  {
   newComment = '';
   commentModalOpen = false;
-  comments = 0;
-
+  // comments = this.data.comments;
+  comments: string[] = []; // Hold the list of comments
 
   constructor(
   public dialogRef: MatDialogRef<CommentsComponent>,
@@ -44,14 +44,16 @@ export class CommentsComponent  {
   //       }
   // }
 
-    closeCommentModal(): void {
-    this.commentModalOpen = false;
-  }
+  //   closeCommentModal(): void {
+  //   this.commentModalOpen = false;
+  // }
   postComment(): void {
     if (this.newComment.trim()) {
-      this.comments++;
+      // this.comments++;
+      this.comments.push(this.newComment);
       this.newComment = '';
-      this.closeCommentModal();
+      this.dialogRef.close(this.comments); 
+      // this.closeCommentModal();
     }
   }
 

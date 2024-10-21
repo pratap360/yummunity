@@ -30,11 +30,11 @@ import { CommentsComponent } from '../../post-activity/comments/comments.compone
   styleUrl: './text-post.component.css',
 })
 export class TextPostComponent {
-  [x: string]: any;
+
   likes = 0;
   liked = false;
 
-  comments = 0;
+  comments_counter = 0;
   commentModalOpen = false;
   newComment = '';
 
@@ -79,16 +79,16 @@ export class TextPostComponent {
     return Math.random().toString(36).substring(2, 12);
   }
 
-  onAddPost(
-    enterAnimationDuration: string,
-    exitAnimationDuration: string
-  ): void {
-    this.dialog.open(CommentsComponent, {
-      width: '800px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-    });
-  }
+  // onAddPost(
+  //   enterAnimationDuration: string,
+  //   exitAnimationDuration: string
+  // ): void {
+  //   this.dialog.open(CommentsComponent, {
+  //     width: '800px',
+  //     enterAnimationDuration,
+  //     exitAnimationDuration,
+  //   });
+  // }
 
   // openCommentModal() {
   //   // this.commentModalOpen = true;
@@ -102,13 +102,12 @@ export class TextPostComponent {
   openCommentModal(): void {
     const dialogRef = this.dialog.open(CommentsComponent, {
       width: '800px', // Set the modal width
-      data: { postId: 1 }, // You can pass additional data here, like the postId
+      data: { comments_counter: this.comments_counter } 
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.comments++;
-        // You can also handle the comment submission here
+        this.comments_counter = result;  
         console.log('Posted comment:', result);
       }
     });

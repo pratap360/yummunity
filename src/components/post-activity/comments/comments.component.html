@@ -1,26 +1,42 @@
 <!-- Comment Modal Dialog -->
 <!-- <mat-dialog-content *ngIf="commentModalOpen"> -->
 <mat-dialog-content>
-    <span class="comment-tittle">Post a Comment</span>
-    <!-- <form class="recipe-post-comments"> -->
-        <mat-form-field appearance="outline" class="recipe-post-comments-area">
-            <mat-label>Write your comment</mat-label>
-            <textarea matInput #comment [(ngModel)]="newComment" [ngModelOptions]="{standalone: true}" maxlength="200"
-                placeholder="comment your thoughs..."></textarea>
-            <mat-hint align="start"><strong>use different text formating</strong> </mat-hint>
-            <mat-hint align="end">{{comment.value.length}} / 200</mat-hint>
-        </mat-form-field>
-    <!-- </form> -->
-    <div class="modal-actions">
+  <span class="comment-tittle">Post a Comment</span>
+  <!-- <form class="recipe-post-comments"> -->
+  <mat-form-field appearance="outline" class="recipe-post-comments-area">
+    <mat-label>Write your comment</mat-label>
+    <textarea matInput #comment [(ngModel)]="newComment" [ngModelOptions]="{standalone: true}" maxlength="200"
+      placeholder="comment your thoughs..."></textarea>
+    <mat-hint align="start"><strong>use different text formating</strong> </mat-hint>
+    <mat-hint align="end">{{comment.value.length}} / 200</mat-hint>
+  </mat-form-field>
+  <!-- </form> -->
+
+  <!-- <div class="modal-actions">
         <button mat-raised-button color="primary" (click)="postComment()">Post</button>
         <button mat-button (click)="onCancel()">Cancel</button>
-      </div>
+      </div> -->
+
+  <!-- Display existing comments if available -->
+  <div *ngIf="comments.length > 0" class="comment-section">
+    <h3>{{ comments.length }} Comment(s)</h3>
+    <div class="comment-box" *ngFor="let comment of comments">
+      <p>{{ comments }}</p>
+    </div>
+  </div>
+
+  <!-- If no comments, show nothing -->
+  <div *ngIf="comments.length === 0">
+    <p>No comments yet. Be the first to comment!</p>
+  </div>
+
+
 </mat-dialog-content>
 
-<!-- <mat-dialog-actions>
-    <button mat-button mat-dialog-close>Close</button>
-    <button mat-button [mat-dialog-close]="true">Comment</button>
-</mat-dialog-actions> -->
+<mat-dialog-actions>
+  <button mat-flat-button color="primary" (click)="postComment()">Post</button>
+  <button mat-button (click)="onCancel()">Cancel</button>
+</mat-dialog-actions>
 
 <!-- <h2>Post a Comment</h2>
 <mat-form-field appearance="fill">
