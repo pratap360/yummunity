@@ -52,9 +52,13 @@ export class CommentsComponent  {
       // this.comments++;
       this.comments.push(this.newComment);
       this.newComment = '';
-      this.dialogRef.close(this.comments); 
+      // this.dialogRef.close(this.comments); 
       // this.closeCommentModal();
     }
+  }
+
+  get commentCount(): number {
+    return this.comments.length;
   }
 
   onCancel(): void {

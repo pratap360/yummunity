@@ -40,6 +40,7 @@ export class TextPostComponent {
 
   saves = 0;
   saved = false;
+  comments: string[] = []; 
 
   constructor(public dialog: MatDialog) {}
 
@@ -112,4 +113,11 @@ export class TextPostComponent {
       }
     });
   }
+
+
+
+  get commentCount(): number {
+    return this.comments.length;
+  }
+  
 }

@@ -24,7 +24,7 @@
       <!-- Comment Button with Modal Popup -->
       <button mat-raised-button (click)="openCommentModal()">
         <mat-icon>comment</mat-icon>
-        {{ comments_counter }} Comment
+        {{ commentCount }} Comment{{ commentCount !== 1 ? 's' : '' }}
       </button>
   
       <!-- Save Button -->

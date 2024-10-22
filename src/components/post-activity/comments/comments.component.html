@@ -19,7 +19,7 @@
 
   <!-- Display existing comments if available -->
   <div *ngIf="comments.length > 0" class="comment-section">
-    <h3>{{ comments.length }} Comment(s)</h3>
+    <h3>{{ comments.length }} Comment{{ comments.length > 1 ? 's' : '' }}</h3>
     <div class="comment-box" *ngFor="let comment of comments">
       <p>{{ comments }}</p>
     </div>
