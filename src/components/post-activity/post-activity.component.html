@@ -1,1 +1,9 @@
-<p>post-activity works!</p>
+<mat-card-actions class="action-buttons">
+    <app-likes></app-likes>
+    <button mat-raised-button (click)="openCommentModal()">
+        <mat-icon>comment</mat-icon>
+        {{ comments_counter }} Comment{{ comments.length > 1 ? 's' : '' }}
+    </button>
+    <app-saves></app-saves>
+    <app-read-more></app-read-more>
+</mat-card-actions>

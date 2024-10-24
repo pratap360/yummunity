@@ -15,31 +15,35 @@
         used.</li>
     </ul>
   </mat-card-content>
-  <mat-card-actions class="action-buttons">
+  <app-post-activity></app-post-activity>
+  <!-- <mat-card-actions class="action-buttons"> -->
     <!-- Like Button -->
-    <button mat-flat-button [color]="liked ? 'warn' : null" (click)="toggleLike()">
+
+    <!-- <button mat-flat-button [color]="liked ? 'warn' : null" (click)="toggleLike()">
       <mat-icon>favorite</mat-icon>
       {{ likes }} Like
-    </button>
+    </button> -->
 
     <!-- Comment Button with Modal Popup -->
-    <button mat-raised-button (click)="openCommentModal()">
+    <!-- <button mat-raised-button (click)="openCommentModal()">
       <mat-icon>comment</mat-icon>
       {{ comments_counter }} Comment{{ comments.length > 1 ? 's' : '' }}
-    </button>
+    </button> -->
 
     <!-- Save Button -->
-    <button mat-raised-button [color]="saved ? 'warn' : null" (click)="toggleSave()">
+
+    <!-- <button mat-raised-button [color]="saved ? 'warn' : null" (click)="toggleSave()">
       <mat-icon>bookmark</mat-icon>
       {{ saves }} Save
-    </button>
+    </button> -->
 
     <!-- Read More Button -->
-    <button mat-stroked-button (click)="navigateToPost()">
+
+    <!-- <button mat-stroked-button (click)="navigateToPost()">
       <mat-icon>more_horiz</mat-icon>
       Read More
-    </button>
-  </mat-card-actions>
+    </button> -->
+  <!-- </mat-card-actions> -->
 </mat-card>
 
 
