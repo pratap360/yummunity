@@ -2,26 +2,21 @@
 <!-- <mat-dialog-content *ngIf="commentModalOpen"> -->
 <mat-dialog-content>
   <span class="comment-tittle">Post a Comment</span>
-  <!-- <form class="recipe-post-comments"> -->
+  <form class="recipe-post-comments">
   <mat-form-field appearance="outline" class="recipe-post-comments-area">
     <mat-label>Write your comment</mat-label>
     <textarea matInput #comment [(ngModel)]="newComment" [ngModelOptions]="{standalone: true}" maxlength="200"
       placeholder="comment your thoughs..."></textarea>
-    <mat-hint align="start"><strong>use different text formating</strong> </mat-hint>
     <mat-hint align="end">{{comment.value.length}} / 200</mat-hint>
   </mat-form-field>
-  <!-- </form> -->
+  </form>
 
-  <!-- <div class="modal-actions">
-        <button mat-raised-button color="primary" (click)="postComment()">Post</button>
-        <button mat-button (click)="onCancel()">Cancel</button>
-      </div> -->
 
   <!-- Display existing comments if available -->
   <div *ngIf="comments.length > 0" class="comment-section">
-    <h3>{{ comments.length }} Comment{{ comments.length > 1 ? 's' : '' }}</h3>
     <div class="comment-box" *ngFor="let comment of comments">
-      <p>{{ comments }}</p>
+      <!-- <p *ngFor="">{{ comments[0] }}</p> -->
+      <p>{{ comments}}</p>
     </div>
   </div>
 
@@ -37,13 +32,3 @@
   <button mat-flat-button color="primary" (click)="postComment()">Post</button>
   <button mat-button (click)="onCancel()">Cancel</button>
 </mat-dialog-actions>
-
-<!-- <h2>Post a Comment</h2>
-<mat-form-field appearance="fill">
-  <mat-label>Write your comment</mat-label>
-  <textarea matInput [(ngModel)]="comment"></textarea>
-</mat-form-field>
-<div class="modal-actions">
-  <button mat-raised-button color="primary" (click)="onPostComment()">Post</button>
-  <button mat-button (click)="onCancel()">Cancel</button>
-</div> -->

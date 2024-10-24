@@ -30,11 +30,21 @@ export class CommentsComponent  {
   commentModalOpen = false;
   // comments = this.data.comments;
   comments: string[] = []; // Hold the list of comments
+  
 
   constructor(
   public dialogRef: MatDialogRef<CommentsComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
+
+  ngOnInit(): void {
+    this.loadComments();
+  }
+
+  loadComments():void{
+    const storedComments = localStorage.getItem(`comments_${this.data.postId}`);
+    this.comments = storedComments ? JSON.parse(storedComments) : [];
+  }
 
   // onPostComment(): void {
   //   if (this.newComment.trim()) {
@@ -54,6 +64,11 @@ export class CommentsComponent  {
       this.newComment = '';
       // this.dialogRef.close(this.comments); 
       // this.closeCommentModal();
+
+      localStorage.setItem(`comments_${this.data.postId}`, JSON.stringify(this.comments));
+      console.log(this.comments);
+      
+      this.dialogRef.close(this.comments.length);
     }
   }
 

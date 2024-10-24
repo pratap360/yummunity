@@ -30,7 +30,6 @@ import { CommentsComponent } from '../../post-activity/comments/comments.compone
   styleUrl: './text-post.component.css',
 })
 export class TextPostComponent {
-
   likes = 0;
   liked = false;
 
@@ -40,9 +39,16 @@ export class TextPostComponent {
 
   saves = 0;
   saved = false;
-  comments: string[] = []; 
+  comments: string[] = [];
 
   constructor(public dialog: MatDialog) {}
+
+  ngOnInit(): void {
+    const comments = JSON.parse(localStorage.getItem('comments_1') || '[]');
+    this.comments_counter = comments.length;
+  }
+  
+
 
   toggleLike(): void {
     this.liked = !this.liked;
@@ -102,22 +108,22 @@ export class TextPostComponent {
 
   openCommentModal(): void {
     const dialogRef = this.dialog.open(CommentsComponent, {
-      width: '800px', // Set the modal width
-      data: { comments_counter: this.comments_counter } 
+      width: '500px', // Set the modal width
+      data: { postId: 1 },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.comments_counter = result;  
+        this.comments_counter = result;
         console.log('Posted comment:', result);
       }
+      // const comments = JSON.parse(localStorage.getItem('comments_1') || '[]');
+      // this.comments_counter = comments.length;
+      // console.log('Posted comment:', this.comments_counter);
     });
   }
-
-
 
   get commentCount(): number {
     return this.comments.length;
   }
-  
 }
