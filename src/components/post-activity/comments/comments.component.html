@@ -15,8 +15,13 @@
   <!-- Display existing comments if available -->
   <div *ngIf="comments.length > 0" class="comment-section">
     <div class="comment-box" *ngFor="let comment of comments">
+      <div class="user_comment_data">
+        <div mat-card-avatar class="profile-comment-image"></div>
+        <h4 class="commented-user-id">Pratap Parui</h4>
+        <h4 class="commented-datetime">{{ dateTime }}</h4>
+      </div>
       <!-- <p *ngFor="">{{ comments[0] }}</p> -->
-      <p>{{ comments}}</p>
+      <p class="user_comment">{{ comments}}</p>
     </div>
   </div>
 

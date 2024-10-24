@@ -1,33 +1,57 @@
-.recipe-post-comments-area{
-    width: 100%;
+.recipe-post-comments-area {
+  width: 100%;
 }
 
 .comment-tittle {
-    font-size: 24px;
-    margin: 15px;
-    display: flex;
-    align-items: center;
+  font-size: 24px;
+  margin: 15px;
+  display: flex;
+  align-items: center;
 }
 
 .comment-modal-content {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .comment-section {
-    max-height: 200px; /* Adjust the height based on your design */
-    overflow-y: auto;
-    margin-top: 10px;
-    padding: 10px;
-    border-top: 1px solid #ccc;
-  }
-  
-  .comment-box {
-    padding: 5px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .full-width {
-    width: 100%;
-  }
-  
+  display: flex;
+  flex-direction: column;
+}
+
+.comment-section {
+  max-height: 300px;
+  overflow-y: auto;
+  margin-top: 10px;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.comment-box {
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
+}
+
+.full-width {
+  width: 100%;
+}
+
+
+.profile-comment-image {
+  background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg');
+  background-size: cover;
+  height: 35px;
+  width: 35px;
+}
+
+.commented-user-id ,.commented-datetime{
+  font-size: 16px;
+  font-weight: 400;
+  font-style: italic;
+  margin-left: 12px;
+}
+
+.user_comment_data {
+  display: flex;
+  padding: 10px 15px 0 15px;
+}
+
+.user_comment {
+  padding: 7px;
+  font-size: 17px;
+}

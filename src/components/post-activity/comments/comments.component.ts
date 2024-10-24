@@ -30,6 +30,7 @@ export class CommentsComponent  {
   commentModalOpen = false;
   // comments = this.data.comments;
   comments: string[] = []; // Hold the list of comments
+  dateTime: string = new Date().toLocaleString();
   
 
   constructor(
