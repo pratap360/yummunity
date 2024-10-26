@@ -1,4 +1,5 @@
-<button mat-raised-button [color]="saved ? 'warn' : null" (click)="toggleSave()">
+<!-- <button mat-raised-button [color]="saved ? 'warn' : null" (click)="toggleSave()"> -->
+<button mat-raised-button [ngClass]="{'saved': saved}" (click)="toggleSave()">
     <mat-icon>bookmark</mat-icon>
-    {{ saves }} Save
+    {{ saves }} {{ saves ? 'Saved' : 'Save' }}
   </button>
