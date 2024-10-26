@@ -164,3 +164,13 @@ div.profile-tab-container{
   margin-top: 25px;
   margin-bottom: 20px;
 }
+
+.action-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  justify-content: space-evenly;
+  padding: 20px;
+  margin: 10px;
+}
