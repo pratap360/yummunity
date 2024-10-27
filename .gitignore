@@ -41,3 +41,9 @@ testem.log
 .DS_Store
 Thumbs.db
 src/.env
+
+
+# angular json 
+# 14 builder : "@angular-devkit/build-angular:application",
+# 68 "builder": "@angular-devkit/build-angular:dev-server",
+

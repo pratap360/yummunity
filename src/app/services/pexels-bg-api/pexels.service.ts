@@ -17,7 +17,6 @@ export class PexelsService {
   getRandomFoodImage(): Observable<string | null> {
     const headers = new HttpHeaders({
       Authorization: this.apiKey
-      // Authorization: !!this.apiKey
     });
 
     return this.http.get<any>(this.apiUrl, {
