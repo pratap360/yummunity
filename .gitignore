@@ -47,3 +47,4 @@ src/.env
 # 14 builder : "@angular-devkit/build-angular:application",
 # 68 "builder": "@angular-devkit/build-angular:dev-server",
 
+src/.env.sample
