@@ -5,6 +5,7 @@ import { environment } from '../environments/environment';
   providedIn: 'root',
 })
 export class AppwriteConfigService {
+  static appwriteConfig: any;
   appwriteConfig = {
     appwriteUrl: environment.appwriteUrl,
     appwriteProjectId: environment.appwriteProjectId,
