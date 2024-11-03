@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 // import { SideNavBarComponent } from '../../components/side-nav-bar/side-nav-bar.component';
 import { SidenavComponent } from '../../components/sidenav/sidenav.component';
 
@@ -47,8 +47,6 @@ import {MatTooltipModule} from '@angular/material/tooltip';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AccountComponent {
-
- 
   // account info 
   MonthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -59,5 +57,7 @@ export class AccountComponent {
   blogTitle = 'Summer Chipotle Chicken Cobb Salad with Cilantro Vinaigrette'
   longText = `This juicy salad tastes like summer! With chipotle chicken, sweet corn, avocado, cilantro vinaigrette, bacon crumbles, and fresh strawberries for a pop of sweetness.`;
 
-
 }
+
+
+// ! note : take {registration} data info to show the 'users since' from the auth api 
