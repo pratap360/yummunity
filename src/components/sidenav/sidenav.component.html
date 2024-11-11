@@ -29,7 +29,7 @@
         <a mat-list-item routerLink="/account" matTooltip="Account" matTooltipPosition="right">
           <mat-icon>account_circle</mat-icon><span class="nav-text" *ngIf="!isCollapsed">Account</span>
         </a>
-        <a mat-list-item matTooltip="Logout" matTooltipPosition="right">
+        <a mat-list-item matTooltip="Logout" matTooltipPosition="right" (click)="logout()" routerLink="/">
           <mat-icon>logout</mat-icon><span class="nav-text" *ngIf="!isCollapsed">Logout</span>
         </a>
       </mat-nav-list>

@@ -86,7 +86,7 @@ export class SignupComponent implements OnInit {
     });
    }
   // createAccount() {
-  //   this.account.create(ID.unique(), "pratap@yummunity.com", "Pratap@201", "Pratap")
+  //   this.account.create(ID.unique(), "pratap@yummunity.com", "Pratap@1234", "Pratap")
   //   .then(function (response: any) {
   //       console.log(response);
   //   }, function (error: any) {

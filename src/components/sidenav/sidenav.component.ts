@@ -8,12 +8,12 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import {MatBadgeModule} from '@angular/material/badge';
+import { MatBadgeModule } from '@angular/material/badge';
 
 import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
-
+import { Client, Account } from 'appwrite';
 @Component({
   selector: 'app-sidenav',
   standalone: true,
@@ -37,6 +37,8 @@ import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 export class SidenavComponent {
   // opened: boolean = true;
   isCollapsed = false;
+  client = new Client();
+  account: any;
 
   toggleSidenav() {
     // this.opened = !this.opened;
@@ -51,4 +53,17 @@ export class SidenavComponent {
       map((result) => result.matches),
       shareReplay()
     );
+
+  constructor() {
+    this.client.setProject('670194640036c325ba3a');
+    this.account = new Account(this.client);
+  }
+
+  async logout() {
+    try {
+        await this.account.deleteSessions()
+    } catch (error) {
+        console.log("Appwrite Service :: logout()", error);
+    }
+  }
 }
