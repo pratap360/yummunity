@@ -64,4 +64,11 @@ export class HomeFeedComponent {
       console.log(`Dialog result: ${result}`);
     });
   }
+
+
+  // closeDialog() {
+  //   const dialogRef = this.dialog.closeAll();
+  //   console.log(dialogRef);
+    
+  // }
 }

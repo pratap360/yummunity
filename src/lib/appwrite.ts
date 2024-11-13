@@ -1,3 +1,5 @@
+// ? this is bydefault code for appwrite config 
+
 import { Client, Account, Databases} from 'appwrite';
 
 export const client = new Client();

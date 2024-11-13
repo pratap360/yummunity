@@ -41,7 +41,7 @@
 
   <mat-card-content>
     <mat-form-field appearance="outline" class="recipe-post-text-area">
-      <textarea matInput #post maxlength="2000" placeholder="what are the health benfits of eating..."
+      <textarea matInput  #post maxlength="2000" placeholder="what are the health benfits of eating..."
         rows="2"></textarea>
         <mat-hint align="start"><strong>use different text formating</strong></mat-hint>
         <mat-hint align="end">{{post.value.length}} / 2000</mat-hint>
@@ -101,5 +101,5 @@
 
 <mat-dialog-actions align="end">
   <button mat-button class="cancel-button">Cancel</button>
-  <button mat-button color="primary" class="post-button" [disabled]="!canPost">Post</button>
+  <button mat-button color="primary" class="post-button" [disabled]="!canPost" (click)="postRecipe()">Post</button>
 </mat-dialog-actions>
