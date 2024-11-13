@@ -1,12 +1,33 @@
-import { ChangeDetectionStrategy, Component, inject, model,OnInit,signal } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  model,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {  MAT_DIALOG_DATA,  MatDialog,  MatDialogActions,  MatDialogClose, MatDialogContent,  MatDialogRef,  MatDialogTitle,} from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardModule } from '@angular/material/card';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import {
+  MatCard,
+  MatCardActions,
+  MatCardContent,
+  MatCardHeader,
+  MatCardModule,
+} from '@angular/material/card';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { UsersService } from '../../app/services/users/users.service';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
@@ -14,11 +35,13 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Client, Account } from 'appwrite';
 import { HomeFeedComponent } from '../../app/home-feed/home-feed.component';
+import { AppwriteService } from '../../lib/appwrite.service';
 
 @Component({
   selector: 'app-add-posts',
   standalone: true,
-  imports: [CommonModule,
+  imports: [
+    CommonModule,
     MatFormFieldModule,
     MatInputModule,
     FormsModule,
@@ -37,13 +60,13 @@ import { HomeFeedComponent } from '../../app/home-feed/home-feed.component';
   ],
   templateUrl: './add-posts.component.html',
   styleUrl: './add-posts.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddPostsComponent implements OnInit {
-  postrecipeForm: FormGroup
+  postrecipeForm: FormGroup;
 
   users: any[] = [];
-  
+
   canPost: boolean = true;
   imagePreviews: string[] = [];
   currentImageIndex: number = 0;
@@ -51,24 +74,24 @@ export class AddPostsComponent implements OnInit {
   client = new Client();
   account: any;
 
-
   constructor(
     private userService: UsersService,
     private http: HttpClient,
-    // private dialogRef: MatDialogRef<RecipeDialogComponent>,
+    private dialogRef: MatDialogRef<AddPostsComponent>,
     private snackBar: MatSnackBar,
-    // private closedialog : HomeFeedComponent
-  ){
-// Initialize the form with controls
-this.postrecipeForm = new FormGroup({
-  postContent: new FormControl('', [Validators.required, Validators.maxLength(2000)])
-});
-
-    this.client.setProject('670194640036c325ba3a')
-    .setEndpoint('https://cloud.appwrite.io/v1');
-    this.account = new Account(this.client);
+    private appwriteService: AppwriteService // private closedialog : HomeFeedComponent
+  ) {
+    // Initialize the form with controls
+    this.postrecipeForm = new FormGroup({
+      postContent: new FormControl('', [
+        Validators.required,
+        Validators.maxLength(2000),
+      ]),
+    });
   }
-
+  get postContent() {
+    return this.postrecipeForm.get('postContent');
+  }
   ngOnInit(): void {
     this.userService.getUsersdata().subscribe({
       next: (response) => {
@@ -76,10 +99,10 @@ this.postrecipeForm = new FormGroup({
       },
       error: (error) => {
         console.error('Error fetching users:', error);
-      }
+      },
     });
   }
- 
+
   onSelectedImages(event: Event): void {
     const files = (event.target as HTMLInputElement).files;
     if (files) {
@@ -91,16 +114,16 @@ this.postrecipeForm = new FormGroup({
         return;
       }
 
-      this.imagePreviews = [];  // Clear previous previews
-      fileArray.forEach(file => {
+      this.imagePreviews = []; // Clear previous previews
+      fileArray.forEach((file) => {
         const reader = new FileReader();
         reader.onload = () => {
-          this.imagePreviews.push(reader.result as string);  // Add preview to the array
+          this.imagePreviews.push(reader.result as string); // Add preview to the array
         };
-        reader.readAsDataURL(file);  // Read the image file
+        reader.readAsDataURL(file); // Read the image file
       });
 
-      this.currentImageIndex = 0;  // Reset the index when new images are uploaded
+      this.currentImageIndex = 0; // Reset the index when new images are uploaded
     }
   }
 
@@ -116,13 +139,42 @@ this.postrecipeForm = new FormGroup({
     }
   }
 
-  postRecipe(){
-    console.log('Appwrite Service :: postRecipe() ::');
-
-    
-    // this.closedialog.closeDialog();
+  postRecipe() {
     // * have to close the pop up and show a toast that the recipe has been posted
+    if (this.postrecipeForm.invalid) {
+      return; // Stop if form is invalid
+    }
+    const recipeData = {
+      content: this.postrecipeForm.value.postContent,
+      images: this.imagePreviews,
+    };
+
+    this.appwriteService
+      .postRecipe(recipeData)
+      .then(() => {
+        this.dialogRef.close();
+        this.snackBar.open('Recipe posted successfully!', 'Close', {
+          duration: 3000,
+        });
+      })
+      .catch((error) => {
+        console.error('Failed to post recipe:', error);
+        this.snackBar.open(
+          'Failed to post recipe. Please try again.',
+          'Close',
+          {
+            duration: 3000,
+          }
+        );
+      });
+    // this.dialogRef.close();
+    console.log('Appwrite Service :: postRecipe() ::posted successfully & closed dialog');
   }
 
+  
 
+  onCancel(): void {
+    console.log('Appwrite Service :: onCancel() ::');
+    this.dialogRef.close();
+  }
 }

@@ -30,7 +30,7 @@ export class AppwriteService {
       );
       return response;
     } catch (error) {
-      console.error('Error posting recipe:', error);
+      console.error('Appwrite Service :: postRecipe() ::', error);
       throw error;
     }
   }

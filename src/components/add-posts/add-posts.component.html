@@ -100,6 +100,7 @@
 </mat-dialog-actions> -->
 
 <mat-dialog-actions align="end">
-  <button mat-button class="cancel-button">Cancel</button>
+  <button mat-button class="cancel-button" (click)="onCancel()">Cancel</button>
   <button mat-button color="primary" class="post-button" [disabled]="!canPost" (click)="postRecipe()">Post</button>
+  <!-- <button mat-button color="primary" class="post-button" [disabled]="!canPost" (click)="postRecipe()">Post</button> -->
 </mat-dialog-actions>
