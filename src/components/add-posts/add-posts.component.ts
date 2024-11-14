@@ -6,7 +6,7 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -29,7 +29,7 @@ import {
 } from '@angular/material/card';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UsersService } from '../../app/services/users/users.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -44,6 +44,7 @@ import { AppwriteService } from '../../lib/appwrite.service';
     CommonModule,
     MatFormFieldModule,
     MatInputModule,
+    ReactiveFormsModule,
     FormsModule,
     MatButtonModule,
     MatDialogTitle,
@@ -57,13 +58,17 @@ import { AppwriteService } from '../../lib/appwrite.service';
     MatCardModule,
     MatTooltipModule,
     MatIconModule,
+    JsonPipe
   ],
   templateUrl: './add-posts.component.html',
   styleUrl: './add-posts.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddPostsComponent implements OnInit {
-  postrecipeForm: FormGroup;
+  postrecipeForm: FormGroup = new FormGroup({
+    postContent: new FormControl('',[Validators.required,Validators.maxLength(2000)]),
+    postImages: new FormControl(''),
+  });
 
   users: any[] = [];
 
@@ -74,6 +79,7 @@ export class AddPostsComponent implements OnInit {
   client = new Client();
   account: any;
 
+  formvalue: any;
   constructor(
     private userService: UsersService,
     private http: HttpClient,
@@ -82,12 +88,12 @@ export class AddPostsComponent implements OnInit {
     private appwriteService: AppwriteService // private closedialog : HomeFeedComponent
   ) {
     // Initialize the form with controls
-    this.postrecipeForm = new FormGroup({
-      postContent: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(2000),
-      ]),
-    });
+    // this.postrecipeForm = new FormGroup({
+    //   postContent: new FormControl('', [
+    //     Validators.required,
+    //     Validators.maxLength(2000),
+    //   ]),
+    // });
   }
   get postContent() {
     return this.postrecipeForm.get('postContent');
@@ -141,8 +147,9 @@ export class AddPostsComponent implements OnInit {
 
   postRecipe() {
     // * have to close the pop up and show a toast that the recipe has been posted
+    this.formvalue  = this.postrecipeForm.value
     if (this.postrecipeForm.invalid) {
-      return; // Stop if form is invalid
+      return alert('Please fill in all the required fields'); // Stop if form is invalid
     }
     const recipeData = {
       content: this.postrecipeForm.value.postContent,
