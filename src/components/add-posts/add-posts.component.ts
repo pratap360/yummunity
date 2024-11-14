@@ -156,12 +156,10 @@ export class AddPostsComponent implements OnInit {
     }
     const recipeData = {
       content: this.postrecipeForm.value.postContent,
-      images: this.imagePreviews,
+      // images: this.imagePreviews,
     };
 
-    this.appwriteService
-      .postRecipe(recipeData)
-      .then(() => {
+    this.appwriteService.postRecipe(recipeData).then(() => {
         this.dialogRef.close();
         this.post_snackBar.open('Recipe posted successfully!', 'Close', {
           horizontalPosition: this.horizontalPosition,

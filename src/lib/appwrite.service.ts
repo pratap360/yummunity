@@ -1,7 +1,7 @@
 // appwrite.service.ts
 
 import { Injectable } from '@angular/core';
-import { Client, Databases} from 'appwrite';
+import { Client, Databases,ID} from 'appwrite';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -24,11 +24,12 @@ export class AppwriteService {
   async postRecipe(recipeData: any): Promise<any> {
     try {
       const response = await this.databases.createDocument(
+        environment.appwrite_DatabaseID,
         environment.post_CollectionID, 
-        'unique()',
-        recipeData
+        ID.unique(),
+        { data: recipeData }
       );
-      return response;
+      return console.log('Appwrite Service Response:: postRecipe() ::', response);
     } catch (error) {
       console.error('Appwrite Service :: postRecipe() ::', error);
       throw error;
