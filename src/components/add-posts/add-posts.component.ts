@@ -31,7 +31,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { UsersService } from '../../app/services/users/users.service';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSnackBar,  MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, } from '@angular/material/snack-bar';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Client, Account } from 'appwrite';
 import { HomeFeedComponent } from '../../app/home-feed/home-feed.component';
@@ -80,11 +80,14 @@ export class AddPostsComponent implements OnInit {
   account: any;
 
   formvalue: any;
+
+  private post_snackBar = inject(MatSnackBar);
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
   constructor(
     private userService: UsersService,
     private http: HttpClient,
     private dialogRef: MatDialogRef<AddPostsComponent>,
-    private snackBar: MatSnackBar,
     private appwriteService: AppwriteService // private closedialog : HomeFeedComponent
   ) {
     // Initialize the form with controls
@@ -99,14 +102,14 @@ export class AddPostsComponent implements OnInit {
     return this.postrecipeForm.get('postContent');
   }
   ngOnInit(): void {
-    this.userService.getUsersdata().subscribe({
-      next: (response) => {
-        this.users = response.data.data;
-      },
-      error: (error) => {
-        console.error('Error fetching users:', error);
-      },
-    });
+    // this.userService.getUsersdata().subscribe({
+    //   next: (response) => {
+    //     this.users = response.data.data;
+    //   },
+    //   error: (error) => {
+    //     console.error('Error fetching users:', error);
+    //   },
+    // });
   }
 
   onSelectedImages(event: Event): void {
@@ -147,7 +150,7 @@ export class AddPostsComponent implements OnInit {
 
   postRecipe() {
     // * have to close the pop up and show a toast that the recipe has been posted
-    this.formvalue  = this.postrecipeForm.value
+    // this.formvalue  = this.postrecipeForm.value
     if (this.postrecipeForm.invalid) {
       return alert('Please fill in all the required fields'); // Stop if form is invalid
     }
@@ -160,19 +163,21 @@ export class AddPostsComponent implements OnInit {
       .postRecipe(recipeData)
       .then(() => {
         this.dialogRef.close();
-        this.snackBar.open('Recipe posted successfully!', 'Close', {
+        this.post_snackBar.open('Recipe posted successfully!', 'Close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
           duration: 3000,
         });
       })
       .catch((error) => {
-        console.error('Failed to post recipe:', error);
-        this.snackBar.open(
-          'Failed to post recipe. Please try again.',
-          'Close',
-          {
+        this.post_snackBar.open(
+          'Failed to post recipe. Please Post Later.','Close',{
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
             duration: 3000,
           }
         );
+        console.error('Failed to post recipe:', error);
       });
     // this.dialogRef.close();
     console.log('Appwrite Service :: postRecipe() ::posted successfully & closed dialog');

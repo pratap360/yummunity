@@ -17,9 +17,8 @@ import {
 } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { ForgetPwdComponent } from './forget-pwd/forget-pwd.component';
-
-import { Client, Account } from 'appwrite';
-// import { AuthService } from '../../lib/appwrite/auth';
+import { Client, Account} from 'appwrite';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -54,7 +53,7 @@ export class LoginComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   constructor(private fb: FormBuilder) {
-    this.client.setProject('670194640036c325ba3a');
+    this.client.setProject(environment.appwrite_ProjectID);
     // .setEndpoint('https://cloud.appwrite.io/v1')
     this.account = new Account(this.client);
   }
