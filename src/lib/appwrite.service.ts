@@ -10,24 +10,24 @@ import { environment } from '../environments/environment';
 export class AppwriteService {
   // private sdk: Client;
   client = new Client();
-  databases : any;
+  database : any;
 
 
   constructor() {
     this.client
     .setEndpoint(environment.appwrite_Endpoint)
     .setProject(environment.appwrite_ProjectID);
-  this.databases  = new Databases(this.client);
+  this.database  = new Databases(this.client);
   }
 
   // Method to post a recipe to Appwrite
   async postRecipe(recipeData: any): Promise<any> {
     try {
-      const response = await this.databases.createDocument(
+      const response = await this.database.createDocument(
         environment.appwrite_DatabaseID,
         environment.post_CollectionID, 
         ID.unique(),
-        { data: recipeData }
+       recipeData
       );
       return console.log('Appwrite Service Response:: postRecipe() ::', response);
     } catch (error) {

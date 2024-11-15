@@ -47,24 +47,26 @@ import { AppwriteService } from '../../lib/appwrite.service';
     ReactiveFormsModule,
     FormsModule,
     MatButtonModule,
-    MatDialogTitle,
     MatDialogContent,
     MatDialogActions,
-    MatDialogClose,
-    MatCard,
-    MatCardHeader,
     MatCardContent,
-    MatCardActions,
     MatCardModule,
     MatTooltipModule,
     MatIconModule,
-    JsonPipe
+    
+    // MatCardActions,
+    // MatCardHeader,
+    // MatCard,
+    // MatDialogClose,
+    // MatDialogTitle,
+    // JsonPipe
   ],
   templateUrl: './add-posts.component.html',
   styleUrl: './add-posts.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddPostsComponent implements OnInit {
+
   postrecipeForm: FormGroup = new FormGroup({
     postContent: new FormControl('',[Validators.required,Validators.maxLength(2000)]),
     postImages: new FormControl(''),
@@ -98,9 +100,7 @@ export class AddPostsComponent implements OnInit {
     //   ]),
     // });
   }
-  get postContent() {
-    return this.postrecipeForm.get('postContent');
-  }
+
   ngOnInit(): void {
     // this.userService.getUsersdata().subscribe({
     //   next: (response) => {
@@ -155,8 +155,15 @@ export class AddPostsComponent implements OnInit {
       return alert('Please fill in all the required fields'); // Stop if form is invalid
     }
     const recipeData = {
-      content: this.postrecipeForm.value.postContent,
-      // images: this.imagePreviews,
+
+      post_Content: this.postrecipeForm.get('postContent')?.value,
+      post_Content_Pictures: this.postrecipeForm.get('postImages')?.value,
+
+      // user_name:
+      // user_bio:
+      // post_comments:
+      // post_likes:
+      // post_saves:
     };
 
     this.appwriteService.postRecipe(recipeData).then(() => {
