@@ -14,13 +14,14 @@
         <div class="usernameInput">
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>User Name</mat-label>
+            <!-- [(ngModel)]="username" -->
             <input
-              formControlName="username"
+            formControlName="username"
               matInput
               placeholder="Enter User Name" required
             />
-            <mat-error *ngIf="!signupForm.controls['email'].valid">
-                Email is required
+            <mat-error *ngIf="!signupForm.controls['username'].valid">
+              Username is required
               </mat-error>
           </mat-form-field>
         </div>

@@ -1,4 +1,5 @@
 import { Component, OnInit , inject} from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { Router , RouterLink} from '@angular/router';
 
 
@@ -26,6 +27,7 @@ import { Client, Account,ID } from "appwrite";
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
+    CommonModule,
     FontAwesomeModule
   ],
   templateUrl: './signup.component.html',
@@ -41,6 +43,7 @@ export class SignupComponent implements OnInit {
 
   client = new Client();
   account: any;
+username: any;
   constructor(private fb: FormBuilder) {
     this.client
     .setEndpoint('https://cloud.appwrite.io/v1')
