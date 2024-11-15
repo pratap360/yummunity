@@ -35,4 +35,25 @@ export class AppwriteService {
       throw error;
     }
   }
+
+async userData(userInfo: any) : Promise<any> {
+  try{
+    const response = await this.database.createDocument(
+      environment.appwrite_DatabaseID,
+      environment.users_CollectionID, 
+      ID.unique(),
+      userInfo
+    );
+    return console.log('Appwrite Service Response:: userData() ::', response);
+  } catch (error) {
+    console.error('Appwrite Service :: userData() ::', error);
+    throw error;
+  }
 }
+
+
+
+
+
+}
+

@@ -67,11 +67,6 @@ import { AppwriteService } from '../../lib/appwrite.service';
 })
 export class AddPostsComponent implements OnInit {
 
-  postrecipeForm: FormGroup = new FormGroup({
-    postContent: new FormControl('',[Validators.required,Validators.maxLength(2000)]),
-    postImages: new FormControl(''),
-  });
-
   users: any[] = [];
 
   canPost: boolean = true;
@@ -90,7 +85,7 @@ export class AddPostsComponent implements OnInit {
     private userService: UsersService,
     private http: HttpClient,
     private dialogRef: MatDialogRef<AddPostsComponent>,
-    private appwriteService: AppwriteService // private closedialog : HomeFeedComponent
+    private appwriteService: AppwriteService 
   ) {
     // Initialize the form with controls
     // this.postrecipeForm = new FormGroup({
@@ -111,6 +106,11 @@ export class AddPostsComponent implements OnInit {
     //   },
     // });
   }
+
+  postrecipeForm: FormGroup = new FormGroup({
+    postContent: new FormControl('',[Validators.required,Validators.maxLength(2000)]),
+    postImages: new FormControl(''),
+  });
 
   onSelectedImages(event: Event): void {
     const files = (event.target as HTMLInputElement).files;
@@ -154,8 +154,8 @@ export class AddPostsComponent implements OnInit {
     if (this.postrecipeForm.invalid) {
       return alert('Please fill in all the required fields'); // Stop if form is invalid
     }
-    const recipeData = {
 
+    const recipeData = {
       post_Content: this.postrecipeForm.get('postContent')?.value,
       post_Content_Pictures: this.postrecipeForm.get('postImages')?.value,
 

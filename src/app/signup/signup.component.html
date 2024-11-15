@@ -16,11 +16,11 @@
             <mat-label>User Name</mat-label>
             <!-- [(ngModel)]="username" -->
             <input
-            formControlName="username"
+            formControlName="user_name"
               matInput
               placeholder="Enter User Name" required
             />
-            <mat-error *ngIf="!signupForm.controls['username'].valid">
+            <mat-error *ngIf="!signupForm.controls['user_name'].valid">
               Username is required
               </mat-error>
           </mat-form-field>
@@ -29,11 +29,11 @@
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Email</mat-label>
             <input
-              formControlName="email"
+              formControlName="user_email"
               matInput
               placeholder="Enter email address" required
             />
-            <mat-error *ngIf="!signupForm.controls['email'].valid">
+            <mat-error *ngIf="!signupForm.controls['user_email'].valid">
                 Email is required
               </mat-error>
           </mat-form-field>
@@ -42,13 +42,13 @@
         <div>
           <mat-form-field class="full-width" appearance="outline">
             <mat-label>Password</mat-label>
-            <input formControlName="password" matInput [type]=" hide ? 'password' : 'text'" required />
+            <input formControlName="user_password" matInput [type]=" hide ? 'password' : 'text'" required />
             <button  mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-pressed]="hide">
             <mat-icon>
                 {{hide ? 'visibility_off' : 'visibility'}}
             </mat-icon>
         </button>
-        <mat-error *ngIf="!signupForm.controls['password'].valid">
+        <mat-error *ngIf="!signupForm.controls['user_password'].valid">
             Password is required
           </mat-error>
         </mat-form-field>
@@ -59,7 +59,7 @@
       </form>
     </mat-card-content>
     <div class="button-group">
-      <button mat-raised-button class="login" color="primary" (click)="onSignUp()" routerLink="/home-feed">
+      <button mat-raised-button class="login" color="primary" (click)="onSignUp()" routerLink="/login">
         <mat-icon fontIcon="login"></mat-icon>
 Sign Up</button>
       <button mat-flat-button color="secondary" class="google-login"><fa-icon [icon]="faGoogle"></fa-icon> Sign up with Google</button>
