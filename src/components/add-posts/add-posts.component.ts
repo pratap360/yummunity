@@ -166,12 +166,12 @@ export class AddPostsComponent implements OnInit {
       // post_saves:
     };
 
-    this.appwriteService.postRecipe(recipeData).then(() => {
+    this.appwriteService.postRecipewithImage(recipeData).then(() => {
         this.dialogRef.close();
         this.post_snackBar.open('Recipe posted successfully!', 'Close', {
           horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition,
-          duration: 3000,
+          duration: 5000,
         });
       })
       .catch((error) => {
@@ -179,13 +179,13 @@ export class AddPostsComponent implements OnInit {
           'Failed to post recipe. Please Post Later.','Close',{
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
-            duration: 3000,
+            duration: 5000,
           }
         );
         console.error('Failed to post recipe:', error);
       });
     // this.dialogRef.close();
-    console.log('Appwrite Service :: postRecipe() ::posted successfully & closed dialog');
+    console.log('add-posts.ts :: postRecipe() ::posted successfully & closed dialog');
   }
 
   

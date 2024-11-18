@@ -28,7 +28,7 @@
       <mat-icon>arrow_back</mat-icon>
     </button>
     
-    <div class="slider-image" formControlName="postImages">
+    <div class="slider-image">
       <img [src]="imagePreviews[currentImageIndex]" alt="Image Preview" style="max-width: 100%; height: auto;">
     </div>
     
@@ -38,9 +38,9 @@
   </div>
 <!-- </form> -->
 
-    <div class="action-icons">
+    <div class="action-icons" [formGroup]="postrecipeForm">
       <!-- Hidden file input -->
-      <input mat-flat-button aria-label="Insert Image" #fileInput type="file" accept="image/*" multiple hidden
+      <input mat-flat-button  aria-label="Insert Image" id="uploadImage" #fileInput type="file" formControlName="postImages" accept="image/*" multiple hidden
         (change)="onSelectedImages($event)">
       <!-- Button that opens the file input -->
       <button mat-flat-button type="button" (click)="fileInput.click()">

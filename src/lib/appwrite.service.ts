@@ -1,7 +1,7 @@
 // appwrite.service.ts
 
 import { Injectable } from '@angular/core';
-import { Client, Databases,ID} from 'appwrite';
+import { Client, Databases,Storage,ID} from 'appwrite';
 import { environment } from '../environments/environment';
 
 @Injectable({
@@ -11,30 +11,31 @@ export class AppwriteService {
   // private sdk: Client;
   client = new Client();
   database : any;
-
+  storage: any
 
   constructor() {
     this.client
     .setEndpoint(environment.appwrite_Endpoint)
     .setProject(environment.appwrite_ProjectID);
   this.database  = new Databases(this.client);
+  this.storage = new Storage(this.client);
   }
 
-  // Method to post a recipe to Appwrite
-  async postRecipe(recipeData: any): Promise<any> {
-    try {
-      const response = await this.database.createDocument(
-        environment.appwrite_DatabaseID,
-        environment.post_CollectionID, 
-        ID.unique(),
-       recipeData
-      );
-      return console.log('Appwrite Service Response:: postRecipe() ::', response);
-    } catch (error) {
-      console.error('Appwrite Service :: postRecipe() ::', error);
-      throw error;
-    }
-  }
+  // // Method to post a recipe to Appwrite
+  // async postRecipe(recipeData: any): Promise<any> {
+  //   try {
+  //     const response = await this.database.createDocument(
+  //       environment.appwrite_DatabaseID,
+  //       environment.post_CollectionID, 
+  //       ID.unique(),
+  //      recipeData
+  //     );
+  //     return console.log('Appwrite Service Response:: postRecipe() ::', response);
+  //   } catch (error) {
+  //     console.error('Appwrite Service :: postRecipe() ::', error);
+  //     throw error;
+  //   }
+  // }
 
 async userData(userInfo: any) : Promise<any> {
   try{
@@ -51,6 +52,89 @@ async userData(userInfo: any) : Promise<any> {
   }
 }
 
+
+
+// async postRecipe(recipeData: any): Promise<any> {
+//   try {
+//     if(!recipeData.post_Content_Pictures){
+//       recipeData.post_Content_Pictures = []
+//       const uploadImage = await this.storage.createFile(
+//         environment.appwrite_BucketID_PostImages, 
+//         ID.unique(), // fileId
+//         document.getElementById('uploadImage').files[], // file
+//         ["read("any")"] // permissions (optional)
+//       );
+//     }
+//     const response = await this.database.createDocument(
+//       environment.appwrite_DatabaseID,
+//       environment.post_CollectionID, 
+//       ID.unique(),
+//      recipeData
+//     );
+
+
+//     return console.log('Appwrite Service Response:: postRecipe() ::', response,this.uploadImage);
+//   } catch (error) {
+//     console.error('Appwrite Service :: postRecipe() ::', error);
+//     throw error;
+//   }
+// }
+
+// const uploadImage = await this.storage.createFile(
+//   environment.appwrite_BucketID_PostImages, 
+//   ID.unique(), // fileId
+//   document.getElementById('uploadImage').files[], // file
+//   ["read("any")"] // permissions (optional)
+// );
+
+async postRecipewithImage(recipeData: any): Promise<any> {
+  try {
+    // Ensure post_Content_Pictures is an array
+    if (!recipeData.post_Content_Pictures) {
+      recipeData.post_Content_Pictures = [];
+    }
+
+    const files = (document.getElementById('uploadImage') as HTMLInputElement)?.files;
+
+
+    if (files) {
+      if (files.length > 4) {
+        throw new Error('You can upload a maximum of 4 images.');
+      }
+
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+
+        console.log('Uploading file:', files);
+
+        // Upload each image to Appwrite bucket
+        const uploadResponse = await this.storage.createFile(
+          environment.appwrite_BucketID_PostImages,
+          ID.unique(), 
+          file,
+        );
+
+        console.log('Upload Response:', uploadResponse);
+
+        // Add the uploaded image details to the post_Content_Pictures array
+        // recipeData.post_Content_Pictures.push(uploadResponse.$id);
+      }
+    }
+    // Create the recipe document in the database
+    const response = await this.database.createDocument(
+      environment.appwrite_DatabaseID,
+      environment.post_CollectionID,
+      ID.unique(),
+      recipeData
+    );
+
+    console.log('Appwrite Service Response:: postRecipewithImage() ::', response);
+
+  } catch (error) {
+    console.error('Appwrite Service :: postRecipewithImage() ::', error);
+    throw error;
+  }
+}
 
 
 
