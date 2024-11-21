@@ -87,11 +87,11 @@ async userData(userInfo: any) : Promise<any> {
 //   ["read("any")"] // permissions (optional)
 // );
 
-async postRecipewithImage(recipeData: any): Promise<any> {
+async postRecipewithImage(recipeData: any,imageUrls: string[]): Promise<any> {
   try {
     // Ensure post_Content_Pictures is an array
     if (!recipeData.post_Content_Pictures) {
-      recipeData.post_Content_Pictures = [];
+      recipeData.post_Content_Pictures = imageUrls
     }
 
     const files = (document.getElementById('uploadImage') as HTMLInputElement)?.files;
@@ -113,11 +113,11 @@ async postRecipewithImage(recipeData: any): Promise<any> {
           ID.unique(), 
           file,
         );
+        // Add the uploaded image details to the post_Content_Pictures array
+        recipeData.post_Content_Pictures.push(uploadResponse.$id);
 
         console.log('Upload Response:', uploadResponse);
 
-        // Add the uploaded image details to the post_Content_Pictures array
-        // recipeData.post_Content_Pictures.push(uploadResponse.$id);
       }
     }
     // Create the recipe document in the database

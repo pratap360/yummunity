@@ -165,8 +165,10 @@ export class AddPostsComponent implements OnInit {
       // post_likes:
       // post_saves:
     };
+    // const imageUrls: never[] = [];
+    // recipeData.post_Content_Pictures: imageUrls;
 
-    this.appwriteService.postRecipewithImage(recipeData).then(() => {
+    this.appwriteService.postRecipewithImage(recipeData.post_Content,recipeData.post_Content_Pictures).then(() => {
         this.dialogRef.close();
         this.post_snackBar.open('Recipe posted successfully!', 'Close', {
           horizontalPosition: this.horizontalPosition,
