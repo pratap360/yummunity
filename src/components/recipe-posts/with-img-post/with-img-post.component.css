@@ -29,6 +29,9 @@ mat-card.posts-card {
     margin: 10px;
 }
 
+.menu-button {
+    margin-left: auto;
+}
 
 
 /* .card-content h3 {

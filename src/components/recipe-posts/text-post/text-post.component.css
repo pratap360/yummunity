@@ -32,6 +32,11 @@ mat-card.posts-card {
 }
 
 
+.menu-button {
+    margin-left: auto;
+}
+
+
 /* .card-content h3 {
     padding: 10px;
     font-size: 24px;

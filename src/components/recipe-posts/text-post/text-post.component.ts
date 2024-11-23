@@ -7,6 +7,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import {MatMenuModule} from '@angular/material/menu';
 import { PostActivityComponent } from '../../post-activity/post-activity.component';
 
 @Component({
@@ -21,6 +22,7 @@ import { PostActivityComponent } from '../../post-activity/post-activity.compone
     MatChipsModule,
     MatInputModule,
     MatDialogModule,
+    MatMenuModule,
     PostActivityComponent,
   ],
   templateUrl: './text-post.component.html',

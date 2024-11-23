@@ -50,3 +50,6 @@ mat-card.posts-card {
     justify-content: space-between;    
 }
 
+.menu-button {
+    margin-left: auto;
+}

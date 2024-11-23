@@ -5,6 +5,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
+import {MatMenuModule} from '@angular/material/menu';
+
 
 @Component({
   selector: 'app-blog-post',
@@ -16,6 +18,7 @@ import { MatInputModule } from '@angular/material/input';
     MatIconModule,
     MatChipsModule,
     MatInputModule,
+    MatMenuModule
   ],
   templateUrl: './blog-post.component.html',
   styleUrl: './blog-post.component.css'

@@ -5,6 +5,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { PostActivityComponent } from '../../post-activity/post-activity.component';
+import {MatMenuModule} from '@angular/material/menu';
 
 @Component({
   selector: 'app-with-img-post',
@@ -15,6 +16,7 @@ import { PostActivityComponent } from '../../post-activity/post-activity.compone
     MatCardModule,
     MatIconModule,
     MatChipsModule,
+    MatMenuModule,
     PostActivityComponent
   ],
   templateUrl: './with-img-post.component.html',

@@ -3,6 +3,23 @@
       <div mat-card-avatar class="profile-header-image"></div>
       <mat-card-title>Pratap Parui</mat-card-title>
       <mat-card-subtitle>Developer|Food Critics</mat-card-subtitle>
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-icon>info</mat-icon>
+          <span>Feature Not Implemented</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>report</mat-icon>
+          <span>Report</span>
+        </button>
+        <button mat-menu-item disabled>
+          <mat-icon>campaign</mat-icon>
+          <span>Promote</span>
+        </button>
+      </mat-menu>
     </mat-card-header>
     <img mat-card-image src="/assets/posts-img/food1.jpg"
       alt="White and Brown Cooked Dish on White Ceramic Bowls">
