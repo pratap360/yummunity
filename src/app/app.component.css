@@ -1,0 +1,24 @@
+/* Responsive media queries for all components here  */
+
+@media (max-width: 768px) {
+    * {
+        overflow-x: hidden;
+    }
+
+    :root {
+        font-size: 12px;
+    }
+
+
+    h1,
+    h2,
+    h3,
+    h4 {
+        font-size: 1.2em;
+    }
+
+    button {
+        padding: 10px 16px;
+        font-size: 12px;
+    }
+}

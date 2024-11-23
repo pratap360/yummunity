@@ -16,6 +16,7 @@ import {MatTooltipModule} from '@angular/material/tooltip';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { AddPostsComponent } from '../../components/add-posts/add-posts.component';
 import { PostContainerComponent } from "../../components/post-container/post-container.component";
+import { BottomNavComponent } from "../../components/bottom-nav/bottom-nav.component";
 
 
 @Component({
@@ -38,7 +39,8 @@ import { PostContainerComponent } from "../../components/post-container/post-con
     RouterModule,
     RouterOutlet,
     RouterLink,
-    PostContainerComponent
+    PostContainerComponent,
+    BottomNavComponent
 ],
   templateUrl: './home-feed.component.html',
   styleUrl: './home-feed.component.css',

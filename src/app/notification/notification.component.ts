@@ -13,6 +13,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { PostContainerComponent } from "../../components/post-container/post-container.component";
+import { BottomNavComponent } from "../../components/bottom-nav/bottom-nav.component";
 @Component({
   selector: 'app-notification',
   standalone: true,
@@ -29,7 +30,7 @@ import { PostContainerComponent } from "../../components/post-container/post-con
     MatIconModule,
     MatButtonToggleModule,
     MatCheckboxModule,
-    MatTooltipModule, PostContainerComponent],
+    MatTooltipModule, PostContainerComponent, BottomNavComponent],
   templateUrl: './notification.component.html',
   styleUrl: './notification.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

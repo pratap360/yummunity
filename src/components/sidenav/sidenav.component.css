@@ -88,3 +88,17 @@ mat-icon {
   margin-right: 12px;
   vertical-align: middle;
 }
+
+@media (max-width: 768px) {
+
+  .hamburger{
+    display: none;
+  }
+
+  .app-toolbar{
+    /* display: flex; */
+    align-items: center;
+    justify-content: start;
+    position:fixed;
+  }
+}

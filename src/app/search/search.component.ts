@@ -21,6 +21,7 @@ import { PostContainerComponent } from '../../components/post-container/post-con
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { MealService } from '../services/mealdb/meal.service';
+import { BottomNavComponent } from "../../components/bottom-nav/bottom-nav.component";
 
 @Component({
   selector: 'app-search',
@@ -50,7 +51,8 @@ import { MealService } from '../services/mealdb/meal.service';
     RouterLink,
     TrendingRecipesListComponent,
     PostContainerComponent,
-  ],
+    BottomNavComponent
+],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

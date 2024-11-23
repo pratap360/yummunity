@@ -19,6 +19,7 @@ import { WithImgPostComponent } from "../../components/recipe-posts/with-img-pos
 import { PostContainerComponent } from "../../components/post-container/post-container.component";
 import { PostActivityComponent } from "../../components/post-activity/post-activity.component";
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { BottomNavComponent } from "../../components/bottom-nav/bottom-nav.component";
 @Component({
   selector: 'app-account',
   standalone: true,
@@ -40,7 +41,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     BlogPostComponent,
     TextPostComponent, WithImgPostComponent,
     PostContainerComponent,
-    PostActivityComponent
+    PostActivityComponent,
+    BottomNavComponent
 ],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css',

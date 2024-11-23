@@ -1,0 +1,9 @@
+<div class="bottom-nav" *ngIf="isMobile">
+    <nav mat-tab-nav-bar>
+        <a mat-tab-link routerLink="/home-feed" routerLinkActive="active"><mat-icon>home</mat-icon></a>
+        <a mat-tab-link routerLink="/search" routerLinkActive="active"><mat-icon>search</mat-icon></a>
+        <a mat-tab-link routerLink="/notifications" routerLinkActive="active"><mat-icon>notifications</mat-icon></a>
+        <a mat-tab-link routerLink="/account" routerLinkActive="active"><mat-icon>account_circle</mat-icon></a>
+        <a mat-tab-link routerLink="/" (click)="logout()" routerLinkActive="active"><mat-icon>logout</mat-icon></a>
+    </nav>
+</div>
