@@ -1,0 +1,8 @@
+<mat-card-actions class="action-buttons">
+    <app-likes></app-likes>
+    <button mat-raised-button (click)="openCommentModal()">
+        <mat-icon>comment</mat-icon>
+        {{ comments_counter }} Comment{{ comments.length > 1 ? 's' : '' }}
+    </button>
+    <app-saves></app-saves>
+</mat-card-actions>
