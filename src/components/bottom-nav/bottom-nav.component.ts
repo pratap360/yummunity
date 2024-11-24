@@ -5,7 +5,6 @@ import { MatBadgeModule } from '@angular/material/badge';
 import {MatTabsModule} from '@angular/material/tabs';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 // import { SidenavComponent } from '../sidenav/sidenav.component';
-
 @Component({
   selector: 'app-bottom-nav',
   standalone: true,
