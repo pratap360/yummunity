@@ -5,9 +5,8 @@
 
   <div class="search-container">
   <mat-form-field appearance="outline" class="search-bar">
-    <input matInput type="search" placeholder="Search here" [(ngModel)]="searchQuery"> 
+    <input matInput type="search" [placeholder]="currentPlaceholder" [(ngModel)]="searchQuery">
     <button matSuffix mat-icon-button aria-label="Search" (click)="onSearch()"><mat-icon>search</mat-icon></button>
-    <!-- (input)="onSearch()" (click)="onSearch()" -->
   </mat-form-field>
 </div>
 

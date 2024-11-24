@@ -1,4 +1,9 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  OnDestroy,
+} from '@angular/core';
 // import { SideNavBarComponent } from '../../components/side-nav-bar/side-nav-bar.component';
 import { SidenavComponent } from '../../components/sidenav/sidenav.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,7 +18,7 @@ import { RouterModule, RouterOutlet, RouterLink } from '@angular/router';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
-import {MatGridListModule} from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list';
 import { CommonModule, DatePipe } from '@angular/common';
 import { SearchSuggestionProfileComponent } from '../../components/search-suggestion-profile/search-suggestion-profile.component';
 import { TrendingRecipesListComponent } from '../../components/trending-recipes-list/trending-recipes-list.component';
@@ -21,7 +26,7 @@ import { PostContainerComponent } from '../../components/post-container/post-con
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FormsModule } from '@angular/forms';
 import { MealService } from '../services/mealdb/meal.service';
-import { BottomNavComponent } from "../../components/bottom-nav/bottom-nav.component";
+import { BottomNavComponent } from '../../components/bottom-nav/bottom-nav.component';
 
 @Component({
   selector: 'app-search',
@@ -51,22 +56,53 @@ import { BottomNavComponent } from "../../components/bottom-nav/bottom-nav.compo
     RouterLink,
     TrendingRecipesListComponent,
     PostContainerComponent,
-    BottomNavComponent
-],
+    BottomNavComponent,
+  ],
   templateUrl: './search.component.html',
   styleUrl: './search.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class SearchComponent {
+export class SearchComponent implements OnInit, OnDestroy {
+  placeholderTexts: string[] = [
+    'Search top rated recipes...',
+    'Find your favorite dishes...',
+    'Discover new cuisines...',
+    'What are you craving today?',
+    'Cook delicious meals...',
+    'Cook something special...',
+    'Discover diet-friendly recipes...',
+    'Search Healthy Recipes...',
+    'Search Yummunity peeps...',
+  ];
+  currentPlaceholder: string = '';
+  private placeholderIndex = 0;
+  private intervalId: any;
 
   searchQuery: string = '';
   isLoading: boolean = false;
   meals: any[] = [];
   isSearchSuggestions: boolean = true;
   hideShowText: boolean = false;
+
   constructor(private mealService: MealService) {}
 
-  
+  ngOnInit(): void {
+    // Initialize placeholder cycling
+    this.currentPlaceholder = this.placeholderTexts[this.placeholderIndex];
+    this.intervalId = setInterval(() => {
+      this.placeholderIndex =
+        (this.placeholderIndex + 1) % this.placeholderTexts.length;
+      this.currentPlaceholder = this.placeholderTexts[this.placeholderIndex];
+    }, 1500); // Change every 2 seconds
+  }
+
+  ngOnDestroy(): void {
+    // Clear interval to avoid memory leaks
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
+  }
+
   onSearch() {
     if (this.searchQuery.trim() === '') {
       return;
@@ -83,16 +119,14 @@ export class SearchComponent {
       error: (error) => {
         console.log(error);
         this.isLoading = false;
-        this.hideShowText= true;
-
-      }
+        this.hideShowText = true;
+      },
     });
-
   }
   openMealDetail(meal: any) {
     window.open(meal.strSource, '_blank'); // Opens the recipe in a new tab
   }
-  
+
   // users = [
   //   { name: 'User_name', id: 'user_id', bio: 'user’s bio' },
   //   { name: 'User_name', id: 'user_id', bio: 'user’s bio' },
