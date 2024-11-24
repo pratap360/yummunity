@@ -91,6 +91,16 @@ mat-icon {
 
 @media (max-width: 768px) {
 
+  .app-toolbar{
+    /* display: flex; */
+    align-items: center;
+    justify-content: start;
+    position:fixed;
+  }
+}
+
+@media (max-width: 599px) {
+
   .hamburger{
     display: none;
   }

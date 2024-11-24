@@ -1,10 +1,23 @@
 button {
-    background-color: #f3f3f3; /* Default color */
-    color: #000;
+  background-color: #f3f3f3;
+  /* Default color */
+  color: #000;
+}
+
+button.liked {
+  background-color: #BA005C;
+  /* Change to your desired color */
+  color: white;
+}
+
+@media screen and (max-width: 599px) {
+  span {
+    display: none;
   }
-  
-  button.liked {
-    background-color: #BA005C; /* Change to your desired color */
-    color: white;
+}
+
+@media screen and (max-width: 768px) {
+  span {
+    display: none;
   }
-  
+}

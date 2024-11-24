@@ -1,6 +1,9 @@
 <!-- <button mat-raised-button [color]="liked ? 'warn' : null" (click)="toggleLike()"> -->
 <button mat-raised-button [ngClass]="{'liked': liked}" (click)="toggleLike()">
   <mat-icon>favorite</mat-icon>
-  {{ likes }} {{likes ? 'Liked' : 'Like'}}
+  {{ likes }} 
+  <span>
+    {{likes ? 'Liked' : 'Like'}}
+  </span>
   <!-- {{ likes }} {{ liked ? 'Liked' : 'Like' }} -->
 </button>

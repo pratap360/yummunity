@@ -1,5 +1,18 @@
 /* Responsive media queries for all components here  */
 
+@media (max-width: 599px) {
+    * {
+        overflow-x: hidden;
+    } 
+    
+    :root {
+        font-size: 10px;
+    }
+    
+}
+
+
+
 @media (max-width: 768px) {
     * {
         overflow-x: hidden;

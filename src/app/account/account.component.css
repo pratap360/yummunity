@@ -174,3 +174,14 @@ div.profile-tab-container{
   padding: 20px;
   margin: 10px;
 }
+
+
+@media (max-width: 768px) {
+    
+  .account-container {
+    margin: 20px auto;
+  }
+
+
+  
+}

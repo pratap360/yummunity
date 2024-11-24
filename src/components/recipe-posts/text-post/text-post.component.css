@@ -51,3 +51,12 @@ mat-card.posts-card {
     display: flex;
     justify-content: flex-end;
 } */
+
+
+@media screen and (max-width: 599px) {  
+    
+}
+
+@media screen and (max-width: 768px) {
+    
+}
