@@ -59,6 +59,18 @@ export class AccountComponent {
   blogTitle = 'Summer Chipotle Chicken Cobb Salad with Cilantro Vinaigrette'
   longText = `This juicy salad tastes like summer! With chipotle chicken, sweet corn, avocado, cilantro vinaigrette, bacon crumbles, and fresh strawberries for a pop of sweetness.`;
 
+
+  name = 'Pratap Parui';
+  username = '@pratap360';
+  description = 'Developer | Food Lover & Critics';
+  // profileImage = 'assets/path-to-profile-image.jpg';
+
+  recipesCount = 10;
+  followersCount = 349;
+  yummunityRating = 4.5;
+
+  link = 'Parui Dev';
+  linkUrl = 'https://paruidev.com';
 }
 
 

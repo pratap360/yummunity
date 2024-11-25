@@ -18,6 +18,10 @@ h3 {
   font-size: 24px;
 }
 
+h6{
+  font-size: 12px;
+}
+
 /* * account card 👇🏼 */
 
 
@@ -29,7 +33,7 @@ h3 {
   padding-top: 20px;
 }
 
-.profile-card {
+/* .profile-card {
   width: 80%;
   max-width: 700px;
   padding: 20px;
@@ -40,7 +44,7 @@ h3 {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
 
-}
+} */
 
 .profile-details {
   display: flex;
@@ -176,12 +180,106 @@ div.profile-tab-container{
 }
 
 
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+.profile-card .profile-header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 16px;
+}
+.profile-card .profile-header .profile-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  margin-right: 12px;
+  object-fit: cover;
+}
+.profile-card .profile-header .profile-info {
+  flex: 1;
+}
+.profile-card .profile-header .profile-info h3 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+.profile-card .profile-header .profile-info .username {
+  margin: 4px 0;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+.profile-card .profile-header .profile-info .description {
+  margin: 0;
+  font-size: 0.875rem;
+}
+.profile-card .profile-footer {
+  width: 100%;
+}
+.profile-card .profile-footer .info-toggle-group {
+  display: flex;
+  justify-content: space-between;
+}
+.profile-card .profile-footer .info-toggle-group mat-button-toggle {
+  flex: 1;
+  font-size: 0.8rem;
+  text-transform: none;
+  color: #fff;
+}
+.profile-card .profile-footer .info-toggle-group mat-button-toggle:not(:last-child) {
+  margin-right: 4px;
+}
+
+
+
+
 @media (max-width: 768px) {
     
   .account-container {
+    z-index: 1;
     margin: 20px auto;
   }
 
+  .profile-card {
+    padding: 12px;
+    margin-top: 50px;
+ }
+  .profile-card .profile-header {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+ }
+  .profile-card .profile-header .profile-image {
+    margin-right: 0;
+    margin-bottom: 8px;
+ }
+  .profile-card .profile-header .profile-info h3 {
+    font-size: 1rem;
+ }
+  .profile-card .profile-header .profile-info .username, .profile-card .profile-header .profile-info .description {
+    font-size: 0.8rem;
+ }
+  .profile-card .profile-footer {
+    flex-direction: column;
+ }
+  /* .profile-card .profile-footer .info-toggle-group {
+    flex-direction: column;
+ } */
+  .profile-card .profile-footer .info-toggle-group mat-button-toggle {
+    margin-bottom: 8px;
+ }
+  .profile-card .profile-footer .info-toggle-group mat-button-toggle:not(:last-child) {
+    margin-right: 0;
+ }
 
+ .profile-tab {
+  width: 100%;
+}
   
 }
