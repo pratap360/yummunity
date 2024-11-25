@@ -25,6 +25,12 @@
     right: 20px;
 }
 
+@media screen and (max-width: 576px) {
+    .add-post {
+        top: 785px;
+    }
+}
+
 /* 
 .posts-card {
     width: 100%;

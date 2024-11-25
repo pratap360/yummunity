@@ -1,6 +1,6 @@
 /* Responsive media queries for all components here  */
 
-@media (max-width: 599px) {
+@media (max-width: 576px) {
     * {
         overflow-x: hidden;
     } 

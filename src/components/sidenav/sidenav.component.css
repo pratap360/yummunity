@@ -99,7 +99,7 @@ mat-icon {
   }
 }
 
-@media (max-width: 599px) {
+@media (max-width: 576px) {
 
   .hamburger{
     display: none;
