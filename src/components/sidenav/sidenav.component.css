@@ -89,20 +89,19 @@ mat-icon {
   vertical-align: middle;
 }
 
-@media (max-width: 768px) and (min-width: 577px) {
+@media (max-width: 768px) {
 
   .hamburger , .sidenav-container{
     display: none;
   }
   .app-toolbar{
-
     align-items: center;
     justify-content: start;
     position:fixed;
   }
 }
 
-/* @media (max-width: 576px) {
+@media (max-width: 576px) {
 
   .hamburger , .sidenav-container{
     display: none;
@@ -113,4 +112,4 @@ mat-icon {
     justify-content: start;
     position:fixed;
   }
-} */
+}
