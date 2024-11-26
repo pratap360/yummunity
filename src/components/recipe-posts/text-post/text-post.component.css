@@ -53,8 +53,11 @@ mat-card.posts-card {
 } */
 
 
-@media screen and (max-width: 576px) {  
-    
+@media screen and (max-width: 576px) {
+    .card-content{
+        font-size: 16px;
+        word-wrap: break-word;
+    }
 }
 
 @media screen and (max-width: 768px) {

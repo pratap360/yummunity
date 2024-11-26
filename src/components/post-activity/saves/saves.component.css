@@ -13,6 +13,10 @@ button {
     span {
       display: none;
     }
+
+    button{
+      z-index: 0;
+    }
   }
   
   @media screen and (max-width: 768px) {

@@ -7,3 +7,9 @@
     padding: 20px;
     margin: 10px;
 }
+
+@media screen and (max-width: 576px) {
+    span{
+        display: none;
+    }
+}

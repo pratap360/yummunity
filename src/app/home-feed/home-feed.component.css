@@ -26,8 +26,29 @@
 }
 
 @media screen and (max-width: 576px) {
+
+    .content-wrapper {
+        align-items: normal;
+        margin: 3.43rem 1rem;
+    }
+    
+}
+
+@media screen and (max-width: 768px) {
+    .content-wrapper {
+        margin: 3.43rem 1rem;
+    }
     .add-post {
-        top: 785px;
+        /* top: 785px; */
+        bottom: 70px;
+        padding: 0.5rem; 
+        justify-content: center;
+    }
+    mat-icon{
+        margin: 0 !important;
+    }
+    span{
+        display: none;
     }
 }
 

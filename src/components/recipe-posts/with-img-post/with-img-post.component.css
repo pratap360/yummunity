@@ -1,12 +1,16 @@
 mat-card.posts-card {
     margin-top: 20px;
     margin-bottom: 20px;
+    width: 100%; /* Ensures the card spans the full width */
+    max-width: 700px; /* Restricts the max width */
+    border-radius: 8px; /* Optional: Add rounded corners */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
 }
-.posts-card {
+/* .posts-card {
     width: 100%;
     max-width: 700px;
 
-}
+} */
 
 .card-content {
     padding: 7px;
@@ -40,3 +44,10 @@ mat-card.posts-card {
 
 } */
 
+
+@media screen and (max-width: 576px) {
+    .card-content{
+        font-size: 16px;
+        word-wrap: break-word;
+    }
+}

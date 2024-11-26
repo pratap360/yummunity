@@ -35,7 +35,7 @@ export class BottomNavComponent implements OnInit {
   }
 
   checkScreenSize() {
-    this.isMobile = window.innerWidth < 768; // Adjust breakpoint as needed
+    this.isMobile = window.innerWidth <= 768; // Adjust breakpoint as needed
   }
 
   logout() {

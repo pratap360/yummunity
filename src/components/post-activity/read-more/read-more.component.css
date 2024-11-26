@@ -1,11 +1,15 @@
 @media screen and (max-width: 576px) {
-    span {
-      display: none;
-    }
+  span {
+    display: none;
   }
-  
-  @media screen and (max-width: 768px) {
-    span {
-      display: none;
-    }
+
+  button {
+    z-index: 0;
   }
+}
+
+@media screen and (max-width: 768px) {
+  span {
+    display: none;
+  }
+}
