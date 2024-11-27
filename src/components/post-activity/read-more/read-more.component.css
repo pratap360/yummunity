@@ -12,4 +12,11 @@
   span {
     display: none;
   }
+  button{
+    padding: 0.5rem;
+  }
+  mat-icon{
+    margin: 0 !important;
+  }
+
 }

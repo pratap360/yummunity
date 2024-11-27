@@ -1,22 +1,31 @@
 .action-buttons {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    box-sizing: border-box;
-    justify-content: space-evenly;
-    padding: 20px;
-    margin: 10px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  box-sizing: border-box;
+  justify-content: space-evenly;
+  padding: 20px;
+  margin: 10px;
 }
 
 
 @media screen and (max-width: 576px) {
-    span {
-      display: none;
-    }
+  span {
+    display: none;
   }
-  
-  @media screen and (max-width: 768px) {
-    span {
-      display: none;
-    }
+}
+
+@media screen and (max-width: 768px) {
+  span {
+    display: none;
   }
+  .action-buttons {
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    justify-content: space-evenly;
+    padding: 9px;
+    flex-wrap: wrap;
+    margin: 0px;
+  }
+}
