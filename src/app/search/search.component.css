@@ -85,6 +85,7 @@ mat-spinner {
 @media (max-width: 768px) {
     
   .search-container {
-    margin: 20px auto;
+    /* margin: 20px auto; */
+    margin: 3.43rem 0.75rem;
   }
 }
