@@ -1,7 +1,7 @@
 <!-- <app-side-nav-bar></app-side-nav-bar> -->
 <app-sidenav></app-sidenav>
 <app-post-container></app-post-container>
-<app-bottom-nav></app-bottom-nav>
+
 <!-- 
 <div class="main-wrapper">
   <mat-card appearance="outlined" class="post-container">
@@ -10,12 +10,11 @@
   </mat-card>
 </div> -->
 
-
-
 <div class="content-wrapper">
   <div class="account-container">
-    <h3>My Account</h3>
+    <h3 class="account-title">My Account</h3>
   </div>
+
   <!-- <mat-card class="profile-card mat-elevation-z4">
     <div class="profile-details">
       <div class="profile-left">
@@ -37,6 +36,7 @@
       </button>
     </div>
   </mat-card> -->
+ <!--! reminder : must add the follow and edit buttons to the account component   -->
 
   <mat-card class="profile-card mat-elevation-z4">
     <div class="profile-header">
@@ -44,7 +44,7 @@
         <div mat-card-avatar alt="Profile" class="profile-card-image"></div>
       </div>
       <div class="profile-info">
-        <h3>{{ name }}</h3>
+        <h3 class="name">{{ name }}</h3>
         <p class="username">{{ username }}</p>
         <p class="description">{{ description }}</p>
       </div>
@@ -72,16 +72,16 @@
 
 </div>
 
-<div class="profile-info-container">
+<!-- <div class="profile-info-container">
   <mat-button-toggle-group name="profile-info" aria-label="profile-info" multiple>
     <mat-button-toggle disabled="true" value="recipies & blog list">Recipes & Blog :{{ recipesCount }}</mat-button-toggle>
     <mat-button-toggle disabled="true" value="followers"> Followers: {{ followersCount }}</mat-button-toggle>
     <mat-button-toggle disabled="true" value="rating"> Yummunity Rating: {{ yummunityRating }} </mat-button-toggle>
   </mat-button-toggle-group>
-</div>
+</div> -->
 
 <div class="profile-tab-container">
-  <mat-tab-group color="accent" class="profile-tab">
+  <mat-tab-group color="accent" class="profile-tab" dynamicHeight>
     <mat-tab>
       <ng-template mat-tab-label>
         <mat-icon class="profile-tab-icon">mood</mat-icon>
@@ -215,3 +215,5 @@
   </mat-tab-group>
 
 </div>
+
+<app-bottom-nav></app-bottom-nav>

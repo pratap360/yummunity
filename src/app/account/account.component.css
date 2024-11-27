@@ -1,5 +1,3 @@
-
-
 .account-container {
   color: #000;
   display: flex;
@@ -18,7 +16,11 @@ h3 {
   font-size: 24px;
 }
 
-h6{
+h3.name {
+  font-size: 25px;
+}
+
+h6 {
   font-size: 12px;
 }
 
@@ -83,9 +85,11 @@ h6{
 
 .user-info h3 {
   margin: 0;
-  font-size: 1.5rem; /* Make the user name a bit bigger */
+  font-size: 1.5rem;
+  /* Make the user name a bit bigger */
   color: #333;
 }
+
 .user-info p {
   margin: 0;
   font-size: 1rem;
@@ -94,7 +98,7 @@ h6{
 
 
 .profile-right {
-  
+
   text-align: left;
   flex: 1;
   margin: 0;
@@ -106,6 +110,7 @@ h6{
 .profile-right button {
   margin-left: 10px;
 }
+
 .edit-button {
   position: absolute;
   top: 10px;
@@ -119,18 +124,18 @@ h6{
   background-size: cover;
 }
 
-div.profile-info-container{
+div.profile-info-container {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-mat-button-toggle{
+mat-button-toggle {
   width: 233px;
   color: #000 !important;
 }
 
-div.profile-tab-container{
+div.profile-tab-container {
   padding: 20px;
   display: flex;
   justify-content: center;
@@ -140,7 +145,7 @@ div.profile-tab-container{
 }
 
 
-.profile-tab-icon{
+.profile-tab-icon {
   margin-right: 8px;
 
 }
@@ -152,10 +157,10 @@ div.profile-tab-container{
   align-items: stretch;
   width: 80%;
   max-width: 700px;
-  z-index: 0; 
+  z-index: 0;
 }
 
-.save-content-wrapper{
+.save-content-wrapper {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -190,12 +195,14 @@ div.profile-tab-container{
   max-width: 700px;
   margin: 0 auto;
 }
+
 .profile-card .profile-header {
   display: flex;
   align-items: center;
   width: 100%;
   margin-bottom: 16px;
 }
+
 .profile-card .profile-header .profile-image {
   width: 80px;
   height: 80px;
@@ -203,35 +210,43 @@ div.profile-tab-container{
   margin-right: 12px;
   object-fit: cover;
 }
+
 .profile-card .profile-header .profile-info {
   flex: 1;
 }
-.profile-card .profile-header .profile-info h3 {
+
+.profile-card .profile-header .profile-info {
   margin: 0;
   font-size: 1.25rem;
 }
+
 .profile-card .profile-header .profile-info .username {
   margin: 4px 0;
   font-size: 0.9rem;
   color: #aaa;
 }
+
 .profile-card .profile-header .profile-info .description {
   margin: 0;
   font-size: 0.875rem;
 }
+
 .profile-card .profile-footer {
   width: 100%;
 }
+
 .profile-card .profile-footer .info-toggle-group {
   display: flex;
   justify-content: space-between;
 }
+
 .profile-card .profile-footer .info-toggle-group mat-button-toggle {
   flex: 1;
   font-size: 0.8rem;
   text-transform: none;
   color: #fff;
 }
+
 .profile-card .profile-footer .info-toggle-group mat-button-toggle:not(:last-child) {
   margin-right: 4px;
 }
@@ -239,47 +254,79 @@ div.profile-tab-container{
 
 
 
-@media (max-width: 768px) {
-    
+@media screen and (max-width: 768px) {
+
   .account-container {
     z-index: 1;
     margin: 20px auto;
   }
 
   .profile-card {
-    padding: 12px;
-    margin-top: 50px;
- }
+    margin-top: 5rem;
+  }
+
   .profile-card .profile-header {
     flex-direction: column;
     align-items: center;
     text-align: center;
- }
+  }
+
   .profile-card .profile-header .profile-image {
     margin-right: 0;
     margin-bottom: 8px;
- }
-  .profile-card .profile-header .profile-info h3 {
+  }
+
+  /* .profile-card .profile-header .profile-info h3 {
     font-size: 1rem;
- }
-  .profile-card .profile-header .profile-info .username, .profile-card .profile-header .profile-info .description {
+ } */
+  .profile-card .profile-header .profile-info .username,
+  .profile-card .profile-header .profile-info .description {
     font-size: 0.8rem;
- }
+  }
+
   .profile-card .profile-footer {
     flex-direction: column;
- }
+  }
+
   /* .profile-card .profile-footer .info-toggle-group {
     flex-direction: column;
  } */
   .profile-card .profile-footer .info-toggle-group mat-button-toggle {
     margin-bottom: 8px;
- }
+  }
+
   .profile-card .profile-footer .info-toggle-group mat-button-toggle:not(:last-child) {
     margin-right: 0;
- }
+  }
 
- .profile-tab {
-  width: 100%;
+  .profile-tab {
+    width: 100%;
+  }
+
+  .account-title {
+    font-size: 20px;
+    position: relative;
+    bottom: 1rem;
+  }
+
+  h3.name {
+    font-size: 25px;
+  }
+
+  div.profile-tab-container {
+    /* width: 100%; */
+    margin-bottom: 3.4rem;
+  }
+
+  mat-tab-group {
+    display: flex;
+    flex-wrap: nowrap;
+    /* Prevents wrapping of tabs */
+    overflow-x: auto;
+    /* Allows horizontal scrolling if tabs don’t fit */
+    -webkit-overflow-scrolling: touch;
+    /* Smooth scrolling on mobile devices */
+  }
 }
-  
-}
+
+/* ! reminder : must add the follow and edit buttons to the account component  and do check the why bottom nav auto hide the logout button*/

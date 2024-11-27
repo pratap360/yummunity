@@ -36,7 +36,7 @@
 
 @media screen and (max-width: 768px) {
     .content-wrapper {
-        margin: 3.43rem 1rem;
+        margin: 3.43rem 0.75rem;
     }
     .add-post {
         /* top: 785px; */

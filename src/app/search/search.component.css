@@ -12,10 +12,10 @@
   max-width: 730px;
   padding: 10px 15px;
   font-size: 16px;
-  border: 0.1rem solid #ccc;
+  /* border: 0.1rem solid #ccc; */
   border-radius: 4px;
   outline: none;
-  transition: border-color 0.3s;
+  /* transition: border-color 0.3s; */
 }
 
 mat-form-field {
@@ -76,8 +76,7 @@ mat-spinner {
 }
 
 .mat-card-image {
-
-  height: 200px;
+  height: 450px;
   object-fit: cover;
 }
 
@@ -86,6 +85,22 @@ mat-spinner {
     
   .search-container {
     /* margin: 20px auto; */
-    margin: 3.43rem 0.75rem;
+    margin-top: 4.4rem;
   }
+
+  p.suggestions-header{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .meal-container {
+    margin-bottom: 4rem;
+  }
+  
+  .mat-card-image {
+    height: 200px;
+  }
+  
+
 }

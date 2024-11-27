@@ -22,7 +22,7 @@
       <mat-card-title>{{ meal.strMeal }}</mat-card-title>
       <mat-card-subtitle>{{ meal.strCategory }}</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image [src]="meal.strMealThumb" alt="{{ meal.strMeal }}">
+    <img mat-card-image class="mat-card-image" [src]="meal.strMealThumb" alt="{{ meal.strMeal }}">
     <mat-card-content>
       <p>{{ meal.strInstructions | slice:0:150 }}...</p> <!-- Displaying first 150 characters of the instructions -->
     </mat-card-content>
@@ -45,13 +45,12 @@
   
 <p class="suggestions-header" *ngIf="isSearchSuggestions">Users whom to follow</p>
 
-
 <app-search-suggestion-profile *ngIf="isSearchSuggestions"></app-search-suggestion-profile>
 
 <!-- <app-search-suggestion-profile *ngIf="isSearchSuggestions"></app-search-suggestion-profile> -->
 
-
 <app-trending-recipes-list *ngIf="isSearchSuggestions"></app-trending-recipes-list>
+
 
 <app-bottom-nav></app-bottom-nav>
 <!-- <div class="suggestions-container">

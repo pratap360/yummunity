@@ -39,4 +39,23 @@ p.suggestions-header {
     /* background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg'); */
     background-size: cover;
   }
-  
+
+
+  @media (max-width: 768px) {
+    
+    .suggestions-container{
+      /* margin: 20px auto; */
+      padding: 0 10px;
+    }
+    span{
+      display: none;
+    }
+    button{
+      padding: 0.5rem; 
+    }
+    mat-icon{
+      margin: 0 !important;
+    }
+  }
+
+

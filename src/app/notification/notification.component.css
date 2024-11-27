@@ -9,8 +9,6 @@ mat-button-toggle {
 
 }
 
-
-
 .notification-activity-container {
     display: flex;
     justify-content: center;
@@ -83,6 +81,22 @@ mat-button-toggle {
 @media (max-width: 768px) {
     
     div.notification-container {
-        margin: 28px 0px 20px 0px;
+        margin-top: 4rem;
+        /* margin: 28px 0px 20px 0px; */
+    }
+    .follow-icon{
+        display: none !important;
+    }
+    .notification-activity-container{
+        margin-bottom: 4rem;
+    }
+    mat-card-title{
+        font-size: 20px;
+    }
+    mat-card-subtitle{
+        font-size: 12px;
+    }
+    p .post-text{
+        font-size: 8px;
     }
 }
