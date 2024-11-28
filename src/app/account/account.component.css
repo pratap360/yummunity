@@ -1,3 +1,9 @@
+*{
+  margin: 0;
+  padding: 0;
+  overflow: hidden; 
+}
+
 .account-container {
   color: #000;
   display: flex;
@@ -321,11 +327,8 @@ div.profile-tab-container {
   mat-tab-group {
     display: flex;
     flex-wrap: nowrap;
-    /* Prevents wrapping of tabs */
     overflow-x: auto;
-    /* Allows horizontal scrolling if tabs don’t fit */
     -webkit-overflow-scrolling: touch;
-    /* Smooth scrolling on mobile devices */
   }
 }
 
