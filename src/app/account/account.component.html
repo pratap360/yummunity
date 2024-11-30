@@ -64,34 +64,41 @@
 <!-- <app-bottom-nav></app-bottom-nav> -->
 
 <div class="profile-tab-container">
-  <mat-tab-group color="accent" class="profile-post-tab" mat-align-tabs="center" dynamicHeight>
-    <mat-tab>
+
+  <mat-tab-group color="accent" class="profile-post-tab" mat-align-tabs="center" dynamicHeight (selectedIndexChange)="selectedTabIndex.set($event)">
+    <mat-tab label="Recipes Shares">
       <ng-template mat-tab-label>
         <mat-icon class="profile-tab-icon">mood</mat-icon>
         Recipes Shares
       </ng-template>
+      @defer(when selectedTabIndex() === 1; prefetch when prefetchTabs()) {
       <!-- ! Content 1 -->
       <app-text-post></app-text-post>
       <app-with-img-post></app-with-img-post>
+      }
     </mat-tab>
 
-    <mat-tab>
+    <mat-tab label="Blogs">
       <ng-template mat-tab-label>
         <mat-icon class="profile-tab-icon">library_books</mat-icon>
         Blogs
       </ng-template>
-      <!-- ! Content 2 -->
-      <app-blog-post></app-blog-post>
+      @defer(when selectedTabIndex() === 2; prefetch when prefetchTabs()) {
+        <!-- ! Content 2 -->
+        <app-blog-post></app-blog-post>
+      }
     </mat-tab>
 
-    <mat-tab>
+    <mat-tab label="Saves">
       <ng-template mat-tab-label>
         <mat-icon class="profile-tab-icon">bookmarks</mat-icon>
         Saves
       </ng-template>
-      <app-text-post></app-text-post>
+      @defer(when selectedTabIndex() === 2; prefetch when prefetchTabs()) {
+        <!-- ! Content 3 -->
+        <app-text-post></app-text-post>
+      }
 
-      <!-- ! Content 3 -->
        <!-- ? Need to implement the ngfor here to display the saved posts using boolean value  -->
        <!-- <ng-container *ngFor="let post of savedPosts">
         <app-text-post [data]="post"></app-text-post>

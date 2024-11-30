@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, signal,OnInit } from '@angular/core';
 // import { SideNavBarComponent } from '../../components/side-nav-bar/side-nav-bar.component';
 import { SidenavComponent } from '../../components/sidenav/sidenav.component';
 
@@ -12,6 +12,8 @@ import { SearchComponent } from '../search/search.component';
 import { HomeFeedComponent } from '../home-feed/home-feed.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import {MatTabsModule} from '@angular/material/tabs';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import {MatChipsModule} from '@angular/material/chips';
 import { BlogPostComponent } from "../../components/recipe-posts/blog-post/blog-post.component";
 import { TextPostComponent } from "../../components/recipe-posts/text-post/text-post.component";
@@ -39,8 +41,11 @@ import { SavesComponent } from "../../components/post-activity/saves/saves.compo
     MatTabsModule,
     MatChipsModule,
     MatTooltipModule,
+    MatToolbarModule,
+    MatSlideToggleModule,
     BlogPostComponent,
-    TextPostComponent, WithImgPostComponent,
+    TextPostComponent, 
+    WithImgPostComponent,
     PostContainerComponent,
     PostActivityComponent,
     BottomNavComponent,
@@ -73,7 +78,12 @@ export class AccountComponent {
 
   link = 'Parui Dev';
   linkUrl = 'https://paruidev.com';
+
+  selectedTabIndex = signal(0);
+  prefetchTabs = signal(false);
+  
 }
+
 
 
 // ! note : take {registration} data info to show the 'users since' from the auth api 
