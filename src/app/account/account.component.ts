@@ -20,6 +20,7 @@ import { PostContainerComponent } from "../../components/post-container/post-con
 import { PostActivityComponent } from "../../components/post-activity/post-activity.component";
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { BottomNavComponent } from "../../components/bottom-nav/bottom-nav.component";
+import { SavesComponent } from "../../components/post-activity/saves/saves.component";
 @Component({
   selector: 'app-account',
   standalone: true,
@@ -42,7 +43,8 @@ import { BottomNavComponent } from "../../components/bottom-nav/bottom-nav.compo
     TextPostComponent, WithImgPostComponent,
     PostContainerComponent,
     PostActivityComponent,
-    BottomNavComponent
+    BottomNavComponent,
+    SavesComponent
 ],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css',

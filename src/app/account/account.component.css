@@ -1,7 +1,6 @@
-*{
+* {
   margin: 0;
   padding: 0;
-  overflow: hidden; 
 }
 
 .account-container {
@@ -156,15 +155,25 @@ div.profile-tab-container {
 
 }
 
-.profile-tab {
+/* .profile-tab {
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
+  overflow: hidden; 
   align-items: stretch;
   width: 80%;
   max-width: 700px;
   z-index: 0;
+} */
+
+.profile-post-tab {
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  max-width: 700px;
+  z-index: 0;
 }
+
 
 .save-content-wrapper {
   display: flex;
@@ -305,7 +314,7 @@ div.profile-tab-container {
     margin-right: 0;
   }
 
-  .profile-tab {
+  .profile-post-tab{
     width: 100%;
   }
 
@@ -322,6 +331,7 @@ div.profile-tab-container {
   div.profile-tab-container {
     /* width: 100%; */
     margin-bottom: 3.4rem;
+    padding: 1rem;
   }
 
   mat-tab-group {
@@ -330,6 +340,7 @@ div.profile-tab-container {
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
   }
+
 }
 
 /* ! reminder : must add the follow and edit buttons to the account component  and do check the why bottom nav auto hide the logout button*/
