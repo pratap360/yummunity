@@ -87,46 +87,52 @@ export class SearchComponent implements OnInit, OnDestroy {
   constructor(private mealService: MealService) {}
 
   ngOnInit(): void {
-    // Initialize placeholder cycling
     this.currentPlaceholder = this.placeholderTexts[this.placeholderIndex];
     this.intervalId = setInterval(() => {
       this.placeholderIndex =
         (this.placeholderIndex + 1) % this.placeholderTexts.length;
       this.currentPlaceholder = this.placeholderTexts[this.placeholderIndex];
-    }, 1500); // Change every 2 seconds
+    }, 1500);
   }
 
   ngOnDestroy(): void {
-    // Clear interval to avoid memory leaks
     if (this.intervalId) {
       clearInterval(this.intervalId);
     }
   }
 
-  onSearch() {
+  onSearch(): void {
     if (this.searchQuery.trim() === '') {
       return;
     }
 
     this.isLoading = true;
+    this.hideShowText = false;
 
     this.mealService.searchMeals(this.searchQuery).subscribe({
-      next: (response) => {
-        this.meals = response.meals;
+      next: ([responseOne, responseTwo]) => {
+        const mealsOne = responseOne?.meals || [];
+        const mealsTwo = responseTwo?.data || []; // Adjust if the API response structure differs
+
+        this.meals = [...mealsOne, ...mealsTwo];
         this.isLoading = false;
         this.isSearchSuggestions = false;
+
+        if (this.meals.length === 0) {
+          this.hideShowText = true; // Show "No results found" message
+        }
       },
       error: (error) => {
-        console.log(error);
+        console.error(error);
         this.isLoading = false;
         this.hideShowText = true;
       },
     });
   }
-  openMealDetail(meal: any) {
-    window.open(meal.strSource, '_blank'); // Opens the recipe in a new tab
-  }
 
+  openMealDetail(meal: any): void {
+    window.open(meal.strSource || meal.link, '_blank'); // Adjust based on API structure
+  }
   // users = [
   //   { name: 'User_name', id: 'user_id', bio: 'user’s bio' },
   //   { name: 'User_name', id: 'user_id', bio: 'user’s bio' },

@@ -34,8 +34,12 @@
 </div>
 
 <!-- Show "No results found" only after loading and when there are no meals -->
-<div class="text-info-spinner" *ngIf="hideShowText || !isLoading && meals.length == 0">
+<!-- <div class="text-info-spinner" *ngIf="hideShowText || !isLoading && meals.length == 0">
   No meals found.
+</div> -->
+
+<div *ngIf="hideShowText">
+  Nothing founded for "{{ searchQuery }}". Please try a something different.
 </div>
 
 
