@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
 })
 export class MealService {
   private apiUrlOne = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
-  private apiUrlTwo = 'https://api.freeapi.app/api/v1/public/meals?query=';
+  // private apiUrlTwo = 'https://api.freeapi.app/api/v1/public/meals?query=';
 
   constructor(private http: HttpClient) {}
 
@@ -16,11 +16,12 @@ export class MealService {
     const requestOne = this.http.get<any>(this.apiUrlOne + query).pipe(
       catchError(() => of(null)) // Handle errors for API One
     );
-    const requestTwo = this.http.get<any>(this.apiUrlTwo + query).pipe(
-      catchError(() => of(null)) // Handle errors for API Two
-    );
+    // const requestTwo = this.http.get<any>(this.apiUrlTwo + query).pipe(
+    //   catchError(() => of(null)) // Handle errors for API Two
+    // );
 
     // Combine both requests into a single observable
-    return forkJoin([requestOne, requestTwo]);
+    return forkJoin([requestOne]);
+    // return forkJoin([requestOne, requestTwo]);
   }
 }
