@@ -155,42 +155,53 @@ export class AddPostsComponent implements OnInit {
       return alert('Please fill in all the required fields'); // Stop if form is invalid
     }
 
-    const recipeData = {
-      post_Content: this.postrecipeForm.get('postContent')?.value,
-      post_Content_Pictures: this.postrecipeForm.get('postImages')?.value,
+    const files = (document.getElementById('uploadImage') as HTMLInputElement).files;
 
-      // user_name:
-      // user_bio:
-      // post_comments:
-      // post_likes:
-      // post_saves:
-    };
-    // const imageUrls: never[] = [];
-    // recipeData.post_Content_Pictures: imageUrls;
+    const fileArray = files ? Array.from(files) : [];    
+    if (fileArray.length > 4) {
+      return alert('You can only upload a maximum of 4 images');
+    }
 
-    this.appwriteService.postRecipewithImage(recipeData.post_Content,recipeData.post_Content_Pictures).then(() => {
-        this.dialogRef.close();
-        this.post_snackBar.open('Recipe posted successfully!', 'Close', {
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-          duration: 5000,
-        });
-      })
-      .catch((error) => {
-        this.post_snackBar.open(
-          'Failed to post recipe. Please Post Later.','Close',{
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-            duration: 5000,
-          }
-        );
-        console.error('Failed to post recipe:', error);
+    // const recipeData = {
+    //   post_Content: this.postrecipeForm.get('postContent')?.value,
+    //   post_Content_Pictures: this.postrecipeForm.get('postImages')?.value,
+
+    //   // user_name:
+    //   // user_bio:
+    //   // post_comments:
+    //   // post_likes:
+    //   // post_saves:
+    // };
+
+    this.appwriteService.uploadFiles(fileArray)
+    .then((imageUrls) => {
+      const recipeData = {
+        post_Content: this.postrecipeForm.get('postContent')?.value,
+        post_Content_Pictures: imageUrls, // Use uploaded image URLs
+      };
+
+      return this.appwriteService.createPost(recipeData);
+    })
+    .then(() => {
+      this.dialogRef.close();
+      this.post_snackBar.open('Recipe posted successfully!', 'Close', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration: 5000,
       });
-    // this.dialogRef.close();
-    console.log('add-posts.ts :: postRecipe() ::posted successfully & closed dialog');
+    })
+    .catch((error) => {
+      console.error('Failed to post recipe:', error);
+      this.post_snackBar.open('Failed to post recipe. Please try again later.', 'Close', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration: 5000,
+      });
+    });
+
+
   }
 
-  
 
   onCancel(): void {
     console.log('Appwrite Service :: onCancel() ::');
