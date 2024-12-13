@@ -50,6 +50,11 @@ export class HomeFeedComponent {
   readonly dialog = inject(MatDialog);
 
 
+
+
+
+
+  
   onAddPost(enterAnimationDuration: string, exitAnimationDuration: string): void {
     this.dialog.open(AddPostsComponent, {
       width: '800px',
@@ -57,6 +62,10 @@ export class HomeFeedComponent {
       exitAnimationDuration,
     });
   }
+
+
+
+
 
 
   // openDialog() {

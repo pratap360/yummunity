@@ -11,7 +11,8 @@
 
 
 <div class="content-wrapper">
-  <app-recipe-posts></app-recipe-posts>
+  <app-recipe-posts *ngFor="let post of posts" [post]="post"></app-recipe-posts>
+  <!-- <app-recipe-posts></app-recipe-posts> -->
 </div>
 
 
