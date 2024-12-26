@@ -6,6 +6,7 @@ import {
   model,
   OnInit,
   signal,
+  
 } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -27,7 +28,7 @@ import { BlogPostComponent } from './blog-post/blog-post.component';
 import { TextPostComponent } from './text-post/text-post.component';
 import { WithImgPostComponent } from './with-img-post/with-img-post.component';
 import { AppwriteService } from '../../lib/appwrite.service';
-
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-recipe-posts',
   standalone: true,
@@ -41,13 +42,15 @@ import { AppwriteService } from '../../lib/appwrite.service';
     BlogPostComponent,
     TextPostComponent,
     WithImgPostComponent,
+    CommonModule,
   ],
   templateUrl: './recipe-posts.component.html',
   styleUrl: './recipe-posts.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecipePostsComponent implements OnInit {
-  @Input() post: any;
+  // @Input() post: any;
+  posts: any[] = [];
 
   constructor(private appwriteService: AppwriteService) {}
   ngOnInit(): void {
@@ -55,13 +58,12 @@ export class RecipePostsComponent implements OnInit {
   }
 
   fetchPosts() {
-    this.appwriteService.getPosts().then(
-      (response: any) => {
-        this.post = response.documents; // Assign fetched posts to the `posts` array
-        console.log('Fetched posts:', this.post);
+    this.appwriteService.getPosts().subscribe(
+      (data: any) => {
+        this.posts = data;
       },
       (error: any) => {
-        console.error('Failed to fetch posts:', error);
+        console.error('Error fetching posts', error);
       }
     );
   }
