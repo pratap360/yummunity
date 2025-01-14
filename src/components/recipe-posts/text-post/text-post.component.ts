@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -7,9 +7,10 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import {MatMenuModule} from '@angular/material/menu';
+import {MatMenuModule, MatMenuTrigger} from '@angular/material/menu';
 import { PostActivityComponent } from '../../post-activity/post-activity.component';
 import { AppwriteService } from '../../../lib/appwrite.service';
+import { SharePostComponent } from '../../post-activity/share-post/share-post.component';
 
 @Component({
   selector: 'app-text-post',
@@ -57,4 +58,16 @@ export class TextPostComponent {
       }
     );
   }
+
+
+    readonly menuTrigger = viewChild.required(MatMenuTrigger);
+  
+    readonly dialog = inject(MatDialog);
+    sharePost() {
+      const dialogRef = this.dialog.open(SharePostComponent, {
+        restoreFocus: false,
+      });
+      dialogRef.afterClosed().subscribe(() => this.menuTrigger().focus());
+    }
+
 }

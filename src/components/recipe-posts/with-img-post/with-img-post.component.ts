@@ -1,12 +1,25 @@
-import { Component,Input, OnInit } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnInit,
+  ChangeDetectionStrategy,
+  inject,
+  viewChild,
+} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { PostActivityComponent } from '../../post-activity/post-activity.component';
-import {MatMenuModule} from '@angular/material/menu';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { AppwriteService } from '../../../lib/appwrite.service';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogContent,
+} from '@angular/material/dialog';
+import { SharePostComponent } from '../../post-activity/share-post/share-post.component';
 
 @Component({
   selector: 'app-with-img-post',
@@ -18,10 +31,13 @@ import { AppwriteService } from '../../../lib/appwrite.service';
     MatIconModule,
     MatChipsModule,
     MatMenuModule,
-    PostActivityComponent
+    MatMenuTrigger,
+    MatDialogContent,
+    MatDialogActions,
+    PostActivityComponent,
   ],
   templateUrl: './with-img-post.component.html',
-  styleUrl: './with-img-post.component.css'
+  styleUrl: './with-img-post.component.css',
 })
 export class WithImgPostComponent implements OnInit {
   @Input() post: any;
@@ -43,5 +59,13 @@ export class WithImgPostComponent implements OnInit {
     );
   }
 
+  readonly menuTrigger = viewChild.required(MatMenuTrigger);
 
+  readonly dialog = inject(MatDialog);
+  sharePost() {
+    const dialogRef = this.dialog.open(SharePostComponent, {
+      restoreFocus: false,
+    });
+    dialogRef.afterClosed().subscribe(() => this.menuTrigger().focus());
+  }
 }
