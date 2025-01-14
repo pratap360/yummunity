@@ -32,7 +32,7 @@ export class WithImgPostComponent implements OnInit {
   }
 
   fetchPosts() {
-    this.appwriteService.getPosts().then(
+    this.appwriteService.getPosts().subscribe(
       (response: any) => {
         this.post = response.documents; // Assign fetched posts to the `posts` array
         console.log('Fetched posts:', this.post);

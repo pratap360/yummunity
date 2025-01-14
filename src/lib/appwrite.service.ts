@@ -3,6 +3,8 @@
 import { Injectable } from '@angular/core';
 import { Client, Databases, Storage, ID } from 'appwrite';
 import { environment } from '../environments/environment';
+import { Observable } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root',
@@ -145,7 +147,7 @@ export class AppwriteService {
   }
 
   // Fetch posts from the collection
-  getPosts() {
+  getPosts(): Observable<any> {
     return this.database.listDocuments(
       environment.appwrite_DatabaseID,
       environment.users_CollectionID

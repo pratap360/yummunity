@@ -54,17 +54,17 @@ export class RecipePostsComponent implements OnInit {
 
   constructor(private appwriteService: AppwriteService) {}
   ngOnInit(): void {
-    this.fetchPosts();
+    // this.fetchPosts();
   }
 
-  fetchPosts() {
-    this.appwriteService.getPosts().subscribe(
-      (data: any) => {
-        this.posts = data;
-      },
-      (error: any) => {
-        console.error('Error fetching posts', error);
-      }
-    );
-  }
+  // fetchPosts():void {
+  //   this.appwriteService.getPosts().subscribe(
+  //     (data: any) => {
+  //       this.posts = data;
+  //     },
+  //     (error: any) => {
+  //       console.error('Error fetching posts', error);
+  //     }
+  //   );
+  // }
 }
