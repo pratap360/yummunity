@@ -6,8 +6,8 @@ import {
   model,
   OnInit,
   signal,
-  
 } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -28,7 +28,7 @@ import { BlogPostComponent } from './blog-post/blog-post.component';
 import { TextPostComponent } from './text-post/text-post.component';
 import { WithImgPostComponent } from './with-img-post/with-img-post.component';
 import { AppwriteService } from '../../lib/appwrite.service';
-import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-recipe-posts',
   standalone: true,
@@ -50,21 +50,32 @@ import { CommonModule } from '@angular/common';
 })
 export class RecipePostsComponent implements OnInit {
   // @Input() post: any;
-  posts: any[] = [];
+  postsId: string[] = [];
+  id: any;
 
   constructor(private appwriteService: AppwriteService) {}
   ngOnInit(): void {
-    // this.fetchPosts();
+    this.fetchPostsId();
   }
 
-  // fetchPosts():void {
-  //   this.appwriteService.getPosts().subscribe(
-  //     (data: any) => {
-  //       this.posts = data;
-  //     },
-  //     (error: any) => {
-  //       console.error('Error fetching posts', error);
-  //     }
-  //   );
-  // }
+  fetchPostsId(): void {
+    this.appwriteService.getPostsId().subscribe({
+      next: (data) => {
+        this.postsId = data;
+        console.log( 'Posts Ids:', this.postsId);
+      },
+      error: (error) => {
+        console.error('Error fetching posts:', error);
+      }
+    });
+  }
 }
+
+//       (data) => {
+//         this.posts = data;
+//       },
+//       (error) => {
+//         console.error('Error fetching posts', error);
+//       }
+//     );
+//   }

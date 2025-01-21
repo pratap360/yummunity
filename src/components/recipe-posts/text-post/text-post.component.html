@@ -1,12 +1,13 @@
 <mat-card appearance="outlined" class="posts-card">
   <mat-card-header>
     <div mat-card-avatar class="profile-header-image"></div>
-    <mat-card-title>Pratap Parui</mat-card-title>
-    <mat-card-subtitle>Developer|Food Critics</mat-card-subtitle>
+    <mat-card-title>{{user_name}}</mat-card-title>
+    <mat-card-subtitle>{{user_bio}}</mat-card-subtitle>
     <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
+      <!-- implement copy to clipboard properly  -->
       <button mat-menu-item (click)="sharePost()">
         <mat-icon>share</mat-icon>
         <span>Share Post</span>
@@ -63,7 +64,7 @@
   <!-- </mat-card-actions> -->
 </mat-card>
 
-
+<div *ngFor="let recipe of postsId">
 <mat-card appearance="outlined" class="posts-card">
   <mat-card-header>
     <div mat-card-avatar class="profile-header-image"></div>
@@ -88,7 +89,9 @@
     </mat-menu>
   </mat-card-header>
   <mat-card-content class="card-content">
-    <p><b>Did you know that ?:</b>egg is not non veg it's a veg</p>
+    {{recipe.post_Content}}
+    <!-- <p><b>Did you know that ?:</b>egg is not non veg it's a veg</p> -->
   </mat-card-content>
   <app-post-activity></app-post-activity>
 </mat-card>
+</div>

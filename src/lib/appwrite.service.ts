@@ -3,7 +3,8 @@
 import { Injectable } from '@angular/core';
 import { Client, Databases, Storage, ID } from 'appwrite';
 import { environment } from '../environments/environment';
-import { Observable } from 'rxjs';
+import { from, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
@@ -147,10 +148,26 @@ export class AppwriteService {
   }
 
   // Fetch posts from the collection
-  getPosts(): Observable<any> {
-    return this.database.listDocuments(
+  getPostsId(): Observable<any> {
+    const promise = this.database.listDocuments(
       environment.appwrite_DatabaseID,
-      environment.users_CollectionID
+      environment.post_CollectionID
     );
+    return from(promise.then((response: { documents: Array<{ $id: string }> }) => response.documents.map((doc) => doc.$id)));
   }
+
+  // async getPost(): Promise<any> {
+  //   try {
+  //     const response = await this.database.getDocument(
+  //       environment.appwrite_DatabaseID,
+  //       environment.users_CollectionID,
+
+  //     );
+  //     return response;
+  //   }
+  //   catch (error) {
+  //     console.error('Appwrite Service :: getPost() ::', error);
+  //     throw error;
+  //   }
+  // }
 }

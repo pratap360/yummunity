@@ -4,11 +4,30 @@
 
 <app-blog-post></app-blog-post> -->
 
-<div *ngFor="let post of posts">
+<!-- <div *ngFor="let post of posts">
   <app-text-post *ngIf="post.type === 'text'"></app-text-post>
   <app-with-img-post *ngIf="post.type === 'image'" [post]="post"></app-with-img-post>
   <app-blog-post *ngIf="post.type === 'blog'"></app-blog-post>
+</div> -->
+
+<div *ngFor="let post of postsId">
+  <app-text-post [postsId]="postsId"></app-text-post>
+  <!-- <app-with-img-post [post]="post"></app-with-img-post>
+  <app-blog-post></app-blog-post> -->
 </div>
+
+
+<!-- <div *ngIf="postsId.length > 0; else noData">
+  <ul>
+    <li *ngFor="let post of postsId">
+      Document ID: {{ id }}
+    </li>
+  </ul>
+</div>
+
+<ng-template #noData>
+  <p>No documents found.</p>
+</ng-template> -->
 
 
 <!-- </div>

@@ -39,25 +39,25 @@ import { SharePostComponent } from '../../post-activity/share-post/share-post.co
   templateUrl: './with-img-post.component.html',
   styleUrl: './with-img-post.component.css',
 })
-export class WithImgPostComponent implements OnInit {
+export class WithImgPostComponent {
   @Input() post: any;
 
   constructor(private appwriteService: AppwriteService) {}
-  ngOnInit(): void {
-    this.fetchPosts();
-  }
+  // ngOnInit(): void {
+  //   this.fetchPosts();
+  // }
 
-  fetchPosts() {
-    this.appwriteService.getPosts().subscribe(
-      (response: any) => {
-        this.post = response.documents; // Assign fetched posts to the `posts` array
-        console.log('Fetched posts:', this.post);
-      },
-      (error: any) => {
-        console.error('Failed to fetch posts:', error);
-      }
-    );
-  }
+  // fetchPosts() {
+  //   this.appwriteService.getPosts().subscribe(
+  //     (response: any) => {
+  //       this.post = response.documents; // Assign fetched posts to the `posts` array
+  //       console.log('Fetched posts:', this.post);
+  //     },
+  //     (error: any) => {
+  //       console.error('Failed to fetch posts:', error);
+  //     }
+  //   );
+  // }
 
   readonly menuTrigger = viewChild.required(MatMenuTrigger);
 
