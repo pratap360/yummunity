@@ -1,34 +1,18 @@
 import {
   ChangeDetectionStrategy,
   Component,
-  inject,
-  Input,
-  model,
   OnInit,
-  signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
-  MatDialogRef,
-  MatDialogTitle,
-} from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { BlogPostComponent } from './blog-post/blog-post.component';
 import { TextPostComponent } from './text-post/text-post.component';
 import { WithImgPostComponent } from './with-img-post/with-img-post.component';
-import { AppwriteService } from '../../lib/appwrite.service';
-import { RecipePost } from '../../app/interface/recipe-post';
 import { PostActivityComponent } from "../post-activity/post-activity.component";
 import { MatMenuModule } from '@angular/material/menu';
 
@@ -60,10 +44,10 @@ import { MatMenuModule } from '@angular/material/menu';
 
 export class RecipePostsComponent implements OnInit {
   // @Input() post: any;
-  posts: RecipePost[] = [];
-  id: any;
+  // posts: RecipePost[] = [];
+  // id: any;
 
-  constructor(private appwriteService: AppwriteService) {}
+  constructor() {}
   ngOnInit(): void {
     // this.fetchPostsId();
     // this.loadPosts();

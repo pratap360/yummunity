@@ -48,16 +48,16 @@ export class TextPostComponent {
   // post_id: string = '678ea60e001c28e7b3f9';
   constructor(private appwriteService: AppwriteService) {}
   ngOnInit(): void {
-    this.fetchPostsId();
+    this.fetchAllPosts();
   }
 
 
-  fetchPostsId(): void {
-    this.appwriteService.getPostsId().subscribe({
+  fetchAllPosts(): void {
+    this.appwriteService.getAllPosts().subscribe({
       next: (data) => {
-        console.log('Data:', data);
+        // console.log('Data:', data);
         this.posts = data.documents;
-        console.log( 'Posts Ids:', this.posts);
+        console.log( 'All Posts :', this.posts);
       },
       error: (error) => {
         console.error('Error fetching posts:', error);

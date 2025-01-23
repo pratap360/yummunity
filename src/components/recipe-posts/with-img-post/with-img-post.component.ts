@@ -20,11 +20,14 @@ import {
   MatDialogContent,
 } from '@angular/material/dialog';
 import { SharePostComponent } from '../../post-activity/share-post/share-post.component';
+import { CommonModule } from '@angular/common';
+import { RecipePost } from '../../../app/interface/recipe-post';
 
 @Component({
   selector: 'app-with-img-post',
   standalone: true,
   imports: [
+    CommonModule,
     FormsModule,
     MatButtonModule,
     MatCardModule,
@@ -40,24 +43,27 @@ import { SharePostComponent } from '../../post-activity/share-post/share-post.co
   styleUrl: './with-img-post.component.css',
 })
 export class WithImgPostComponent {
-  @Input() post: any;
+  // @Input() post: any;
+  posts: RecipePost[] = [];
 
   constructor(private appwriteService: AppwriteService) {}
-  // ngOnInit(): void {
-  //   this.fetchPosts();
-  // }
+  ngOnInit(): void {
+    this.fetchAllPosts();
+  }
 
-  // fetchPosts() {
-  //   this.appwriteService.getPosts().subscribe(
-  //     (response: any) => {
-  //       this.post = response.documents; // Assign fetched posts to the `posts` array
-  //       console.log('Fetched posts:', this.post);
-  //     },
-  //     (error: any) => {
-  //       console.error('Failed to fetch posts:', error);
-  //     }
-  //   );
-  // }
+
+  fetchAllPosts(): void {
+    this.appwriteService.getAllPosts().subscribe({
+      next: (data) => {
+        // console.log('Data:', data);
+        this.posts = data.documents;
+        console.log( 'All Posts:', this.posts);
+      },
+      error: (error) => {
+        console.error('Error fetching posts:', error);
+      }
+    })
+  }
 
   readonly menuTrigger = viewChild.required(MatMenuTrigger);
 
