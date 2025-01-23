@@ -11,6 +11,8 @@ import {MatMenuModule, MatMenuTrigger} from '@angular/material/menu';
 import { PostActivityComponent } from '../../post-activity/post-activity.component';
 import { AppwriteService } from '../../../lib/appwrite.service';
 import { SharePostComponent } from '../../post-activity/share-post/share-post.component';
+import { RecipePost } from '../../../app/interface/recipe-post';
+
 
 @Component({
   selector: 'app-text-post',
@@ -39,10 +41,11 @@ export class TextPostComponent {
   //   const comments = JSON.parse(localStorage.getItem('comments_1') || '[]');
   //   this.comments_counter = comments.length;
   // }
-  @Input() postsId: any;
+  // @Input() postsId: any;
+    posts: RecipePost[] = [];
   user_name: string = 'Pratap Parui';
   user_bio: string = 'Developer|Food Critics';
-  post_id: string = '678ea60e001c28e7b3f9';
+  // post_id: string = '678ea60e001c28e7b3f9';
   constructor(private appwriteService: AppwriteService) {}
   ngOnInit(): void {
     this.fetchPostsId();
@@ -52,13 +55,14 @@ export class TextPostComponent {
   fetchPostsId(): void {
     this.appwriteService.getPostsId().subscribe({
       next: (data) => {
-        this.postsId = data;
-        console.log( 'Posts Ids:', this.postsId);
+        console.log('Data:', data);
+        this.posts = data.documents;
+        console.log( 'Posts Ids:', this.posts);
       },
       error: (error) => {
         console.error('Error fetching posts:', error);
       }
-    });
+    })
   }
 
 

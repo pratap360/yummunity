@@ -28,6 +28,9 @@ import { BlogPostComponent } from './blog-post/blog-post.component';
 import { TextPostComponent } from './text-post/text-post.component';
 import { WithImgPostComponent } from './with-img-post/with-img-post.component';
 import { AppwriteService } from '../../lib/appwrite.service';
+import { RecipePost } from '../../app/interface/recipe-post';
+import { PostActivityComponent } from "../post-activity/post-activity.component";
+import { MatMenuModule } from '@angular/material/menu';
 
 @Component({
   selector: 'app-recipe-posts',
@@ -39,36 +42,58 @@ import { AppwriteService } from '../../lib/appwrite.service';
     MatIconModule,
     MatChipsModule,
     MatInputModule,
+    MatMenuModule,
     BlogPostComponent,
     TextPostComponent,
     WithImgPostComponent,
     CommonModule,
-  ],
+    PostActivityComponent
+],
   templateUrl: './recipe-posts.component.html',
   styleUrl: './recipe-posts.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
+
+
+
+
+
 export class RecipePostsComponent implements OnInit {
   // @Input() post: any;
-  postsId: string[] = [];
+  posts: RecipePost[] = [];
   id: any;
 
   constructor(private appwriteService: AppwriteService) {}
   ngOnInit(): void {
-    this.fetchPostsId();
+    // this.fetchPostsId();
+    // this.loadPosts();
   }
 
-  fetchPostsId(): void {
-    this.appwriteService.getPostsId().subscribe({
-      next: (data) => {
-        this.postsId = data;
-        console.log( 'Posts Ids:', this.postsId);
-      },
-      error: (error) => {
-        console.error('Error fetching posts:', error);
-      }
-    });
-  }
+  // private loadPosts(){
+  //   this.appwriteService.getPostsId().subscribe({
+  //     next:(response) => {
+  //       this.postsId = response.documents;
+  //       console.log('Posts:', this.postsId);
+  //     },
+  //     error: (error) => {
+  //       console.error('Error fetching posts:', error);
+  //     }
+  //   });
+  // }
+
+
+  //  fetchPostsId(): void {
+  //   this.appwriteService.getPostsId().subscribe({
+  //     next: (data) => {
+  //       console.log('Data:', data);
+  //       this.posts = data.documents;
+  //       console.log( 'Posts Ids:', this.posts);
+  //     },
+  //     error: (error) => {
+  //       console.error('Error fetching posts:', error);
+  //     }
+  //   })
+  // }
 }
 
 //       (data) => {

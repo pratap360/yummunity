@@ -35,63 +35,63 @@
   </mat-card-content>
   <app-post-activity></app-post-activity>
   <!-- <mat-card-actions class="action-buttons"> -->
-    <!-- Like Button -->
+  <!-- Like Button -->
 
-    <!-- <button mat-flat-button [color]="liked ? 'warn' : null" (click)="toggleLike()">
+  <!-- <button mat-flat-button [color]="liked ? 'warn' : null" (click)="toggleLike()">
       <mat-icon>favorite</mat-icon>
       {{ likes }} Like
     </button> -->
 
-    <!-- Comment Button with Modal Popup -->
-    <!-- <button mat-raised-button (click)="openCommentModal()">
+  <!-- Comment Button with Modal Popup -->
+  <!-- <button mat-raised-button (click)="openCommentModal()">
       <mat-icon>comment</mat-icon>
       {{ comments_counter }} Comment{{ comments.length > 1 ? 's' : '' }}
     </button> -->
 
-    <!-- Save Button -->
+  <!-- Save Button -->
 
-    <!-- <button mat-raised-button [color]="saved ? 'warn' : null" (click)="toggleSave()">
+  <!-- <button mat-raised-button [color]="saved ? 'warn' : null" (click)="toggleSave()">
       <mat-icon>bookmark</mat-icon>
       {{ saves }} Save
     </button> -->
 
-    <!-- Read More Button -->
+  <!-- Read More Button -->
 
-    <!-- <button mat-stroked-button (click)="navigateToPost()">
+  <!-- <button mat-stroked-button (click)="navigateToPost()">
       <mat-icon>more_horiz</mat-icon>
       Read More
     </button> -->
   <!-- </mat-card-actions> -->
 </mat-card>
 
-<div *ngFor="let recipe of postsId">
-<mat-card appearance="outlined" class="posts-card">
-  <mat-card-header>
-    <div mat-card-avatar class="profile-header-image"></div>
-    <mat-card-title>Pratap Parui</mat-card-title>
-    <mat-card-subtitle>Developer|Food Critics</mat-card-subtitle>
-    <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="sharePost()">
-        <mat-icon>share</mat-icon>
-        <span>Share Post</span>
+<div>
+  <mat-card *ngFor="let post of posts" appearance="outlined" class="posts-card">
+    <mat-card-header>
+      <div mat-card-avatar class="profile-header-image"></div>
+      <mat-card-title>{{ post.user_name || 'Anonymous' }}</mat-card-title>
+      <mat-card-subtitle>{{ post.user_bio || 'love food' }}</mat-card-subtitle>
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
+        <mat-icon>more_vert</mat-icon>
       </button>
-      <button mat-menu-item>
-        <mat-icon>report</mat-icon>
-        <span>Report</span>
-      </button>
-      <button mat-menu-item disabled>
-        <mat-icon>campaign</mat-icon>
-        <span>Promote</span>
-      </button>
-    </mat-menu>
-  </mat-card-header>
-  <mat-card-content class="card-content">
-    {{recipe.post_Content}}
-    <!-- <p><b>Did you know that ?:</b>egg is not non veg it's a veg</p> -->
-  </mat-card-content>
-  <app-post-activity></app-post-activity>
-</mat-card>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="sharePost()">
+          <mat-icon>share</mat-icon>
+          <span>Share Post</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>report</mat-icon>
+          <span>Report</span>
+        </button>
+        <button mat-menu-item disabled>
+          <mat-icon>campaign</mat-icon>
+          <span>Promote</span>
+        </button>
+      </mat-menu>
+    </mat-card-header>
+    <mat-card-content class="card-content">
+      <p>{{post.post_Content}}</p>
+      <!-- <p><b>Did you know that ?:</b>egg is not non veg it's a veg</p> -->
+    </mat-card-content>
+    <app-post-activity></app-post-activity>
+  </mat-card>
 </div>
