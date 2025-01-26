@@ -1,7 +1,7 @@
 // appwrite.service.ts
 
 import { Injectable } from '@angular/core';
-import { Client, Databases, Storage, ID } from 'appwrite';
+import { Client, Databases, Storage, ID,Query  } from 'appwrite';
 import { environment } from '../environments/environment';
 import { from, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
@@ -102,10 +102,9 @@ export class AppwriteService {
         return this.database.listDocuments(
           environment.appwrite_DatabaseID,
           environment.post_CollectionID,
-          [], // filters
-          [], // Order
-          'createdAt', // OrderBy
-          false //Desc
+          [
+            Query.orderDesc('$createdAt')
+          ]
         );
       }),
       map((response: { documents: Array<any> }) => {

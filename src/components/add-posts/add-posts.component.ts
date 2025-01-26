@@ -192,7 +192,7 @@ export class AddPostsComponent implements OnInit {
     })
     .catch((error) => {
       console.error('Failed to post recipe:', error);
-      this.post_snackBar.open('Failed to post recipe. Please try again later.', 'Close', {
+      this.post_snackBar.open(error, 'Close', {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
         duration: 5000,
