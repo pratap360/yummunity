@@ -50,10 +50,9 @@ export class RecipePostsComponent{
   posts: RecipePost[] = [];
 
   constructor(private appwriteService: AppwriteService) {}
-  // ngOnInit(): void {
-  //   this.fetchPostsId();
-  //   this.loadPosts();
-  // }
+  ngOnInit(): void {
+
+  }
 
   // fetchAllPosts(): void {
   //   this.appwriteService.getAllPosts().subscribe({

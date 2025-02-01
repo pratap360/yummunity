@@ -1,37 +1,37 @@
 .recipe-post-form {
-    min-width: 250px;
-    max-width: 500px;
-    width: 100%;
+  min-width: 250px;
+  max-width: 500px;
+  width: 100%;
 }
 
 .recipe-post-text-area {
-    width: 100%;
+  width: 100%;
 }
 
 textarea {
-    height: auto; 
-    /* height: 380px !important;  */
-    /* min-height: 380px !important; 
+  height: auto;
+  /* height: 380px !important;  */
+  /* min-height: 380px !important; 
     max-height: 380px !important;  */
-  }
-  
+}
+
 
 .post-tittle {
-    font-size: 20px;
-    margin: 15px;
-    display: flex;
-    align-items: center;
+  font-size: 20px;
+  margin: 15px;
+  display: flex;
+  align-items: center;
 }
 
 mat-dialog-container {
-    width: 600px;
-    height: 500px;
+  width: 600px;
+  height: 500px;
 
 }
 
-mat-card-title{
-font-size: 1.2rem;
-margin-bottom: 13px;
+mat-card-title {
+  font-size: 1.2rem;
+  margin-bottom: 13px;
 }
 
 
@@ -41,50 +41,52 @@ margin-bottom: 13px;
     padding: 10px;
   }
    */
-  .user-info {
-    display: flex;
-    align-items: center;
-  }
-  
-  .user-info img {
-    height: 30px;
-    width: 30px;
-    margin-right: 10px;
-  }
-  
-  /* .full-width-input {
+.user-info {
+  display: flex;
+  align-items: center;
+}
+
+.user-info img {
+  height: 30px;
+  width: 30px;
+  margin-right: 10px;
+}
+
+/* .full-width-input {
     width: 100%;
   } */
-  
-  .action-icons {
-    display: flex;
-    justify-content: start;
-    gap: 10px;
-    margin-top: 10px;
-  }
-  
-  .post-actions {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
-  
-  .cancel-button {
-    color: #201a1b; /* Light color for buttons */
-  }
-  
-  .post-button:disabled {
-    color: #555; /* Disabled color */
-  }
-  
-.add-post{
-    display: block;
-    flex-grow: 1;
-    box-sizing: content-box;
-    margin: 0;
-    overflow: auto;
-    max-height: 65vh;
-    /* overflow: hidden; */
+
+.action-icons {
+  display: flex;
+  justify-content: start;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.post-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.cancel-button {
+  color: #201a1b;
+  /* Light color for buttons */
+}
+
+.post-button:disabled {
+  color: #555;
+  /* Disabled color */
+}
+
+.add-post {
+  display: block;
+  flex-grow: 1;
+  box-sizing: content-box;
+  margin: 0;
+  overflow: auto;
+  max-height: 65vh;
+  /* overflow: hidden; */
 }
 
 /* .image-previews {
@@ -112,4 +114,12 @@ margin-bottom: 13px;
 
 mat-icon-button {
   background-color: #f1f1f1;
+}
+
+.title-field,
+.blog-link,
+.summary-field,
+.tags-field,
+.thumbnail-field  {
+  width: 100%;
 }

@@ -1,6 +1,6 @@
 <mat-dialog-content class="add-post">
   <!-- <mat-card class="post-card"> -->
-  <span class="post-tittle"> What Type of food you are cooking?</span>
+  <span class="post-tittle" *ngIf="!isBlogMode"> What Type of food you are cooking?</span>
   <!-- <mat-card-header *ngFor="let user of users">
     <div class="user-info">
       <img mat-card-avatar [src]="user.picture.thumbnail" class="profile-header-image"
@@ -10,71 +10,154 @@
   </mat-card-header> -->
 
   <mat-card-content>
-    <!-- <form class="recipe-post-form" > -->
-    <mat-form-field appearance="outline" class="recipe-post-text-area" [formGroup]="postrecipeForm">
-      <textarea matInput  #post maxlength="2000" formControlName="postContent" placeholder="what are the health benfits of eating..."
-        rows="2"></textarea>
-        @if ( postrecipeForm.controls['postContent'].touched && postrecipeForm.controls['postContent'].errors?.['required']){
+    <form [formGroup]="postRecipeForm">
+      <!-- Default Post Content Area -->
+      <ng-container *ngIf="!isBlogMode">
+        <mat-form-field appearance="outline" class="recipe-post-text-area" [formGroup]="postRecipeForm">
+          <textarea matInput #post maxlength="2000" formControlName="postContent"
+            placeholder="what are the health benfits of eating..." rows="2"></textarea>
+          @if ( postRecipeForm.controls['postContent'].touched &&
+          postRecipeForm.controls['postContent'].errors?.['required']){
           <mat-hint align="start" color="primary">
             <strong>Above Field is required, Try to write some Hot Recipes</strong>
           </mat-hint>
-        }  
-        <mat-hint align="end">{{post.value.length}} / 2000</mat-hint>
-    </mat-form-field>
+          }
+          <mat-hint align="end">{{post.value.length}} / 2000</mat-hint>
+        </mat-form-field>
+      </ng-container>
 
-      <!-- Image Slider -->
-  <div *ngIf="imagePreviews.length > 0" class="slider">
-    <button mat-icon-button (click)="prevImage()" [disabled]="currentImageIndex === 0">
-      <mat-icon>arrow_back</mat-icon>
-    </button>
-    
-    <div class="slider-image">
-      <img [src]="imagePreviews[currentImageIndex]" alt="Image Preview" style="max-width: 100%; height: auto;">
-    </div>
-    
-    <button mat-icon-button (click)="nextImage()" [disabled]="currentImageIndex === imagePreviews.length - 1">
-      <mat-icon>arrow_forward</mat-icon>
-    </button>
-  </div>
-<!-- </form> -->
+      <!-- Link Mode Content Area -->
+      <ng-container *ngIf="isBlogMode">
+        <span class="post-tittle"> What Type of Blog you are posting?</span>
 
-    <div class="action-icons" [formGroup]="postrecipeForm">
+        <mat-form-field [formGroup]="postBlogForm" class="title-field" appearance="outline">
+          <mat-label>Title</mat-label>
+          <input matInput #message maxlength="50" placeholder="A catchy title for your blog" formControlName="blogTitle">
+          <mat-hint align="end">{{message.value.length}} / 50</mat-hint>
+        </mat-form-field>
+
+        <mat-form-field [formGroup]="postBlogForm" appearance="outline" class="blog-link">
+          <mat-label>Blog Link</mat-label>
+          <input matInput formControlName="blogLink" placeholder="Enter blog URL">
+          <!-- <mat-error *ngIf="postRecipeForm.get('blogLink')?.hasError('required')">
+            URL is required
+          </mat-error> -->
+        </mat-form-field>
+
+        <!-- Summary field shows up if link preview fails -->
+        <mat-form-field [formGroup]="postBlogForm" *ngIf="!linkPreviewError" appearance="outline" class="summary-field">
+          <mat-label>Short Summary</mat-label>
+          <textarea matInput formControlName="summary" maxlength="100" rows="2"
+            placeholder="Enter a brief summary of the blog"></textarea>
+          <mat-hint align="end">
+            {{postRecipeForm.get('summary')?.value?.length || 0}} / 100
+          </mat-hint>
+        </mat-form-field>
+
+        <!-- tag chips -->
+
+        <mat-form-field [formGroup]="postBlogForm" class="tags-field" appearance="outline">
+          <mat-label>Blog Tags</mat-label>
+          <mat-chip-grid #chipGrid aria-label="Enter upto 3 Tags">
+            @for (tags of blogTags(); track tags) {
+              <mat-chip-row
+                (removed)="remove(tags)"
+                [editable]="true"
+                (edited)="edit(tags, $event)"
+                [aria-description]="'press enter to edit ' + tags.name"
+              >
+                {{tags.name}}
+                <button matChipRemove [attr.aria-label]="'remove ' + tags.name">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+              </mat-chip-row>
+            }
+            <input
+              [maxLength]="blogTags().length >= 3 ? 0 : 50"
+              [disabled]="blogTags().length >= 3"
+              placeholder="Add Tags..."
+              [matChipInputFor]="chipGrid"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="add($event)"
+              formControlName="blogTags"
+            />
+          </mat-chip-grid>
+        </mat-form-field>
+        
+      <!-- thumbnail/image selection -->
       <!-- Hidden file input -->
-      <input mat-flat-button  aria-label="Insert Image" id="uploadImage" #fileInput type="file" formControlName="postImages" accept="image/*" multiple hidden
-        (change)="onSelectedImages($event)">
+      <input mat-flat-button aria-label="Insert Thumbnail" class="thumbnail-field" id="uploadImage" #fileInput type="file" formControlName="blogThumbnail" accept="image/*" hidden (change)="onBlogThumbnail($event)">
       <!-- Button that opens the file input -->
       <button mat-flat-button type="button" (click)="fileInput.click()">
         <mat-icon>image</mat-icon>Add Images
       </button>
-      <!-- ? note: when the add blog link is trigger then the add image will disable the btn and it will insert a link text area after the click of link btn then it will get the preview of the blog  -->
-      <button mat-icon-button aria-label="Insert Emoji" matTooltip="Add Blog Link">
-        <mat-icon>link</mat-icon> 
-      </button>
-      <button mat-icon-button aria-label="Insert Emoji" matTooltip="Coming Soon">
-        <mat-icon>emoji_emotions</mat-icon>
-      </button>
-      <button mat-icon-button aria-label="Insert Poll" matTooltip="Coming Soon">
-        <mat-icon>poll</mat-icon>
-      </button>
-      <button mat-icon-button aria-label="ratings" matTooltip="Coming Soon">
-        <mat-icon>stars</mat-icon>
-      </button>
+      <div *ngIf="thumbnailPreview.length" class="thumbnail-preview">
+        <img [src]="thumbnailPreview[0]" alt="Thumbnail preview" style="max-width: 200px; height: auto; margin: 10px 0;">
+        <button mat-icon-button (click)="removeBlogThumbnail(0)" aria-label="Remove image">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
+      </ng-container>
+
+      <!-- Image Slider -->
+      <div *ngIf="!isBlogMode">
+      <div *ngIf="imagePreviews.length > 0" class="slider">
+        <button mat-icon-button (click)="prevImage()" [disabled]="currentImageIndex === 0">
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+
+        <div class="slider-image">
+          <img [src]="imagePreviews[currentImageIndex]" alt="Image Preview" style="max-width: 100%; height: auto;">
+        </div>
+
+        <button mat-icon-button (click)="nextImage()" [disabled]="currentImageIndex === imagePreviews.length - 1">
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
     </div>
+      <!-- </form> -->
+
+      <!-- <div class="action-icons" [formGroup]="postRecipeForm"> -->
+      <div class="action-icons">
+        <ng-container *ngIf="!isBlogMode">
+          <!-- Hidden file input -->
+          <input mat-flat-button aria-label="Insert Image" id="uploadImage" #fileInput type="file"
+            formControlName="postImages" accept="image/*" multiple hidden (change)="onSelectedImages($event)">
+          <!-- Button that opens the file input -->
+          <button mat-flat-button type="button" (click)="fileInput.click()">
+            <mat-icon>image</mat-icon>Add Images
+          </button>
+        </ng-container>
+        <!-- Link Mode Toggle -->
+        <button mat-icon-button [class.active]="isBlogMode" (click)="toggleBlogMode()"
+          matTooltip="{{isBlogMode ? 'Back to Post' : 'Add Blog Post'}}">
+          <mat-icon>{{isBlogMode ? 'arrow_back' : 'link'}}</mat-icon>
+        </button>
+
+        <!-- Other Action Buttons -->
+
+        <button *ngIf="!isBlogMode" mat-icon-button aria-label="Insert Emoji" matTooltip="Coming Soon">
+          <mat-icon>emoji_emotions</mat-icon>
+        </button>
+        <button *ngIf="!isBlogMode" mat-icon-button aria-label="Insert Poll" matTooltip="Coming Soon">
+          <mat-icon>poll</mat-icon>
+        </button>
+        <button *ngIf="!isBlogMode" mat-icon-button aria-label="ratings" matTooltip="Coming Soon">
+          <mat-icon>stars</mat-icon>
+        </button>
+      </div>
+    </form>
   </mat-card-content>
 </mat-dialog-content>
 
-<!-- <mat-dialog-actions align="start">
-  <button mat-flat-button><mat-icon>image</mat-icon>Add Images</button>
-  <button mat-icon-button matTooltip="Add Tags" matTooltipPosition="right" ><mat-icon>tag</mat-icon></button> 
-  <button mat-icon-button matTooltip="Add Health benfits" matTooltipPosition="right" ><mat-icon>health_and_safety</mat-icon></button>
-  <button mat-icon-button matTooltip="Add Overall Ratings" matTooltipPosition="right"><mat-icon>stars</mat-icon></button>
-</mat-dialog-actions> -->
 
 <mat-dialog-actions align="end">
   <button mat-button class="cancel-button" (click)="onCancel()">Cancel</button>
-  <button mat-button color="primary" class="post-button" (click)="postRecipe()">Post</button>
-  <!-- <button mat-button color="primary" class="post-button" [disabled]="!canPost" (click)="postRecipe()">Post</button> -->
+  <button *ngIf="!isBlogMode" mat-button color="primary" class="post-button" (click)="postRecipe()">Post</button>
+  <button *ngIf="isBlogMode" mat-button color="primary" class="post-button" (click)="postBlog()">Post Blog</button>
 </mat-dialog-actions>
 
 
-<!-- {{postrecipeForm.value | json}} -->
+<!-- {{postRecipeForm.value | json}} -->

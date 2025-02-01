@@ -2,11 +2,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  model,
   OnInit,
   signal,
+  ViewChild 
 } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -36,6 +36,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Client, Account } from 'appwrite';
 import { HomeFeedComponent } from '../../app/home-feed/home-feed.component';
 import { AppwriteService } from '../../lib/appwrite.service';
+import {MatChipEditedEvent, MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import { LiveAnnouncer } from '@angular/cdk/a11y';
+
+export interface Tag{
+  name: string;
+}
 
 @Component({
   selector: 'app-add-posts',
@@ -53,6 +60,7 @@ import { AppwriteService } from '../../lib/appwrite.service';
     MatCardModule,
     MatTooltipModule,
     MatIconModule,
+    MatChipsModule,
     
     // MatCardActions,
     // MatCardHeader,
@@ -78,38 +86,96 @@ export class AddPostsComponent implements OnInit {
 
   formvalue: any;
 
+  isBlogMode = false;
+  linkPreviewError = false;
+
+  @ViewChild('fileInput') fileInput: any;
+  thumbnailPreview: string[] = [];
+
+  readonly addOnBlur = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
+  readonly blogTags = signal<Tag[]>([]);
+  readonly announcer = inject(LiveAnnouncer);
+
   private post_snackBar = inject(MatSnackBar);
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   constructor(
+    private fb: FormBuilder,
     private userService: UsersService,
     private http: HttpClient,
     private dialogRef: MatDialogRef<AddPostsComponent>,
     private appwriteService: AppwriteService 
   ) {
-    // Initialize the form with controls
-    // this.postrecipeForm = new FormGroup({
-    //   postContent: new FormControl('', [
-    //     Validators.required,
-    //     Validators.maxLength(2000),
-    //   ]),
-    // });
+    this.initializeForm();
   }
 
   ngOnInit(): void {
-    // this.userService.getUsersdata().subscribe({
-    //   next: (response) => {
-    //     this.users = response.data.data;
-    //   },
-    //   error: (error) => {
-    //     console.error('Error fetching users:', error);
-    //   },
-    // });
   }
 
-  postrecipeForm: FormGroup = new FormGroup({
+  private initializeForm() {
+    this.postRecipeForm = this.fb.group({
+      postContent: ['', Validators.required],
+      postImages: [null],
+    });
+
+    // this is for blog post
+    this.postBlogForm = this.fb.group({
+       blogTitle: [''],
+       blogLink: [''],
+       summary: [''],
+       blogTags: [''],
+       blogThumbnail: ['']
+    })
+  }
+
+  toggleBlogMode() {
+    this.isBlogMode = !this.isBlogMode;
+    if (this.isBlogMode) {
+      this.postRecipeForm.get('postContent')?.disable();
+
+      this.postBlogForm.get('blogTitle')?.enable();
+      this.postBlogForm.get('blogLink')?.enable();
+      this.postBlogForm.get('summary')?.enable();
+      this.postBlogForm.get('blogTags')?.enable();
+      this.postBlogForm.get('blogThumbnail')?.enable();
+
+      this.postBlogForm.get('blogTitle')?.setValidators([Validators.required]);
+      this.postBlogForm.get('blogLink')?.setValidators([Validators.required]);
+      this.postBlogForm.get('summary')?.setValidators([Validators.maxLength(100)]);
+      this.postBlogForm.get('blogTags')?.setValidators([Validators.required, Validators.maxLength(3)]);
+      // this.postBlogForm.get('blogThumbnail')?.setValidators([Validators.required]);
+    } else {
+      this.postRecipeForm.get('postContent')?.enable();
+
+
+      this.postBlogForm.get('blogTitle')?.disable();
+      this.postBlogForm.get('blogLink')?.disable();
+      this.postBlogForm.get('summary')?.disable();
+      this.postBlogForm.get('blogTags')?.disable();
+      this.postBlogForm.get('blogThumbnail')?.disable();
+
+      this.postBlogForm.get('blogTitle')?.clearValidators();
+      this.postBlogForm.get('blogLink')?.clearValidators();
+      this.postBlogForm.get('summary')?.clearValidators();
+      this.postBlogForm.get('blogTags')?.clearValidators();
+      this.postBlogForm.get('blogThumbnail')?.clearValidators();
+
+    }
+    this.postBlogForm.get('blogLink')?.updateValueAndValidity();
+  }
+
+  postRecipeForm: FormGroup = new FormGroup({
     postContent: new FormControl('',[Validators.required,Validators.maxLength(2000)]),
     postImages: new FormControl(''),
+  });
+
+  postBlogForm: FormGroup = new FormGroup({
+    blogTitle: new FormControl(''),
+    blogLink: new FormControl('',[Validators.required]),
+    summary: new FormControl(''),
+    blogTags: new FormControl(''),
+    blogThumbnail: new FormControl('',[Validators.required])
   });
 
   onSelectedImages(event: Event): void {
@@ -150,8 +216,8 @@ export class AddPostsComponent implements OnInit {
 
   postRecipe() {
     // * have to close the pop up and show a toast that the recipe has been posted
-    // this.formvalue  = this.postrecipeForm.value
-    if (this.postrecipeForm.invalid) {
+    // this.formvalue  = this.postRecipeForm.value
+    if (this.postRecipeForm.invalid) {
       return alert('Please fill in all the required fields'); // Stop if form is invalid
     }
 
@@ -163,8 +229,8 @@ export class AddPostsComponent implements OnInit {
     }
 
     // const recipeData = {
-    //   post_Content: this.postrecipeForm.get('postContent')?.value,
-    //   post_Content_Pictures: this.postrecipeForm.get('postImages')?.value,
+    //   post_Content: this.postRecipeForm.get('postContent')?.value,
+    //   post_Content_Pictures: this.postRecipeForm.get('postImages')?.value,
 
     //   // user_name:
     //   // user_bio:
@@ -176,7 +242,7 @@ export class AddPostsComponent implements OnInit {
     this.appwriteService.uploadFiles(fileArray)
     .then((imageUrls) => {
       const recipeData = {
-        post_Content: this.postrecipeForm.get('postContent')?.value,
+        post_Content: this.postRecipeForm.get('postContent')?.value,
         post_Content_Pictures: imageUrls, // Use uploaded image URLs
       };
 
@@ -199,12 +265,92 @@ export class AddPostsComponent implements OnInit {
       });
     });
 
-
   }
 
+  postBlog(){
+
+
+
+
+
+
+
+
+
+
+    console.log('post Blog is working');
+    console.log('Blog Title:', this.postBlogForm.get('blogTitle')?.value);
+    console.log('Blog Link:', this.postBlogForm.get('blogLink')?.value);
+    console.log('Summary:', this.postBlogForm.get('summary')?.value);
+    console.log('Blog Tags:', this.blogTags());
+    console.log('Blog Thumbnail:', this.postBlogForm.get('blogThumbnail')?.value);
+  }
+
+  // 👇 this is for input chips methods 
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add our fruit
+    if (value) {
+      this.blogTags.update(blogTags => [...blogTags, {name: value}]);
+    }
+
+    // Clear the input value
+    event.chipInput!.clear();
+  }
+  remove(tag: Tag): void {
+    this.blogTags.update(tags => {
+      const index = tags.indexOf(tag);
+      if (index < 0) {
+        return tags;
+      }
+
+      const newTags = [...tags];
+      newTags.splice(index, 1);
+      this.announcer.announce(`Removed ${tag.name}`);
+      return newTags;
+    });
+  }
+  edit(tag: Tag, event: MatChipEditedEvent) {
+    const value = event.value.trim();
+    if (!value) {
+      this.remove(tag);
+      return;
+    }
+
+    this.blogTags.update(tags => {
+      const index = tags.indexOf(tag);
+      if (index >= 0) {
+        tags[index].name = value;
+        return [...tags];
+      }
+      return tags;
+    });
+  }
 
   onCancel(): void {
     console.log('Appwrite Service :: onCancel() ::');
     this.dialogRef.close();
   }
+
+  
+  onBlogThumbnail(event: any): void {
+    const files = event.target.files;
+    if (files && files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.thumbnailPreview = [e.target.result];
+      };
+      reader.readAsDataURL(files[0]);
+    }
+  }
+
+  removeBlogThumbnail(index: number): void {
+    this.thumbnailPreview.splice(index, 1);
+    this.fileInput.nativeElement.value = '';
+  }
+
+
+
+
 }
