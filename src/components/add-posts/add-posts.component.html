@@ -51,7 +51,7 @@
           <textarea matInput formControlName="summary" maxlength="100" rows="2"
             placeholder="Enter a brief summary of the blog"></textarea>
           <mat-hint align="end">
-            {{postRecipeForm.get('summary')?.value?.length || 0}} / 100
+            {{postBlogForm.get('summary')?.value?.length || 0}} / 100
           </mat-hint>
         </mat-form-field>
 
@@ -78,9 +78,8 @@
 
         <!-- thumbnail/image selection -->
         <!-- Hidden file input -->
-        <div class="image-preview-container">
-          <input mat-flat-button aria-label="Insert Thumbnail" class="thumbnail-field" id="uploadImage" #fileInput
-            type="file" formControlName="blogThumbnail" accept="image/*" hidden (change)="onBlogThumbnail($event)" />
+        <div class="image-preview-container" [formGroup]="postBlogForm">
+          <input mat-flat-button aria-label="Insert Thumbnail" class="thumbnail-field" id="blogThumbnail" #fileInput type="file" accept="image/*" hidden (change)="onBlogThumbnail($event)" formControlName="blogThumbnail"/>
           <!-- Button that opens the file input -->
           <button mat-flat-button type="button" class="thumbnail-button" (click)="fileInput.click()" [hidden]="thumbnailPreview.length > 0" >
             <!--or this can be implemeted [disabled]="thumbnailPreview.length > 0" -->

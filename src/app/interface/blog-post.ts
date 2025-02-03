@@ -6,7 +6,7 @@ export interface BlogPost {
     user_bio?: string | null;
     blog_post_title: string;
     blog_post_summary: string;
-    blog_post_tags: any;
+    blog_post_tags: string[];
     blog_post_link: string;
     blog_post_thumbnail: any[];
     blog_post_likes: number;

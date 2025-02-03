@@ -4,7 +4,7 @@ import {
   inject,
   OnInit,
   signal,
-  ViewChild 
+  ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -31,16 +31,24 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { UsersService } from '../../app/services/users/users.service';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { MatSnackBar,  MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition, } from '@angular/material/snack-bar';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Client, Account } from 'appwrite';
 import { HomeFeedComponent } from '../../app/home-feed/home-feed.component';
 import { AppwriteService } from '../../lib/appwrite.service';
-import {MatChipEditedEvent, MatChipInputEvent, MatChipsModule } from '@angular/material/chips';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {
+  MatChipEditedEvent,
+  MatChipInputEvent,
+  MatChipsModule,
+} from '@angular/material/chips';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 
-export interface Tag{
+export interface Tag {
   name: string;
 }
 
@@ -61,7 +69,7 @@ export interface Tag{
     MatTooltipModule,
     MatIconModule,
     MatChipsModule,
-    
+
     // MatCardActions,
     // MatCardHeader,
     // MatCard,
@@ -74,7 +82,6 @@ export interface Tag{
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AddPostsComponent implements OnInit {
-
   users: any[] = [];
 
   canPost: boolean = true;
@@ -92,10 +99,10 @@ export class AddPostsComponent implements OnInit {
   @ViewChild('fileInput') fileInput: any;
   thumbnailPreview: string[] = [];
 
-  readonly addOnBlur = true;
-  readonly separatorKeysCodes = [ENTER, COMMA] as const;
-  readonly blogTags = signal<Tag[]>([]);
-  readonly announcer = inject(LiveAnnouncer);
+  addOnBlur = true;
+  separatorKeysCodes = [ENTER, COMMA] as const;
+  blogTags = signal<Tag[]>([]);
+  announcer = inject(LiveAnnouncer);
 
   private post_snackBar = inject(MatSnackBar);
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
@@ -105,13 +112,12 @@ export class AddPostsComponent implements OnInit {
     private userService: UsersService,
     private http: HttpClient,
     private dialogRef: MatDialogRef<AddPostsComponent>,
-    private appwriteService: AppwriteService 
+    private appwriteService: AppwriteService
   ) {
     this.initializeForm();
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   private initializeForm() {
     this.postRecipeForm = this.fb.group({
@@ -121,12 +127,12 @@ export class AddPostsComponent implements OnInit {
 
     // this is for blog post
     this.postBlogForm = this.fb.group({
-       blogTitle: [''],
-       blogLink: [''],
-       summary: [''],
-       blogTags: [''],
-       blogThumbnail: ['']
-    })
+      blogTitle: [''],
+      blogLink: [''],
+      summary: [''],
+      blogTags: [''],
+      blogThumbnail: [''],
+    });
   }
 
   toggleBlogMode() {
@@ -142,12 +148,15 @@ export class AddPostsComponent implements OnInit {
 
       this.postBlogForm.get('blogTitle')?.setValidators([Validators.required]);
       this.postBlogForm.get('blogLink')?.setValidators([Validators.required]);
-      this.postBlogForm.get('summary')?.setValidators([Validators.maxLength(100)]);
-      this.postBlogForm.get('blogTags')?.setValidators([Validators.required, Validators.maxLength(3)]);
+      this.postBlogForm
+        .get('summary')
+        ?.setValidators([Validators.maxLength(100)]);
+      // this.postBlogForm
+      //   .get('blogTags')
+      //   ?.setValidators([Validators.maxLength(3)]);
       // this.postBlogForm.get('blogThumbnail')?.setValidators([Validators.required]);
     } else {
       this.postRecipeForm.get('postContent')?.enable();
-
 
       this.postBlogForm.get('blogTitle')?.disable();
       this.postBlogForm.get('blogLink')?.disable();
@@ -160,22 +169,24 @@ export class AddPostsComponent implements OnInit {
       this.postBlogForm.get('summary')?.clearValidators();
       this.postBlogForm.get('blogTags')?.clearValidators();
       this.postBlogForm.get('blogThumbnail')?.clearValidators();
-
     }
     this.postBlogForm.get('blogLink')?.updateValueAndValidity();
   }
 
   postRecipeForm: FormGroup = new FormGroup({
-    postContent: new FormControl('',[Validators.required,Validators.maxLength(2000)]),
+    postContent: new FormControl('', [
+      Validators.required,
+      Validators.maxLength(2000),
+    ]),
     postImages: new FormControl(''),
   });
 
   postBlogForm: FormGroup = new FormGroup({
     blogTitle: new FormControl(''),
-    blogLink: new FormControl('',[Validators.required]),
+    blogLink: new FormControl('', [Validators.required]),
     summary: new FormControl(''),
     blogTags: new FormControl(''),
-    blogThumbnail: new FormControl('',[Validators.required])
+    blogThumbnail: new FormControl('', [Validators.required]),
   });
 
   onSelectedImages(event: Event): void {
@@ -221,9 +232,10 @@ export class AddPostsComponent implements OnInit {
       return alert('Please fill in all the required fields'); // Stop if form is invalid
     }
 
-    const files = (document.getElementById('uploadImage') as HTMLInputElement).files;
+    const files = (document.getElementById('uploadImage') as HTMLInputElement)
+      .files;
 
-    const fileArray = files ? Array.from(files) : [];    
+    const fileArray = files ? Array.from(files) : [];
     if (fileArray.length > 4) {
       return alert('You can only upload a maximum of 4 images');
     }
@@ -239,67 +251,104 @@ export class AddPostsComponent implements OnInit {
     //   // post_saves:
     // };
 
-    this.appwriteService.uploadFiles(fileArray)
-    .then((imageUrls) => {
-      const recipeData = {
-        post_Content: this.postRecipeForm.get('postContent')?.value,
-        post_Content_Pictures: imageUrls, // Use uploaded image URLs
-      };
+    this.appwriteService
+      .uploadFiles(fileArray)
+      .then((imageUrls) => {
+        const recipeData = {
+          post_Content: this.postRecipeForm.get('postContent')?.value,
+          post_Content_Pictures: imageUrls, // Use uploaded image URLs
+        };
 
-      return this.appwriteService.createPost(recipeData);
-    })
-    .then(() => {
-      this.dialogRef.close();
-      this.post_snackBar.open('Recipe posted successfully!', 'Close', {
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition,
-        duration: 5000,
+        return this.appwriteService.createPost(recipeData);
+      })
+      .then(() => {
+        this.dialogRef.close();
+        this.post_snackBar.open('Recipe posted successfully!', 'Close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration: 5000,
+        });
+      })
+      .catch((error) => {
+        console.error('Failed to post recipe:', error);
+        this.post_snackBar.open(error, 'Close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration: 5000,
+        });
       });
-    })
-    .catch((error) => {
-      console.error('Failed to post recipe:', error);
-      this.post_snackBar.open(error, 'Close', {
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition,
-        duration: 5000,
-      });
-    });
-
   }
 
-  postBlog(){
+  postBlog() {
+    if (this.postBlogForm.untouched) {
+      return alert('Please fill in all the required fields'); // Stop if form is invalid
+    }
+    const tagsArray = this.blogTags().map(tag => tag.name);
 
 
+    const thumbnail = (
+      document.getElementById('blogThumbnail') as HTMLInputElement
+    ).files;
 
+    const thumbnailArray = thumbnail ? Array.from(thumbnail) : [];
 
+    this.appwriteService
+      .uploadFiles(thumbnailArray)
+      .then((thumbnailUrls) => {
+        const blogData = {
+          blog_post_title: this.postBlogForm.get('blogTitle')?.value,
+          blog_post_link: this.postBlogForm.get('blogLink')?.value,
+          blog_post_summary: this.postBlogForm.get('summary')?.value,
+          blog_post_tags: tagsArray,
+          // blog_post_tags: this.blogTags(),
+          // blog_post_tags: this.postBlogForm.get('blogTags')?.value,
+          blog_post_thumbnail: thumbnailUrls,
+        };
 
-
-
-
-
-
+        return this.appwriteService.createBlogPost(blogData);
+      })
+      .then(() => {
+        this.dialogRef.close();
+        this.post_snackBar.open('Blog posted successfully!', 'Close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration: 5000,
+        });
+      })
+      .catch((error) => {
+        console.error('Failed to post blog:', error);
+        this.post_snackBar.open(error, 'Close', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration: 5000,
+        });
+      });
+    // console.table(this.postBlogForm.value);
     console.log('post Blog is working');
     console.log('Blog Title:', this.postBlogForm.get('blogTitle')?.value);
     console.log('Blog Link:', this.postBlogForm.get('blogLink')?.value);
     console.log('Summary:', this.postBlogForm.get('summary')?.value);
-    console.log('Blog Tags:', this.blogTags());
-    console.log('Blog Thumbnail:', this.postBlogForm.get('blogThumbnail')?.value);
+    console.log('Blog Tags:', tagsArray);
+    console.log(
+      'Blog Thumbnail:',
+      this.postBlogForm.get('blogThumbnail')?.value
+    );
   }
 
-  // 👇 this is for input chips methods 
+  // 👇 this is for input chips methods
   add(event: MatChipInputEvent): void {
     const value = (event.value || '').trim();
 
     // Add our fruit
     if (value) {
-      this.blogTags.update(blogTags => [...blogTags, {name: value}]);
+      this.blogTags.update((blogTags) => [...blogTags, { name: value }]);
     }
 
     // Clear the input value
     event.chipInput!.clear();
   }
   remove(tag: Tag): void {
-    this.blogTags.update(tags => {
+    this.blogTags.update((tags) => {
       const index = tags.indexOf(tag);
       if (index < 0) {
         return tags;
@@ -318,7 +367,7 @@ export class AddPostsComponent implements OnInit {
       return;
     }
 
-    this.blogTags.update(tags => {
+    this.blogTags.update((tags) => {
       const index = tags.indexOf(tag);
       if (index >= 0) {
         tags[index].name = value;
@@ -333,7 +382,6 @@ export class AddPostsComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  
   onBlogThumbnail(event: any): void {
     const files = event.target.files;
     if (files && files[0]) {
@@ -349,8 +397,4 @@ export class AddPostsComponent implements OnInit {
     this.thumbnailPreview.splice(index, 1);
     this.fileInput.nativeElement.value = '';
   }
-
-
-
-
 }

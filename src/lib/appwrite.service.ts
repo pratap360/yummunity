@@ -67,6 +67,15 @@ export class AppwriteService {
     );
   }
 
+  createBlogPost(data: any) {
+    return this.database.createDocument(
+      environment.appwrite_DatabaseID,
+      environment.blogpost_CollectionID,
+      ID.unique(),
+      data
+    );
+  }
+
   // Basic Fetch posts from the collection
   // getAllPosts(): Observable<{ documents: Array<any> }> {
   //   const promise = this.database.listDocuments(

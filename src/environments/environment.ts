@@ -18,6 +18,7 @@ export const environment = {
   appwrite_BucketID_profile_pictures:'6706c76000374f4b5f76',
   users_CollectionID:'users',
   post_CollectionID: 'posts' ,
+  blogpost_CollectionID: 'blog_post',
   
 };
 
