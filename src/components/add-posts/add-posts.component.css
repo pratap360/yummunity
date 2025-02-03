@@ -120,6 +120,34 @@ mat-icon-button {
 .blog-link,
 .summary-field,
 .tags-field,
-.thumbnail-field  {
+.thumbnail-field,
+.thumbnail-button  {
   width: 100%;
+}
+
+.image-preview-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.thumbnail-preview {
+  margin-top: 16px;
+  position: relative;
+}
+
+.preview-container {
+  display: flex;
+  align-items: center;
+}
+
+.preview-actions {
+  display: flex;
+  align-items: center;
+}
+
+.close-button{
+  position: absolute;
+  top: -20px;
+  right: -20px;
 }

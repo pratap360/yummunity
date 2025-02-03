@@ -32,7 +32,8 @@
 
         <mat-form-field [formGroup]="postBlogForm" class="title-field" appearance="outline">
           <mat-label>Title</mat-label>
-          <input matInput #message maxlength="50" placeholder="A catchy title for your blog" formControlName="blogTitle">
+          <input matInput #message maxlength="50" placeholder="A catchy title for your blog"
+            formControlName="blogTitle">
           <mat-hint align="end">{{message.value.length}} / 50</mat-hint>
         </mat-form-field>
 
@@ -60,63 +61,64 @@
           <mat-label>Blog Tags</mat-label>
           <mat-chip-grid #chipGrid aria-label="Enter upto 3 Tags">
             @for (tags of blogTags(); track tags) {
-              <mat-chip-row
-                (removed)="remove(tags)"
-                [editable]="true"
-                (edited)="edit(tags, $event)"
-                [aria-description]="'press enter to edit ' + tags.name"
-              >
-                {{tags.name}}
-                <button matChipRemove [attr.aria-label]="'remove ' + tags.name">
-                  <mat-icon>cancel</mat-icon>
-                </button>
-              </mat-chip-row>
+            <mat-chip-row (removed)="remove(tags)" [editable]="true" (edited)="edit(tags, $event)"
+              [aria-description]="'press enter to edit ' + tags.name">
+              {{tags.name}}
+              <button matChipRemove [attr.aria-label]="'remove ' + tags.name">
+                <mat-icon>cancel</mat-icon>
+              </button>
+            </mat-chip-row>
             }
-            <input
-              [maxLength]="blogTags().length >= 3 ? 0 : 50"
-              [disabled]="blogTags().length >= 3"
-              placeholder="Add Tags..."
-              [matChipInputFor]="chipGrid"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-              [matChipInputAddOnBlur]="addOnBlur"
-              (matChipInputTokenEnd)="add($event)"
-              formControlName="blogTags"
-            />
+            <input [maxLength]="blogTags().length >= 3 ? 0 : 50" [disabled]="blogTags().length >= 3"
+              placeholder="Add Tags..." [matChipInputFor]="chipGrid"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" [matChipInputAddOnBlur]="addOnBlur"
+              (matChipInputTokenEnd)="add($event)" formControlName="blogTags" />
           </mat-chip-grid>
         </mat-form-field>
-        
-      <!-- thumbnail/image selection -->
-      <!-- Hidden file input -->
-      <input mat-flat-button aria-label="Insert Thumbnail" class="thumbnail-field" id="uploadImage" #fileInput type="file" formControlName="blogThumbnail" accept="image/*" hidden (change)="onBlogThumbnail($event)">
-      <!-- Button that opens the file input -->
-      <button mat-flat-button type="button" (click)="fileInput.click()">
-        <mat-icon>image</mat-icon>Add Images
-      </button>
-      <div *ngIf="thumbnailPreview.length" class="thumbnail-preview">
-        <img [src]="thumbnailPreview[0]" alt="Thumbnail preview" style="max-width: 200px; height: auto; margin: 10px 0;">
-        <button mat-icon-button (click)="removeBlogThumbnail(0)" aria-label="Remove image">
-          <mat-icon>close</mat-icon>
-        </button>
-      </div>
+
+        <!-- thumbnail/image selection -->
+        <!-- Hidden file input -->
+        <div class="image-preview-container">
+          <input mat-flat-button aria-label="Insert Thumbnail" class="thumbnail-field" id="uploadImage" #fileInput
+            type="file" formControlName="blogThumbnail" accept="image/*" hidden (change)="onBlogThumbnail($event)" />
+          <!-- Button that opens the file input -->
+          <button mat-flat-button type="button" class="thumbnail-button" (click)="fileInput.click()" [hidden]="thumbnailPreview.length > 0" >
+            <!--or this can be implemeted [disabled]="thumbnailPreview.length > 0" -->
+            <mat-icon>image</mat-icon>Add Images
+          </button>
+          <div *ngIf="thumbnailPreview.length" class="thumbnail-preview">
+            <div class="preview-container">
+            <img [src]="thumbnailPreview[0]" alt="Thumbnail preview"
+              style="max-width: 430px; height: auto; margin: 10px 0;" />
+            <div class="preview-actions">
+              <button mat-icon-button (click)="removeBlogThumbnail(0)" aria-label="Remove image" class="close-button">
+                <mat-icon>close</mat-icon>
+              </button>
+            </div>
+          </div>
+          </div>
+        </div>
+
+
 
       </ng-container>
 
       <!-- Image Slider -->
       <div *ngIf="!isBlogMode">
-      <div *ngIf="imagePreviews.length > 0" class="slider">
-        <button mat-icon-button (click)="prevImage()" [disabled]="currentImageIndex === 0">
-          <mat-icon>arrow_back</mat-icon>
-        </button>
+        <div *ngIf="imagePreviews.length > 0" class="slider">
+          <button mat-icon-button (click)="prevImage()" [disabled]="currentImageIndex === 0">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
 
-        <div class="slider-image">
-          <img [src]="imagePreviews[currentImageIndex]" alt="Image Preview" style="max-width: 100%; height: auto;">
+          <div class="slider-image">
+            <img [src]="imagePreviews[currentImageIndex]" alt="Image Preview" style="max-width: 100%; height: auto;">
+          </div>
+
+          <button mat-icon-button (click)="nextImage()" [disabled]="currentImageIndex === imagePreviews.length - 1">
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
         </div>
-
-        <button mat-icon-button (click)="nextImage()" [disabled]="currentImageIndex === imagePreviews.length - 1">
-          <mat-icon>arrow_forward</mat-icon>
-        </button>
       </div>
-    </div>
       <!-- </form> -->
 
       <!-- <div class="action-icons" [formGroup]="postRecipeForm"> -->
