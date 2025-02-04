@@ -24,7 +24,7 @@ mat-card.posts-card {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-items: center;
+    /* align-items: center; */
 }
 
 .blog-text{
@@ -38,8 +38,11 @@ mat-card.posts-card {
 }
 
 .blog-thumbnail img {
-    width: 100px;
-    height: 100px;
+    width: 280px;
+    max-height: 300px;
+    display: flex;
+    align-self: flex-end;
+    border-radius: 10px;
 }
 
 .blog-post-card-footer {

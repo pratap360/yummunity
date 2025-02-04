@@ -48,10 +48,10 @@
         <!-- Summary field shows up if link preview fails -->
         <mat-form-field [formGroup]="postBlogForm" *ngIf="!linkPreviewError" appearance="outline" class="summary-field">
           <mat-label>Short Summary</mat-label>
-          <textarea matInput formControlName="summary" maxlength="100" rows="2"
+          <textarea matInput formControlName="summary" maxlength="200" rows="2"
             placeholder="Enter a brief summary of the blog"></textarea>
           <mat-hint align="end">
-            {{postBlogForm.get('summary')?.value?.length || 0}} / 100
+            {{postBlogForm.get('summary')?.value?.length || 0}} / 200
           </mat-hint>
         </mat-form-field>
 

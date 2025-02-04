@@ -150,7 +150,7 @@ export class AddPostsComponent implements OnInit {
       this.postBlogForm.get('blogLink')?.setValidators([Validators.required]);
       this.postBlogForm
         .get('summary')
-        ?.setValidators([Validators.maxLength(100)]);
+        ?.setValidators([Validators.maxLength(200)]);
       // this.postBlogForm
       //   .get('blogTags')
       //   ?.setValidators([Validators.maxLength(3)]);

@@ -1,4 +1,4 @@
-<mat-card class="posts-card" appearance="outlined">
+<!-- <mat-card class="posts-card" appearance="outlined">
   <mat-card-header>
     <div mat-card-avatar class="profile-header-image"></div>
     <mat-card-title>Pratap Parui</mat-card-title>
@@ -46,7 +46,7 @@
 
   <app-blog-activity></app-blog-activity>
 
-</mat-card>
+</mat-card> -->
 
 <mat-card class="posts-card" appearance="outlined"  *ngFor="let blog of blogPosts">
   <mat-card-header>
@@ -73,9 +73,7 @@
   </mat-card-header>
   <div><mat-card-title class="blog-title">{{blog.blog_post_title}}</mat-card-title></div>
   <mat-card-content class="blog-card-content">
-    <div class="blog-text">
-      <p>{{blog.blog_post_summary}}</p>
-    </div>
+
     <ng-container *ngIf="blog.blog_post_thumbnail.length > 0">
     <div class="blog-thumbnail">
       <img mat-card-image
@@ -83,6 +81,9 @@
         alt="blog post thumbnail">
     </div>
   </ng-container>
+  <div class="blog-text">
+    <p>{{blog.blog_post_summary}}</p>
+  </div>
   </mat-card-content>
 
   <mat-card-footer class="blog-post-card-footer">
