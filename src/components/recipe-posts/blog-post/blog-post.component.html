@@ -47,3 +47,55 @@
   <app-blog-activity></app-blog-activity>
 
 </mat-card>
+
+<mat-card class="posts-card" appearance="outlined"  *ngFor="let blog of blogPosts">
+  <mat-card-header>
+    <div mat-card-avatar class="profile-header-image"></div>
+    <mat-card-title>{{blog.user_name || 'Not Pratap'}}</mat-card-title>
+    <mat-card-subtitle>{{blog.user_bio || 'not love food'}}</mat-card-subtitle>
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="sharePost()">
+        <mat-icon>share</mat-icon>
+        <span>Share Post</span>
+      </button>
+      <button mat-menu-item>
+        <mat-icon>report</mat-icon>
+        <span>Report</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>campaign</mat-icon>
+        <span>Promote</span>
+      </button>
+    </mat-menu>
+  </mat-card-header>
+  <div><mat-card-title class="blog-title">{{blog.blog_post_title}}</mat-card-title></div>
+  <mat-card-content class="blog-card-content">
+    <div class="blog-text">
+      <p>{{blog.blog_post_summary}}</p>
+    </div>
+    <ng-container *ngIf="blog.blog_post_thumbnail.length > 0">
+    <div class="blog-thumbnail">
+      <img mat-card-image
+        [src]="blog.blog_post_thumbnail[0]"
+        alt="blog post thumbnail">
+    </div>
+  </ng-container>
+  </mat-card-content>
+
+  <mat-card-footer class="blog-post-card-footer">
+    <mat-chip-set aria-label="Chihuahua traits">
+      <mat-chip *ngFor="let tag of blog.blog_post_tags">{{tag}}</mat-chip>
+      <!-- <mat-chip>Non-Veg</mat-chip>
+      <mat-chip>Chicken recipe</mat-chip> -->
+    </mat-chip-set>
+    <a mat-icon-button [href]="blog.blog_post_link"
+      target="_blank" matTooltip="Open in new tab" matTooltipPosition="left">
+      <mat-icon>open_in_new</mat-icon></a>
+  </mat-card-footer>
+
+  <app-blog-activity></app-blog-activity>
+
+</mat-card>

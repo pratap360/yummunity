@@ -10,11 +10,15 @@ import { BlogActivityComponent } from '../../post-activity/blog-activity/blog-ac
 import { MatTooltipModule} from '@angular/material/tooltip';
 import { SharePostComponent } from '../../post-activity/share-post/share-post.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AppwriteService } from '../../../lib/appwrite.service';
+import { BlogPost } from '../../../app/interface/blog-post';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-blog-post',
   standalone: true,
   imports: [
+    CommonModule,
     FormsModule,
     MatButtonModule,
     MatCardModule,
@@ -30,13 +34,36 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class BlogPostComponent {
 
+  blogPosts: BlogPost[] = [];
+
+  constructor(private appwriteService: AppwriteService){}
+
+  ngOnInit(): void {
+    this.fetchBlogPosts();
+  }
+
+
+fetchBlogPosts(): void {
+  this.appwriteService.getBlogPosts().subscribe({
+    next:(data) => {
+      this.blogPosts = data.documents;
+      console.log('All Blog Posts:', this.blogPosts);
+    },
+    error:(error) => {
+      console.error('Error:', error);
+    }
+  })
+}
+
+
+
+
     // blog post component 
     blogTitle = 'Summer Chipotle Chicken Cobb Salad with Cilantro Vinaigrette'
     longText = `This juicy salad tastes like summer! With chipotle chicken, sweet corn, avocado, cilantro vinaigrette, bacon crumbles, and fresh strawberries for a pop of sweetness.`;
 
 
     readonly menuTrigger = viewChild.required(MatMenuTrigger);
-
     readonly dialog = inject(MatDialog);
     sharePost() {
       const dialogRef = this.dialog.open(SharePostComponent, {
@@ -44,4 +71,7 @@ export class BlogPostComponent {
       });
       dialogRef.afterClosed().subscribe(() => this.menuTrigger().focus());
     }
+
+
+
 }

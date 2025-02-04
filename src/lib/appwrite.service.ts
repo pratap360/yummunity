@@ -76,33 +76,6 @@ export class AppwriteService {
     );
   }
 
-  // Basic Fetch posts from the collection
-  // getAllPosts(): Observable<{ documents: Array<any> }> {
-  //   const promise = this.database.listDocuments(
-  //     environment.appwrite_DatabaseID,
-  //     environment.post_CollectionID
-  //   );
-  //   return from(promise as Promise<{ documents: Array<any> }>).pipe(
-  //     map((response: { documents: Array<any> }) => response)
-  //   );
-  // }
-  // return from(promise.then((response: { documents: Array<{ $id: string }> }) => response.documents.map((doc) => doc.$id)));
-
-  // fetch post using timer and switchMap
-  // getAllPosts(): Observable<{ documents: Array<any> }> {
-  //   const pollInterval = 10000; // 10 seconds
-
-  // return timer(0, pollInterval).pipe(
-  //   switchMap(() => {
-  //     return from(this.database.listDocuments(
-  //       environment.appwrite_DatabaseID,
-  //       environment.post_CollectionID
-  //     ) as Promise<{ documents: Array<any> }>);
-  //   }),
-  //   map((response: { documents: Array<any> }) => response)
-  // );
-  // }
-
   getAllPosts(): Observable<{ documents: Array<any> }> {
     const pollInterval = 60000; // 60 seconds
 
@@ -126,4 +99,33 @@ export class AppwriteService {
       })
     );
   }
+
+
+  getBlogPosts(): Observable<{ documents: Array<any> }> {
+    const pollInterval = 60000; // 60 seconds
+
+    return timer(0, pollInterval).pipe(
+      switchMap((): Promise<{ documents: Array<any> }> => {
+        return this.database.listDocuments(
+          environment.appwrite_DatabaseID,
+          environment.blogpost_CollectionID,
+          [
+            Query.orderDesc('$createdAt')
+          ]
+        );
+      }),
+      // map((response: { documents: Array<any> }) => {
+      //   response.documents.sort((a, b) => {
+      //     const dateA = new Date(a.createdAt).getTime();
+      //     const dateB = new Date(b.createdAt).getTime();
+      //     return dateB - dateA;
+      //   });
+      //   return response;
+      // })
+    );
+  }
+
+
+
+
 }

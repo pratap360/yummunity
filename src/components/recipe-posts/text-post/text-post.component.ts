@@ -42,7 +42,7 @@ export class TextPostComponent {
   //   this.comments_counter = comments.length;
   // }
   // @Input() postsId: any;
-    posts: RecipePost[] = [];
+  posts: RecipePost[] = [];
   user_name: string = 'Pratap Parui';
   user_bio: string = 'Developer|Food Critics';
   // post_id: string = '678ea60e001c28e7b3f9';
