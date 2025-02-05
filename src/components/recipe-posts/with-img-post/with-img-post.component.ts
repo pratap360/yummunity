@@ -43,27 +43,25 @@ import { RecipePost } from '../../../app/interface/recipe-post';
   styleUrl: './with-img-post.component.css',
 })
 export class WithImgPostComponent {
-  // @Input() post: any;
-  posts: RecipePost[] = [];
+  @Input() posts: RecipePost[] = [];
 
-  constructor(private appwriteService: AppwriteService) {}
-  ngOnInit(): void {
-    this.fetchAllPosts();
-  }
+  // constructor(private appwriteService: AppwriteService) {}
+  // ngOnInit(): void {
+  //   this.fetchAllPosts();
+  // }
 
-
-  fetchAllPosts(): void {
-    this.appwriteService.getAllPosts().subscribe({
-      next: (data) => {
-        // console.log('Data:', data);
-        this.posts = data.documents;
-        console.log( 'All Posts:', this.posts);
-      },
-      error: (error) => {
-        console.error('Error fetching posts:', error);
-      }
-    })
-  }
+  // fetchAllPosts(): void {
+  //   this.appwriteService.getAllPosts().subscribe({
+  //     next: (data) => {
+  //       // console.log('Data:', data);
+  //       this.posts = data.documents;
+  //       console.log( 'All Posts:', this.posts);
+  //     },
+  //     error: (error) => {
+  //       console.error('Error fetching posts:', error);
+  //     }
+  //   })
+  // }
 
   readonly menuTrigger = viewChild.required(MatMenuTrigger);
 

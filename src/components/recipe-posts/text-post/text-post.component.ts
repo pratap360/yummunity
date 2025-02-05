@@ -42,28 +42,28 @@ export class TextPostComponent {
   //   this.comments_counter = comments.length;
   // }
   // @Input() postsId: any;
-  posts: RecipePost[] = [];
+  @Input() posts: RecipePost[] = [];
   user_name: string = 'Pratap Parui';
   user_bio: string = 'Developer|Food Critics';
   // post_id: string = '678ea60e001c28e7b3f9';
-  constructor(private appwriteService: AppwriteService) {}
-  ngOnInit(): void {
-    this.fetchAllPosts();
-  }
+  // constructor(private appwriteService: AppwriteService) {}
+  // ngOnInit(): void {
+  //   this.fetchAllPosts();
+  // }
 
 
-  fetchAllPosts(): void {
-    this.appwriteService.getAllPosts().subscribe({
-      next: (data) => {
-        // console.log('Data:', data);
-        this.posts = data.documents;
-        console.log( 'All Posts :', this.posts);
-      },
-      error: (error) => {
-        console.error('Error fetching posts:', error);
-      }
-    })
-  }
+  // fetchAllPosts(): void {
+  //   this.appwriteService.getAllPosts().subscribe({
+  //     next: (data) => {
+  //       // console.log('Data:', data);
+  //       this.posts = data.documents;
+  //       console.log( 'All Posts :', this.posts);
+  //     },
+  //     error: (error) => {
+  //       console.error('Error fetching posts:', error);
+  //     }
+  //   })
+  // }
 
 
     readonly menuTrigger = viewChild.required(MatMenuTrigger);

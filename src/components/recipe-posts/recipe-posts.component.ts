@@ -17,6 +17,7 @@ import { PostActivityComponent } from "../post-activity/post-activity.component"
 import { MatMenuModule } from '@angular/material/menu';
 import { AppwriteService } from '../../lib/appwrite.service';
 import { RecipePost } from '../../app/interface/recipe-post';
+import { BlogPost } from '../../app/interface/blog-post';
 
 @Component({
   selector: 'app-recipe-posts',
@@ -48,24 +49,40 @@ export class RecipePostsComponent{
   // @Input() post: any;
   // id: any;
   posts: RecipePost[] = [];
+  blogPosts: BlogPost[] = [];
 
   constructor(private appwriteService: AppwriteService) {}
   ngOnInit(): void {
-
+    this.fetchAllPosts();
+    this.fetchBlogPosts();
   }
 
-  // fetchAllPosts(): void {
-  //   this.appwriteService.getAllPosts().subscribe({
-  //     next: (data) => {
-  //       // console.log('Data:', data);
-  //       this.posts = data.documents;
-  //       console.log( 'All Posts:', this.posts);
-  //     },
-  //     error: (error) => {
-  //       console.error('Error fetching posts:', error);
-  //     }
-  //   })
-  // }
+
+  fetchAllPosts(): void {
+    this.appwriteService.getAllPosts().subscribe({
+      next: (data) => {
+        // console.log('Data:', data);
+        this.posts = data.documents;
+        console.log( 'All Posts :', this.posts);
+      },
+      error: (error) => {
+        console.error('Error fetching posts:', error);
+      }
+    })
+  }
+
+  fetchBlogPosts(): void {
+    this.appwriteService.getBlogPosts().subscribe({
+      next:(data) => {
+        this.blogPosts = data.documents;
+        console.log('All Blog Posts:', this.blogPosts);
+      },
+      error:(error) => {
+        console.error('Error:', error);
+      }
+    })
+  }
+
 
 
 }
