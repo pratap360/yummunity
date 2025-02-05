@@ -76,7 +76,7 @@ export class AppwriteService {
     );
   }
 
-  getAllPosts(): Observable<{ documents: Array<any> }> {
+  getAllPosts(limit: number, offset: number): Observable<{ documents: Array<any> }> {
     const pollInterval = 60000; // 60 seconds
 
     return timer(0, pollInterval).pipe(
@@ -85,7 +85,9 @@ export class AppwriteService {
           environment.appwrite_DatabaseID,
           environment.post_CollectionID,
           [
-            Query.orderDesc('$createdAt')
+            Query.orderDesc('$createdAt'),
+            Query.limit(limit),
+            Query.offset(offset)
           ]
         );
       }),
