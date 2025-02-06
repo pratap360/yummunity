@@ -1,6 +1,6 @@
-<mat-spinner *ngIf="isLoading"></mat-spinner>
+<mat-spinner *ngIf="isLoading | async"></mat-spinner>
 
-<div *ngIf="!isLoading">
+<div *ngIf="!(isLoading | async)">
   <app-text-post [posts]="posts"></app-text-post>
   <app-with-img-post [posts]="posts"></app-with-img-post>
   <app-blog-post [blogPosts]="blogPosts"></app-blog-post>

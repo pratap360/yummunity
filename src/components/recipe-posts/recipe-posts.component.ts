@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, OnInit, HostListener, OnDestroy } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  OnInit,
+  HostListener,
+  OnDestroy,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -14,7 +20,10 @@ import { AppwriteService } from '../../lib/appwrite.service';
 import { RecipePost } from '../../app/interface/recipe-post';
 import { BlogPost } from '../../app/interface/blog-post';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { Subscription } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
+
 @Component({
   selector: 'app-recipe-posts',
   standalone: true,
@@ -37,7 +46,8 @@ import { Subscription } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RecipePostsComponent implements OnInit, OnDestroy {
-  isLoading = false;
+  // isLoading = false;
+  isLoading = new BehaviorSubject<boolean>(false);
   posts: RecipePost[] = [];
   blogPosts: BlogPost[] = [];
   limit = 5;
@@ -52,27 +62,36 @@ export class RecipePostsComponent implements OnInit, OnDestroy {
   }
 
   fetchAllPosts(): void {
-
     if (this.postsSubscription) {
       this.postsSubscription.unsubscribe(); // Unsubscribe from previous subscription
     }
 
     console.log('Fetching all posts');
-    // this.isLoading = true;
+    this.isLoading.next(true);
+
     // setTimeout(() => {
-      this.appwriteService.getAllPosts(this.limit, this.offset).subscribe({
+    this.postsSubscription = this.appwriteService
+      .getAllPosts(this.limit, this.offset)
+      .pipe(
+        catchError((error) => {
+          console.error('Error fetching posts:', error);
+          this.isLoading.next(false);
+          return of({ documents: [] }); // Return empty data to prevent errors
+        })
+      )
+      .subscribe({
         next: (data) => {
           console.log('Posts fetched:', data);
           // this.posts = data.documents;
           this.posts = [...this.posts, ...data.documents];
           this.offset += this.limit;
-          this.isLoading = false;
+          this.isLoading.next(false);
           console.log('Spinner hidden');
           console.log('All Posts :', this.posts);
         },
         error: (error) => {
           console.error('Error fetching posts:', error);
-          this.isLoading = false;
+          this.isLoading.next(false);
           console.log('Spinner hidden');
         },
       });
@@ -91,28 +110,24 @@ export class RecipePostsComponent implements OnInit, OnDestroy {
     });
   }
 
-
-
-
   @HostListener('window:scroll', ['$event'])
   onScroll(): void {
-    if (this.isNearBottom() && !this.isLoading) {
-      this.fetchAllPosts(); // Load more posts
+    if (this.isNearBottom() && !this.isLoading.value) {
+      // setTimeout(() => this.fetchAllPosts(), 500);
+      this.fetchAllPosts();
     }
   }
-
 
   isNearBottom(): boolean {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const scrollHeight = document.documentElement.scrollHeight;
     const clientHeight = document.documentElement.clientHeight;
-    return scrollTop + clientHeight >= scrollHeight - 100; // Load more when 100px from bottom
+    return scrollTop + clientHeight >= scrollHeight - 100;
   }
 
   ngOnDestroy(): void {
     if (this.postsSubscription) {
-      this.postsSubscription.unsubscribe(); // Unsubscribe from previous subscription
+      this.postsSubscription.unsubscribe();
     }
   }
 }
-
