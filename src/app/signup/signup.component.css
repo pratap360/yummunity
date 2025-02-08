@@ -258,7 +258,7 @@ button.google-login {
   padding: 10px;
 }
 
-.login-bg-pic {
+.sign-up-pic {
   position: absolute;
   top: 0;
   left: 0;
@@ -302,4 +302,25 @@ button.google-login {
   font-family: 'roboto', sans-serif;
   font-size: 12px;
   color: #666666;
+}
+
+@media screen and (max-width: 768px) {
+
+  .sign-up-pic {
+    height: 100%;
+  }
+}
+
+@media screen and (min-width: 390px) and (max-width: 768px) {
+  mat-card {
+    width: 90%;
+    max-width: 400px; 
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 45px;
+    position: relative;
+    margin: auto;
+    margin-top: 2rem;
+  }
 }
