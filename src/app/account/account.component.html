@@ -28,7 +28,7 @@
       </button>
     </div>
   </mat-card> -->
- <!--! reminder : must add the follow and edit buttons to the account component   -->
+  <!--! reminder : must add the follow and edit buttons to the account component   -->
 
   <mat-card class="profile-card mat-elevation-z4">
     <div class="profile-header">
@@ -41,12 +41,9 @@
         <p class="description">{{ description }}</p>
       </div>
     </div>
-  
+
     <div class="profile-footer">
-      <div
-        class="info-toggle-group"
-        appearance="standard"
-        multiple>
+      <div class="info-toggle-group" appearance="standard" multiple>
         <h6>
           Recipes & Blog: {{ recipesCount }}
         </h6>
@@ -65,17 +62,15 @@
 
 <div class="profile-tab-container">
 
-  <mat-tab-group color="accent" class="profile-post-tab" mat-align-tabs="center" dynamicHeight (selectedIndexChange)="selectedTabIndex.set($event)">
+  <mat-tab-group color="accent" class="profile-post-tab" mat-align-tabs="center" dynamicHeight
+    (selectedIndexChange)="selectedTabIndex.set($event)">
     <mat-tab label="Recipes Shares">
       <ng-template mat-tab-label>
         <mat-icon class="profile-tab-icon">mood</mat-icon>
         Recipes Shares
       </ng-template>
-      @defer(when selectedTabIndex() === 1; prefetch when prefetchTabs()) {
-      <!-- ! Content 1 -->
-      <app-text-post></app-text-post>
-      <app-with-img-post></app-with-img-post>
-      }
+      <app-text-post [posts]="posts"></app-text-post>
+      <app-with-img-post [posts]="posts"></app-with-img-post>
     </mat-tab>
 
     <mat-tab label="Blogs">
@@ -83,10 +78,7 @@
         <mat-icon class="profile-tab-icon">library_books</mat-icon>
         Blogs
       </ng-template>
-      @defer(when selectedTabIndex() === 2; prefetch when prefetchTabs()) {
-        <!-- ! Content 2 -->
-        <app-blog-post></app-blog-post>
-      }
+      <app-blog-post [blogPosts]="blogPosts"></app-blog-post>
     </mat-tab>
 
     <mat-tab label="Saves">
@@ -94,17 +86,27 @@
         <mat-icon class="profile-tab-icon">bookmarks</mat-icon>
         Saves
       </ng-template>
-      @defer(when selectedTabIndex() === 2; prefetch when prefetchTabs()) {
-        <!-- ! Content 3 -->
-        <app-text-post></app-text-post>
-      }
+      <app-text-post></app-text-post>
+    </mat-tab>
+  </mat-tab-group>
+  <!-- </mat-tab> -->
 
-       <!-- ? Need to implement the ngfor here to display the saved posts using boolean value  -->
-       <!-- <ng-container *ngFor="let post of savedPosts">
+  <!-- <mat-tab label="Saves">
+      <ng-template mat-tab-label>
+        <mat-icon class="profile-tab-icon">bookmarks</mat-icon>
+        Saves
+      </ng-template>
+      @defer(when selectedTabIndex() === 2;) {
+        ! Content 3 prefetch when prefetchTabs()
+        <app-text-post></app-text-post>
+      } -->
+
+  <!-- ? Need to implement the ngfor here to display the saved posts using boolean value  -->
+  <!-- <ng-container *ngFor="let post of savedPosts">
         <app-text-post [data]="post"></app-text-post>
       </ng-container> -->
 
-      <!-- <div class="save-content-wrapper">
+  <!-- <div class="save-content-wrapper">
         <mat-card appearance="outlined" class="posts-card">
           <mat-card-content class="card-content">
             <h3>Did you know that ?</h3>
@@ -119,8 +121,8 @@
         </mat-card>
       </div> -->
 
-    </mat-tab>
-  </mat-tab-group>
+  <!-- </mat-tab>
+  </mat-tab-group> -->
 
 </div>
 

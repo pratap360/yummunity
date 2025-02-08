@@ -76,8 +76,9 @@ export class AppwriteService {
     );
   }
 
+// home feed -> recipte posts data fetching for text posts+image posts 
   getAllPosts(limit: number, offset: number): Observable<{ documents: Array<any> }> {
-    const pollInterval = 60000; // 60 seconds
+    const pollInterval = 300000; // 60 seconds X 5 = 5 minutes
 
     return timer(0, pollInterval).pipe(
       switchMap((): Promise<{ documents: Array<any> }> => {
@@ -102,9 +103,9 @@ export class AppwriteService {
     );
   }
 
-
+// home feed -> recipte posts data fetching for blogs 
   getBlogPosts(): Observable<{ documents: Array<any> }> {
-    const pollInterval = 60000; // 60 seconds
+    const pollInterval = 300000; // 60 seconds X 5 => 300000 = 5 minutes
 
     return timer(0, pollInterval).pipe(
       switchMap((): Promise<{ documents: Array<any> }> => {
@@ -116,17 +117,19 @@ export class AppwriteService {
           ]
         );
       }),
-      // map((response: { documents: Array<any> }) => {
-      //   response.documents.sort((a, b) => {
-      //     const dateA = new Date(a.createdAt).getTime();
-      //     const dateB = new Date(b.createdAt).getTime();
-      //     return dateB - dateA;
-      //   });
-      //   return response;
-      // })
     );
   }
 
+  // account page data fetching 
+  getUserPosts(): Observable<{ documents: Array<any> }> {
+    return from(this.database.listDocuments(
+      environment.appwrite_DatabaseID,
+      environment.post_CollectionID,
+      [
+        Query.orderDesc('$createdAt')
+      ]
+    ) as Promise<{ documents: Array<any> }>);
+  }
 
 
 
