@@ -134,7 +134,8 @@ body {
 
 mat-card {
   max-width: 450px;
-  height: 100vh;
+  /* height: 100vh; */
+  height: 100%;
   text-align: center;
   border-radius: 0px 45px 45px 0px;
   position: relative;

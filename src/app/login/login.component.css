@@ -39,10 +39,11 @@ body {
 
 mat-card {
   max-width: 450px;
-  height: 100vh;
+  height: 100%;
+  /* height: 100vh; */
   text-align: center;
   border-radius: 0px 45px 45px 0px;
-  position: relative;
+  position: absolute;
   z-index: 1;
   display: flex;
   /* height: 100%; */
@@ -167,17 +168,36 @@ button.google-login {
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 130vh;
   background-image: url('/assets/img/login-bg-pic.jpg');
   background-size: cover;
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-  /* Keep the background fixed */
   z-index: -1;
   overflow-x: auto;
 }
 
+@media screen and (max-width: 768px) {
+
+  .login-bg-pic {
+    height: 100%;
+  }
+}
+
+@media screen and (min-width: 390px) and (max-width: 768px) {
+  mat-card {
+    width: 90%;
+    max-width: 400px; 
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 45px;
+    position: relative;
+    margin: auto;
+    margin-top: 2rem;
+  }
+}
 
 .made-by {
   display: flex;
