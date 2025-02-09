@@ -1,6 +1,14 @@
-<button mat-flat-button (click)="navigateToPost()">
+<!-- <button mat-flat-button (click)="navigateToPost()">
     <mat-icon>open_in_new</mat-icon>
     <span>
       Read More
     </span>
-  </button>
+  </button> -->
+
+<!-- <a mat-flat-button  [routerLink]="['/', userName, 'post', postId]"  -->
+<a mat-flat-button  [routerLink]="['/', 'userName', 'post', postId]" 
+  class="btn btn-primary" target="_blank">
+  <mat-icon>open_in_new</mat-icon> Read More
+</a>
+
+

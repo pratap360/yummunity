@@ -1,7 +1,7 @@
 // appwrite.service.ts
 
 import { Injectable } from '@angular/core';
-import { Client, Databases, Storage, ID,Query  } from 'appwrite';
+import { Client, Databases, Storage, ID, Query } from 'appwrite';
 import { environment } from '../environments/environment';
 import { from, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
@@ -76,8 +76,11 @@ export class AppwriteService {
     );
   }
 
-// home feed -> recipte posts data fetching for text posts+image posts 
-  getAllPosts(limit: number, offset: number): Observable<{ documents: Array<any> }> {
+  // home feed -> recipte posts data fetching for text posts+image posts
+  getAllPosts(
+    limit: number,
+    offset: number
+  ): Observable<{ documents: Array<any> }> {
     const pollInterval = 300000; // 60 seconds X 5 = 5 minutes
 
     return timer(0, pollInterval).pipe(
@@ -88,7 +91,7 @@ export class AppwriteService {
           [
             Query.orderDesc('$createdAt'),
             Query.limit(limit),
-            Query.offset(offset)
+            Query.offset(offset),
           ]
         );
       }),
@@ -103,7 +106,7 @@ export class AppwriteService {
     );
   }
 
-// home feed -> recipte posts data fetching for blogs 
+  // home feed -> recipte posts data fetching for blogs
   getBlogPosts(): Observable<{ documents: Array<any> }> {
     const pollInterval = 300000; // 60 seconds X 5 => 300000 = 5 minutes
 
@@ -112,25 +115,30 @@ export class AppwriteService {
         return this.database.listDocuments(
           environment.appwrite_DatabaseID,
           environment.blogpost_CollectionID,
-          [
-            Query.orderDesc('$createdAt')
-          ]
+          [Query.orderDesc('$createdAt')]
         );
-      }),
+      })
     );
   }
 
-  // account page data fetching 
+  // account page data fetching
   getUserPosts(): Observable<{ documents: Array<any> }> {
-    return from(this.database.listDocuments(
-      environment.appwrite_DatabaseID,
-      environment.post_CollectionID,
-      [
-        Query.orderDesc('$createdAt')
-      ]
-    ) as Promise<{ documents: Array<any> }>);
+    return from(
+      this.database.listDocuments(
+        environment.appwrite_DatabaseID,
+        environment.post_CollectionID,
+        [Query.orderDesc('$createdAt')]
+      ) as Promise<{ documents: Array<any> }>
+    );
   }
 
-
-
+  getPostById(postId: string): Observable<any> {
+    return from(
+      this.database.getDocument(
+      environment.appwrite_DatabaseID,
+      environment.post_CollectionID,
+      postId
+      )
+    );
+  }
 }

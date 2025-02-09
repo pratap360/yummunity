@@ -7,6 +7,7 @@ import { SearchComponent } from './search/search.component';
 import { NotificationComponent } from './notification/notification.component';
 import { AccountComponent } from './account/account.component';
 import { ForgetPwdComponent } from './login/forget-pwd/forget-pwd.component';
+import { FullPostComponent } from '../components/full-post/full-post.component';
 
 export const routes: Routes = [
     {path: '', redirectTo: '/login', pathMatch: 'full'},
@@ -27,6 +28,8 @@ export const routes: Routes = [
     
     
     {path: '**', component: NotFoundComponent},
+
+    // { path: '/post/:postId', component: FullPostComponent },
 ];
 
 
