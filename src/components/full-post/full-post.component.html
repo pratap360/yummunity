@@ -1,1 +1,16 @@
-<p>full-post works!</p>
+<div class="post-container">
+    <div *ngIf="isLoading" class="loading">
+      <p>Loading...</p>
+    </div>
+  
+    <div *ngIf="!isLoading && post">
+      <h2 class="post-title">{{ post.title }}</h2>
+      <img *ngIf="post.imageUrl" [src]="post.imageUrl" alt="Post Image" class="post-image" />
+      <p class="post-content">{{ post.content }}</p>
+    </div>
+  
+    <div *ngIf="!isLoading && !post" class="error-message">
+      <p>Post not found!</p>
+    </div>
+  </div>
+  

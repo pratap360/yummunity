@@ -132,12 +132,22 @@ export class AppwriteService {
     );
   }
 
-  getPostById(postId: string): Observable<any> {
+  // getPostById(postId: string): Observable<any> {
+  //   return from(
+  //     this.database.getDocument(
+  //     environment.appwrite_DatabaseID,
+  //     environment.post_CollectionID,
+  //     postId
+  //     )
+  //   );
+  // }
+
+  getPostById(documentId: string): Observable<any> {
     return from(
       this.database.getDocument(
-      environment.appwrite_DatabaseID,
-      environment.post_CollectionID,
-      postId
+        environment.appwrite_DatabaseID,
+        environment.post_CollectionID,
+        documentId
       )
     );
   }
