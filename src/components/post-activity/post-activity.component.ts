@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -11,6 +11,7 @@ import { CommentsComponent } from './comments/comments.component';
 import { LikesComponent } from './likes/likes.component';
 import { ReadMoreComponent } from './read-more/read-more.component';
 import { SavesComponent } from './saves/saves.component';
+import { RecipePost } from '../../app/interface/recipe-post';
 
 @Component({
   selector: 'app-post-activity',
@@ -33,8 +34,8 @@ import { SavesComponent } from './saves/saves.component';
   styleUrl: './post-activity.component.css'
 })
 export class PostActivityComponent {
-
-  
+  @Input() post!: RecipePost;
+  // @Input() posts:any;
   comments_counter = 0;
   commentModalOpen = false;
   newComment = '';
@@ -43,8 +44,16 @@ export class PostActivityComponent {
   comments: string[] = [];
   constructor(public dialog: MatDialog) {}
   ngOnInit(): void {
+
     const comments = JSON.parse(localStorage.getItem('comments_1') || '[]');
     this.comments_counter = comments.length;
+
+    if (this.post) {
+      console.log('Received Post in PostActivityComponent:', this.post);
+      console.log('Extracted documentId:', this.post.id);
+    } else {
+      console.error('Post is undefined in PostActivityComponent');
+    }
   }
   openCommentModal(): void {
     const dialogRef = this.dialog.open(CommentsComponent, {

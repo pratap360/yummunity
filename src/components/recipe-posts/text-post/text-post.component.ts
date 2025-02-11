@@ -51,6 +51,9 @@ export class TextPostComponent {
   //   this.fetchAllPosts();
   // }
 
+  ngOnint() :void{
+    console.log('Post id is there on text-post:', this.posts);
+  }
 
   // fetchAllPosts(): void {
   //   this.appwriteService.getAllPosts().subscribe({

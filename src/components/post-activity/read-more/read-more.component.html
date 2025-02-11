@@ -6,10 +6,13 @@
   </button> -->
 
 <!-- <a mat-flat-button  [routerLink]="['/', userName, 'post', postId]"  -->
-<a mat-flat-button  [routerLink]="['/', 'userName', 'post', postId]" 
-  class="btn btn-primary" target="_blank">
+<a mat-flat-button routerLink="/fullpost"  class="btn btn-primary">
   <mat-icon>open_in_new</mat-icon> Read More
 </a>
+
+<!-- <button mat-flat-button (click)="navigateToFullPost()" class="btn btn-primary" target="_blank">
+  <mat-icon>open_in_new</mat-icon> Read More
+</button> -->
 
 
 <!-- <a [routerLink]="['/post', post.documentId]" class="read-more-button">

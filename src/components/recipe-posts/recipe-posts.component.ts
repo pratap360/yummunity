@@ -4,6 +4,7 @@ import {
   OnInit,
   HostListener,
   OnDestroy,
+  Input,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -52,6 +53,7 @@ export class RecipePostsComponent implements OnInit, OnDestroy {
   blogPosts: BlogPost[] = [];
   limit = 5;
   offset = 0;
+
 
   private postsSubscription: Subscription | undefined;
   constructor(private appwriteService: AppwriteService) {}

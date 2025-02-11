@@ -26,7 +26,9 @@ export const routes: Routes = [
     
     {path: 'account', component: AccountComponent},
     
-    { path:'post/:documentId', component: FullPostComponent },
+    // { path:'post/:documentId', component: FullPostComponent },
+    // { path:'fullpost/:documentId', component: FullPostComponent },
+    { path:'fullpost', component: FullPostComponent },
     
     {path: '**', component: NotFoundComponent},
 ];
