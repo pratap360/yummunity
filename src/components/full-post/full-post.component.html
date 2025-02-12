@@ -1,101 +1,115 @@
-<mat-card appearance="outlined" class="posts-card">
-  <mat-card-header>
-    <div mat-card-avatar class="profile-header-image"></div>
-    <mat-card-title>{{user_name}}</mat-card-title>
-    <mat-card-subtitle>{{user_bio}}</mat-card-subtitle>
-    <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
-      <mat-icon>more_vert</mat-icon>
-    </button>
-    <mat-menu #menu="matMenu">
-      <!-- implement copy to clipboard properly  -->
-      <button mat-menu-item (click)="sharePost()">
-        <mat-icon>share</mat-icon>
-        <span>Share Post</span>
-      </button>
-      <button mat-menu-item>
-        <mat-icon>report</mat-icon>
-        <span>Report</span>
-      </button>
-      <button mat-menu-item disabled>
-        <mat-icon>campaign</mat-icon>
-        <span>Promote</span>
-      </button>
-    </mat-menu>
-  </mat-card-header>
-  <mat-card-content class="card-content">
-    <p><b>Did you know that ?:</b>A hen lays around 300 to 325 eggs per year, and it takes her 24 to 26 hours to produce
-      each egg
-    </p>
-    <ul>this is form full post text content:
-      <li> Boosting energy through complex carbohydrates.</li>
-      <li> Offering fiber for better digestion.</li>
-      <li> Supplying essential nutrients like iron, potassium, and vitamin C, depending on the vegetables and spices
-        used.</li>
-    </ul>
-    <ul>Health benefits of such a meal include:
-      <li> Boosting energy through complex carbohydrates.</li>
-      <li> Offering fiber for better digestion.</li>
-      <li> Supplying essential nutrients like iron, potassium, and vitamin C, depending on the vegetables and spices
-        used.</li>
-    </ul>
-    <ul>Health benefits of such a meal include:
-      <li> Boosting energy through complex carbohydrates.</li>
-      <li> Offering fiber for better digestion.</li>
-      <li> Supplying essential nutrients like iron, potassium, and vitamin C, depending on the vegetables and spices
-        used.</li>
-    </ul>
-  </mat-card-content>
-  <mat-card-actions class="action-buttons">
-    <app-likes></app-likes>
-    <app-saves></app-saves>
-  </mat-card-actions>
+<app-sidenav></app-sidenav>
+<app-post-container></app-post-container>
 
-  <mat-accordion>
-    <!-- <mat-expansion-panel hideToggle> -->
-    <mat-expansion-panel>
-      <mat-expansion-panel-header>
-        <!-- <mat-panel-title> Comment on this post </mat-panel-title> -->
+
+<div class="container">
+<button mat-flat-button (click)="goBack()" class="back-button">
+  <mat-icon>
+    arrow_back
+  </mat-icon>
+  Go Back
+</button>
+
+
+  <mat-card appearance="outlined" class="posts-card">
+    <mat-card-header>
+      <div mat-card-avatar class="profile-header-image"></div>
+      <mat-card-title>{{user_name}}</mat-card-title>
+      <mat-card-subtitle>{{user_bio}}</mat-card-subtitle>
+      <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <!-- implement copy to clipboard properly  -->
+        <button mat-menu-item (click)="sharePost()">
+          <mat-icon>share</mat-icon>
+          <span>Share Post</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>report</mat-icon>
+          <span>Report</span>
+        </button>
+        <button mat-menu-item disabled>
+          <mat-icon>campaign</mat-icon>
+          <span>Promote</span>
+        </button>
+      </mat-menu>
+    </mat-card-header>
+    <mat-card-content class="card-content">
+      <p><b>Did you know that ?:</b>A hen lays around 300 to 325 eggs per year, and it takes her 24 to 26 hours to
+        produce
+        each egg
+      </p>
+      <ul>this is form full post text content:
+        <li> Boosting energy through complex carbohydrates.</li>
+        <li> Offering fiber for better digestion.</li>
+        <li> Supplying essential nutrients like iron, potassium, and vitamin C, depending on the vegetables and spices
+          used.</li>
+      </ul>
+      <ul>Health benefits of such a meal include:
+        <li> Boosting energy through complex carbohydrates.</li>
+        <li> Offering fiber for better digestion.</li>
+        <li> Supplying essential nutrients like iron, potassium, and vitamin C, depending on the vegetables and spices
+          used.</li>
+      </ul>
+      <ul>Health benefits of such a meal include:
+        <li> Boosting energy through complex carbohydrates.</li>
+        <li> Offering fiber for better digestion.</li>
+        <li> Supplying essential nutrients like iron, potassium, and vitamin C, depending on the vegetables and spices
+          used.</li>
+      </ul>
+    </mat-card-content>
+    <mat-card-actions class="action-buttons">
+      <app-likes></app-likes>
+      <app-saves></app-saves>
+    </mat-card-actions>
+
+    <mat-accordion>
+      <!-- <mat-expansion-panel hideToggle> -->
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <!-- <mat-panel-title> Comment on this post </mat-panel-title> -->
           <mat-panel-title> Comment on this post </mat-panel-title>
         </mat-expansion-panel-header>
-      <form class="recipe-post-comments">
-        <mat-form-field appearance="outline" class="recipe-post-comments-area">
-          <mat-label>Write your comment</mat-label>
-          <textarea matInput #comment class="comment-box" maxlength="200"
-            placeholder="comment your thoughs..."></textarea>
-          <mat-hint align="end">{{comment.value.length}} / 200</mat-hint>
-        </mat-form-field>
+        <form class="recipe-post-comments">
+          <mat-form-field appearance="outline" class="recipe-post-comments-area">
+            <mat-label>Write your comment</mat-label>
+            <textarea matInput #comment class="comment-box" maxlength="200"
+              placeholder="comment your thoughs..."></textarea>
+            <mat-hint align="end">{{comment.value.length}} / 200</mat-hint>
+          </mat-form-field>
         </form>
         <mat-dialog-actions>
           <button mat-flat-button color="primary" (click)="postComment()">Post</button>
         </mat-dialog-actions>
-    </mat-expansion-panel>
-
-    
-    <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
-      <mat-expansion-panel-header>
-        <mat-panel-title>See All Comments</mat-panel-title>
-        <mat-panel-description>
-          Total comments on this Post
-          <mat-icon>comment</mat-icon>
-          {{ comments_counter }}
-          <!-- Currently I am {{panelOpenState() ? 'open' : 'closed'}} -->
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>Add the comment section here ....</p>
-    </mat-expansion-panel>
-
-    <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
-      <mat-expansion-panel-header>
-        <mat-panel-title>Summarize  with Gemini AI</mat-panel-title>
-        <mat-panel-description>
-          comming soon...
-          <mat-icon>book_4_spark</mat-icon>
-        </mat-panel-description>
-      </mat-expansion-panel-header>
-      <p>Gemini AI implement here ....</p>
-    </mat-expansion-panel>
-  </mat-accordion>
-  
+      </mat-expansion-panel>
 
 
-</mat-card>
+      <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>See All Comments</mat-panel-title>
+          <mat-panel-description>
+            Total comments on this Post
+            <mat-icon>comment</mat-icon>
+            {{ comments_counter }}
+            <!-- Currently I am {{panelOpenState() ? 'open' : 'closed'}} -->
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>Add the comment section here ....</p>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Summarize with Gemini AI</mat-panel-title>
+          <mat-panel-description>
+            comming soon...
+            <mat-icon>book_4_spark</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <p>Gemini AI implement here ....</p>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-card>
+</div>
+
+<app-bottom-nav></app-bottom-nav>

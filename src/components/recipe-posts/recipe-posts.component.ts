@@ -24,6 +24,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { RouterModule } from '@angular/router';
+import { FullPostComponent } from "../full-post/full-post.component";
 
 @Component({
   selector: 'app-recipe-posts',
@@ -41,7 +43,9 @@ import { of } from 'rxjs';
     WithImgPostComponent,
     CommonModule,
     MatProgressSpinnerModule,
-  ],
+    RouterModule,
+    FullPostComponent
+],
   templateUrl: './recipe-posts.component.html',
   styleUrl: './recipe-posts.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { AddPostsComponent } from '../../components/add-posts/add-posts.component';
 import { PostContainerComponent } from '../../components/post-container/post-container.component';
 import { BottomNavComponent } from '../../components/bottom-nav/bottom-nav.component';
+import { FullPostComponent } from "../../components/full-post/full-post.component";
 
 @Component({
   selector: 'app-home-feed',
@@ -30,7 +31,8 @@ import { BottomNavComponent } from '../../components/bottom-nav/bottom-nav.compo
     RouterModule,
     PostContainerComponent,
     BottomNavComponent,
-  ],
+    FullPostComponent
+],
   templateUrl: './home-feed.component.html',
   styleUrl: './home-feed.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

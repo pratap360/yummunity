@@ -55,5 +55,8 @@ export class ReadMoreComponent implements OnInit {
     }
   }
 
+  viewFullPost() {
+    this.router.navigate(['/@userId/fullpostID']); // Navigates & updates the URL
+  }
 
 }

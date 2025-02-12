@@ -36,4 +36,8 @@ export class NotFoundComponent implements OnInit {
       this.router.navigate(['/login']);
     }
   }
+
+  goBack(): void {
+    window.history.back();
+  }
 }

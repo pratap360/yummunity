@@ -1,4 +1,5 @@
 import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
+import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { AppwriteService } from '../../lib/appwrite.service';
 import { CommonModule } from '@angular/common';
@@ -16,6 +17,9 @@ import { LikesComponent } from "../post-activity/likes/likes.component";
 import { SavesComponent } from "../post-activity/saves/saves.component";
 import { CommentsComponent } from "../post-activity/comments/comments.component";
 import {MatExpansionModule} from '@angular/material/expansion';
+import { BottomNavComponent } from "../bottom-nav/bottom-nav.component";
+import { SidenavComponent } from "../sidenav/sidenav.component";
+import { PostContainerComponent } from "../post-container/post-container.component";
 @Component({
   selector: 'app-full-post',
   standalone: true,
@@ -31,7 +35,10 @@ import {MatExpansionModule} from '@angular/material/expansion';
     MatMenuModule,
     LikesComponent,
     SavesComponent,
-    MatExpansionModule
+    MatExpansionModule,
+    BottomNavComponent,
+    SidenavComponent,
+    PostContainerComponent
 ],
   templateUrl: './full-post.component.html',
   styleUrl: './full-post.component.css',
@@ -58,7 +65,8 @@ comments_counter = 0;
 newComment: any;
   constructor(
     private route: ActivatedRoute,
-    private appwriteService: AppwriteService
+    private appwriteService: AppwriteService,
+    private location: Location
   ) {}
 
   // ngOnInit(): void {
@@ -92,6 +100,15 @@ newComment: any;
     });
   }
   
+  goBack(): void {
+    window.history.back();
+  }
+
+  // goBack() {
+  //   this.location.back();
+  // }
+
+
  readonly menuTrigger = viewChild.required(MatMenuTrigger);
   
     readonly dialog = inject(MatDialog);

@@ -8,6 +8,23 @@ mat-card.posts-card {
   max-width: 700px;
 }
 
+.container {
+  display: flex;
+  justify-content: center;
+  /* Centers horizontally */
+  align-items: center;
+  /* Centers vertically */
+  height: 100vh;
+  /* Full height of the viewport */
+  flex-direction: column;
+  position: relative;
+}
+
+.back-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
 
 .profile-header-image {
   background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg');
@@ -59,12 +76,10 @@ mat-card.posts-card {
 
 
 @media screen and (max-width: 576px) {
-  .card-content{
-      font-size: 16px;
-      word-wrap: break-word;
+  .card-content {
+    font-size: 16px;
+    word-wrap: break-word;
   }
 }
 
-@media screen and (max-width: 768px) {
-  
-}
+@media screen and (max-width: 768px) {}
