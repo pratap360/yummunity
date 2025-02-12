@@ -1,15 +1,6 @@
 <app-sidenav></app-sidenav>
-<app-post-container></app-post-container>
-
 
 <div class="container">
-<button mat-flat-button (click)="goBack()" class="back-button">
-  <mat-icon>
-    arrow_back
-  </mat-icon>
-  Go Back
-</button>
-
 
   <mat-card appearance="outlined" class="posts-card">
     <mat-card-header>
@@ -110,6 +101,15 @@
       </mat-expansion-panel>
     </mat-accordion>
   </mat-card>
+
+
+  <button mat-flat-button (click)="goBack()" class="back-button">
+    <mat-icon>
+      arrow_back
+    </mat-icon>
+    Go Back
+  </button>
+
 </div>
 
 <app-bottom-nav></app-bottom-nav>

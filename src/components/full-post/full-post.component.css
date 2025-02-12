@@ -1,6 +1,6 @@
 mat-card.posts-card {
   margin-top: 20px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .posts-card {
@@ -11,20 +11,17 @@ mat-card.posts-card {
 .container {
   display: flex;
   justify-content: center;
-  /* Centers horizontally */
   align-items: center;
-  /* Centers vertically */
-  height: 100vh;
-  /* Full height of the viewport */
   flex-direction: column;
   position: relative;
+  padding: 10px;
 }
 
-.back-button {
+/* .back-button {
   position: absolute;
   top: 10px;
   left: 10px;
-}
+} */
 
 .profile-header-image {
   background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg');
@@ -54,25 +51,10 @@ mat-card.posts-card {
 }
 
 
-/* .card-content h3 {
-  padding: 10px;
-  font-size: 24px;
-
-} */
-
-/* mat-dialog-content {
-  padding: 24px;
-}
-
-.modal-actions {
-  display: flex;
-  justify-content: flex-end;
-} */
 
 .recipe-post-comments-area {
   width: 100%;
 }
-
 
 
 @media screen and (max-width: 576px) {
@@ -82,4 +64,15 @@ mat-card.posts-card {
   }
 }
 
-@media screen and (max-width: 768px) {}
+@media screen and (max-width: 768px) {
+  mat-card.posts-card {
+    margin-top: 50px;
+    margin-bottom: 35px;
+  }
+  
+  .back-button {
+    position: relative;
+    bottom: 20px;
+    margin-bottom: 40px;
+  }
+}
