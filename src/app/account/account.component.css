@@ -349,10 +349,8 @@ div.profile-tab-container {
     display: grid;
     justify-content: space-around;
   }
-  
+
   .edit-button span{
     display: none;
   }
 }
-
-/* ! reminder : must add the follow and edit buttons to the account component  and do check the why bottom nav auto hide the logout button*/
