@@ -42,7 +42,7 @@ export class AppwriteService {
   uploadFiles(files: File[]): Promise<string[]> {
     const uploadPromises = files.map((file) =>
       this.storage.createFile(
-        environment.appwrite_BucketID_PostImages,
+        environment.PostImages_BucketID,
         ID.unique(),
         file
       )
@@ -51,7 +51,7 @@ export class AppwriteService {
     return Promise.all(uploadPromises).then((responses) =>
       responses.map((response) =>
         this.storage.getFileView(
-          environment.appwrite_BucketID_PostImages,
+          environment.PostImages_BucketID,
           response.$id
         )
       )
