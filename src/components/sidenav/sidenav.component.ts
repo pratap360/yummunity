@@ -55,7 +55,7 @@ export class SidenavComponent {
     );
 
   constructor() {
-    this.client.setProject('670194640036c325ba3a');
+    this.client.setProject('yummunity');
     this.account = new Account(this.client);
   }
 

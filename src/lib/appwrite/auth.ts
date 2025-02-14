@@ -13,7 +13,7 @@ export class AuthService {
 
     this.client
       .setEndpoint('https://cloud.appwrite.io/v1')
-      .setProject('670194640036c325ba3a');
+      .setProject('yummunity');
     this.account = new Account(this.client);
   }
 
