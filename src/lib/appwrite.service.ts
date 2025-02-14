@@ -58,6 +58,25 @@ export class AppwriteService {
     );
   }
 
+  uploadBlogFiles(files: File[]): Promise<string[]> {
+    const uploadPromises = files.map((file) =>
+      this.storage.createFile(
+        environment.Blog_thumbnail_BucketID,
+        ID.unique(),
+        file
+      )
+    );
+
+    return Promise.all(uploadPromises).then((responses) =>
+      responses.map((response) =>
+        this.storage.getFileView(
+          environment.Blog_thumbnail_BucketID,
+          response.$id
+        )
+      )
+    );
+  }
+
   createPost(data: any) {
     return this.database.createDocument(
       environment.appwrite_DatabaseID,

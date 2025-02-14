@@ -22,7 +22,8 @@ h3 {
 }
 
 h3.name {
-  font-size: 25px;
+  font-size: 24px;
+  margin: 0;
 }
 
 h6 {
@@ -133,6 +134,12 @@ div.profile-info-container {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+div.account-card-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 mat-button-toggle {
@@ -324,9 +331,6 @@ div.profile-tab-container {
     bottom: 1rem;
   }
 
-  h3.name {
-    font-size: 25px;
-  }
 
   div.profile-tab-container {
     /* width: 100%; */
@@ -341,6 +345,14 @@ div.profile-tab-container {
     -webkit-overflow-scrolling: touch;
   }
 
+  div.account-card-header{
+    display: grid;
+    justify-content: space-around;
+  }
+  
+  .edit-button span{
+    display: none;
+  }
 }
 
 /* ! reminder : must add the follow and edit buttons to the account component  and do check the why bottom nav auto hide the logout button*/

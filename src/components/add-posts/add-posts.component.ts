@@ -293,7 +293,7 @@ export class AddPostsComponent implements OnInit {
     const thumbnailArray = thumbnail ? Array.from(thumbnail) : [];
 
     this.appwriteService
-      .uploadFiles(thumbnailArray)
+      .uploadBlogFiles(thumbnailArray)
       .then((thumbnailUrls) => {
         const blogData = {
           blog_post_title: this.postBlogForm.get('blogTitle')?.value,

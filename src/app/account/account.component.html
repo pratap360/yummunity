@@ -36,7 +36,14 @@
         <div mat-card-avatar alt="Profile" class="profile-card-image"></div>
       </div>
       <div class="profile-info">
-        <h3 class="name">{{ name }}</h3>
+        <div class="account-card-header">
+          <h3 class="name">{{ name }}</h3>
+          <button class="edit-button" mat-icon-button>
+            <mat-icon>edit</mat-icon>
+            <!-- <span>Edit</span> -->
+          </button>
+        </div>
+        <hr>
         <p class="username">{{ username }}</p>
         <p class="description">{{ description }}</p>
       </div>
