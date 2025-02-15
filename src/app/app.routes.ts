@@ -9,6 +9,7 @@ import { AccountComponent } from './account/account.component';
 import { ForgetPwdComponent } from './login/forget-pwd/forget-pwd.component';
 import { FullPostComponent } from '../components/full-post/full-post.component';
 import { RecipePostsComponent } from '../components/recipe-posts/recipe-posts.component';
+import { EditComponent } from './account/edit/edit.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -32,6 +33,8 @@ export const routes: Routes = [
   { path: 'notifications', component: NotificationComponent },
 
   { path: 'account', component: AccountComponent },
+  {path: 'account/edit-profile', component: EditComponent},
+  // { path: '@userId', component: AccountComponent },
 
   // { path:'post/:documentId', component: FullPostComponent },
   // { path:'fullpost/:documentId', component: FullPostComponent },

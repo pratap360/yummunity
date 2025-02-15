@@ -31,7 +31,7 @@ import { SavesComponent } from '../../components/post-activity/saves/saves.compo
 import { AppwriteService } from '../../lib/appwrite.service';
 import { BlogPost } from '../interface/blog-post';
 import { RecipePost } from '../interface/recipe-post';
-import { error } from 'console';
+import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 @Component({
   selector: 'app-account',
   standalone: true,
@@ -59,6 +59,9 @@ import { error } from 'console';
     PostActivityComponent,
     BottomNavComponent,
     SavesComponent,
+    RouterModule,
+    RouterOutlet,
+    RouterLink,
   ],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css',

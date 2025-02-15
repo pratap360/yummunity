@@ -8,6 +8,7 @@ export interface UserData {
   user_password: string;
   user_phone_no: number;
   user_gender: string;
+  user_dob: Date;
   user_location: string;
   user_url: string;
   user_fav_food_recipe: string;
