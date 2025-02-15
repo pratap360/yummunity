@@ -9,7 +9,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-
+import {MatSelectModule} from '@angular/material/select';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
 @Component({
   selector: 'app-edit',
   standalone: true,
@@ -21,7 +23,12 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
     MatInputModule,
     MatTooltipModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
+    MatSelectModule,
+    MatDatepickerModule
+  ],
+  providers: [
+    provideNativeDateAdapter()
   ],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.css',
@@ -36,6 +43,7 @@ export class EditComponent {
 
   accountForm: FormGroup;
   imagePreview: string | null = null;
+  hide: boolean = true;
 
   durationInSeconds = 5;
   private _snackBar = inject(MatSnackBar);
