@@ -39,3 +39,19 @@ export const environment = {
   Profile_pictures_BucketID:'profile_pictures',
   Blog_thumbnail_BucketID:'Blog_thumbnail',
 };
+
+// export const environment = {
+//   production: false,
+//   appwrite_Endpoint: process.env['APPWRITE_URL'] || '', 
+//   appwrite_ProjectID: process.env['APPWRITE_PROJECT_ID'] || '', 
+//   appwrite_DatabaseID: process.env['APPWRITE_DATABASE_ID'] || '',
+
+//   post_CollectionID: process.env['APPWRITE_POST_COLLECTION_ID'] || '',
+//   comments_CollectionID: process.env['APPWRITE_COMMENT_COLLECTION_ID'] || '',
+//   users_CollectionID: process.env['APPWRITE_USER_COLLECTION_ID'] || '',
+//   blogpost_CollectionID: process.env['APPWRITE_BLOGPOST_COLLECTION_ID'] || '',
+
+//   PostImages_BucketID: process.env['APPWRITE_POST_IMAGE_BUCKET_ID'] || '',
+//   Profile_pictures_BucketID: process.env['APPWRITE_PROFILE_PICTURE_BUCKET_ID'] || '',
+//   Blog_thumbnail_BucketID: process.env['APPWRITE_BLOG_THUMBNAIL_BUCKET_ID'] || '',
+// };
