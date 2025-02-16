@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 import { Router , RouterLink} from '@angular/router';
-
+import {CommonModule} from '@angular/common';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 
@@ -15,7 +15,9 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-forget-pwd',
   standalone: true,
-  imports: [RouterLink,
+  imports: [
+    CommonModule,
+    RouterLink,
     MatCardModule,
     MatButtonModule,
     MatInputModule,
