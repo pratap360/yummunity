@@ -10,6 +10,7 @@ import { ForgetPwdComponent } from './login/forget-pwd/forget-pwd.component';
 import { FullPostComponent } from '../components/full-post/full-post.component';
 import { RecipePostsComponent } from '../components/recipe-posts/recipe-posts.component';
 import { EditComponent } from './account/edit/edit.component';
+import { WelcomeComponent } from './signup/welcome/welcome.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -19,7 +20,7 @@ export const routes: Routes = [
   //     [{path: 'forget-pwd',component: ForgetPwdComponent}]
   // },
   { path: 'signup', component: SignupComponent },
-
+  {path: 'welcome', component: WelcomeComponent},
   { path: 'home-feed', component: HomeFeedComponent },
 //   { path: 'home-feed', component: HomeFeedComponent ,
 //     children:[

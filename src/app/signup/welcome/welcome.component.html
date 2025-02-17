@@ -1,1 +1,49 @@
-<p>welcome works!</p>
+<div class="welcome-container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <div class="header">
+                    <img class="yummunity-header" src="/assets/img/yummunity-header.png" alt="yummunity-header">
+                    <h2 class="title">Yummunity</h2>
+                </div>
+                <div>
+                    <h4 class="welcome-title">Just Little Bit About You</h4>
+                </div>
+            </mat-card-title>
+        </mat-card-header>
+
+        <form [formGroup]="welcomeForm" (ngSubmit)="onSubmit()">
+            <div class="profile-image-container">
+                <div class="profile-image-wrapper">
+                    <img [src]="imagePreview || 'assets/default-avatar.png'" alt="Profile picture">
+                    <div class="image-upload-overlay">
+                        <input type="file" (change)="onImageSelected($event)" accept="image/*" #fileInput
+                            formControlName="user_profile_pic">
+                        <mat-icon>photo_camera</mat-icon>
+                        <span>Change Photo</span>
+                    </div>
+                </div>
+            </div>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="user_name" placeholder="Your name">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>User unique Tag</mat-label>
+                <input matInput formControlName="user_tag" placeholder="@username">
+                <mat-hint>Your unique username tag</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Bio</mat-label>
+                <textarea matInput formControlName="user_bio" placeholder="Tell us about yourself"></textarea>
+            </mat-form-field>
+        </form>
+    </mat-card>
+</div>
+
+
+<div class="welcome-pic">
+</div>
