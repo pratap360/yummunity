@@ -314,13 +314,13 @@ button.google-login {
 @media screen and (min-width: 390px) and (max-width: 768px) {
   mat-card {
     width: 90%;
-    max-width: 400px; 
+    /* max-width: 400px;  */
     display: flex;
     flex-direction: column;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     border-radius: 45px;
     position: relative;
     margin: auto;
-    margin-top: 2rem;
+    /* margin-top: 2rem; */
   }
 }

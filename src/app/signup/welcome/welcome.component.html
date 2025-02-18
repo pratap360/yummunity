@@ -1,1 +1,97 @@
-<p>welcome works!</p>
+<div class="welcome-container">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title>
+                <div class="header">
+                    <img class="yummunity-header" src="/assets/img/yummunity-header.png" alt="yummunity-header">
+                    <h2 class="title">Yummunity</h2>
+                </div>
+                <div>
+                    <h4 class="welcome-title">Almost done! Just Little Bit About You</h4>
+                </div>
+            </mat-card-title>
+        </mat-card-header>
+
+        <form [formGroup]="welcomeForm" (ngSubmit)="onSubmit()" class="welcome-card">
+            <div class="profile-image-container">
+                <div class="profile-image-wrapper">
+                    <img [src]="imagePreview || 'assets/default-avatar.png'" alt="Profile picture">
+                    <div class="image-upload-overlay">
+                        <input type="file" (change)="onImageSelected($event)" accept="image/*" #fileInput
+                            formControlName="user_profile_pic">
+                        <mat-icon>photo_camera</mat-icon>
+                        <span>Change Photo</span>
+                    </div>
+                </div>
+            </div>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="user_name" placeholder="Your name">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>User unique Tag</mat-label>
+                <input matInput formControlName="user_tag" placeholder="@username">
+                <mat-hint>Your unique username tag</mat-hint>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Bio</mat-label>
+                <textarea matInput formControlName="user_bio" placeholder="Tell us about yourself"></textarea>
+            </mat-form-field>
+
+
+            <mat-form-field appearance="outline">
+                <mat-label>Location</mat-label>
+                <input matInput formControlName="user_location" placeholder="Your location">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Select gender</mat-label>
+                <mat-select disableRipple formControlName="user_gender">
+                    <mat-option value="Male">Male</mat-option>
+                    <mat-option value="Female">Female</mat-option>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>What's your birthday?</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="user_dob">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Add your Phone Number</mat-label>
+                <input matInput placeholder="10 digit phone number" formControlName="user_phone_no">
+                <mat-icon matSuffix>call</mat-icon>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Favorite Food or Recipe</mat-label>
+                <textarea matInput formControlName="user_fav_food_recipe"
+                    placeholder="Tell us your favorite food or recipe"></textarea>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Website</mat-label>
+                <input matInput formControlName="user_url" placeholder="Your website">
+            </mat-form-field>
+
+            <div class="button-container">
+                <button type="submit" mat-flat-button (click)="saveChanges()" routerLink="/home-feed">Save
+                    Changes</button>
+            </div>
+        </form>
+    </mat-card>
+</div>
+
+
+
+
+
+
+<div class="welcome-pic">
+</div>

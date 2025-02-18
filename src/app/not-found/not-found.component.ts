@@ -31,7 +31,7 @@ export class NotFoundComponent implements OnInit {
   navigate() {
     const isLoggedIn = !!localStorage.getItem('authToken');
     if (isLoggedIn) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/home-feed']);
     } else {
       this.router.navigate(['/login']);
     }
