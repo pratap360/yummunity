@@ -17,7 +17,7 @@
                 <div class="profile-image-wrapper">
                     <img [src]="imagePreview || ''" alt="Profile picture">
                     <div class="image-upload-overlay">
-                        <input type="file" (change)="onFileSelected($event)" accept="image/*" #fileInput id="profile_pic"
+                        <input type="file" (change)="onImageSelected($event)" accept="image/*" #fileInput id="profile_pic"
                             formControlName="user_profile_pic">
                         <mat-icon>photo_camera</mat-icon>
                         <span>Change Photo</span>
@@ -129,7 +129,7 @@
                     Changes</button>
             </div> -->
 
-            <span>{{welcomeForm.value | json}}</span>
+            <!-- <span>{{welcomeForm.value | json}}</span> -->
             <!-- <span>{{ welcomeForm.get('user_url')?.value | json }}</span> -->
         </form>
     </mat-card>

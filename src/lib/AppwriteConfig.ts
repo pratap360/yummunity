@@ -7,11 +7,11 @@ import { environment } from '../environments/environment';
 export class AppwriteConfigService {
   static appwriteConfig: any;
   appwriteConfig = {
-    appwriteUrl: environment.appwriteUrl,
-    appwriteProjectId: environment.appwriteProjectId,
-    appwriteDatabaseId: environment.appwriteDatabaseId,
-    appwriteCollectionId: environment.appwriteCollectionId,
-    appwriteBucketId: environment.appwriteBucketId,
+    appwriteUrl: environment.appwrite_Endpoint,
+    appwriteProjectId: environment.appwrite_Endpoint,
+    appwriteDatabaseId: environment.appwrite_DatabaseID,
+    // appwriteCollectionId: environment.appwriteCollectionId,
+    // appwriteBucketId: environment.appwriteBucketId,
   };
 }
 

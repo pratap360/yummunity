@@ -73,7 +73,7 @@ export class WelcomeComponent implements OnInit{
     user_email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
     user_password: [{ value: '', disabled: true },],
     user_bio: [''],
-    user_profile_pic: [''],
+    user_profile_pic: [null],
     user_phone_no: ['', [Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]],
     user_gender: ['', Validators.required],
     user_dob: [''],
@@ -90,37 +90,81 @@ export class WelcomeComponent implements OnInit{
         this.imagePreview = reader.result as string;
       };
       reader.readAsDataURL(file);
+      this.selectedFile = file;
+      // this.welcomeForm.patchValue({
+      //   user_profile_pic: file
+      // });
     }
   }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.selectedFile = file;
-      this.welcomeForm.patchValue({
-        user_profile_pic: file
-      });
-    }
-  }
+  // onFileSelected(event: any) {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     this.selectedFile = file;
+  //     this.welcomeForm.patchValue({
+  //       user_profile_pic: file
+  //     });
+  //   }
+  // }
 
 
   async onSubmit() {
-    if (this.welcomeForm.valid){
+    if (this.welcomeForm.valid && this.signupData){
       try {
-        const result = await this.userData.createUser(
-          this.signupData,
-          this.welcomeForm.value
+        const profile_pic = (
+          document.getElementById('profile_pic') as HTMLInputElement
+        ).files;
+        const userProfilePic = profile_pic ? Array.from(profile_pic) : [];
+
+        const profilePicUrl = await this.appwriteService.uploadProfilePic(userProfilePic);
+
+        const account = await this.appwriteService.createAccount(
+          this.signupData.user_email,
+          this.signupData.user_password,
+          this.signupData.user_name
         );
-        if (result.success){
-          console.log('User created successfully:', result.userData);
-        }else{
-          console.error('Error creating user:', result.error);
-        }
+
+        console.log("Account Created:", account);
+        
+
+        const userData = {
+          // user_id: account.$id,
+          user_name: this.signupData.user_name,
+          user_email: this.signupData.user_email,
+          user_password: this.signupData.user_password,
+          user_tag: this.welcomeForm.value.user_tag,
+          user_bio: this.welcomeForm.value.user_bio,
+          user_profile_pic: profilePicUrl,
+          user_phone_no: this.welcomeForm.value.user_phone_no,
+          user_gender: this.welcomeForm.value.user_gender,
+          user_dob: this.welcomeForm.value.user_dob,
+          user_location: this.welcomeForm.value.user_location,
+          user_url: this.welcomeForm.value.user_url,
+          user_fav_food_recipe: this.welcomeForm.value.user_fav_food_recipe
+        };
+
+        await this.appwriteService.createUserDocument(userData)
+        .then(() => {
+          console.log("submitting all data:",userData);
+          this.user_snackBar.open('Changes Saved', 'Close', {
+            duration: this.durationInSeconds * 1000,
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
+        });
+        
+        // const userData = this.welcomeForm.value;
       }
       catch(error){
-        console.log('getting error onSumbit');
+          console.error('Failed to Create New user: ', error);
+          this.user_snackBar.open('check console for errors', 'Close', {
+            duration: this.durationInSeconds * 1000,
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+          });
       }
     }
+    this.router.navigate(['/home-feed'])
   }
   saveChanges() {
     const profile_pic = (

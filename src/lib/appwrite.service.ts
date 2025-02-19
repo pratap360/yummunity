@@ -1,7 +1,7 @@
 // appwrite.service.ts
 
 import { Injectable } from '@angular/core';
-import { Client, Databases, Storage, ID, Query } from 'appwrite';
+import { Client,Account, Databases, Storage, ID, Query } from 'appwrite';
 import { environment } from '../environments/environment';
 import { from, Observable } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
@@ -15,6 +15,7 @@ export class AppwriteService {
   client = new Client();
   database: any;
   storage: any;
+  account: any;
 
   constructor() {
     this.client
@@ -22,6 +23,8 @@ export class AppwriteService {
       .setProject(environment.appwrite_ProjectID);
     this.database = new Databases(this.client);
     this.storage = new Storage(this.client);
+    this.account = new Account(this.client);
+    
   }
 
   async userData(userInfo: any): Promise<any> {
@@ -202,7 +205,23 @@ export class AppwriteService {
     )
   }
 
+  async createAccount(email: string, password: string, name: string) {
+    return await this.account.create(
+      ID.unique(),
+      email,
+      password,
+      name
+    );
+  }
 
+  async createUserDocument(userData: any) {
+    return await this.database.createDocument(
+      environment.appwrite_DatabaseID,
+      environment.users_CollectionID,
+      ID.unique(),
+      userData
+    );
+  }
   // async userData(userInfo: any): Promise<any> {
   //   try {
   //     const response = await this.database.createDocument(
