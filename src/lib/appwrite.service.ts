@@ -76,7 +76,29 @@ export class AppwriteService {
       )
     );
   }
+  uploadProfilePic(files: File[]): Promise<string[]> {
+    const uploadPromises = files.map((file) =>
+      this.storage.createFile(
+        environment.Profile_pictures_BucketID,
+        ID.unique(),
+        file
+      )
+    );
 
+    return Promise.all(uploadPromises).then((responses) =>
+      responses.map((response) =>
+        this.storage.getFileView(
+          environment.Profile_pictures_BucketID,
+          response.$id
+        )
+      )
+    );
+  }
+
+  // ! updateProfilePic method bana hai baki 
+
+
+  
   createPost(data: any) {
     return this.database.createDocument(
       environment.appwrite_DatabaseID,
@@ -170,4 +192,32 @@ export class AppwriteService {
       )
     );
   }
+
+  createNewUser(data : any): Observable<any>{
+    return this.database.createDocument(
+      environment.appwrite_DatabaseID,
+      environment.users_CollectionID,
+      ID.unique(),
+      data
+    )
+  }
+
+
+  // async userData(userInfo: any): Promise<any> {
+  //   try {
+  //     const response = await this.database.createDocument(
+  //       environment.appwrite_DatabaseID,
+  //       environment.users_CollectionID,
+  //       ID.unique(),
+  //       userInfo
+  //     );
+  //     return console.log('Appwrite Service Response:: userData() ::', response);
+  //   } catch (error) {
+  //     console.error('Appwrite Service :: userData() ::', error);
+  //     throw error;
+  //   }
+  // }
+
+
+
 }

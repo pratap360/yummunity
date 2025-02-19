@@ -7,12 +7,18 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import {MatSelectModule} from '@angular/material/select';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { Router } from '@angular/router';
+import { AppwriteService } from '../../../lib/appwrite.service';
+import { error } from 'console';
 @Component({
   selector: 'app-welcome',
   standalone: true,
@@ -27,65 +33,97 @@ import { Router } from '@angular/router';
     MatSelectModule,
     MatDatepickerModule,
   ],
-  providers: [
-    provideNativeDateAdapter()
-  ],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './welcome.component.html',
-  styleUrl: './welcome.component.css'
+  styleUrl: './welcome.component.css',
 })
 export class WelcomeComponent {
-imagePreview: any;
-welcomeForm: FormGroup;
-
+  imagePreview: any;
+  hide: boolean = true;
   durationInSeconds = 5;
-  private _snackBar = inject(MatSnackBar);
+  private user_snackBar = inject(MatSnackBar);
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
-constructor(private fb : FormBuilder, private router: Router) {
-this.welcomeForm = this.fb.group({
-  user_name: ['', Validators.required],
-  user_tag: ['', Validators.required],
-  user_bio: [''],
-  user_profile_pic: [null],
-  user_email: ['', [Validators.required, Validators.email]],
-  user_password: ['',[Validators.required, Validators.minLength(8)]],
-  user_confirm_password: ['',[Validators.required, Validators.minLength(8)]],
-  user_phone_no: ['', [Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')] ],
-  user_gender: [''],
-  user_dob: [''],
-  user_location: [''],
-  user_url: [''],
-  user_fav_food_recipe: ['']
-});
- }
+  ngOninit() {}
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private appwriteService: AppwriteService
+  ) {}
 
-ngOninit() {
-
-}
-onSubmit() {
-throw new Error('Method not implemented.');
-}
-
-onImageSelected(event: Event): void {
-  const file = (event.target as HTMLInputElement).files?.[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagePreview = reader.result as string;
-    };
-    reader.readAsDataURL(file);
-  }
-}
-
-
-
-saveChanges(){
-  this.router.navigate(['/home-feed']);
-  this._snackBar.open('Changes Saved', 'Close', {
-    duration: this.durationInSeconds * 1000,
-    horizontalPosition: this.horizontalPosition,
-    verticalPosition: this.verticalPosition,
+  welcomeForm: FormGroup = this.fb.group({
+    user_name: ['', Validators.required],
+    user_tag: ['', Validators.required],
+    user_email: ['', [Validators.required, Validators.email]],
+    user_password: ['',],
+    user_bio: [''],
+    user_profile_pic: [''],
+    user_phone_no: ['', [Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]],
+    user_gender: ['', Validators.required],
+    user_dob: [''],
+    user_location: [''],
+    user_url: [''],
+    user_fav_food_recipe: [''],
   });
-}
+
+  onImageSelected(event: Event): void {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagePreview = reader.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  saveChanges() {
+    const profile_pic = (
+      document.getElementById('profile_pic') as HTMLInputElement
+    ).files;
+
+    const userProfilePic = profile_pic ? Array.from(profile_pic) : [];
+
+    this.appwriteService
+      .uploadProfilePic(userProfilePic)
+      .then((profilePicUrl) => {
+        // const userData = this.welcomeForm.value;
+        const userData = {
+          user_name: this.welcomeForm.get('user_name')?.value ,
+          user_email: this.welcomeForm.get('user_email')?.value,
+          user_password:this.welcomeForm.get('user_password')?.value,
+          user_tag:  this.welcomeForm.get('user_tag')?.value,
+          user_bio: this.welcomeForm.get('user_bio')?.value ,
+          user_profile_pic: profilePicUrl,
+          user_phone_no: this.welcomeForm.get('user_phone_no')?.value,
+          user_gender: this.welcomeForm.get('user_gender')?.value,
+          user_dob: this.welcomeForm.get('user_dob')?.value,
+          user_location: this.welcomeForm.get('user_location')?.value,
+          user_url: this.welcomeForm.get('user_url')?.value,
+          user_fav_food_recipe: this.welcomeForm.get('user_fav_food_recipe')?.value,
+        };
+        return this.appwriteService.createNewUser(userData);
+      })
+      .then(() => {
+       console.log(this.welcomeForm.value);
+        this.user_snackBar.open('Changes Saved', 'Close', {
+          duration: this.durationInSeconds * 1000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+      })
+      .catch((error) => {
+        console.log(this.welcomeForm.value);
+        console.error('Failed to Create New user: ', error);
+        this.user_snackBar.open('check console for errors', 'Close', {
+          duration: this.durationInSeconds * 1000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
+      });
+
+    // console.log(this.welcomeForm.value);
+    // this.router.navigate(['/home-feed']);
+  }
 }

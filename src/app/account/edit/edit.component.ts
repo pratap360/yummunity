@@ -90,6 +90,7 @@ export class EditComponent {
 
   saveChanges(): void{
     // ? write the logic to save the changes form update appwrite database
+    // * use setValue to update the form 
     this._snackBar.open('Profile Updated Successfully!!', 'OK', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,

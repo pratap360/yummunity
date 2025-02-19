@@ -74,16 +74,13 @@ export class SignupComponent implements OnInit {
   onSignUp() {
     if (this.signupForm.valid) {
       console.log(this.signupForm.value);
-      this._snackBar.open('Account Created Successfully Kindly Login', 'OK', {
+      this._snackBar.open('Account Created Successfully, Kindly Fill All Detials', 'OK', {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
         duration: this.durationInSeconds * 1000,
       });
+      this.createUserAccount();
     }
-    console.log(this.signupForm.value);
-
-    this.createUserAccount();
-    // this.createAccount();
   }
 
   // createAccount() {
@@ -129,9 +126,6 @@ export class SignupComponent implements OnInit {
           });
           console.log("'Failed to create user account", error);
         }),
-        function (error: any) {
-          console.log(error);
-        }
       );
 
   }

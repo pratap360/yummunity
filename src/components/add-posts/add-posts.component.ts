@@ -109,8 +109,8 @@ export class AddPostsComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   constructor(
     private fb: FormBuilder,
-    private userService: UsersService,
-    private http: HttpClient,
+    // private userService: UsersService,
+    // private http: HttpClient,
     private dialogRef: MatDialogRef<AddPostsComponent>,
     private appwriteService: AppwriteService
   ) {

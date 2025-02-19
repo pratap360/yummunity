@@ -12,12 +12,12 @@
             </mat-card-title>
         </mat-card-header>
 
-        <form [formGroup]="welcomeForm" (ngSubmit)="onSubmit()" class="welcome-card">
+        <form [formGroup]="welcomeForm" class="welcome-card">
             <div class="profile-image-container">
                 <div class="profile-image-wrapper">
-                    <img [src]="imagePreview || 'assets/default-avatar.png'" alt="Profile picture">
+                    <img [src]="imagePreview || ''" alt="Profile picture">
                     <div class="image-upload-overlay">
-                        <input type="file" (change)="onImageSelected($event)" accept="image/*" #fileInput
+                        <input type="file" (change)="onImageSelected($event)" accept="image/*" #fileInput id="profile_pic"
                             formControlName="user_profile_pic">
                         <mat-icon>photo_camera</mat-icon>
                         <span>Change Photo</span>
@@ -26,21 +26,51 @@
             </div>
 
             <mat-form-field appearance="outline">
+                <mat-label>Bio</mat-label>
+                <textarea matInput formControlName="user_bio" placeholder="Tell us about yourself"></textarea>
+                <mat-error *ngIf="welcomeForm.controls['user_bio'].invalid">
+                    <span *ngIf="welcomeForm.controls['user_bio'].errors?.['required']">Bio is required</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
                 <mat-label>Name</mat-label>
                 <input matInput formControlName="user_name" placeholder="Your name">
+                <mat-error *ngIf="welcomeForm.controls['user_name'].invalid">
+                    <span *ngIf="welcomeForm.controls['user_name'].errors?.['required']">Name is required</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="user_email"  placeholder="Enter email address">
+                <mat-error *ngIf="welcomeForm.controls['user_email'].invalid">
+                    <span *ngIf="welcomeForm.controls['user_email'].errors?.['required']">Name is required</span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="full-width" appearance="outline">
+                <mat-label>Password</mat-label>
+                <input formControlName="user_password" matInput [type]=" hide ? 'password' : 'text'" required />
+                <button  mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-pressed]="hide">
+                <mat-icon>
+                    {{hide ? 'visibility_off' : 'visibility'}}
+                </mat-icon>
+            </button>
+            <mat-error *ngIf="!welcomeForm.controls['user_password'].valid">
+                Password is required
+              </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
                 <mat-label>User unique Tag</mat-label>
                 <input matInput formControlName="user_tag" placeholder="@username">
                 <mat-hint>Your unique username tag</mat-hint>
+                <mat-error *ngIf="welcomeForm.controls['user_tag'].invalid">
+                    <span *ngIf="welcomeForm.controls['user_tag'].errors?.['required']">Must have a unique Tag which is
+                        required</span>
+                </mat-error>
             </mat-form-field>
-
-            <mat-form-field appearance="outline">
-                <mat-label>Bio</mat-label>
-                <textarea matInput formControlName="user_bio" placeholder="Tell us about yourself"></textarea>
-            </mat-form-field>
-
 
             <mat-form-field appearance="outline">
                 <mat-label>Location</mat-label>
@@ -53,6 +83,9 @@
                     <mat-option value="Male">Male</mat-option>
                     <mat-option value="Female">Female</mat-option>
                 </mat-select>
+                <mat-error *ngIf="welcomeForm.controls['user_gender'].invalid">
+                    <span *ngIf="welcomeForm.controls['user_gender'].errors?.['required']">Gender is required</span>
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
@@ -65,8 +98,12 @@
 
             <mat-form-field appearance="outline">
                 <mat-label>Add your Phone Number</mat-label>
-                <input matInput placeholder="10 digit phone number" formControlName="user_phone_no">
+                <input matInput placeholder="10 digit phone number" formControlName="user_phone_no" maxlength="10">
                 <mat-icon matSuffix>call</mat-icon>
+                <mat-error *ngIf="welcomeForm.controls['user_phone_no'].invalid && welcomeForm.controls['user_phone_no'].touched">
+                    <span *ngIf="welcomeForm.controls['user_phone_no'].errors?.['required']">Phone number is required</span>
+                    <span *ngIf="welcomeForm.controls['user_phone_no'].errors?.['pattern']">Invalid phone number format. Please enter a 10-digit number.</span>
+                </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline">
@@ -77,13 +114,17 @@
 
             <mat-form-field appearance="outline">
                 <mat-label>Website</mat-label>
-                <input matInput formControlName="user_url" placeholder="Your website">
+                <input matInput formControlName="user_url" placeholder="Your website"><mat-icon matSuffix>web</mat-icon>
             </mat-form-field>
 
             <div class="button-container">
-                <button type="submit" mat-flat-button (click)="saveChanges()" routerLink="/home-feed">Save
+                <button mat-flat-button type="submit" (click)="saveChanges()" class="save-button" routerLink="/home-feed"
+                    [disabled]="welcomeForm.invalid">Save
                     Changes</button>
             </div>
+
+            <!-- <span>{{welcomeForm.value | json}}</span> -->
+            <!-- <span>{{ welcomeForm.get('user_url')?.value | json }}</span> -->
         </form>
     </mat-card>
 </div>
