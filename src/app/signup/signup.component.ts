@@ -22,6 +22,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Client, Account, ID } from 'appwrite';
 import { environment } from '../../environments/environment';
 import { AppwriteService } from '../../lib/appwrite.service';
+import { UserdataService } from '../services/appwrite/userdata/userdata.service';
 
 @Component({
   selector: 'app-signup',
@@ -52,13 +53,15 @@ export class SignupComponent implements OnInit {
   username: any;
   constructor(
     private fb: FormBuilder,
-    private appwriteService: AppwriteService
-  ) { 
+    private appwriteService: AppwriteService,
+    private router: Router,
+    private userData: UserdataService
+  ) {
     this.client
-    .setEndpoint(environment.appwrite_Endpoint)
-    .setProject(environment.appwrite_ProjectID);
+      .setEndpoint(environment.appwrite_Endpoint)
+      .setProject(environment.appwrite_ProjectID);
     this.account = new Account(this.client);
-}
+  }
 
   ngOnInit(): void {}
 
@@ -72,16 +75,39 @@ export class SignupComponent implements OnInit {
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   onSignUp() {
-    if (this.signupForm.valid) {
-      console.log(this.signupForm.value);
-      this._snackBar.open('Account Created Successfully, Kindly Fill All Detials', 'OK', {
+    if (this.signupForm.invalid) {
+      this._snackBar.open('Kindly Fill All Detials', 'OK', {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
         duration: this.durationInSeconds * 1000,
       });
-      this.createUserAccount();
+    } else {
+      this.userData.setSignupData(this.signupForm.value);
+      console.log(this.signupForm.value);
+      this._snackBar.open(
+        'Account Created Successfully, Kindly Fill All Detials',
+        'OK',
+        {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration: this.durationInSeconds * 1000,
+        }
+      );
+      this.router.navigate(['/welcome'])
     }
   }
+
+  // onSignUp() {
+  //   if (this.signupForm.valid) {
+  //     console.log(this.signupForm.value);
+  //     this._snackBar.open('Account Created Successfully, Kindly Fill All Detials', 'OK', {
+  //       horizontalPosition: this.horizontalPosition,
+  //       verticalPosition: this.verticalPosition,
+  //       duration: this.durationInSeconds * 1000,
+  //     });
+  //     this.createUserAccount();
+  //   }
+  // }
 
   // createAccount() {
   //   this.account.create(ID.unique(), this.signupForm.value.user_email, this.signupForm.value.user_password, this.signupForm.value.user_name)
@@ -107,27 +133,31 @@ export class SignupComponent implements OnInit {
       user_password: this.signupForm.value.user_password,
     };
 
-    this.account.create(ID.unique(), this.signupForm.value.user_email, this.signupForm.value.user_password, this.signupForm.value.user_name)
+    this.account
+      .create(
+        ID.unique(),
+        this.signupForm.value.user_email,
+        this.signupForm.value.user_password,
+        this.signupForm.value.user_name
+      )
       .then(
         this.appwriteService
-        .userData(userInfo)
-        .then(() => {
-          this._snackBar.open('Sign Up Successfully!!', 'OK', {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-            duration: this.durationInSeconds * 1000,
-          });
-        })
-        .catch((error) => {
-          this._snackBar.open('Failed to Sign Up', 'Close', {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-            duration: this.durationInSeconds * 1000,
-          });
-          console.log("'Failed to create user account", error);
-        }),
+          .userData(userInfo)
+          .then(() => {
+            this._snackBar.open('Sign Up Successfully!!', 'OK', {
+              horizontalPosition: this.horizontalPosition,
+              verticalPosition: this.verticalPosition,
+              duration: this.durationInSeconds * 1000,
+            });
+          })
+          .catch((error) => {
+            this._snackBar.open('Failed to Sign Up', 'Close', {
+              horizontalPosition: this.horizontalPosition,
+              verticalPosition: this.verticalPosition,
+              duration: this.durationInSeconds * 1000,
+            });
+            console.log("'Failed to create user account", error);
+          })
       );
-
   }
 }
-

@@ -17,7 +17,7 @@
                 <div class="profile-image-wrapper">
                     <img [src]="imagePreview || ''" alt="Profile picture">
                     <div class="image-upload-overlay">
-                        <input type="file" (change)="onImageSelected($event)" accept="image/*" #fileInput id="profile_pic"
+                        <input type="file" (change)="onFileSelected($event)" accept="image/*" #fileInput id="profile_pic"
                             formControlName="user_profile_pic">
                         <mat-icon>photo_camera</mat-icon>
                         <span>Change Photo</span>
@@ -51,7 +51,7 @@
 
             <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Password</mat-label>
-                <input formControlName="user_password" matInput [type]=" hide ? 'password' : 'text'" required />
+                <input matInput formControlName="user_password"  [type]=" hide ? 'password' : 'text'" required />
                 <button  mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-pressed]="hide">
                 <mat-icon>
                     {{hide ? 'visibility_off' : 'visibility'}}
@@ -64,6 +64,7 @@
 
             <mat-form-field appearance="outline">
                 <mat-label>User unique Tag</mat-label>
+                <span matTextPrefix>&#64;&nbsp;</span>
                 <input matInput formControlName="user_tag" placeholder="@username">
                 <mat-hint>Your unique username tag</mat-hint>
                 <mat-error *ngIf="welcomeForm.controls['user_tag'].invalid">
@@ -118,12 +119,17 @@
             </mat-form-field>
 
             <div class="button-container">
-                <button mat-flat-button type="submit" (click)="saveChanges()" class="save-button" routerLink="/home-feed"
+                <button mat-flat-button type="submit" (click)="onSubmit()" class="save-button" routerLink="/home-feed"
                     [disabled]="welcomeForm.invalid">Save
                     Changes</button>
             </div>
+            <!-- <div class="button-container">
+                <button mat-flat-button type="submit" (click)="saveChanges()" class="save-button" routerLink="/home-feed"
+                    [disabled]="welcomeForm.invalid">Save
+                    Changes</button>
+            </div> -->
 
-            <!-- <span>{{welcomeForm.value | json}}</span> -->
+            <span>{{welcomeForm.value | json}}</span>
             <!-- <span>{{ welcomeForm.get('user_url')?.value | json }}</span> -->
         </form>
     </mat-card>

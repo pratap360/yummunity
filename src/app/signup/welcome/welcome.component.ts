@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,7 +18,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { AppwriteService } from '../../../lib/appwrite.service';
-import { error } from 'console';
+import { UserdataService } from '../../services/appwrite/userdata/userdata.service';
 @Component({
   selector: 'app-welcome',
   standalone: true,
@@ -37,26 +37,41 @@ import { error } from 'console';
   templateUrl: './welcome.component.html',
   styleUrl: './welcome.component.css',
 })
-export class WelcomeComponent {
+export class WelcomeComponent implements OnInit{
   imagePreview: any;
   hide: boolean = true;
+  signupData : any;
   durationInSeconds = 5;
   private user_snackBar = inject(MatSnackBar);
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
-  ngOninit() {}
+  selectedFile: File | null = null;
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private appwriteService: AppwriteService
+    private appwriteService: AppwriteService,
+    private userData : UserdataService
   ) {}
+  ngOnInit(): void {
+    this.signupData = this.userData.getSignupData();
+
+    if(this.signupData){
+      this.welcomeForm.patchValue({
+        user_name:this.signupData.user_name,
+        user_email: this.signupData.user_email,
+        user_password: this.signupData.user_password
+      });
+    }
+  }
 
   welcomeForm: FormGroup = this.fb.group({
-    user_name: ['', Validators.required],
+    // user_name: [ '', Validators.required],
+    user_name: [{ value: '', disabled: true }, Validators.required],
     user_tag: ['', Validators.required],
-    user_email: ['', [Validators.required, Validators.email]],
-    user_password: ['',],
+    user_email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
+    user_password: [{ value: '', disabled: true },],
     user_bio: [''],
     user_profile_pic: [''],
     user_phone_no: ['', [Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]],
@@ -78,6 +93,35 @@ export class WelcomeComponent {
     }
   }
 
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.selectedFile = file;
+      this.welcomeForm.patchValue({
+        user_profile_pic: file
+      });
+    }
+  }
+
+
+  async onSubmit() {
+    if (this.welcomeForm.valid){
+      try {
+        const result = await this.userData.createUser(
+          this.signupData,
+          this.welcomeForm.value
+        );
+        if (result.success){
+          console.log('User created successfully:', result.userData);
+        }else{
+          console.error('Error creating user:', result.error);
+        }
+      }
+      catch(error){
+        console.log('getting error onSumbit');
+      }
+    }
+  }
   saveChanges() {
     const profile_pic = (
       document.getElementById('profile_pic') as HTMLInputElement
