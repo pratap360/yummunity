@@ -1,3 +1,4 @@
+
 .recipe-post-form {
   min-width: 250px;
   max-width: 500px;
@@ -20,7 +21,12 @@ textarea {
   font-size: 20px;
   margin: 15px;
   display: flex;
+  flex-direction: row;
   align-items: center;
+  justify-content: space-between;
+}
+.post-tittle img {
+  width: 2rem;
 }
 
 mat-dialog-container {
@@ -150,4 +156,13 @@ mat-icon-button {
   position: absolute;
   top: -20px;
   right: -20px;
+}
+
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 400,
+  'GRAD' 0,
+  'opsz' 24
 }
