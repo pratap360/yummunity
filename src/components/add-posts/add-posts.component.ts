@@ -47,7 +47,9 @@ import {
 } from '@angular/material/chips';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
-
+import { MatTabsModule } from '@angular/material/tabs';
+import { MarkdownModule, MarkdownService } from 'ngx-markdown';
+import { Parser } from 'marked';
 export interface Tag {
   name: string;
 }
@@ -69,7 +71,9 @@ export interface Tag {
     MatTooltipModule,
     MatIconModule,
     MatChipsModule,
-
+    MatTabsModule,
+    MarkdownModule,
+    // MarkdownService,
     // MatCardActions,
     // MatCardHeader,
     // MatCard,
@@ -112,12 +116,24 @@ export class AddPostsComponent implements OnInit {
     // private userService: UsersService,
     // private http: HttpClient,
     private dialogRef: MatDialogRef<AddPostsComponent>,
-    private appwriteService: AppwriteService
+    private appwriteService: AppwriteService,
+    private markdownService: MarkdownService
   ) {
     this.initializeForm();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  //   this.markdownService.renderer.heading = ({ tokens, depth }) => {
+  //     const text = Parser.parseInline(tokens);
+  //     const escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
+  //     return '<h' + depth + '>' +
+  //     '<a name="' + escapedText + '" class="anchor" href="#' + escapedText + '">' +
+  //       '<span class="header-link"></span>' +
+  //     '</a>' + text +
+  //   '</h' + depth + '>'; 
+  //  };
+  
+  }
 
   private initializeForm() {
     this.postRecipeForm = this.fb.group({
@@ -397,4 +413,8 @@ export class AddPostsComponent implements OnInit {
     this.thumbnailPreview.splice(index, 1);
     this.fileInput.nativeElement.value = '';
   }
+
+
+
+  
 }

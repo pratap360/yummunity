@@ -21,17 +21,26 @@
     <form [formGroup]="postRecipeForm">
       <!-- Default Post Content Area -->
       <ng-container *ngIf="!isBlogMode">
-        <mat-form-field appearance="outline" class="recipe-post-text-area" [formGroup]="postRecipeForm">
-          <textarea matInput #post maxlength="2000" formControlName="postContent"
-            placeholder="what are the health benfits of eating..." rows="4"></textarea>
-          @if ( postRecipeForm.controls['postContent'].touched &&
-          postRecipeForm.controls['postContent'].errors?.['required']){
-            <mat-hint align="start" color="primary">
-              <strong>Try to write some Hot Recipes</strong>
-          </mat-hint>
-          }
-          <mat-hint align="end">{{post.value.length}} / 2000</mat-hint>
-        </mat-form-field>
+        <mat-tab-group>
+          <mat-tab label="Create a Post">
+            <mat-form-field appearance="outline" class="recipe-post-text-area" [formGroup]="postRecipeForm">
+              <textarea matInput #post maxlength="2000" formControlName="postContent"
+                placeholder="what are the health benfits of eating..." rows="2"></textarea>
+              @if ( postRecipeForm.controls['postContent'].touched &&
+              postRecipeForm.controls['postContent'].errors?.['required']){
+                <mat-hint align="start" color="primary">
+                  <strong>Try to write some Hot Recipes</strong>
+              </mat-hint>
+              }
+              <mat-hint align="end">{{post.value.length}} / 2000</mat-hint>
+            </mat-form-field>
+          </mat-tab>
+          <mat-tab label="preview">
+            <markdown [data]="postRecipeForm.get('postContent')?.value" ngPreserveWhitespaces>
+            </markdown>
+          </mat-tab>
+        </mat-tab-group>
+
       </ng-container>
 
       <!-- Link Mode Content Area -->
