@@ -1,0 +1,8 @@
+<div *ngIf="userProfile">
+    <h1>{{ userProfile.user_name }}</h1>
+    <p>&{{ userProfile.user_tag }}</p>
+    <!-- Add other profile fields -->
+  </div>
+  <div *ngIf="error">
+    <p>User not found</p>
+  </div>

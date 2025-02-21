@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule,RouterOutlet, RouterLink } from '@angular/router';
@@ -30,6 +30,7 @@ export class SearchSuggestionProfileComponent implements OnInit {
 
   users: any[] = [];
   // users: UserData[] = [];
+  // @Input() users: string[] = []
 
   // constructor(private userService: UsersService) { }
   constructor(private OnSearchUsers: OnSearchGetUserService) { }

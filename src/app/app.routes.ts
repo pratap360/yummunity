@@ -11,6 +11,7 @@ import { FullPostComponent } from '../components/full-post/full-post.component';
 import { RecipePostsComponent } from '../components/recipe-posts/recipe-posts.component';
 import { EditComponent } from './account/edit/edit.component';
 import { WelcomeComponent } from './signup/welcome/welcome.component';
+import { UserProfileComponent } from './account/user-profile/user-profile.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -35,7 +36,7 @@ export const routes: Routes = [
 
   { path: 'account', component: AccountComponent },
   {path: 'account/edit-profile', component: EditComponent},
-  // { path: '@userId', component: AccountComponent },
+  { path: '@user_tag', component: UserProfileComponent },
 
   // { path:'post/:documentId', component: FullPostComponent },
   // { path:'fullpost/:documentId', component: FullPostComponent },

@@ -32,5 +32,18 @@ export class OnSearchGetUserService {
         ) as Promise<{ documents: Array<any> }>
       );
     }
+
+    getUserProfile(user_tag:string): Observable<any>{
+      return from(
+        this.database.listDocuments(
+          environment.appwrite_DatabaseID,
+          environment.users_CollectionID,
+          [
+            Query.equal('user_tag',user_tag)
+          ]
+        )
+      )
+    }
+
   
 }
