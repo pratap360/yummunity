@@ -22,6 +22,7 @@ import {
 import { SharePostComponent } from '../../post-activity/share-post/share-post.component';
 import { CommonModule } from '@angular/common';
 import { RecipePost } from '../../../app/interface/recipe-post';
+import { MarkdownModule } from 'ngx-markdown';
 
 @Component({
   selector: 'app-with-img-post',
@@ -38,6 +39,7 @@ import { RecipePost } from '../../../app/interface/recipe-post';
     MatDialogContent,
     MatDialogActions,
     PostActivityComponent,
+    MarkdownModule
   ],
   templateUrl: './with-img-post.component.html',
   styleUrl: './with-img-post.component.css',

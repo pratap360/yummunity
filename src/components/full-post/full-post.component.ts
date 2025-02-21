@@ -20,6 +20,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { BottomNavComponent } from "../bottom-nav/bottom-nav.component";
 import { SidenavComponent } from "../sidenav/sidenav.component";
 import { PostContainerComponent } from "../post-container/post-container.component";
+import { MarkdownModule } from 'ngx-markdown';
+
 @Component({
   selector: 'app-full-post',
   standalone: true,
@@ -38,7 +40,8 @@ import { PostContainerComponent } from "../post-container/post-container.compone
     MatExpansionModule,
     BottomNavComponent,
     SidenavComponent,
-    PostContainerComponent
+    PostContainerComponent,
+    MarkdownModule
 ],
   templateUrl: './full-post.component.html',
   styleUrl: './full-post.component.css',

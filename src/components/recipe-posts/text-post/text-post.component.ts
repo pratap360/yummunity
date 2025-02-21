@@ -12,7 +12,7 @@ import { PostActivityComponent } from '../../post-activity/post-activity.compone
 import { AppwriteService } from '../../../lib/appwrite.service';
 import { SharePostComponent } from '../../post-activity/share-post/share-post.component';
 import { RecipePost } from '../../../app/interface/recipe-post';
-
+import { MarkdownModule } from 'ngx-markdown';
 
 @Component({
   selector: 'app-text-post',
@@ -28,6 +28,7 @@ import { RecipePost } from '../../../app/interface/recipe-post';
     MatDialogModule,
     MatMenuModule,
     PostActivityComponent,
+    MarkdownModule,
   ],
   templateUrl: './text-post.component.html',
   styleUrl: './text-post.component.css',

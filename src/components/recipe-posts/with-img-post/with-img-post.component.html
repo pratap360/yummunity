@@ -27,19 +27,7 @@
         <img mat-card-image [src]="post.post_Content_Pictures[0]" alt="Post Image">
       </ng-container>
     <mat-card-content class="card-content">
-      <p>{{post.post_Content}}</p>
-      <!-- <p>
-        The dish in the image appears to be a version of rice served with a flavorful curry or stew. Rice is a
-        staple food globally and is often paired with nutrient-rich vegetables, beans, or meats. This particular
-        combination provides a balanced meal, with rice offering carbohydrates and the curry contributing protein,
-        vitamins, and healthy fats.
-      </p>
-      <ul>Health benefits of such a meal include:
-        <li> Boosting energy through complex carbohydrates.</li>
-        <li> Offering fiber for better digestion.</li>
-        <li> Supplying essential nutrients like iron, potassium, and vitamin C, depending on the vegetables and spices used.</li>
-      </ul> -->
-  
+      <markdown [data]="post.post_Content" ngPreserveWhitespaces></markdown>
     </mat-card-content>
     <app-post-activity></app-post-activity>
   </mat-card>

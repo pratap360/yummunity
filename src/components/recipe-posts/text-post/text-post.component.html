@@ -89,7 +89,8 @@
       </mat-menu>
     </mat-card-header>
     <mat-card-content class="card-content">
-      <p>{{post.post_Content}}</p>
+      <!-- <p>{{post.post_Content}}</p> -->
+      <markdown [data]="post.post_Content" ngPreserveWhitespaces></markdown>
       <!-- <p><b>Did you know that ?:</b>egg is not non veg it's a veg</p> -->
     </mat-card-content>
     <!-- <app-post-activity *ngFor="let post of posts" [post]="post"></app-post-activity> -->
