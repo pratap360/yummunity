@@ -3,9 +3,8 @@
 import { Injectable } from '@angular/core';
 import { Client,Account, Databases, Storage, ID, Query } from 'appwrite';
 import { environment } from '../environments/environment';
-import { from, Observable } from 'rxjs';
+import { from, Observable,timer } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
-import { timer } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

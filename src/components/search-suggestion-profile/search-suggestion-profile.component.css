@@ -18,44 +18,52 @@ p.suggestions-header {
 
 
 .suggestions-container {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;
-    flex-wrap: wrap;
-    margin: 5px;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  margin: 0.6rem;
+  align-content: center;
+  justify-content: center;
+}
+
 .profile-card {
-    margin: 7px;
-    max-width: 700px;
-  }
-  
-  .profile-header {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  .profile-header-image {
-    /* background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg'); */
-    background-size: cover;
-  }
+  margin: 7px;
+  max-width: 700px;
+}
+
+.profile-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: nowrap
+}
+
+.profile-header-image {
+  /* background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg'); */
+  background-size: cover;
+}
 
 
-  @media (max-width: 768px) {
-    
-    .suggestions-container{
-      /* margin: 20px auto; */
-      padding: 0 10px;
-    }
-    span{
-      display: none;
-    }
-    button{
-      padding: 0.5rem; 
-    }
-    mat-icon{
-      margin: 0 !important;
-    }
+@media (max-width: 768px) {
+
+  .suggestions-container {
+    /* margin: 20px auto; */
+    padding: 0 10px;
   }
 
+  span {
+    display: none;
+  }
 
+  button {
+    padding: 0.5rem;
+  }
+
+  mat-icon {
+    margin: 0 !important;
+  }
+
+  .profile-card {
+    max-width: 450px;
+  }
+}
