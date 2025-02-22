@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { RouterModule,RouterOutlet, RouterLink } from '@angular/router';
+import { RouterModule,RouterOutlet, RouterLink, Router } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
 import { UsersService } from '../../app/services/users/users.service';
@@ -28,12 +28,14 @@ import { UserData } from '../../app/interface/user-data';
 })
 export class SearchSuggestionProfileComponent implements OnInit {
 
-  users: any[] = [];
+  users:any[] = []
   // users: UserData[] = [];
   // @Input() users: string[] = []
 
   // constructor(private userService: UsersService) { }
-  constructor(private OnSearchUsers: OnSearchGetUserService) { }
+  constructor(private OnSearchUsers: OnSearchGetUserService,
+    private router: Router
+  ) { }
 
   // ngOnInit(): void {
   //   this.userService.getsuggestUsers().subscribe({
@@ -55,6 +57,11 @@ export class SearchSuggestionProfileComponent implements OnInit {
         console.error('Error fetching users:', error);
       }
     })
+  }
+
+  onUserCardClick(user_tag: string): void {
+    // Navigate to the user profile component with the user_tag
+    this.router.navigate(['/user', user_tag]);
   }
 
 }

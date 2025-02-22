@@ -36,7 +36,7 @@ export const routes: Routes = [
 
   { path: 'account', component: AccountComponent },
   {path: 'account/edit-profile', component: EditComponent},
-  { path: '@user_tag', component: UserProfileComponent },
+  { path: 'user/:user_tag', component: UserProfileComponent },
 
   // { path:'post/:documentId', component: FullPostComponent },
   // { path:'fullpost/:documentId', component: FullPostComponent },
@@ -54,5 +54,6 @@ export const routes: Routes = [
 
 
 
-  { path: '**', component: NotFoundComponent },
+  { path: 'not-found', component: NotFoundComponent },
+  { path: '**', redirectTo: '/not-found' },
 ];

@@ -1,8 +1,16 @@
-<div *ngIf="userProfile">
-    <h1>{{ userProfile.user_name }}</h1>
-    <p>&{{ userProfile.user_tag }}</p>
+<app-sidenav></app-sidenav>
+<div *ngIf="user">
+    <h1>{{ user.user_name }}</h1>
+    <p>this is the correct implementation 
+      &{{ user.user_tag }}</p>
     <!-- Add other profile fields -->
   </div>
-  <div *ngIf="error">
-    <p>User not found</p>
+  <!-- <div *ngIf="user && !user.user_tag">
+    <p>User tag is incorrect</p>
+    <h4>OR</h4>
+    <p>No user profile found</p>
+  </div> -->
+
+  <div *ngIf="!user">
+    <p>Loading user profile...</p>
   </div>

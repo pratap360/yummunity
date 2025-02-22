@@ -5,15 +5,13 @@
   <p class="suggestions-header">Users whom to follow</p> -->
 
 <div class="suggestions-container">
-    <mat-card *ngFor="let user of users" class="profile-card" appearance="outlined">
+    <mat-card *ngFor="let user of users" class="profile-card" appearance="outlined" (click)="onUserCardClick(user.user_tag)" >
         <mat-card-header class="profile-header">
             <img mat-card-avatar [src]="user.user_profile_pic" class="profile-header-image"
                 alt="{{user.user_name}}">
             <mat-card-title>{{user.user_name}}</mat-card-title>
             <mat-card-subtitle>
-                <a [routerLink]="['/@' + user.user_tag]">
-                    {{user.user_tag}}
-                </a>
+                   <p>&#64;{{user.user_tag}}</p>
             </mat-card-subtitle>
             <button mat-flat-button><mat-icon>person_add</mat-icon>
                 <span>
