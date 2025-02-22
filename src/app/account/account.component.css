@@ -159,19 +159,8 @@ div.profile-tab-container {
 
 .profile-tab-icon {
   margin-right: 8px;
-
 }
 
-/* .profile-tab {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  overflow: hidden; 
-  align-items: stretch;
-  width: 80%;
-  max-width: 700px;
-  z-index: 0;
-} */
 
 .profile-post-tab {
   display: flex;
@@ -333,9 +322,7 @@ div.profile-tab-container {
 
 
   div.profile-tab-container {
-    /* width: 100%; */
     margin-bottom: 3.4rem;
-    /* padding: 1rem; */
   }
 
   mat-tab-group {
