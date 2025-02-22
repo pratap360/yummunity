@@ -1,16 +1,43 @@
 <app-sidenav></app-sidenav>
-<div *ngIf="user">
-    <h1>{{ user.user_name }}</h1>
-    <p>this is the correct implementation 
-      &{{ user.user_tag }}</p>
-    <!-- Add other profile fields -->
-  </div>
-  <!-- <div *ngIf="user && !user.user_tag">
-    <p>User tag is incorrect</p>
-    <h4>OR</h4>
-    <p>No user profile found</p>
-  </div> -->
 
-  <div *ngIf="!user">
-    <p>Loading user profile...</p>
-  </div>
+
+<div class="content-wrapper">
+  <mat-card class="profile-card mat-elevation-z4" *ngIf="user">
+    <div class="profile-header">
+      <div class="avatar">
+          <img mat-card-avatar class="profile-card-image" [src]="user.user_profile_pic" alt="Profile">
+      </div>
+      <div class="profile-info">
+        <div class="account-card-header">
+          <h3 class="name">{{ user.user_name }}</h3>
+          <button mat-flat-button class="edit-button" matTooltip="Follow"
+            matTooltipPosition="right" (click)="followUser()">
+            <mat-icon>person_add</mat-icon>Follow
+          </button>
+        </div>
+        <hr>
+        <p class="username">&#64;{{ user.user_tag }}</p>
+        <p class="description">{{ user.user_bio }}</p>
+      </div>
+    </div>
+
+    <div class="profile-footer">
+      <div class="info-toggle-group" appearance="standard" multiple>
+        <h6>
+          Recipes & Blog: {{ user.user_following_count }}
+        </h6>
+        <h6>
+          Followers: {{ user.user_followers_count }}
+        </h6>
+        <h6>
+          Yummunity Rating: {{ user.yummunity_rating }}
+        </h6>
+      </div>
+    </div>
+
+    <div *ngIf="!user">
+      <p>Loading user profile...</p>
+    </div>
+
+  </mat-card>
+</div>
