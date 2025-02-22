@@ -12,6 +12,7 @@ import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition
 import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { BottomNavComponent } from "../../../components/bottom-nav/bottom-nav.component";
 @Component({
   selector: 'app-edit',
   standalone: true,
@@ -25,8 +26,9 @@ import { provideNativeDateAdapter } from '@angular/material/core';
     ReactiveFormsModule,
     CommonModule,
     MatSelectModule,
-    MatDatepickerModule
-  ],
+    MatDatepickerModule,
+    BottomNavComponent
+],
   providers: [
     provideNativeDateAdapter()
   ],

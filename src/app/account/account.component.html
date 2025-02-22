@@ -53,8 +53,10 @@
         <mat-icon class="profile-tab-icon">mood</mat-icon>
         Recipes Shares
       </ng-template>
+      <div class="card-content-wrapper">
       <app-text-post [posts]="posts"></app-text-post>
       <app-with-img-post [posts]="posts"></app-with-img-post>
+      </div>
     </mat-tab>
 
     <mat-tab label="Blogs">
@@ -62,7 +64,9 @@
         <mat-icon class="profile-tab-icon">library_books</mat-icon>
         Blogs
       </ng-template>
+      <div class="card-content-wrapper">
       <app-blog-post [blogPosts]="blogPosts"></app-blog-post>
+      </div>
     </mat-tab>
 
     <mat-tab label="Saves">
@@ -70,7 +74,9 @@
         <mat-icon class="profile-tab-icon">bookmarks</mat-icon>
         Saves
       </ng-template>
-      <app-text-post></app-text-post>
+      <div class="card-content-wrapper">
+        <app-text-post></app-text-post>
+      </div>
     </mat-tab>
   </mat-tab-group>
   <!-- </mat-tab> -->

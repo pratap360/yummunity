@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { OnSearchGetUserService } from '../../services/appwrite/userdata/on-search-get-user.service';
@@ -14,12 +14,13 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { BottomNavComponent } from "../../../components/bottom-nav/bottom-nav.component";
 @Component({
   selector: 'app-user-profile',
   standalone: true,
   imports: [
-    CommonModule, 
-    RouterModule, 
+    CommonModule,
+    RouterModule,
     SidenavComponent,
     MatCardModule,
     MatButtonModule,
@@ -30,7 +31,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTooltipModule,
     MatToolbarModule,
     MatSlideToggleModule,
-  ],
+    BottomNavComponent
+],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css',
 })
@@ -42,6 +44,7 @@ export class UserProfileComponent implements OnInit {
   // userTag: string = '';
   user: any;
   user_tag: string = '';
+  selectedTabIndex = signal(0);
 
   constructor(
     private route: ActivatedRoute,

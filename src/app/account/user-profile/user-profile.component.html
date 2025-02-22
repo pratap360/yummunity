@@ -41,3 +41,71 @@
 
   </mat-card>
 </div>
+
+<div class="profile-tab-container">
+
+  <mat-tab-group color="accent" class="profile-post-tab" mat-align-tabs="center" dynamicHeight
+    (selectedIndexChange)="selectedTabIndex.set($event)">
+    <mat-tab label="Recipes Shares">
+      <ng-template mat-tab-label>
+        <mat-icon class="profile-tab-icon">mood</mat-icon>
+        Recipes Shares
+      </ng-template>
+      <!-- <app-text-post [posts]="posts"></app-text-post>
+      <app-with-img-post [posts]="posts"></app-with-img-post> -->
+    </mat-tab>
+
+    <mat-tab label="Blogs">
+      <ng-template mat-tab-label>
+        <mat-icon class="profile-tab-icon">library_books</mat-icon>
+        Blogs
+      </ng-template>
+      <!-- <app-blog-post [blogPosts]="blogPosts"></app-blog-post> -->
+    </mat-tab>
+
+    <mat-tab label="Saves">
+      <ng-template mat-tab-label>
+        <mat-icon class="profile-tab-icon">bookmarks</mat-icon>
+        Saves
+      </ng-template>
+      <!-- <app-text-post></app-text-post> -->
+    </mat-tab>
+  </mat-tab-group>
+  <!-- </mat-tab> -->
+
+  <!-- <mat-tab label="Saves">
+      <ng-template mat-tab-label>
+        <mat-icon class="profile-tab-icon">bookmarks</mat-icon>
+        Saves
+      </ng-template>
+      @defer(when selectedTabIndex() === 2;) {
+        ! Content 3 prefetch when prefetchTabs()
+        <app-text-post></app-text-post>
+      } -->
+
+  <!-- ? Need to implement the ngfor here to display the saved posts using boolean value  -->
+  <!-- <ng-container *ngFor="let post of savedPosts">
+        <app-text-post [data]="post"></app-text-post>
+      </ng-container> -->
+
+  <!-- <div class="save-content-wrapper">
+        <mat-card appearance="outlined" class="posts-card">
+          <mat-card-content class="card-content">
+            <h3>Did you know that ?</h3>
+            <p>A hen lays around 300 to 325 eggs per year, and it takes her 24 to 26 hours to produce each egg</p>
+          </mat-card-content>
+          <mat-card-actions class="action-buttons">
+            <button mat-flat-button><mat-icon>favorite</mat-icon>Like</button>
+            <button mat-raised-button><mat-icon>comment</mat-icon>Comment</button>
+            <button mat-flat-button><mat-icon>bookmark</mat-icon>Saved</button>
+            <button mat-stroked-button><mat-icon>more_horiz</mat-icon>Read More</button>
+          </mat-card-actions>
+        </mat-card>
+      </div> -->
+
+  <!-- </mat-tab>
+  </mat-tab-group> -->
+
+</div>
+
+<app-bottom-nav></app-bottom-nav>
