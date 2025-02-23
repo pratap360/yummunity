@@ -1,7 +1,16 @@
 // appwrite.service.ts
 
 import { Injectable } from '@angular/core';
-import { Client, Account, Databases, Storage, ID, Query } from 'appwrite';
+import {
+  Client,
+  Account,
+  Databases,
+  Storage,
+  ID,
+  Query,
+  Permission,
+  Role,
+} from 'appwrite';
 import { environment } from '../environments/environment';
 import { from, Observable, timer } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
@@ -205,18 +214,21 @@ export class AppwriteService {
   }
 
   async createUserDocument(userId: string, userData: any) {
-    const session = await this.account.get();
     return await this.database.createDocument(
       environment.appwrite_DatabaseID,
       environment.users_CollectionID,
       userId,
-      userData
+      userData,
+      [
+        Permission.read(Role.any()),
+        Permission.update(Role.any()),
+        // Permission.update(Role.user(userId)),
+      ]
     );
   }
 
   // 👇 current session user data method
   async getCurrentUser(): Promise<UserData> {
-
     try {
       const session = await this.account.get();
       console.log('SessionId:', session.$id);

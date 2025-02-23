@@ -148,7 +148,7 @@ export class WelcomeComponent implements OnInit {
 
         await this.appwriteService.createUserDocument(account.$id, userData).then(() => {
           console.log('submitting all data:', userData);
-          this.user_snackBar.open('Account Created Successfully, kinldy Login', 'Close', {
+          this.user_snackBar.open('Account Created Successfully, Kindly Login', 'Close', {
             duration: this.durationInSeconds * 1000,
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
