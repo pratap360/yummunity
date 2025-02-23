@@ -7,35 +7,37 @@
     <h3 class="account-title">My Account</h3>
   </div>
 
-  <mat-card class="profile-card mat-elevation-z4">
+  <mat-card class="profile-card mat-elevation-z4" *ngIf="userData">
     <div class="profile-header">
       <div class="avatar">
-        <div mat-card-avatar alt="Profile" class="profile-card-image"></div>
+        <img mat-card-avatar class="profile-card-image" [src]="userData.user_profile_pic || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y' " 
+        [alt]="userData.user_name">
       </div>
       <div class="profile-info">
         <div class="account-card-header">
-          <h3 class="name">{{ name }}</h3>
+          <h3 class="name">{{ userData.user_name }}</h3>
           <button mat-icon-button class="edit-button" routerLink="/account/edit-profile" matTooltip="Edit profile" matTooltipPosition="right">
             <mat-icon>edit</mat-icon>
             <!-- <span>Edit</span> -->
           </button>
         </div>
         <hr>
-        <p class="username">{{ username }}</p>
-        <p class="description">{{ description }}</p>
+        <p class="username">&#64;{{ userData.user_tag }}</p>
+        <p class="description">{{ userData.user_bio || '' }}</p>
       </div>
     </div>
 
     <div class="profile-footer">
       <div class="info-toggle-group" appearance="standard" multiple>
         <h6>
-          Recipes & Blog: {{ recipesCount }}
+          Recipes & Blog: {{ userData.user_fav_food_recipe || '0'  }}
+          <!--* later modify this 👆 this is recipe and blog count-->
         </h6>
         <h6>
-          Followers: {{ followersCount }}
+          Followers: {{ userData.user_followers_count.length || '0' }}
         </h6>
         <h6>
-          Yummunity Rating: {{ yummunityRating }}
+          Yummunity Rating: {{ userData.yummunity_rating }}
         </h6>
       </div>
     </div>

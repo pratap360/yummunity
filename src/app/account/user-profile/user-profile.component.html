@@ -5,7 +5,7 @@
   <mat-card class="profile-card mat-elevation-z4" *ngIf="user">
     <div class="profile-header">
       <div class="avatar">
-          <img mat-card-avatar class="profile-card-image" [src]="user.user_profile_pic" alt="Profile">
+          <img mat-card-avatar class="profile-card-image" [src]="user.user_profile_pic" [alt]="user.user_name">
       </div>
       <div class="profile-info">
         <div class="account-card-header">
@@ -51,8 +51,8 @@
         <mat-icon class="profile-tab-icon">mood</mat-icon>
         Recipes Shares
       </ng-template>
-      <!-- <app-text-post [posts]="posts"></app-text-post>
-      <app-with-img-post [posts]="posts"></app-with-img-post> -->
+      <app-text-post [posts]="posts"></app-text-post>
+      <app-with-img-post [posts]="posts"></app-with-img-post>
     </mat-tab>
 
     <mat-tab label="Blogs">
@@ -60,7 +60,7 @@
         <mat-icon class="profile-tab-icon">library_books</mat-icon>
         Blogs
       </ng-template>
-      <!-- <app-blog-post [blogPosts]="blogPosts"></app-blog-post> -->
+      <app-blog-post [blogPosts]="blogPosts"></app-blog-post>
     </mat-tab>
 
     <mat-tab label="Saves">

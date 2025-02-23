@@ -1,4 +1,4 @@
-<mat-card appearance="outlined" class="posts-card">
+<!-- <mat-card appearance="outlined" class="posts-card">
   <mat-card-header>
     <div mat-card-avatar class="profile-header-image"></div>
     <mat-card-title>{{user_name}}</mat-card-title>
@@ -7,7 +7,6 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <!-- implement copy to clipboard properly  -->
       <button mat-menu-item (click)="sharePost()">
         <mat-icon>share</mat-icon>
         <span>Share Post</span>
@@ -34,35 +33,7 @@
     </ul>
   </mat-card-content>
   <app-post-activity></app-post-activity>
-  <!-- <mat-card-actions class="action-buttons"> -->
-  <!-- Like Button -->
-
-  <!-- <button mat-flat-button [color]="liked ? 'warn' : null" (click)="toggleLike()">
-      <mat-icon>favorite</mat-icon>
-      {{ likes }} Like
-    </button> -->
-
-  <!-- Comment Button with Modal Popup -->
-  <!-- <button mat-raised-button (click)="openCommentModal()">
-      <mat-icon>comment</mat-icon>
-      {{ comments_counter }} Comment{{ comments.length > 1 ? 's' : '' }}
-    </button> -->
-
-  <!-- Save Button -->
-
-  <!-- <button mat-raised-button [color]="saved ? 'warn' : null" (click)="toggleSave()">
-      <mat-icon>bookmark</mat-icon>
-      {{ saves }} Save
-    </button> -->
-
-  <!-- Read More Button -->
-
-  <!-- <button mat-stroked-button (click)="navigateToPost()">
-      <mat-icon>more_horiz</mat-icon>
-      Read More
-    </button> -->
-  <!-- </mat-card-actions> -->
-</mat-card>
+</mat-card> -->
 
 <div>
   <mat-card *ngFor="let post of posts" appearance="outlined" class="posts-card">
@@ -89,7 +60,6 @@
       </mat-menu>
     </mat-card-header>
     <mat-card-content class="card-content">
-      <!-- <p>{{post.post_Content}}</p> -->
       <markdown [data]="post.post_Content" ngPreserveWhitespaces></markdown>
       <!-- <p><b>Did you know that ?:</b>egg is not non veg it's a veg</p> -->
     </mat-card-content>

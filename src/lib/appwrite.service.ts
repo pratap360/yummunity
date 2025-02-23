@@ -1,10 +1,11 @@
 // appwrite.service.ts
 
 import { Injectable } from '@angular/core';
-import { Client,Account, Databases, Storage, ID, Query } from 'appwrite';
+import { Client, Account, Databases, Storage, ID, Query } from 'appwrite';
 import { environment } from '../environments/environment';
-import { from, Observable,timer } from 'rxjs';
+import { from, Observable, timer } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
+import { UserData } from '../app/interface/user-data';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,7 @@ export class AppwriteService {
   database: any;
   storage: any;
   account: any;
+  session: any;
 
   constructor() {
     this.client
@@ -23,7 +25,6 @@ export class AppwriteService {
     this.database = new Databases(this.client);
     this.storage = new Storage(this.client);
     this.account = new Account(this.client);
-    
   }
 
   async userData(userInfo: any): Promise<any> {
@@ -52,10 +53,7 @@ export class AppwriteService {
 
     return Promise.all(uploadPromises).then((responses) =>
       responses.map((response) =>
-        this.storage.getFileView(
-          environment.PostImages_BucketID,
-          response.$id
-        )
+        this.storage.getFileView(environment.PostImages_BucketID, response.$id)
       )
     );
   }
@@ -97,10 +95,8 @@ export class AppwriteService {
     );
   }
 
-  // ! updateProfilePic method bana hai baki 
+  // ! updateProfilePic method bana hai baki
 
-
-  
   createPost(data: any) {
     return this.database.createDocument(
       environment.appwrite_DatabaseID,
@@ -195,47 +191,60 @@ export class AppwriteService {
     );
   }
 
-  createNewUser(data : any): Observable<any>{
+  createNewUser(data: any): Observable<any> {
     return this.database.createDocument(
       environment.appwrite_DatabaseID,
       environment.users_CollectionID,
       ID.unique(),
       data
-    )
+    );
   }
 
   async createAccount(email: string, password: string, name: string) {
-    return await this.account.create(
-      ID.unique(),
-      email,
-      password,
-      name
-    );
+    return await this.account.create(ID.unique(), email, password, name);
   }
 
-  async createUserDocument(userData: any) {
+  async createUserDocument(userId: string, userData: any) {
+    const session = await this.account.get();
     return await this.database.createDocument(
       environment.appwrite_DatabaseID,
       environment.users_CollectionID,
-      ID.unique(),
+      userId,
       userData
     );
   }
-  // async userData(userInfo: any): Promise<any> {
-  //   try {
-  //     const response = await this.database.createDocument(
-  //       environment.appwrite_DatabaseID,
-  //       environment.users_CollectionID,
-  //       ID.unique(),
-  //       userInfo
-  //     );
-  //     return console.log('Appwrite Service Response:: userData() ::', response);
-  //   } catch (error) {
-  //     console.error('Appwrite Service :: userData() ::', error);
-  //     throw error;
-  //   }
-  // }
 
+  // 👇 current session user data method
+  async getCurrentUser(): Promise<UserData> {
 
+    try {
+      const session = await this.account.get();
+      console.log('SessionId:', session.$id);
+      const userData = await this.getUserData(session.$id);
+      return userData;
+      // console.log('Session:', session);
+      // return this.getUserData(session.$id);
+    } catch (error) {
+      console.error('Error getting current user:', error);
+      throw error;
+    }
+  }
 
+  async getUserData(userId: string): Promise<UserData> {
+    if (!userId) {
+      throw new Error('User ID is required');
+    }
+    try {
+      const response = await this.database.getDocument(
+        environment.appwrite_DatabaseID,
+        environment.users_CollectionID,
+        userId
+      );
+      console.log('Document ID:', response);
+      return response as UserData;
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      throw error;
+    }
+  }
 }

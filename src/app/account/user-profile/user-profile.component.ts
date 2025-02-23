@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 import { OnSearchGetUserService } from '../../services/appwrite/userdata/on-search-get-user.service';
 import { switchMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { SidenavComponent } from "../../../components/sidenav/sidenav.component";
+import { SidenavComponent } from '../../../components/sidenav/sidenav.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
@@ -14,7 +14,12 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { BottomNavComponent } from "../../../components/bottom-nav/bottom-nav.component";
+import { BottomNavComponent } from '../../../components/bottom-nav/bottom-nav.component';
+import { BlogPost } from '../../interface/blog-post';
+import { RecipePost } from '../../interface/recipe-post';
+import { TextPostComponent } from "../../../components/recipe-posts/text-post/text-post.component";
+import { WithImgPostComponent } from "../../../components/recipe-posts/with-img-post/with-img-post.component";
+import { BlogPostComponent } from "../../../components/recipe-posts/blog-post/blog-post.component";
 @Component({
   selector: 'app-user-profile',
   standalone: true,
@@ -31,13 +36,15 @@ import { BottomNavComponent } from "../../../components/bottom-nav/bottom-nav.co
     MatTooltipModule,
     MatToolbarModule,
     MatSlideToggleModule,
-    BottomNavComponent
+    BottomNavComponent,
+    TextPostComponent,
+    WithImgPostComponent,
+    BlogPostComponent
 ],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css',
 })
 export class UserProfileComponent implements OnInit {
-
   // userProfile : any;
   // error:any;
   // loading = true;
@@ -45,7 +52,8 @@ export class UserProfileComponent implements OnInit {
   user: any;
   user_tag: string = '';
   selectedTabIndex = signal(0);
-
+  posts: RecipePost[] = [];
+  blogPosts: BlogPost[] = [];
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -77,8 +85,7 @@ export class UserProfileComponent implements OnInit {
       });
   }
 
-
   followUser() {
-    alert('following user is working')
-    }
+    alert('following user is working');
+  }
 }

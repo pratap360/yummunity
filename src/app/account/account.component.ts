@@ -32,11 +32,14 @@ import { AppwriteService } from '../../lib/appwrite.service';
 import { BlogPost } from '../interface/blog-post';
 import { RecipePost } from '../interface/recipe-post';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { UserData } from '../interface/user-data';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-account',
   standalone: true,
   imports: [
     // SideNavBarComponent,
+    CommonModule,
     SidenavComponent,
     RecipePostsComponent,
     SearchComponent,
@@ -85,35 +88,29 @@ export class AccountComponent implements OnInit {
   ];
 
   Month = this.MonthNames[new Date().getMonth()];
-
-  // blog post component
-  blogTitle = 'Summer Chipotle Chicken Cobb Salad with Cilantro Vinaigrette';
-  longText = `This juicy salad tastes like summer! With chipotle chicken, sweet corn, avocado, cilantro vinaigrette, bacon crumbles, and fresh strawberries for a pop of sweetness.`;
-
-  name = 'Pratap Parui';
-  username = '@pratap360';
-  description = 'Developer | Food Lover & Critics';
-  // profileImage = 'assets/path-to-profile-image.jpg';
-
-  recipesCount = 10;
-  followersCount = 349;
-  yummunityRating = 4.5;
-
-  link = 'Parui Dev';
-  linkUrl = 'https://paruidev.com';
-
   selectedTabIndex = signal(0);
-  // prefetchTabs = signal(true);
-
   posts: RecipePost[] = [];
   blogPosts: BlogPost[] = [];
-
+  userData!: UserData;
+  // userData: UserData | null = null;
+  // userData: UserData[] = [];
   constructor(private appwriteService: AppwriteService) {}
 
   ngOnInit(): void {
-    this.allPostsData();
-    this.fetchBlogPosts();
+    // this.allPostsData();
+    // this.fetchBlogPosts();
+    this.loggedInUserData();
   }
+
+  async loggedInUserData(): Promise<void> {
+    try {
+      this.userData = await this.appwriteService.getCurrentUser();
+    } catch (error) {
+      console.error('Error loading user data:', error);
+    }
+
+  }
+
 
   allPostsData(): void {
     this.appwriteService.getUserPosts().subscribe({

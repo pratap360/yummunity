@@ -1,7 +1,7 @@
 export interface UserData {
-picture: any;
-name: any;
-login: any;
+  picture: any;
+  name: any;
+  login: any;
   id?: string;
   user_tag: string;
   user_profile_pic?: any[];

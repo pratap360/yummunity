@@ -37,10 +37,10 @@ import { UserdataService } from '../../services/appwrite/userdata/userdata.servi
   templateUrl: './welcome.component.html',
   styleUrl: './welcome.component.css',
 })
-export class WelcomeComponent implements OnInit{
+export class WelcomeComponent implements OnInit {
   imagePreview: any;
   hide: boolean = true;
-  signupData : any;
+  signupData: any;
   durationInSeconds = 5;
   private user_snackBar = inject(MatSnackBar);
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
@@ -52,16 +52,16 @@ export class WelcomeComponent implements OnInit{
     private fb: FormBuilder,
     private router: Router,
     private appwriteService: AppwriteService,
-    private userData : UserdataService
+    private userData: UserdataService
   ) {}
   ngOnInit(): void {
     this.signupData = this.userData.getSignupData();
 
-    if(this.signupData){
+    if (this.signupData) {
       this.welcomeForm.patchValue({
-        user_name:this.signupData.user_name,
+        user_name: this.signupData.user_name,
         user_email: this.signupData.user_email,
-        user_password: this.signupData.user_password
+        user_password: this.signupData.user_password,
       });
     }
   }
@@ -70,8 +70,11 @@ export class WelcomeComponent implements OnInit{
     // user_name: [ '', Validators.required],
     user_name: [{ value: '', disabled: true }, Validators.required],
     user_tag: ['', Validators.required],
-    user_email: [{ value: '', disabled: true }, [Validators.required, Validators.email]],
-    user_password: [{ value: '', disabled: true },],
+    user_email: [
+      { value: '', disabled: true },
+      [Validators.required, Validators.email],
+    ],
+    user_password: [{ value: '', disabled: true }],
     user_bio: [''],
     user_profile_pic: [null],
     user_phone_no: ['', [Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]],
@@ -107,16 +110,17 @@ export class WelcomeComponent implements OnInit{
   //   }
   // }
 
-
   async onSubmit() {
-    if (this.welcomeForm.valid && this.signupData){
+    if (this.welcomeForm.valid && this.signupData) {
       try {
         const profile_pic = (
           document.getElementById('profile_pic') as HTMLInputElement
         ).files;
         const userProfilePic = profile_pic ? Array.from(profile_pic) : [];
 
-        const profilePicUrl = await this.appwriteService.uploadProfilePic(userProfilePic);
+        const profilePicUrl = await this.appwriteService.uploadProfilePic(
+          userProfilePic
+        );
 
         const account = await this.appwriteService.createAccount(
           this.signupData.user_email,
@@ -124,8 +128,7 @@ export class WelcomeComponent implements OnInit{
           this.signupData.user_name
         );
 
-        console.log("Account Created:", account);
-        
+        console.log('Account Created:', account);
 
         const userData = {
           // user_id: account.$id,
@@ -140,31 +143,30 @@ export class WelcomeComponent implements OnInit{
           user_dob: this.welcomeForm.value.user_dob,
           user_location: this.welcomeForm.value.user_location,
           user_url: this.welcomeForm.value.user_url,
-          user_fav_food_recipe: this.welcomeForm.value.user_fav_food_recipe
+          user_fav_food_recipe: this.welcomeForm.value.user_fav_food_recipe,
         };
 
-        await this.appwriteService.createUserDocument(userData)
-        .then(() => {
-          console.log("submitting all data:",userData);
-          this.user_snackBar.open('Changes Saved', 'Close', {
+        await this.appwriteService.createUserDocument(account.$id, userData).then(() => {
+          console.log('submitting all data:', userData);
+          this.user_snackBar.open('Account Created Successfully, kinldy Login', 'Close', {
             duration: this.durationInSeconds * 1000,
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
           });
+          this.router.navigate(['/login']);
         });
-        
+
         // const userData = this.welcomeForm.value;
-      }
-      catch(error){
-          console.error('Failed to Create New user: ', error);
-          this.user_snackBar.open('check console for errors', 'Close', {
-            duration: this.durationInSeconds * 1000,
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-          });
+      } catch (error) {
+        console.error('Failed to Create New user: ', error);
+        this.user_snackBar.open('check console for errors', 'Close', {
+          duration: this.durationInSeconds * 1000,
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+        });
       }
     }
-    this.router.navigate(['/home-feed'])
+    // this.router.navigate(['/home-feed'])
   }
   saveChanges() {
     const profile_pic = (
@@ -178,23 +180,24 @@ export class WelcomeComponent implements OnInit{
       .then((profilePicUrl) => {
         // const userData = this.welcomeForm.value;
         const userData = {
-          user_name: this.welcomeForm.get('user_name')?.value ,
+          user_name: this.welcomeForm.get('user_name')?.value,
           user_email: this.welcomeForm.get('user_email')?.value,
-          user_password:this.welcomeForm.get('user_password')?.value,
-          user_tag:  this.welcomeForm.get('user_tag')?.value,
-          user_bio: this.welcomeForm.get('user_bio')?.value ,
+          user_password: this.welcomeForm.get('user_password')?.value,
+          user_tag: this.welcomeForm.get('user_tag')?.value,
+          user_bio: this.welcomeForm.get('user_bio')?.value,
           user_profile_pic: profilePicUrl,
           user_phone_no: this.welcomeForm.get('user_phone_no')?.value,
           user_gender: this.welcomeForm.get('user_gender')?.value,
           user_dob: this.welcomeForm.get('user_dob')?.value,
           user_location: this.welcomeForm.get('user_location')?.value,
           user_url: this.welcomeForm.get('user_url')?.value,
-          user_fav_food_recipe: this.welcomeForm.get('user_fav_food_recipe')?.value,
+          user_fav_food_recipe: this.welcomeForm.get('user_fav_food_recipe')
+            ?.value,
         };
         return this.appwriteService.createNewUser(userData);
       })
       .then(() => {
-       console.log(this.welcomeForm.value);
+        console.log(this.welcomeForm.value);
         this.user_snackBar.open('Changes Saved', 'Close', {
           duration: this.durationInSeconds * 1000,
           horizontalPosition: this.horizontalPosition,
