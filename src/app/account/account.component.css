@@ -262,7 +262,9 @@ div.profile-tab-container {
   margin-right: 4px;
 }
 
-
+p.tab-grp-tittle{
+  margin: auto;
+}
 
 
 @media screen and (max-width: 768px) {
@@ -342,5 +344,8 @@ div.profile-tab-container {
   }
   .card-content-wrapper{
     padding:0px 10px;
+  }
+  p.tab-grp-tittle{
+    display: none;
   }
 }

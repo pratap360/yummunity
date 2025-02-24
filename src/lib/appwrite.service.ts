@@ -228,35 +228,21 @@ export class AppwriteService {
   }
 
   // 👇 current session user data method
-  async getCurrentUser(): Promise<UserData> {
-    try {
-      const session = await this.account.get();
-      console.log('SessionId:', session.$id);
-      const userData = await this.getUserData(session.$id);
-      return userData;
-      // console.log('Session:', session);
-      // return this.getUserData(session.$id);
-    } catch (error) {
-      console.error('Error getting current user:', error);
-      throw error;
-    }
+  getCurrentUser(): Observable<UserData> {
+    return from(this.account.get()).pipe(
+      switchMap((session: any) => {
+        return this.getUserData(session.$id);
+      })
+    );
   }
 
-  async getUserData(userId: string): Promise<UserData> {
-    if (!userId) {
-      throw new Error('User ID is required');
-    }
-    try {
-      const response = await this.database.getDocument(
+  getUserData(userId: string): Observable<UserData> {
+    return from(
+      this.database.getDocument(
         environment.appwrite_DatabaseID,
         environment.users_CollectionID,
         userId
-      );
-      console.log('Document ID:', response);
-      return response as UserData;
-    } catch (error) {
-      console.error('Error fetching user data:', error);
-      throw error;
-    }
+      ) as Promise<UserData>
+    );
   }
 }

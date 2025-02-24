@@ -102,15 +102,25 @@ export class AccountComponent implements OnInit {
     this.loggedInUserData();
   }
 
-  async loggedInUserData(): Promise<void> {
-    try {
-      this.userData = await this.appwriteService.getCurrentUser();
-    } catch (error) {
-      console.error('Error loading user data:', error);
-    }
+  // async LoggedInUserData(): Promise<void> {
+  //   try {
+  //     this.userData = await this.appwriteService.getCurrentUser();
+  //   } catch (error) {
+  //     console.error('Error loading user data:', error);
+  //   }
+  // }
 
+  loggedInUserData() : void {
+    this.appwriteService.getCurrentUser().subscribe({
+      next: (data) => {
+        this.userData = data;
+        console.log('User Data:', this.userData);
+      },
+      error : (error) => {
+        console.error("getting error on method loggedInUserData()", error);
+      }
+    })
   }
-
 
   allPostsData(): void {
     this.appwriteService.getUserPosts().subscribe({

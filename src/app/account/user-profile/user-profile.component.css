@@ -119,20 +119,24 @@ div.profile-tab-container {
     justify-content: center;
     align-items: center;
     padding-top: 20px;
-  
-  }
 
-  .profile-post-tab {
+}
+
+.profile-post-tab {
     display: flex;
     justify-content: center;
     width: 80%;
     max-width: 700px;
     z-index: 0;
-  }
+}
 
-  .profile-tab-icon {
+.profile-tab-icon {
     margin-right: 8px;
-  }
+}
+
+p.tab-grp-tittle {
+    margin: auto;
+}
 
 @media screen and (max-width: 768px) {
 
@@ -213,16 +217,21 @@ div.profile-tab-container {
         margin-right: 0;
     }
 
-    div.account-card-header{
+    div.account-card-header {
         display: grid;
         justify-content: space-around;
-      }
-      div.profile-tab-container {
+    }
+
+    div.profile-tab-container {
         margin-bottom: 3.4rem;
-      }  
-      
-      .profile-post-tab{
+    }
+
+    .profile-post-tab {
         width: 100%;
-      }
+    }
+
+    p.tab-grp-tittle {
+        display: none;
+    }
 
 }

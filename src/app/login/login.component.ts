@@ -46,15 +46,14 @@ export class LoginComponent implements OnInit {
   faGoogle = faGoogle;
   faHeart = faHeart;
 
-  durationInSeconds = 5;
-
   client = new Client();
   account: any;
 
-  private _snackBar = inject(MatSnackBar);
+  durationInSeconds = 5;
+  private login_snackBar = inject(MatSnackBar);
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private router: Router) {
     this.client.setProject(environment.appwrite_ProjectID);
     // .setEndpoint('https://cloud.appwrite.io/v1')
     this.account = new Account(this.client);
@@ -69,7 +68,7 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     if (!this.loginForm.valid) {
-      this._snackBar.open('Login Successfully!!', 'OK', {
+      this.login_snackBar.open('Login Successfully!!', 'OK', {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
         duration: this.durationInSeconds * 1000,
@@ -85,11 +84,18 @@ export class LoginComponent implements OnInit {
       this.loginForm.value.password
     );
     session.then(
-      function (response: any) {
+       (response: any) => {
         console.log(response); // Success
+        this.router.navigate(['/home-feed']);
       },
-      function (error: any) {
+       (error: any) => {
         console.log(error); // Failure
+        this.router.navigate(['/login']);
+        this.login_snackBar.open('Login Failed!!', 'OK', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration: this.durationInSeconds * 1000,
+        })
       }
     );
   }
