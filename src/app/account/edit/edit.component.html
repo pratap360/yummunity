@@ -10,10 +10,10 @@
                 matTooltipPosition="right"><mat-icon>arrow_back</mat-icon></button>
         </mat-card-header>
 
-        <form [formGroup]="accountForm" (ngSubmit)="onSubmit()">
+        <form [formGroup]="editProfileForm">
             <div class="profile-image-container">
                 <div class="profile-image-wrapper">
-                    <img [src]="imagePreview || 'assets/default-avatar.png'" alt="Profile picture">
+                    <img [src]="imagePreview" alt="Profile picture">
                     <div class="image-upload-overlay">
                         <input type="file" (change)="onImageSelected($event)" accept="image/*" #fileInput
                             formControlName="user_profile_pic">
@@ -42,20 +42,20 @@
             <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Update Email</mat-label>
                 <input formControlName="user_email" matInput placeholder="Enter email address" required />
-                <mat-error *ngIf="!accountForm.controls['user_email'].valid">
+                <mat-error *ngIf="!editProfileForm.controls['user_email'].valid">
                     Email is required
                 </mat-error>
             </mat-form-field>
 
             <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Update Password</mat-label>
-                <input formControlName="user_password" matInput [type]=" hide ? 'password' : 'text'" required />
+                <input formControlName="user_password" matInput [type]=" hide ? 'password' : 'text'" autocomplete="current-password" required />
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-pressed]="hide">
                     <mat-icon>
                         {{hide ? 'visibility_off' : 'visibility'}}
                     </mat-icon>
                 </button>
-                <mat-error *ngIf="!accountForm.controls['user_password'].valid">
+                <mat-error *ngIf="!editProfileForm.controls['user_password'].valid">
                     Password is required
                 </mat-error>
             </mat-form-field>

@@ -88,6 +88,7 @@ export class AccountComponent implements OnInit {
   ];
 
   Month = this.MonthNames[new Date().getMonth()];
+  
   selectedTabIndex = signal(0);
   posts: RecipePost[] = [];
   blogPosts: BlogPost[] = [];

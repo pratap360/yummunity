@@ -8,11 +8,18 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
-import {MatSelectModule} from '@angular/material/select';
-import {MatDatepickerModule} from '@angular/material/datepicker';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
+import { MatSelectModule } from '@angular/material/select';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core';
-import { BottomNavComponent } from "../../../components/bottom-nav/bottom-nav.component";
+import { BottomNavComponent } from '../../../components/bottom-nav/bottom-nav.component';
+import { AppwriteService } from '../../../lib/appwrite.service';
+import { UserData } from '../../interface/user-data';
+import { error } from 'console';
 @Component({
   selector: 'app-edit',
   standalone: true,
@@ -27,23 +34,21 @@ import { BottomNavComponent } from "../../../components/bottom-nav/bottom-nav.co
     CommonModule,
     MatSelectModule,
     MatDatepickerModule,
-    BottomNavComponent
-],
-  providers: [
-    provideNativeDateAdapter()
+    BottomNavComponent,
   ],
+  providers: [provideNativeDateAdapter()],
   templateUrl: './edit.component.html',
   styleUrl: './edit.component.css',
 })
 export class EditComponent {
-  name = 'Pratap Parui';
-  username = '@pratap360';
-  description = 'Developer | Food Lover & Critics';
-  recipesCount = 10;
-  followersCount = 349;
-  yummunityRating = 4.5;
+  // name = 'Pratap Parui';
+  // username = '@pratap360';
+  // description = 'Developer | Food Lover & Critics';
+  // recipesCount = 10;
+  // followersCount = 349;
+  // yummunityRating = 4.5;
 
-  accountForm: FormGroup;
+  editProfileForm: FormGroup;
   imagePreview: string | null = null;
   hide: boolean = true;
 
@@ -52,29 +57,74 @@ export class EditComponent {
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
- constructor(private fb: FormBuilder) {
-    this.accountForm = this.fb.group({
+  userId!: string;
+  userData!: UserData;
+
+  constructor(
+    private fb: FormBuilder,
+    private appwriteService: AppwriteService
+  ) {
+    this.editProfileForm = this.fb.group({
       user_name: ['', Validators.required],
       user_tag: ['', Validators.required],
       user_bio: [''],
-      user_profile_pic: [null],
+      // user_profile_pic: [null],
       user_email: ['', [Validators.required, Validators.email]],
-      user_password: ['',[Validators.required, Validators.minLength(8)]],
-      user_confirm_password: ['',[Validators.required, Validators.minLength(8)]],
-      user_phone_no: ['', [Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')] ],
+      user_password: ['', [Validators.required, Validators.minLength(8)]],
+      // user_confirm_password: ['',[Validators.required, Validators.minLength(8)]],
+      user_phone_no: ['', [Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]],
       user_gender: [''],
       user_dob: [''],
       user_location: [''],
       user_url: [''],
-      user_fav_food_recipe: ['']
+      user_fav_food_recipe: [''],
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.appwriteService.getCurrentUser().subscribe({
+      next: (res: any) => {
+        this.userId = res.$id;
+        this.fetchUserData();
+      },
+      error: (err) => {
+        console.error('Error getting current user:', err);
+      },
+    });
+  }
+
+  fetchUserData(): void {
+    const allUserData = this.appwriteService
+      .getUserData(this.userId)
+      .subscribe({
+        next: (res: UserData) => {
+          this.userData = res;
+          this.editProfileForm.patchValue({
+            user_name: this.userData.user_name,
+            user_tag: this.userData.user_tag,
+            user_bio: this.userData.user_bio,
+            // user_profile_pic: this.userData.user_profile_pic,
+            user_email: this.userData.user_email,
+            user_password: this.userData.user_password,
+            user_phone_no: this.userData.user_phone_no,
+            user_gender: this.userData.user_gender,
+            user_dob: this.userData.user_dob,
+            user_location: this.userData.user_location,
+            user_url: this.userData.user_url,
+            user_fav_food_recipe: this.userData.user_fav_food_recipe,
+          });
+        },
+        error: (error) => {
+          console.error('Error fetching user data on edit component:', error);
+        },
+      });
+    console.log('all User Data Values:', allUserData);
+  }
 
   onImageSelected(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
+      this.editProfileForm.get('user_profile_pic')?.setValue(file);
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result as string;
@@ -83,21 +133,34 @@ export class EditComponent {
     }
   }
 
-  onSubmit(): void {
-    if (this.accountForm.valid) {
-      console.log(this.accountForm.value);
-      // Handle form submission
+  saveChanges(): void {
+    if (this.editProfileForm.invalid) {
+      this._snackBar.open('Kindly Fill All Detials', 'OK', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration: this.durationInSeconds * 1000,
+      });
     }
-  }
-
-  saveChanges(): void{
-    // ? write the logic to save the changes form update appwrite database
-    // * use setValue to update the form 
-    this._snackBar.open('Profile Updated Successfully!!', 'OK', {
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-      duration: this.durationInSeconds * 1000,
-    });
+    const updatedUserData: UserData = this.editProfileForm.value;
+    this.appwriteService
+      .updateUserData(this.userId, updatedUserData)
+      .subscribe({
+        next: () => {
+          this._snackBar.open('Profile Updated Successfully!!', 'OK', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration: this.durationInSeconds * 1000,
+          });
+        },
+        error: (error: any) => {
+          console.error('Error updating user data:', error);
+          this._snackBar.open('Unable to Update Profile !!', 'OK', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration: this.durationInSeconds * 1000,
+          });
+        },
+      });
   }
   goBack(): void {
     window.history.back();

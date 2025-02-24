@@ -245,4 +245,14 @@ export class AppwriteService {
       ) as Promise<UserData>
     );
   }
+
+
+  updateUserData(userId: string, userData: any) {
+    return this.database.updateDocument(
+      environment.appwrite_DatabaseID,
+      environment.users_CollectionID,
+      userId,
+      userData
+    )
+  }
 }

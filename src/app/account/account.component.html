@@ -10,7 +10,7 @@
   <mat-card class="profile-card mat-elevation-z4" *ngIf="userData">
     <div class="profile-header">
       <div class="avatar">
-        <img mat-card-avatar class="profile-card-image" [src]="userData.user_profile_pic || 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y' " 
+        <img mat-card-avatar class="profile-card-image" [src]="userData.user_profile_pic" 
         [alt]="userData.user_name">
       </div>
       <div class="profile-info">
