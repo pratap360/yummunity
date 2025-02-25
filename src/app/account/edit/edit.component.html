@@ -15,8 +15,8 @@
                 <div class="profile-image-wrapper">
                     <img [src]="imagePreview" alt="Profile picture">
                     <div class="image-upload-overlay">
-                        <input type="file" (change)="onImageSelected($event)" accept="image/*" #fileInput
-                            formControlName="user_profile_pic">
+                        <input type="file" (change)="onImageSelected($event)" accept="image/*">
+                        <!-- formControlName="user_profile_pic" -->
                         <mat-icon>photo_camera</mat-icon>
                         <span>Change Photo</span>
                     </div>
@@ -37,6 +37,7 @@
             <mat-form-field appearance="outline">
                 <mat-label>Bio</mat-label>
                 <textarea matInput formControlName="user_bio" placeholder="Tell us about yourself"></textarea>
+                <mat-hint align="end">{{editProfileForm.get('user_bio')?.value?.length || 0}} / 50</mat-hint>
             </mat-form-field>
 
             <mat-form-field class="full-width" appearance="outline">
@@ -83,7 +84,7 @@
 
             <mat-form-field appearance="outline">
                 <mat-label>Add your Phone Number</mat-label>
-                <input matInput placeholder="10 digit phone number" formControlName="user_phone_no">
+                <input matInput placeholder="10 digit phone number" formControlName="user_phone_no" maxlength="10">
                 <mat-icon matSuffix>call</mat-icon>
             </mat-form-field>
 
@@ -99,7 +100,7 @@
             </mat-form-field>
 
             <div class="button-container">
-                <button type="submit" mat-flat-button (click)="saveChanges()">Update Changes</button>
+                <button mat-flat-button type="submit" [disabled]="editProfileForm.invalid" (click)="saveChanges()">Update Changes</button>
             </div>
         </form>
     </mat-card>

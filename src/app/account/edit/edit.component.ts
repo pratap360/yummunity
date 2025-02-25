@@ -49,7 +49,7 @@ export class EditComponent {
   // yummunityRating = 4.5;
 
   editProfileForm: FormGroup;
-  imagePreview: string | null = null;
+  imagePreview!: string ;
   hide: boolean = true;
 
   durationInSeconds = 5;
@@ -68,7 +68,7 @@ export class EditComponent {
       user_name: ['', Validators.required],
       user_tag: ['', Validators.required],
       user_bio: [''],
-      // user_profile_pic: [null],
+      user_profile_pic: [''],
       user_email: ['', [Validators.required, Validators.email]],
       user_password: ['', [Validators.required, Validators.minLength(8)]],
       // user_confirm_password: ['',[Validators.required, Validators.minLength(8)]],
@@ -113,6 +113,7 @@ export class EditComponent {
             user_url: this.userData.user_url,
             user_fav_food_recipe: this.userData.user_fav_food_recipe,
           });
+          this.imagePreview = typeof this.userData.user_profile_pic === 'string' ? this.userData.user_profile_pic : '';
         },
         error: (error) => {
           console.error('Error fetching user data on edit component:', error);
@@ -121,15 +122,28 @@ export class EditComponent {
     console.log('all User Data Values:', allUserData);
   }
 
-  onImageSelected(event: Event): void {
+  // onImageSelected(event: Event): void {
+  //   const file = (event.target as HTMLInputElement).files?.[0];
+  //   if (file) {
+  //     this.editProfileForm.get('user_profile_pic')?.setValue(file);
+  //     const reader = new FileReader();
+  //     reader.onload = () => {
+  //       this.imagePreview = reader.result as string;
+  //     };
+  //     reader.readAsDataURL(file);
+  //   }
+  // }
+  onImageSelected(event: any) {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
-      this.editProfileForm.get('user_profile_pic')?.setValue(file);
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result as string;
       };
       reader.readAsDataURL(file);
+
+      // Also update the form control value
+      this.editProfileForm.patchValue({ user_profile_pic: file });
     }
   }
 
@@ -151,7 +165,9 @@ export class EditComponent {
             verticalPosition: this.verticalPosition,
             duration: this.durationInSeconds * 1000,
           });
+          this.goBack();
         },
+
         error: (error: any) => {
           console.error('Error updating user data:', error);
           this._snackBar.open('Unable to Update Profile !!', 'OK', {
