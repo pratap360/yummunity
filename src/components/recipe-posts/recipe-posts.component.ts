@@ -21,11 +21,11 @@ import { AppwriteService } from '../../lib/appwrite.service';
 import { RecipePost } from '../../app/interface/recipe-post';
 import { BlogPost } from '../../app/interface/blog-post';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { BehaviorSubject, Subscription } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { BehaviorSubject, fromEvent, Subscription } from 'rxjs';
+import { catchError, tap, throttleTime, filter } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { RouterModule } from '@angular/router';
-import { FullPostComponent } from "../full-post/full-post.component";
+import { FullPostComponent } from '../full-post/full-post.component';
 
 @Component({
   selector: 'app-recipe-posts',
@@ -44,8 +44,8 @@ import { FullPostComponent } from "../full-post/full-post.component";
     CommonModule,
     MatProgressSpinnerModule,
     RouterModule,
-    FullPostComponent
-],
+    FullPostComponent,
+  ],
   templateUrl: './recipe-posts.component.html',
   styleUrl: './recipe-posts.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -57,16 +57,27 @@ export class RecipePostsComponent implements OnInit, OnDestroy {
   blogPosts: BlogPost[] = [];
   limit = 5;
   offset = 0;
-
-
+  allPostsLoaded = false;
   private postsSubscription: Subscription | undefined;
   constructor(private appwriteService: AppwriteService) {}
 
   ngOnInit(): void {
     this.fetchAllPosts();
     this.fetchBlogPosts();
+    this.setupScrollListener();
   }
-
+  private setupScrollListener(): void {
+    fromEvent(window, 'scroll')
+      .pipe(
+        throttleTime(250), // Only emit once every 250ms
+        filter(
+          () =>
+            this.isNearBottom() && !this.isLoading.value && !this.allPostsLoaded
+        ), //check for isLoading and allpostLoaded
+        tap(() => this.fetchAllPosts())
+      )
+      .subscribe();
+  }
   fetchAllPosts(): void {
     if (this.postsSubscription) {
       this.postsSubscription.unsubscribe(); // Unsubscribe from previous subscription
@@ -89,6 +100,9 @@ export class RecipePostsComponent implements OnInit, OnDestroy {
         next: (data) => {
           console.log('Posts fetched:', data);
           // this.posts = data.documents;
+          if (data.documents.length < this.limit) {
+            this.allPostsLoaded = true; //all post are loaded
+          }
           this.posts = [...this.posts, ...data.documents];
           this.offset += this.limit;
           this.isLoading.next(false);
@@ -116,19 +130,20 @@ export class RecipePostsComponent implements OnInit, OnDestroy {
     });
   }
 
-  @HostListener('window:scroll', ['$event'])
-  onScroll(): void {
-    if (this.isNearBottom() && !this.isLoading.value) {
-      // setTimeout(() => this.fetchAllPosts(), 500);
-      this.fetchAllPosts();
-    }
-  }
+  // @HostListener('window:scroll', ['$event'])
+  // onScroll(): void {
+  //   if (this.isNearBottom() && !this.isLoading.value) {
+  //     // setTimeout(() => this.fetchAllPosts(), 500);
+  //     this.fetchAllPosts();
+  //   }
+  // }
 
   isNearBottom(): boolean {
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
     const scrollHeight = document.documentElement.scrollHeight;
     const clientHeight = document.documentElement.clientHeight;
-    return scrollTop + clientHeight >= scrollHeight - 100;
+    const scrollThreshold = 200; // Increased threshold to 200px
+    return scrollTop + clientHeight >= scrollHeight - scrollThreshold;
   }
 
   ngOnDestroy(): void {

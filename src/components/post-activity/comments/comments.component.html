@@ -3,12 +3,12 @@
 <mat-dialog-content>
   <span class="comment-tittle">Post a Comment</span>
   <form class="recipe-post-comments">
-  <mat-form-field appearance="outline" class="recipe-post-comments-area">
-    <mat-label>Write your comment</mat-label>
-    <textarea matInput #comment [(ngModel)]="newComment" [ngModelOptions]="{standalone: true}" maxlength="200"
-      placeholder="comment your thoughs..."></textarea>
-    <mat-hint align="end">{{comment.value.length}} / 200</mat-hint>
-  </mat-form-field>
+    <mat-form-field appearance="outline" class="recipe-post-comments-area">
+      <mat-label>Write your comment</mat-label>
+      <textarea matInput #comment [(ngModel)]="newComment" [ngModelOptions]="{standalone: true}" maxlength="200"
+        placeholder="comment your thoughs..."></textarea>
+      <mat-hint align="end">{{comment.value.length}} / 200</mat-hint>
+    </mat-form-field>
   </form>
 
 
@@ -21,7 +21,7 @@
         <h4 class="commented-datetime">{{ dateTime }}</h4>
       </div>
       <!-- <p *ngFor="">{{ comments[0] }}</p> -->
-      <p class="user_comment">{{ comments}}</p>
+      <p class="user_comment">{{comment}}</p>
     </div>
   </div>
 
