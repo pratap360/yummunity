@@ -171,11 +171,12 @@ export class EditComponent {
 
         error: (error: any) => {
           console.error('Error updating user data:', error);
-          this.edit_snackBar.open('Unable to Update Profile !!', 'OK', {
+          this.edit_snackBar.open('Unable to Update Profile due to:', error, {
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
-            duration: this.durationInSeconds * 1000,
+            duration: this.durationInSeconds * 3000,
           });
+          this.goBack();
         },
       });
   }

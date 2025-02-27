@@ -12,9 +12,10 @@ import {
   Role,
 } from 'appwrite';
 import { environment } from '../environments/environment';
-import { from, Observable, timer } from 'rxjs';
+import { from, Observable, of, timer } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { UserData } from '../app/interface/user-data';
+import { faThemeisle } from '@fortawesome/free-brands-svg-icons';
 
 @Injectable({
   providedIn: 'root',
@@ -246,12 +247,73 @@ export class AppwriteService {
     );
   }
 
+  // updateUserData(userId: string, userData: any): Observable<any> {
+  //   return this.database.updateDocument(
+  //     environment.appwrite_DatabaseID,
+  //     environment.users_CollectionID,
+  //     userId,
+  //     userData
+  //   );
+  // }
+
   updateUserData(userId: string, userData: any): Observable<any> {
-    return this.database.updateDocument(
-      environment.appwrite_DatabaseID,
-      environment.users_CollectionID,
-      userId,
-      userData
-    );
+    // Check if there's a new profile pic to upload
+    if (userData.user_profile_pic instanceof File) {
+      // Step 1: Upload the new image
+      return from(
+        this.storage.createFile(
+          environment.Profile_pictures_BucketID,
+          ID.unique(),
+          userData.user_profile_pic
+        )
+      ).pipe(
+        switchMap((fileRespone: any) => {
+          const newPicUrl = fileRespone.$id;
+
+          // Step 2: Get the user's current document to check for an existing profile pic
+          return from(
+            this.database.getDocument(
+              environment.appwrite_DatabaseID,
+              environment.users_CollectionID,
+              userId
+            )
+          ).pipe(
+            switchMap((userDoc: any) => {
+              const oldPic = userDoc.user_profile_pic;
+              if (oldPic) {
+                // Delete the old profile pic if it exists
+                return from(
+                  this.storage.deleteFile(
+                    environment.Profile_pictures_BucketID,
+                    oldPic
+                  )
+                ).pipe(map(() => newPicUrl));
+              } else {
+                return of(newPicUrl);
+              }
+            })
+          );
+        }),
+        // Step 3: Update the user document with the new profile pic URL
+        switchMap((newPicUrl: string) => {
+          // Update the userData object with the new profile pic URL
+          userData.user_profile_pic = newPicUrl;
+          return this.database.updateDocument(
+            environment.appwrite_DatabaseID,
+            environment.users_CollectionID,
+            userId,
+            userData
+          );
+        })
+      );
+    } else {
+      // If no new profile pic, just update other user data
+      return this.database.updateDocument(
+        environment.appwrite_DatabaseID,
+        environment.users_CollectionID,
+        userId,
+        userData
+      );
+    }
   }
 }
