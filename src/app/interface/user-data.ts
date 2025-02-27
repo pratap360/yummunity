@@ -1,7 +1,7 @@
-export interface  UserData {
+export interface UserData {
   id?: string;
   user_tag: string;
-  user_profile_pic?: any[];
+  user_profile_pic?: string;
   user_name: string;
   user_bio?: string;
   user_email: string;

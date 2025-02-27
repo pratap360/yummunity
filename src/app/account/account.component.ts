@@ -3,6 +3,7 @@ import {
   Component,
   signal,
   OnInit,
+  inject,
 } from '@angular/core';
 // import { SideNavBarComponent } from '../../components/side-nav-bar/side-nav-bar.component';
 import { SidenavComponent } from '../../components/sidenav/sidenav.component';
@@ -31,9 +32,21 @@ import { SavesComponent } from '../../components/post-activity/saves/saves.compo
 import { AppwriteService } from '../../lib/appwrite.service';
 import { BlogPost } from '../interface/blog-post';
 import { RecipePost } from '../interface/recipe-post';
-import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import {
+  Router,
+  RouterLink,
+  RouterModule,
+  RouterOutlet,
+} from '@angular/router';
 import { UserData } from '../interface/user-data';
 import { CommonModule } from '@angular/common';
+import {
+  MatSnackBar,
+  MatSnackBarHorizontalPosition,
+  MatSnackBarVerticalPosition,
+} from '@angular/material/snack-bar';
+import { BehaviorSubject } from 'rxjs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-account',
   standalone: true,
@@ -65,6 +78,7 @@ import { CommonModule } from '@angular/common';
     RouterModule,
     RouterOutlet,
     RouterLink,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './account.component.html',
   styleUrl: './account.component.css',
@@ -72,29 +86,36 @@ import { CommonModule } from '@angular/common';
 })
 export class AccountComponent implements OnInit {
   // account info
-  MonthNames = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+  // MonthNames = [
+  //   'January',
+  //   'February',
+  //   'March',
+  //   'April',
+  //   'May',
+  //   'June',
+  //   'July',
+  //   'August',
+  //   'September',
+  //   'October',
+  //   'November',
+  //   'December',
+  // ];
 
-  Month = this.MonthNames[new Date().getMonth()];
-  
+  // Month = this.MonthNames[new Date().getMonth()];
+
   selectedTabIndex = signal(0);
   posts: RecipePost[] = [];
   blogPosts: BlogPost[] = [];
   userData!: UserData;
-  // userData: UserData | null = null;
-  // userData: UserData[] = [];
+
+  isLoading = new BehaviorSubject<boolean>(false);
+  limit = 5;
+
+  durationInSeconds = 5;
+  private router = inject(Router);
+  private account_snackBar = inject(MatSnackBar);
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
   constructor(private appwriteService: AppwriteService) {}
 
   ngOnInit(): void {
@@ -111,16 +132,34 @@ export class AccountComponent implements OnInit {
   //   }
   // }
 
-  loggedInUserData() : void {
+  loggedInUserData(): void {
+    this.isLoading.next(true);
+    setTimeout(() => {
+      this.isLoading.next(false);
+    }, 1000);
     this.appwriteService.getCurrentUser().subscribe({
       next: (data) => {
         this.userData = data;
         console.log('User Data:', this.userData);
+        this.isLoading.next(false);
       },
-      error : (error) => {
-        console.error("getting error on method loggedInUserData()", error);
-      }
-    })
+      error: (error) => {
+        this.isLoading.next(false);
+        console.error('getting error on method loggedInUserData()', error);
+        const snackBarRef = this.account_snackBar.open(
+          'Your Session has been Expired kinldy login again',
+          'OK',
+          {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration: this.durationInSeconds * 1000,
+          }
+        );
+        snackBarRef.onAction().subscribe(() => {
+          this.router.navigate(['/login']);
+        });
+      },
+    });
   }
 
   allPostsData(): void {
@@ -146,7 +185,6 @@ export class AccountComponent implements OnInit {
       },
     });
   }
-
 }
 
 // ! note : take {registration} data info to show the 'users since' from the auth api

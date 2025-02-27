@@ -49,11 +49,11 @@ export class EditComponent {
   // yummunityRating = 4.5;
 
   editProfileForm: FormGroup;
-  imagePreview!: string ;
+  imagePreview!: string;
   hide: boolean = true;
 
   durationInSeconds = 5;
-  private _snackBar = inject(MatSnackBar);
+  private edit_snackBar = inject(MatSnackBar);
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
@@ -103,7 +103,7 @@ export class EditComponent {
             user_name: this.userData.user_name,
             user_tag: this.userData.user_tag,
             user_bio: this.userData.user_bio,
-            // user_profile_pic: this.userData.user_profile_pic,
+            user_profile_pic: res.user_profile_pic || null,
             user_email: this.userData.user_email,
             user_password: this.userData.user_password,
             user_phone_no: this.userData.user_phone_no,
@@ -113,7 +113,8 @@ export class EditComponent {
             user_url: this.userData.user_url,
             user_fav_food_recipe: this.userData.user_fav_food_recipe,
           });
-          this.imagePreview = typeof this.userData.user_profile_pic === 'string' ? this.userData.user_profile_pic : '';
+          // this.imagePreview = typeof this.userData.user_profile_pic === 'string' ? this.userData.user_profile_pic : '';
+          this.imagePreview = res.user_profile_pic || '';
         },
         error: (error) => {
           console.error('Error fetching user data on edit component:', error);
@@ -122,34 +123,34 @@ export class EditComponent {
     console.log('all User Data Values:', allUserData);
   }
 
-  // onImageSelected(event: Event): void {
-  //   const file = (event.target as HTMLInputElement).files?.[0];
-  //   if (file) {
-  //     this.editProfileForm.get('user_profile_pic')?.setValue(file);
-  //     const reader = new FileReader();
-  //     reader.onload = () => {
-  //       this.imagePreview = reader.result as string;
-  //     };
-  //     reader.readAsDataURL(file);
-  //   }
-  // }
-  onImageSelected(event: any) {
+  onImageSelected(event: Event): void {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        this.edit_snackBar.open('Please select an image file', 'OK', {
+          horizontalPosition: this.horizontalPosition,
+          verticalPosition: this.verticalPosition,
+          duration: this.durationInSeconds * 1000,
+        });
+        return;
+      }
+
       const reader = new FileReader();
       reader.onload = () => {
         this.imagePreview = reader.result as string;
+        // Update form control with the base64 string
+        this.editProfileForm.patchValue({
+          user_profile_pic: this.imagePreview,
+        });
       };
       reader.readAsDataURL(file);
-
-      // Also update the form control value
-      this.editProfileForm.patchValue({ user_profile_pic: file });
     }
   }
 
   saveChanges(): void {
     if (this.editProfileForm.invalid) {
-      this._snackBar.open('Kindly Fill All Detials', 'OK', {
+      this.edit_snackBar.open('Kindly Fill All Detials', 'OK', {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
         duration: this.durationInSeconds * 1000,
@@ -160,7 +161,7 @@ export class EditComponent {
       .updateUserData(this.userId, updatedUserData)
       .subscribe({
         next: () => {
-          this._snackBar.open('Profile Updated Successfully!!', 'OK', {
+          this.edit_snackBar.open('Profile Updated Successfully!!', 'OK', {
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
             duration: this.durationInSeconds * 1000,
@@ -170,7 +171,7 @@ export class EditComponent {
 
         error: (error: any) => {
           console.error('Error updating user data:', error);
-          this._snackBar.open('Unable to Update Profile !!', 'OK', {
+          this.edit_snackBar.open('Unable to Update Profile !!', 'OK', {
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
             duration: this.durationInSeconds * 1000,

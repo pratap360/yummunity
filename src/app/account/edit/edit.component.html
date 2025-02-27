@@ -13,9 +13,9 @@
         <form [formGroup]="editProfileForm">
             <div class="profile-image-container">
                 <div class="profile-image-wrapper">
-                    <img [src]="imagePreview" alt="Profile picture">
+                    <img [src]="imagePreview ||''" alt="Profile picture">
                     <div class="image-upload-overlay">
-                        <input type="file" (change)="onImageSelected($event)" accept="image/*">
+                        <input type="file" #fileInput (change)="onImageSelected($event)" accept="image/*">
                         <!-- formControlName="user_profile_pic" -->
                         <mat-icon>photo_camera</mat-icon>
                         <span>Change Photo</span>
@@ -50,7 +50,8 @@
 
             <mat-form-field class="full-width" appearance="outline">
                 <mat-label>Update Password</mat-label>
-                <input formControlName="user_password" matInput [type]=" hide ? 'password' : 'text'" autocomplete="current-password" required />
+                <input formControlName="user_password" matInput [type]=" hide ? 'password' : 'text'"
+                    autocomplete="current-password" required />
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-pressed]="hide">
                     <mat-icon>
                         {{hide ? 'visibility_off' : 'visibility'}}
@@ -100,7 +101,8 @@
             </mat-form-field>
 
             <div class="button-container">
-                <button mat-flat-button type="submit" [disabled]="editProfileForm.invalid" (click)="saveChanges()">Update Changes</button>
+                <button mat-flat-button type="submit" [disabled]="editProfileForm.invalid"
+                    (click)="saveChanges()">Update Changes</button>
             </div>
         </form>
     </mat-card>

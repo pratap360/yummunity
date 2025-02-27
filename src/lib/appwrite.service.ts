@@ -246,13 +246,12 @@ export class AppwriteService {
     );
   }
 
-
-  updateUserData(userId: string, userData: any) {
+  updateUserData(userId: string, userData: any): Observable<any> {
     return this.database.updateDocument(
       environment.appwrite_DatabaseID,
       environment.users_CollectionID,
       userId,
       userData
-    )
+    );
   }
 }

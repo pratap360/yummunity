@@ -1,7 +1,7 @@
 <!-- <app-side-nav-bar></app-side-nav-bar> -->
 <app-sidenav></app-sidenav>
 <!-- <app-post-container></app-post-container> -->
-
+<mat-spinner *ngIf="isLoading | async"></mat-spinner>
 <div class="content-wrapper">
   <div class="account-container">
     <h3 class="account-title">My Account</h3>
@@ -10,13 +10,13 @@
   <mat-card class="profile-card mat-elevation-z4" *ngIf="userData">
     <div class="profile-header">
       <div class="avatar">
-        <img mat-card-avatar class="profile-card-image" [src]="userData.user_profile_pic" 
-        [alt]="userData.user_name">
+        <img mat-card-avatar class="profile-card-image" [src]="userData.user_profile_pic" [alt]="userData.user_name">
       </div>
       <div class="profile-info">
         <div class="account-card-header">
           <h3 class="name">{{ userData.user_name }}</h3>
-          <button mat-icon-button class="edit-button" routerLink="/account/edit-profile" matTooltip="Edit profile" matTooltipPosition="right">
+          <button mat-icon-button class="edit-button" routerLink="/account/edit-profile" matTooltip="Edit profile"
+            matTooltipPosition="right">
             <mat-icon>edit</mat-icon>
             <!-- <span>Edit</span> -->
           </button>
@@ -30,7 +30,7 @@
     <div class="profile-footer">
       <div class="info-toggle-group" appearance="standard" multiple>
         <h6>
-          Recipes & Blog: {{ userData.user_fav_food_recipe || '0'  }}
+          Recipes & Blog: {{ userData.user_fav_food_recipe || '0' }}
           <!--* later modify this 👆 this is recipe and blog count-->
         </h6>
         <h6>
@@ -56,25 +56,25 @@
         <p class="tab-grp-tittle">Recipes Shares</p>
       </ng-template>
       <div class="card-content-wrapper">
-      <app-text-post [posts]="posts"></app-text-post>
-      <app-with-img-post [posts]="posts"></app-with-img-post>
+        <app-text-post [posts]="posts"></app-text-post>
+        <app-with-img-post [posts]="posts"></app-with-img-post>
       </div>
     </mat-tab>
 
     <mat-tab label="Blogs">
       <ng-template mat-tab-label>
         <mat-icon class="profile-tab-icon">library_books</mat-icon>
-      <p class="tab-grp-tittle">Blogs</p>
+        <p class="tab-grp-tittle">Blogs</p>
       </ng-template>
       <div class="card-content-wrapper">
-      <app-blog-post [blogPosts]="blogPosts"></app-blog-post>
+        <app-blog-post [blogPosts]="blogPosts"></app-blog-post>
       </div>
     </mat-tab>
 
     <mat-tab label="Saves">
       <ng-template mat-tab-label>
         <mat-icon class="profile-tab-icon">bookmarks</mat-icon>
-      <p class="tab-grp-tittle">Saves</p>
+        <p class="tab-grp-tittle">Saves</p>
       </ng-template>
       <div class="card-content-wrapper">
         <app-text-post></app-text-post>
