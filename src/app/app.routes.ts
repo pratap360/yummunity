@@ -21,38 +21,40 @@ export const routes: Routes = [
   //     [{path: 'forget-pwd',component: ForgetPwdComponent}]
   // },
   { path: 'signup', component: SignupComponent },
-  {path: 'welcome', component: WelcomeComponent},
+  { path: 'welcome', component: WelcomeComponent },
   { path: 'home-feed', component: HomeFeedComponent },
-//   { path: 'home-feed', component: HomeFeedComponent ,
-//     children:[
-//         {path:'',component:RecipePostsComponent},
-//         {path: '@userId/fullpostID', component: FullPostComponent}
-//     ]
-//   },
+  //   { path: 'home-feed', component: HomeFeedComponent ,
+  //     children:[
+  //         {path:'',component:RecipePostsComponent},
+  //         {path: '@userId/fullpostID', component: FullPostComponent}
+  //     ]
+  //   },
 
   { path: 'search', component: SearchComponent },
 
   { path: 'notifications', component: NotificationComponent },
 
   { path: 'account', component: AccountComponent },
-  {path: 'account/edit-profile', component: EditComponent},
+  { path: 'account/edit-profile', component: EditComponent },
   { path: 'user/:user_tag', component: UserProfileComponent },
 
   // { path:'post/:documentId', component: FullPostComponent },
   // { path:'fullpost/:documentId', component: FullPostComponent },
   // { path:'fullpost', component: FullPostComponent },
-//   {
-//     path: 'fullpost',
-//     loadComponent: () =>
-//       import('../components/full-post/full-post.component').then(
-//         (m) => m.FullPostComponent
-//       ),
-//   },
-  { path: '@userId/fullpostID', loadComponent: () => import('../components/full-post/full-post.component').then(m => m.FullPostComponent) },
-
-
-
-
+  //   {
+  //     path: 'fullpost',
+  //     loadComponent: () =>
+  //       import('../components/full-post/full-post.component').then(
+  //         (m) => m.FullPostComponent
+  //       ),
+  //   },
+  {
+    path: 'user/:user_tag/fullpostID',
+    loadComponent: () =>
+      import('../components/full-post/full-post.component').then(
+        (m) => m.FullPostComponent
+      ),
+  },
 
   { path: 'not-found', component: NotFoundComponent },
   { path: '**', redirectTo: '/not-found' },

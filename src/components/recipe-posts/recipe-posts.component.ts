@@ -24,7 +24,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BehaviorSubject, fromEvent, Subscription } from 'rxjs';
 import { catchError, tap, throttleTime, filter } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { FullPostComponent } from '../full-post/full-post.component';
 
 @Component({
@@ -59,7 +59,10 @@ export class RecipePostsComponent implements OnInit, OnDestroy {
   offset = 0;
   allPostsLoaded = false;
   private postsSubscription: Subscription | undefined;
-  constructor(private appwriteService: AppwriteService) {}
+  constructor(
+    private appwriteService: AppwriteService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.fetchAllPosts();
@@ -144,6 +147,12 @@ export class RecipePostsComponent implements OnInit, OnDestroy {
     const clientHeight = document.documentElement.clientHeight;
     const scrollThreshold = 200; // Increased threshold to 200px
     return scrollTop + clientHeight >= scrollHeight - scrollThreshold;
+  }
+
+  navigateToFullPost(posts: any) {
+    const userTag = posts.users;
+    const postId = posts.id;
+    this.router.navigate([`/user/${userTag}/${postId}`]);
   }
 
   ngOnDestroy(): void {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -24,7 +24,7 @@ export class ReadMoreComponent implements OnInit {
   post: any;
   // @Input() userName: string | undefined;
   @Input() documentId!: string;
-
+  @Output() readMoreClicked = new EventEmitter<void>();
   constructor(private router: Router) {}
 
   ngOnInit() {
@@ -50,13 +50,17 @@ export class ReadMoreComponent implements OnInit {
     if (this.documentId) {
       console.log('Navigating to full post:', this.documentId);
       this.router.navigate(['/fullpost', this.documentId]); // Ensure routing is configured
-    }else{
+    } else {
       console.error('Document ID is not available');
     }
   }
 
-  viewFullPost() {
-    this.router.navigate(['/@userId/fullpostID']); // Navigates & updates the URL
+  onReadMore() {
+    this.readMoreClicked.emit();
   }
 
+  viewFullPost() {
+    // this.router.navigate(['/@userId/fullpostID']); // Navigates & updates the URL
+    this.router.navigate(['/fullpost', this.documentId]);
+  }
 }

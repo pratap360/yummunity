@@ -16,6 +16,7 @@ import { from, Observable, of, timer } from 'rxjs';
 import { switchMap, map } from 'rxjs/operators';
 import { UserData } from '../app/interface/user-data';
 import { faThemeisle } from '@fortawesome/free-brands-svg-icons';
+import { RecipePost } from '../app/interface/recipe-post';
 
 @Injectable({
   providedIn: 'root',
@@ -315,5 +316,15 @@ export class AppwriteService {
         userData
       );
     }
+  }
+
+  getFullPost(postId: string): Observable<any> {
+    return from(
+      this.database.getDocument(
+        environment.appwrite_DatabaseID,
+        environment.post_CollectionID,
+        postId
+      )
+    ) as Observable<RecipePost>;
   }
 }
