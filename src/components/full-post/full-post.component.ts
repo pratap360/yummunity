@@ -91,17 +91,20 @@ export class FullPostComponent implements OnInit {
   //   });
   // }
   ngOnInit() {
-    this.user_tag = this.route.snapshot.paramMap.get('user_tag')!;
-    this.fullpostId = this.route.snapshot.paramMap.get('fullpostId')!;
-    console.log(
-      'getting all data in fullpost:',
-      this.user_tag,
-      this.fullpostId
-    );
-    this.fetchFullPost();
-    // if (this.documentId) {
-    //   this.readfullpost();
-    // }
+    this.route.paramMap.subscribe((params) => {
+      this.user_tag = params.get('user_tag') || '';
+      this.fullpostId = params.get('fullpostId') || '';
+
+      console.log('Getting data in fullpost:', this.user_tag, this.fullpostId);
+
+      if (this.fullpostId) {
+        this.fetchFullPost();
+      } else {
+        console.error('Missing post ID parameter');
+        this.isError = true;
+        this.isLoading = false;
+      }
+    });
   }
 
   fetchFullPost() {
@@ -109,6 +112,17 @@ export class FullPostComponent implements OnInit {
       next: (post: RecipePost) => {
         this.fullPost = post;
         this.isLoading = false;
+        console.log('fetched post data:', post);
+        if (post.user_name) {
+          this.user.user_name = post.user_name;
+        }
+
+        if (post.user_bio) {
+          this.user.user_bio = post.user_bio;
+        }
+
+        // Set the user_tag from the route parameter
+        this.user.user_tag = this.user_tag;
       },
       error: (error) => {
         console.error('Error fetching post:', error);
@@ -117,6 +131,7 @@ export class FullPostComponent implements OnInit {
       },
     });
   }
+
   readfullpost(): void {
     this.appwriteService.getPostById(this.documentId).subscribe({
       next: (data) => {

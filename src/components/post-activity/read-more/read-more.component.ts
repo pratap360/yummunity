@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
+import { RecipePost } from '../../../app/interface/recipe-post';
 
 @Component({
   selector: 'app-read-more',
@@ -20,14 +21,13 @@ import { Router } from '@angular/router';
   styleUrl: './read-more.component.css',
 })
 export class ReadMoreComponent implements OnInit {
-  @Input() postId: string | undefined;
-  post: any;
-  // @Input() userName: string | undefined;
+  @Input() post!: RecipePost;
   @Input() documentId!: string;
-  @Output() readMoreClicked = new EventEmitter<void>();
+  @Output() readMoreClicked = new EventEmitter<string>();
   constructor(private router: Router) {}
 
   ngOnInit() {
+    console.log('Received documentId in ReadMoreComponent:', this.post);
     console.log('Received documentId in ReadMoreComponent:', this.documentId);
   }
   // navigateToPost(): void {
@@ -46,21 +46,17 @@ export class ReadMoreComponent implements OnInit {
   //   this.router.navigate(['/post', documentId]);
   // }
 
-  navigateToFullPost() {
-    if (this.documentId) {
-      console.log('Navigating to full post:', this.documentId);
-      this.router.navigate(['/fullpost', this.documentId]); // Ensure routing is configured
-    } else {
-      console.error('Document ID is not available');
-    }
-  }
-
-  onReadMore() {
-    this.readMoreClicked.emit();
-  }
-
   viewFullPost() {
-    // this.router.navigate(['/@userId/fullpostID']); // Navigates & updates the URL
-    this.router.navigate(['/fullpost', this.documentId]);
+    if (!this.post || !this.post.id || !this.post.users) {
+      console.error('Post data is incomplete:', this.post);
+      return;
+    }
+
+    const userTag = this.post.users;
+    const postId = this.post.id;
+
+    console.log(`Navigating to user/${userTag}/${postId}`);
+    this.router.navigate([`/user/${userTag}/${postId}`]);
+    this.readMoreClicked.emit(postId);
   }
 }

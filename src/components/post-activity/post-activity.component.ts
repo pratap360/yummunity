@@ -12,6 +12,7 @@ import { LikesComponent } from './likes/likes.component';
 import { ReadMoreComponent } from './read-more/read-more.component';
 import { SavesComponent } from './saves/saves.component';
 import { RecipePost } from '../../app/interface/recipe-post';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-post-activity',
@@ -31,7 +32,7 @@ import { RecipePost } from '../../app/interface/recipe-post';
     ReadMoreComponent,
   ],
   templateUrl: './post-activity.component.html',
-  styleUrl: './post-activity.component.css'
+  styleUrl: './post-activity.component.css',
 })
 export class PostActivityComponent {
   @Input() post!: RecipePost;
@@ -40,11 +41,9 @@ export class PostActivityComponent {
   commentModalOpen = false;
   newComment = '';
 
-
   comments: string[] = [];
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private router: Router) {}
   ngOnInit(): void {
-
     const comments = JSON.parse(localStorage.getItem('comments_1') || '[]');
     this.comments_counter = comments.length;
 
@@ -67,6 +66,18 @@ export class PostActivityComponent {
         console.log('Posted comment:', result);
       }
     });
+  }
+
+  viewFullPost(documentId: string) {
+    if (!this.post || !this.post.id || !this.post.users) {
+      console.error('Post data is incomplete');
+      return;
+    }
+
+    const userTag = this.post.users;
+    const postId = this.post.id;
+
+    this.router.navigate([`/user/${userTag}/${postId}`]);
   }
 
   get commentCount(): number {
