@@ -1,3 +1,4 @@
+import { FullpostService } from './../../../app/services/appwrite/fullpost/fullpost.service';
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
@@ -21,15 +22,14 @@ import { RecipePost } from '../../../app/interface/recipe-post';
   styleUrl: './read-more.component.css',
 })
 export class ReadMoreComponent implements OnInit {
-  @Input() post!: RecipePost;
-  @Input() documentId!: string;
-  @Output() readMoreClicked = new EventEmitter<string>();
-  constructor(private router: Router) {}
+  @Input() postData: any;
 
-  ngOnInit() {
-    console.log('Received documentId in ReadMoreComponent:', this.post);
-    console.log('Received documentId in ReadMoreComponent:', this.documentId);
-  }
+  constructor(
+    private router: Router,
+    private FullpostService: FullpostService
+  ) {}
+
+  ngOnInit() {}
   // navigateToPost(): void {
   //   const postId = this.generatePostId();
   //   const username = 'user_name';
@@ -47,16 +47,13 @@ export class ReadMoreComponent implements OnInit {
   // }
 
   viewFullPost() {
-    if (!this.post || !this.post.id || !this.post.users) {
-      console.error('Post data is incomplete:', this.post);
+    console.log('clicked on read more');
+    if (!this.postData || !this.postData.$id) {
+      console.error('Invalid post data');
       return;
     }
 
-    const userTag = this.post.users;
-    const postId = this.post.id;
-
-    console.log(`Navigating to user/${userTag}/${postId}`);
-    this.router.navigate([`/user/${userTag}/${postId}`]);
-    this.readMoreClicked.emit(postId);
+    this.FullpostService.setPost(this.postData);
+    this.router.navigate(['user/:user_tag/', this.postData.$id]);
   }
 }

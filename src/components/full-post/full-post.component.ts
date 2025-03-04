@@ -1,6 +1,7 @@
+import { FullpostService } from './../../app/services/appwrite/fullpost/fullpost.service';
 import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AppwriteService } from '../../lib/appwrite.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -23,6 +24,7 @@ import { PostContainerComponent } from '../post-container/post-container.compone
 import { MarkdownModule } from 'ngx-markdown';
 import { RecipePost } from '../../app/interface/recipe-post';
 import { UserData } from '../../app/interface/user-data';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-full-post',
@@ -36,6 +38,7 @@ import { UserData } from '../../app/interface/user-data';
     MatChipsModule,
     MatInputModule,
     MatDialogModule,
+    MatProgressSpinnerModule,
     MatMenuModule,
     LikesComponent,
     SavesComponent,
@@ -64,7 +67,7 @@ export class FullPostComponent implements OnInit {
 
   postData: any;
   documentId!: string;
-  post: any = null; // To store post data
+  post: any; // To store post data
   // isLoading: boolean = true; // Loading state
   panelOpenState = signal(false);
   newComment: any;
@@ -77,8 +80,22 @@ export class FullPostComponent implements OnInit {
   isError = false;
   constructor(
     private route: ActivatedRoute,
-    private appwriteService: AppwriteService
+    private router: Router,
+    private appwriteService: AppwriteService,
+    private FullpostService: FullpostService
   ) {}
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe((params) => {
+      const postId = params.get('id');
+      this.post = this.FullpostService.getPost();
+
+      if (!this.post || this.post.$id !== postId) {
+        console.error('Post data not found in FullPostComponent');
+        this.router.navigate(['/home-feed']);
+      }
+    });
+  }
 
   // ngOnInit(): void {
   //   this.route.paramMap.subscribe((params) => {
@@ -90,22 +107,22 @@ export class FullPostComponent implements OnInit {
   //     }
   //   });
   // }
-  ngOnInit() {
-    this.route.paramMap.subscribe((params) => {
-      this.user_tag = params.get('user_tag') || '';
-      this.fullpostId = params.get('fullpostId') || '';
+  // ngOnInit() {
+  //   this.route.paramMap.subscribe((params) => {
+  //     this.user_tag = params.get('user_tag') || '';
+  //     this.fullpostId = params.get('fullpostId') || '';
 
-      console.log('Getting data in fullpost:', this.user_tag, this.fullpostId);
+  //     console.log('Getting data in fullpost:', this.user_tag, this.fullpostId);
 
-      if (this.fullpostId) {
-        this.fetchFullPost();
-      } else {
-        console.error('Missing post ID parameter');
-        this.isError = true;
-        this.isLoading = false;
-      }
-    });
-  }
+  //     if (this.fullpostId) {
+  //       this.fetchFullPost();
+  //     } else {
+  //       console.error('Missing post ID parameter');
+  //       this.isError = true;
+  //       this.isLoading = false;
+  //     }
+  //   });
+  // }
 
   fetchFullPost() {
     this.appwriteService.getFullPost(this.fullpostId).subscribe({

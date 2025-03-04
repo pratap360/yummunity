@@ -2,7 +2,7 @@
 
 <div class="container">
 
-  <mat-card appearance="outlined" class="posts-card" *ngIf="fullPost">
+  <mat-card appearance="outlined" class="posts-card" *ngIf="fullPost; else loading">
     <mat-card-header>
       <!-- <div mat-card-avatar class="profile-header-image"></div> -->
       <img *ngIf="user.user_profile_pic" [src]="user.user_profile_pic" class="profile-header-image" alt="User Profile">
@@ -94,5 +94,7 @@
   </button>
 
 </div>
-
+<ng-template #loading>
+  <mat-spinner></mat-spinner>
+</ng-template>
 <app-bottom-nav></app-bottom-nav>

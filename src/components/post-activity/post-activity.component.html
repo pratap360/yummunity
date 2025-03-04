@@ -8,7 +8,7 @@
         </span>
     </button>
     <app-saves></app-saves>
-    <app-read-more [post]="post" (readMoreClicked)="viewFullPost(post.id || '')"></app-read-more>
+    <app-read-more *ngIf="post" [postData]="post"></app-read-more>
     <!-- <app-read-more></app-read-more> -->
     <!-- <app-read-more [documentId]="post.id!"></app-read-more> -->
 </mat-card-actions>

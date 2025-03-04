@@ -35,8 +35,8 @@ import { Router } from '@angular/router';
   styleUrl: './post-activity.component.css',
 })
 export class PostActivityComponent {
-  @Input() post!: RecipePost;
-  // @Input() posts:any;
+  // @Input() post!: RecipePost;
+  @Input() post: any;
   comments_counter = 0;
   commentModalOpen = false;
   newComment = '';
@@ -47,11 +47,11 @@ export class PostActivityComponent {
     const comments = JSON.parse(localStorage.getItem('comments_1') || '[]');
     this.comments_counter = comments.length;
 
-    if (this.post) {
-      console.log('Received Post in PostActivityComponent:', this.post);
-      console.log('Extracted documentId:', this.post.id);
-    } else {
+    if (!this.post) {
+      console.log('getting the post data:', this.post);
       console.error('Post is undefined in PostActivityComponent');
+    } else {
+      console.log('Received Post in PostActivityComponent:', this.post);
     }
   }
   openCommentModal(): void {
