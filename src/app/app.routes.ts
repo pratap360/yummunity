@@ -49,7 +49,8 @@ export const routes: Routes = [
   //       ),
   //   },
   {
-    path: 'user/:user_tag/fullpostID',
+    // path: 'user/:user_tag/fullpostID',
+    path: 'fullpost/:postId',
     loadComponent: () =>
       import('../components/full-post/full-post.component').then(
         (m) => m.FullPostComponent

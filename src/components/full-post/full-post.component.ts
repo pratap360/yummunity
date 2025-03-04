@@ -1,5 +1,12 @@
 import { FullpostService } from './../../app/services/appwrite/fullpost/fullpost.service';
-import { Component, inject, OnInit, signal, viewChild } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnDestroy,
+  OnInit,
+  signal,
+  viewChild,
+} from '@angular/core';
 import { Location } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppwriteService } from '../../lib/appwrite.service';
@@ -25,6 +32,7 @@ import { MarkdownModule } from 'ngx-markdown';
 import { RecipePost } from '../../app/interface/recipe-post';
 import { UserData } from '../../app/interface/user-data';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-full-post',
@@ -51,7 +59,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   templateUrl: './full-post.component.html',
   styleUrl: './full-post.component.css',
 })
-export class FullPostComponent implements OnInit {
+export class FullPostComponent implements OnInit, OnDestroy {
   onCancel() {
     throw new Error('Method not implemented.');
   }
@@ -67,7 +75,6 @@ export class FullPostComponent implements OnInit {
 
   postData: any;
   documentId!: string;
-  post: any; // To store post data
   // isLoading: boolean = true; // Loading state
   panelOpenState = signal(false);
   newComment: any;
@@ -78,6 +85,10 @@ export class FullPostComponent implements OnInit {
   fullpostId!: string;
   isLoading = true;
   isError = false;
+
+  post: RecipePost | null = null; // To store post data
+  private postSubscription: Subscription | null = null;
+  private routeSubscription: Subscription | null = null;
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -86,15 +97,43 @@ export class FullPostComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
-      const postId = params.get('id');
-      this.post = this.FullpostService.getPost();
+    const navigationPost = this.FullpostService.getCurrentPost();
 
-      if (!this.post || this.post.$id !== postId) {
-        console.error('Post data not found in FullPostComponent');
-        this.router.navigate(['/home-feed']);
+    if (navigationPost) {
+      this.post = navigationPost;
+      return;
+    }
+
+    this.routeSubscription = this.route.paramMap.subscribe((params) => {
+      const postId = params.get('postId');
+
+      if (postId) {
+        this.fetchPostDetials(postId);
       }
     });
+  }
+
+  fetchPostDetials(postId: string) {
+    this.appwriteService.getFullPost(postId).subscribe({
+      next: (post: RecipePost) => {
+        this.post = post;
+      },
+      error: (error) => {
+        console.error('Error fetching post:', error);
+      },
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.FullpostService.clearCurrentPost();
+
+    if (this.postSubscription) {
+      this.postSubscription.unsubscribe();
+    }
+
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
+    }
   }
 
   // ngOnInit(): void {

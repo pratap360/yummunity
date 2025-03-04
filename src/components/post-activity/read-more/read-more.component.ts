@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { Router } from '@angular/router';
+
 import { RecipePost } from '../../../app/interface/recipe-post';
 
 @Component({
@@ -22,12 +22,9 @@ import { RecipePost } from '../../../app/interface/recipe-post';
   styleUrl: './read-more.component.css',
 })
 export class ReadMoreComponent implements OnInit {
-  @Input() postData: any;
+  @Input() post!: RecipePost;
 
-  constructor(
-    private router: Router,
-    private FullpostService: FullpostService
-  ) {}
+  constructor(private FullpostService: FullpostService) {}
 
   ngOnInit() {}
   // navigateToPost(): void {
@@ -47,13 +44,20 @@ export class ReadMoreComponent implements OnInit {
   // }
 
   viewFullPost() {
-    console.log('clicked on read more');
-    if (!this.postData || !this.postData.$id) {
-      console.error('Invalid post data');
-      return;
+    debugger;
+    console.log('clicked on read more', this.post.id);
+    if (this.post) {
+      this.FullpostService.navigateToFullPost(this.post);
+      console.log('clicked on read more', this.post.users);
     }
 
-    this.FullpostService.setPost(this.postData);
-    this.router.navigate(['user/:user_tag/', this.postData.$id]);
+    // if (!this.postData || !this.postData.$id) {
+    //   console.error('Invalid post data');
+    //   return;
+    // }
+
+    // this.FullpostService.setPost(this.postData);
+    // this.router.navigate(['user/:user_tag/', this.postData.$id]);
+    // this.router.navigate(['/user', this.post.user_name, this.post.$id]);
   }
 }

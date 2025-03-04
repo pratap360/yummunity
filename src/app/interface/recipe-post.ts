@@ -1,6 +1,6 @@
 export interface RecipePost {
   // documentId: string;
-  id?: string;
+  id: string;
   createdAt?: string;
   users?: string | null;
   user_name: string | null;

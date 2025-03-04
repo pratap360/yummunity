@@ -1,33 +1,33 @@
 <mat-card *ngFor="let post of posts" class="posts-card" appearance="outlined">
-    <mat-card-header>
-      <div mat-card-avatar class="profile-header-image"></div>
-      <mat-card-title>{{ post.user_name || 'Anonymous' }}</mat-card-title>
-      <mat-card-subtitle>{{ post.user_bio || 'love food' }}</mat-card-subtitle>
-      <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
-        <mat-icon>more_vert</mat-icon>
+  <mat-card-header>
+    <div mat-card-avatar class="profile-header-image"></div>
+    <mat-card-title>{{ post.user_name || 'Anonymous' }}</mat-card-title>
+    <mat-card-subtitle>{{ post.user_bio || 'love food' }}</mat-card-subtitle>
+    <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item (click)="sharePost()">
+        <mat-icon>share</mat-icon>
+        <span>Share Post</span>
       </button>
-      <mat-menu #menu="matMenu">
-        <button mat-menu-item (click)="sharePost()">
-          <mat-icon>share</mat-icon>
-          <span>Share Post</span>
-        </button>
-        <button mat-menu-item>
-          <mat-icon>report</mat-icon>
-          <span>Report</span>
-        </button>
-        <button mat-menu-item disabled>
-          <mat-icon>campaign</mat-icon>
-          <span>Promote</span>
-        </button>
-      </mat-menu>
-    </mat-card-header>
-    <!-- <img mat-card-image src="/assets/posts-img/food1.jpg"
+      <button mat-menu-item>
+        <mat-icon>report</mat-icon>
+        <span>Report</span>
+      </button>
+      <button mat-menu-item disabled>
+        <mat-icon>campaign</mat-icon>
+        <span>Promote</span>
+      </button>
+    </mat-menu>
+  </mat-card-header>
+  <!-- <img mat-card-image src="/assets/posts-img/food1.jpg"
       alt="White and Brown Cooked Dish on White Ceramic Bowls"> -->
-      <ng-container *ngIf="post.post_Content_Pictures.length > 0">
-        <img mat-card-image [src]="post.post_Content_Pictures[0]" alt="Post Image">
-      </ng-container>
-    <mat-card-content class="card-content">
-      <markdown [data]="post.post_Content" ngPreserveWhitespaces></markdown>
-    </mat-card-content>
-    <app-post-activity></app-post-activity>
-  </mat-card>
+  <ng-container *ngIf="post.post_Content_Pictures.length > 0">
+    <img mat-card-image [src]="post.post_Content_Pictures[0]" alt="Post Image">
+  </ng-container>
+  <mat-card-content class="card-content">
+    <markdown [data]="post.post_Content" ngPreserveWhitespaces></markdown>
+  </mat-card-content>
+  <app-post-activity [post]="post"></app-post-activity>
+</mat-card>
