@@ -156,6 +156,13 @@ export class EditComponent {
         duration: this.durationInSeconds * 1000,
       });
     }
+    this.edit_snackBar.open('Your Data has been Updated', 'OK', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration: this.durationInSeconds * 1000,
+    });
+    this.goBack();
+
     const updatedUserData: UserData = this.editProfileForm.value;
     this.appwriteService
       .updateUserData(this.userId, updatedUserData)
