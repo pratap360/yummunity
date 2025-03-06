@@ -172,29 +172,39 @@ export class AppwriteService {
   }
 
   // account page data fetching
-  // getUserPosts(): Observable<{ documents: Array<any> }> {
-  //   return from(
-  //     this.database.listDocuments(
-  //       environment.appwrite_DatabaseID,
-  //       environment.post_CollectionID,
-  //       [Query.orderDesc('$createdAt')]
-  //     ) as Promise<{ documents: Array<any> }>
-  //   );
-  // }
-
-  async getUserPosts(userId: string) {
-    try {
-      const response = await this.database.listDocuments(
+  getUserPosts(user_name: string): Observable<{ documents: Array<any> }> {
+    return from(
+      this.database.listDocuments(
         environment.appwrite_DatabaseID,
         environment.post_CollectionID,
-        [Query.equal('user_id', userId)]
-      );
-      return response.documents;
-    } catch (error) {
-      console.error('Error fetching user posts:', error);
-      return [];
-    }
+        [Query.orderDesc('$createdAt'), Query.equal('creator', user_name)]
+      ) as Promise<{ documents: Array<any> }>
+    );
   }
+
+  // Add this to appwrite.service.ts
+  getUserBlogPosts(user_name: string): Observable<{ documents: Array<any> }> {
+    return from(
+      this.database.listDocuments(
+        environment.appwrite_DatabaseID,
+        environment.blogpost_CollectionID,
+        [Query.orderDesc('$createdAt'), Query.equal('creator', user_name)]
+      ) as Promise<{ documents: Array<any> }>
+    );
+  }
+  // async getUserPosts(userId: string) {
+  //   try {
+  //     const response = await this.database.listDocuments(
+  //       environment.appwrite_DatabaseID,
+  //       environment.post_CollectionID,
+  //       [Query.equal('creator', userId)]
+  //     );
+  //     return response.documents;
+  //   } catch (error) {
+  //     console.error('Appwrite service :: getUserPosts :: error', error);
+  //     return [];
+  //   }
+  // }
 
   // getPostById(postId: string): Observable<any> {
   //   return from(

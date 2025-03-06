@@ -51,4 +51,17 @@ export class OnSearchGetUserService {
       return null;
     }
   }
+
+  async getPostsByUserName(user_name: string): Promise<any> {
+    try {
+      const res = await this.database.listDocuments(
+        environment.appwrite_DatabaseID,
+        environment.post_CollectionID,
+        [Query.equal('creator', user_name)]
+      );
+    } catch (error) {
+      console.error('Error in fetching user on -> getUserByName()::', error);
+      return null;
+    }
+  }
 }

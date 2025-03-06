@@ -146,6 +146,11 @@ export class AccountComponent implements OnInit {
       next: (data) => {
         this.userData = data;
         console.log('User Data:', this.userData);
+
+        this.profileUserId = this.userData.id!;
+        this.allPostsData();
+        this.fetchBlogPosts();
+
         this.isLoading.next(false);
       },
       error: (error) => {
@@ -165,45 +170,56 @@ export class AccountComponent implements OnInit {
         });
       },
     });
-    this.getUserPost();
   }
 
-  getUserPost() {
-    this.route.paramMap.subscribe((params) => {
-      this.profileUserId = params.get('id') || '';
-      console.log('Profile User ID:', this.profileUserId);
-      this.appwriteService
-        .getUserPosts(this.profileUserId)
-        .then((data: { documents: RecipePost[] }) => {
-          this.posts = data.documents;
-          console.log('User Posts:', this.posts);
-        })
-        .catch((error) => {
-          console.error('Error:', error);
+  allPostsData(): void {
+    this.isLoading.next(true);
+    this.appwriteService.getUserPosts(this.profileUserId).subscribe({
+      next: (data) => {
+        this.posts = data.documents;
+        console.log('All Posts:', this.posts);
+        this.isLoading.next(false);
+      },
+      error: (error) => {
+        this.isLoading.next(false);
+        console.error('Error:', error);
+        const snackBarRef = this.account_snackBar.open(
+          'Failed to load posts. Please try again later.',
+          'OK',
+          {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration: this.durationInSeconds * 1000,
+          }
+        );
+        snackBarRef.onAction().subscribe(() => {
+          // Handle action if needed
         });
+      },
     });
   }
 
-  // allPostsData(): void {
-  //   this.appwriteService.getUserPosts().subscribe({
-  //     next: (data) => {
-  //       this.posts = data.documents;
-  //       console.log('All Posts:', this.posts);
-  //     },
-  //     error: (error) => {
-  //       console.error('Error:', error);
-  //     },
-  //   });
+  //   fetchBlogPosts(): void {
+  //     this.appwriteService.getBlogPosts().subscribe({
+  //       next: (data) => {
+  //         this.blogPosts = data.documents;
+  //         console.log('All Blog Posts:', this.blogPosts);
+  //       },
+  //       error: (error) => {
+  //         console.error('Error:', error);
+  //       },
+  //     });
+  //   }
   // }
 
   fetchBlogPosts(): void {
-    this.appwriteService.getBlogPosts().subscribe({
+    this.appwriteService.getUserBlogPosts(this.profileUserId).subscribe({
       next: (data) => {
         this.blogPosts = data.documents;
-        console.log('All Blog Posts:', this.blogPosts);
+        console.log('User Blog Posts:', this.blogPosts);
       },
       error: (error) => {
-        console.error('Error:', error);
+        console.error('Error fetching blog posts:', error);
       },
     });
   }

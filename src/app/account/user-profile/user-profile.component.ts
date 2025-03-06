@@ -17,9 +17,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { BottomNavComponent } from '../../../components/bottom-nav/bottom-nav.component';
 import { BlogPost } from '../../interface/blog-post';
 import { RecipePost } from '../../interface/recipe-post';
-import { TextPostComponent } from "../../../components/recipe-posts/text-post/text-post.component";
-import { WithImgPostComponent } from "../../../components/recipe-posts/with-img-post/with-img-post.component";
-import { BlogPostComponent } from "../../../components/recipe-posts/blog-post/blog-post.component";
+import { TextPostComponent } from '../../../components/recipe-posts/text-post/text-post.component';
+import { WithImgPostComponent } from '../../../components/recipe-posts/with-img-post/with-img-post.component';
+import { BlogPostComponent } from '../../../components/recipe-posts/blog-post/blog-post.component';
 @Component({
   selector: 'app-user-profile',
   standalone: true,
@@ -39,8 +39,8 @@ import { BlogPostComponent } from "../../../components/recipe-posts/blog-post/bl
     BottomNavComponent,
     TextPostComponent,
     WithImgPostComponent,
-    BlogPostComponent
-],
+    BlogPostComponent,
+  ],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css',
 })
@@ -51,6 +51,7 @@ export class UserProfileComponent implements OnInit {
   // userTag: string = '';
   user: any;
   user_tag: string = '';
+  user_name: string = '';
   selectedTabIndex = signal(0);
   posts: RecipePost[] = [];
   blogPosts: BlogPost[] = [];
@@ -62,11 +63,14 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params) => {
       this.user_tag = params['user_tag'];
+      this.user_name = params['user_name'];
       this.fetchUserProfile(this.user_tag);
+      this.fetchUserPosts(this.user_name);
     });
   }
 
   fetchUserProfile(user_tag: string): void {
+    console.log('this is what user tag i need', user_tag);
     this.userprofile
       .getUserByTag(user_tag)
       .then((user) => {
@@ -82,6 +86,20 @@ export class UserProfileComponent implements OnInit {
       .catch((error) => {
         console.error('Error fetching user profile:', error);
         this.router.navigate(['/not-found']); // Redirect on error
+      });
+  }
+
+  fetchUserPosts(user_name: string): void {
+    console.log('this is what user name i need', user_name);
+    this.userprofile
+      .getPostsByUserName(user_name)
+      .then((posts) => {
+        if (posts) {
+          this.posts = posts;
+        }
+      })
+      .catch((error) => {
+        console.error('Error fetching user posts:', error);
       });
   }
 

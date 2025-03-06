@@ -56,6 +56,10 @@
         <p class="tab-grp-tittle">Recipes Shares</p>
       </ng-template>
       <div class="card-content-wrapper">
+        <div>
+          <mat-spinner *ngIf="isLoading | async"></mat-spinner>
+          <div class="no-post" *ngIf="!isLoading && posts.length === 0">Not Posts Yet</div>
+        </div>
         <app-text-post [posts]="posts"></app-text-post>
         <app-with-img-post [posts]="posts"></app-with-img-post>
       </div>
@@ -67,6 +71,10 @@
         <p class="tab-grp-tittle">Blogs</p>
       </ng-template>
       <div class="card-content-wrapper">
+        <div>
+          <mat-spinner *ngIf="isLoading | async"></mat-spinner>
+          <div class="no-post" *ngIf="!isLoading && posts.length === 0">Not Posts Yet</div>
+        </div>
         <app-blog-post [blogPosts]="blogPosts"></app-blog-post>
       </div>
     </mat-tab>
@@ -77,6 +85,10 @@
         <p class="tab-grp-tittle">Saves</p>
       </ng-template>
       <div class="card-content-wrapper">
+        <div>
+          <mat-spinner *ngIf="isLoading | async"></mat-spinner>
+          <div class="no-post" *ngIf="!isLoading && posts.length === 0">Not Saves Yet</div>
+        </div>
         <app-text-post></app-text-post>
       </div>
     </mat-tab>
