@@ -33,6 +33,7 @@ import { AppwriteService } from '../../lib/appwrite.service';
 import { BlogPost } from '../interface/blog-post';
 import { RecipePost } from '../interface/recipe-post';
 import {
+  ActivatedRoute,
   Router,
   RouterLink,
   RouterModule,
@@ -108,6 +109,7 @@ export class AccountComponent implements OnInit {
   blogPosts: BlogPost[] = [];
   userData!: UserData;
 
+  profileUserId: string = '';
   isLoading = new BehaviorSubject<boolean>(false);
   limit = 5;
 
@@ -116,7 +118,10 @@ export class AccountComponent implements OnInit {
   private account_snackBar = inject(MatSnackBar);
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
-  constructor(private appwriteService: AppwriteService) {}
+  constructor(
+    private appwriteService: AppwriteService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     // this.allPostsData();
@@ -160,19 +165,36 @@ export class AccountComponent implements OnInit {
         });
       },
     });
+    this.getUserPost();
   }
 
-  allPostsData(): void {
-    this.appwriteService.getUserPosts().subscribe({
-      next: (data) => {
-        this.posts = data.documents;
-        console.log('All Posts:', this.posts);
-      },
-      error: (error) => {
-        console.error('Error:', error);
-      },
+  getUserPost() {
+    this.route.paramMap.subscribe((params) => {
+      this.profileUserId = params.get('id') || '';
+      console.log('Profile User ID:', this.profileUserId);
+      this.appwriteService
+        .getUserPosts(this.profileUserId)
+        .then((data: { documents: RecipePost[] }) => {
+          this.posts = data.documents;
+          console.log('User Posts:', this.posts);
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        });
     });
   }
+
+  // allPostsData(): void {
+  //   this.appwriteService.getUserPosts().subscribe({
+  //     next: (data) => {
+  //       this.posts = data.documents;
+  //       console.log('All Posts:', this.posts);
+  //     },
+  //     error: (error) => {
+  //       console.error('Error:', error);
+  //     },
+  //   });
+  // }
 
   fetchBlogPosts(): void {
     this.appwriteService.getBlogPosts().subscribe({

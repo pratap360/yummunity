@@ -172,14 +172,28 @@ export class AppwriteService {
   }
 
   // account page data fetching
-  getUserPosts(): Observable<{ documents: Array<any> }> {
-    return from(
-      this.database.listDocuments(
+  // getUserPosts(): Observable<{ documents: Array<any> }> {
+  //   return from(
+  //     this.database.listDocuments(
+  //       environment.appwrite_DatabaseID,
+  //       environment.post_CollectionID,
+  //       [Query.orderDesc('$createdAt')]
+  //     ) as Promise<{ documents: Array<any> }>
+  //   );
+  // }
+
+  async getUserPosts(userId: string) {
+    try {
+      const response = await this.database.listDocuments(
         environment.appwrite_DatabaseID,
         environment.post_CollectionID,
-        [Query.orderDesc('$createdAt')]
-      ) as Promise<{ documents: Array<any> }>
-    );
+        [Query.equal('user_id', userId)]
+      );
+      return response.documents;
+    } catch (error) {
+      console.error('Error fetching user posts:', error);
+      return [];
+    }
   }
 
   // getPostById(postId: string): Observable<any> {
