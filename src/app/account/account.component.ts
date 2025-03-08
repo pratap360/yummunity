@@ -109,7 +109,7 @@ export class AccountComponent implements OnInit {
   blogPosts: BlogPost[] = [];
   userData!: UserData;
 
-  profileUserId: string = '';
+  profileUserTag: string = '';
   isLoading = new BehaviorSubject<boolean>(false);
   limit = 5;
 
@@ -118,6 +118,9 @@ export class AccountComponent implements OnInit {
   private account_snackBar = inject(MatSnackBar);
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
+
+  textPosts: any[] = [];
+  withImgPosts: any[] = [];
   constructor(
     private appwriteService: AppwriteService,
     private route: ActivatedRoute
@@ -147,7 +150,9 @@ export class AccountComponent implements OnInit {
         this.userData = data;
         console.log('User Data:', this.userData);
 
-        this.profileUserId = this.userData.id!;
+        this.profileUserTag = this.userData.user_name;
+        console.log('Profile User ID:', this.profileUserTag);
+
         this.allPostsData();
         this.fetchBlogPosts();
 
@@ -174,11 +179,18 @@ export class AccountComponent implements OnInit {
 
   allPostsData(): void {
     this.isLoading.next(true);
-    this.appwriteService.getUserPosts(this.profileUserId).subscribe({
+    this.appwriteService.getUserPosts(this.profileUserTag).subscribe({
       next: (data) => {
         this.posts = data.documents;
         console.log('All Posts:', this.posts);
         this.isLoading.next(false);
+
+        this.textPosts = (this.posts || []).filter(
+          (post) => !post.post_Content_Pictures
+        );
+        this.withImgPosts = (this.posts || []).filter(
+          (post) => post.post_Content_Pictures
+        );
       },
       error: (error) => {
         this.isLoading.next(false);
@@ -213,13 +225,22 @@ export class AccountComponent implements OnInit {
   // }
 
   fetchBlogPosts(): void {
-    this.appwriteService.getUserBlogPosts(this.profileUserId).subscribe({
+    this.appwriteService.getUserBlogPosts(this.profileUserTag).subscribe({
       next: (data) => {
         this.blogPosts = data.documents;
         console.log('User Blog Posts:', this.blogPosts);
       },
       error: (error) => {
         console.error('Error fetching blog posts:', error);
+        this.account_snackBar.open(
+          'Failed to load posts. Please try again later.',
+          'OK',
+          {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration: this.durationInSeconds * 1000,
+          }
+        );
       },
     });
   }

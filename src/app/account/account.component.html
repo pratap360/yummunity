@@ -58,10 +58,15 @@
       <div class="card-content-wrapper">
         <div>
           <mat-spinner *ngIf="isLoading | async"></mat-spinner>
-          <div class="no-post" *ngIf="!isLoading && posts.length === 0">Not Posts Yet</div>
+          <div class="no-post" *ngIf="!isLoading && textPosts?.length === 0 && withImgPosts?.length === 0">
+            No Posts Yet
+          </div>
         </div>
-        <app-text-post [posts]="posts"></app-text-post>
-        <app-with-img-post [posts]="posts"></app-with-img-post>
+
+        <app-text-post *ngIf="textPosts.length > 0" [posts]="textPosts"></app-text-post>
+        <app-with-img-post *ngIf="withImgPosts.length > 0" [posts]="withImgPosts"></app-with-img-post>
+        <!-- <app-text-post [posts]="posts"></app-text-post>
+        <app-with-img-post [posts]="posts"></app-with-img-post> -->
       </div>
     </mat-tab>
 

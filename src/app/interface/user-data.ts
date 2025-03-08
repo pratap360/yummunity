@@ -1,5 +1,5 @@
 export interface UserData {
-  id?: string;
+  id: string;
   user_tag: string;
   user_profile_pic?: string;
   user_name: string;

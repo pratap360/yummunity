@@ -177,7 +177,7 @@ export class AppwriteService {
       this.database.listDocuments(
         environment.appwrite_DatabaseID,
         environment.post_CollectionID,
-        [Query.orderDesc('$createdAt'), Query.equal('creator', user_name)]
+        [Query.orderDesc('$createdAt'), Query.equal('user_name', user_name)]
       ) as Promise<{ documents: Array<any> }>
     );
   }
@@ -188,7 +188,7 @@ export class AppwriteService {
       this.database.listDocuments(
         environment.appwrite_DatabaseID,
         environment.blogpost_CollectionID,
-        [Query.orderDesc('$createdAt'), Query.equal('creator', user_name)]
+        [Query.orderDesc('$createdAt'), Query.equal('user_name', user_name)]
       ) as Promise<{ documents: Array<any> }>
     );
   }
