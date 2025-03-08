@@ -52,16 +52,25 @@ export class OnSearchGetUserService {
     }
   }
 
-  async getPostsByUserName(user_name: string): Promise<any> {
-    try {
-      const res = await this.database.listDocuments(
+  getUserPostsByTag(user_tag: string): Observable<{ documents: Array<any> }> {
+    return from(
+      this.database.listDocuments(
         environment.appwrite_DatabaseID,
         environment.post_CollectionID,
-        [Query.equal('creator', user_name)]
-      );
-    } catch (error) {
-      console.error('Error in fetching user on -> getUserByName()::', error);
-      return null;
-    }
+        [Query.orderDesc('$createdAt'), Query.equal('user_tag', user_tag)]
+      ) as Promise<{ documents: Array<any> }>
+    );
+  }
+
+  getUserBlogPostsByTag(
+    user_tag: string
+  ): Observable<{ documents: Array<any> }> {
+    return from(
+      this.database.listDocuments(
+        environment.appwrite_DatabaseID,
+        environment.blogpost_CollectionID,
+        [Query.orderDesc('$createdAt'), Query.equal('user_tag', user_tag)]
+      ) as Promise<{ documents: Array<any> }>
+    );
   }
 }

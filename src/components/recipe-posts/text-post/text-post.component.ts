@@ -7,7 +7,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import {MatMenuModule, MatMenuTrigger} from '@angular/material/menu';
+import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { PostActivityComponent } from '../../post-activity/post-activity.component';
 import { AppwriteService } from '../../../lib/appwrite.service';
 import { SharePostComponent } from '../../post-activity/share-post/share-post.component';
@@ -44,15 +44,15 @@ export class TextPostComponent {
   // }
   // @Input() postsId: any;
   @Input() posts: RecipePost[] = [];
-  user_name: string = 'Pratap Parui';
-  user_bio: string = 'Developer|Food Critics';
+  // user_name: string = 'Pratap Parui';
+  // user_bio: string = 'Developer|Food Critics';
   // post_id: string = '678ea60e001c28e7b3f9';
   // constructor(private appwriteService: AppwriteService) {}
   // ngOnInit(): void {
   //   this.fetchAllPosts();
   // }
 
-  ngOnint() :void{
+  ngOnint(): void {
     console.log('Post id is there on text-post:', this.posts);
   }
 
@@ -69,15 +69,13 @@ export class TextPostComponent {
   //   })
   // }
 
+  readonly menuTrigger = viewChild.required(MatMenuTrigger);
 
-    readonly menuTrigger = viewChild.required(MatMenuTrigger);
-  
-    readonly dialog = inject(MatDialog);
-    sharePost() {
-      const dialogRef = this.dialog.open(SharePostComponent, {
-        restoreFocus: false,
-      });
-      dialogRef.afterClosed().subscribe(() => this.menuTrigger().focus());
-    }
-
+  readonly dialog = inject(MatDialog);
+  sharePost() {
+    const dialogRef = this.dialog.open(SharePostComponent, {
+      restoreFocus: false,
+    });
+    dialogRef.afterClosed().subscribe(() => this.menuTrigger().focus());
+  }
 }

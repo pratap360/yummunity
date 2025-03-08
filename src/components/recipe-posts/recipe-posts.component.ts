@@ -58,6 +58,10 @@ export class RecipePostsComponent implements OnInit, OnDestroy {
   limit = 5;
   offset = 0;
   allPostsLoaded = false;
+
+  textPosts: any[] = [];
+  withImgPosts: any[] = [];
+
   private postsSubscription: Subscription | undefined;
   constructor(
     private appwriteService: AppwriteService,
@@ -111,6 +115,12 @@ export class RecipePostsComponent implements OnInit, OnDestroy {
           this.isLoading.next(false);
           console.log('Spinner hidden');
           console.log('All Posts :', this.posts);
+          this.textPosts = (this.posts || []).filter(
+            (post) => !post.post_Content_Pictures
+          );
+          this.withImgPosts = (this.posts || []).filter(
+            (post) => post.post_Content_Pictures
+          );
         },
         error: (error) => {
           console.error('Error fetching posts:', error);

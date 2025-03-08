@@ -54,8 +54,8 @@ export class BlogPostComponent {
   // }
 
   // blog post component
-  blogTitle = 'Summer Chipotle Chicken Cobb Salad with Cilantro Vinaigrette';
-  longText = `This juicy salad tastes like summer! With chipotle chicken, sweet corn, avocado, cilantro vinaigrette, bacon crumbles, and fresh strawberries for a pop of sweetness.`;
+  // blogTitle = 'Summer Chipotle Chicken Cobb Salad with Cilantro Vinaigrette';
+  // longText = `This juicy salad tastes like summer! With chipotle chicken, sweet corn, avocado, cilantro vinaigrette, bacon crumbles, and fresh strawberries for a pop of sweetness.`;
 
   readonly menuTrigger = viewChild.required(MatMenuTrigger);
   readonly dialog = inject(MatDialog);

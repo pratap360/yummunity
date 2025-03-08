@@ -150,7 +150,7 @@ export class AccountComponent implements OnInit {
         this.userData = data;
         console.log('User Data:', this.userData);
 
-        this.profileUserTag = this.userData.user_name;
+        this.profileUserTag = this.userData.user_tag;
         console.log('Profile User ID:', this.profileUserTag);
 
         this.allPostsData();

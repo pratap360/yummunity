@@ -5,13 +5,13 @@
   <mat-card class="profile-card mat-elevation-z4" *ngIf="user">
     <div class="profile-header">
       <div class="avatar">
-          <img mat-card-avatar class="profile-card-image" [src]="user.user_profile_pic" [alt]="user.user_name">
+        <img mat-card-avatar class="profile-card-image" [src]="user.user_profile_pic" [alt]="user.user_name">
       </div>
       <div class="profile-info">
         <div class="account-card-header">
           <h3 class="name">{{ user.user_name }}</h3>
-          <button mat-flat-button class="edit-button" matTooltip="Follow"
-            matTooltipPosition="right" (click)="followUser()">
+          <button mat-flat-button class="edit-button" matTooltip="Follow" matTooltipPosition="right"
+            (click)="followUser()">
             <mat-icon>person_add</mat-icon>Follow
           </button>
         </div>
@@ -51,8 +51,10 @@
         <mat-icon class="profile-tab-icon">mood</mat-icon>
         <p class="tab-grp-tittle">Recipes Shares</p>
       </ng-template>
-      <app-text-post [posts]="posts"></app-text-post>
-      <app-with-img-post [posts]="posts"></app-with-img-post>
+      <!-- <app-text-post [posts]="posts"></app-text-post>
+        <app-with-img-post [posts]="posts"></app-with-img-post> -->
+      <app-text-post *ngIf="textPosts.length > 0" [posts]="textPosts"></app-text-post>
+      <app-with-img-post *ngIf="withImgPosts.length > 0" [posts]="withImgPosts"></app-with-img-post>
     </mat-tab>
 
     <mat-tab label="Blogs">
@@ -62,49 +64,7 @@
       </ng-template>
       <app-blog-post [blogPosts]="blogPosts"></app-blog-post>
     </mat-tab>
-
-    <mat-tab label="Saves">
-      <ng-template mat-tab-label>
-        <mat-icon class="profile-tab-icon">bookmarks</mat-icon>
-        <p class="tab-grp-tittle">Saves</p>
-      </ng-template>
-      <!-- <app-text-post></app-text-post> -->
-    </mat-tab>
   </mat-tab-group>
-  <!-- </mat-tab> -->
-
-  <!-- <mat-tab label="Saves">
-      <ng-template mat-tab-label>
-        <mat-icon class="profile-tab-icon">bookmarks</mat-icon>
-        Saves
-      </ng-template>
-      @defer(when selectedTabIndex() === 2;) {
-        ! Content 3 prefetch when prefetchTabs()
-        <app-text-post></app-text-post>
-      } -->
-
-  <!-- ? Need to implement the ngfor here to display the saved posts using boolean value  -->
-  <!-- <ng-container *ngFor="let post of savedPosts">
-        <app-text-post [data]="post"></app-text-post>
-      </ng-container> -->
-
-  <!-- <div class="save-content-wrapper">
-        <mat-card appearance="outlined" class="posts-card">
-          <mat-card-content class="card-content">
-            <h3>Did you know that ?</h3>
-            <p>A hen lays around 300 to 325 eggs per year, and it takes her 24 to 26 hours to produce each egg</p>
-          </mat-card-content>
-          <mat-card-actions class="action-buttons">
-            <button mat-flat-button><mat-icon>favorite</mat-icon>Like</button>
-            <button mat-raised-button><mat-icon>comment</mat-icon>Comment</button>
-            <button mat-flat-button><mat-icon>bookmark</mat-icon>Saved</button>
-            <button mat-stroked-button><mat-icon>more_horiz</mat-icon>Read More</button>
-          </mat-card-actions>
-        </mat-card>
-      </div> -->
-
-  <!-- </mat-tab>
-  </mat-tab-group> -->
 
 </div>
 

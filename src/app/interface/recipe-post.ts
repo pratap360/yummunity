@@ -5,6 +5,7 @@ export interface RecipePost {
   users?: string | null;
   user_name: string | null;
   user_bio?: string | null;
+  user_tag: string | null;
   post_Content_Pictures: any[];
   post_Content: string;
   post_likes: number;

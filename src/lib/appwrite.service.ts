@@ -172,23 +172,23 @@ export class AppwriteService {
   }
 
   // account page data fetching
-  getUserPosts(user_name: string): Observable<{ documents: Array<any> }> {
+  getUserPosts(user_tag: string): Observable<{ documents: Array<any> }> {
     return from(
       this.database.listDocuments(
         environment.appwrite_DatabaseID,
         environment.post_CollectionID,
-        [Query.orderDesc('$createdAt'), Query.equal('user_name', user_name)]
+        [Query.orderDesc('$createdAt'), Query.equal('user_tag', user_tag)]
       ) as Promise<{ documents: Array<any> }>
     );
   }
 
   // Add this to appwrite.service.ts
-  getUserBlogPosts(user_name: string): Observable<{ documents: Array<any> }> {
+  getUserBlogPosts(user_tag: string): Observable<{ documents: Array<any> }> {
     return from(
       this.database.listDocuments(
         environment.appwrite_DatabaseID,
         environment.blogpost_CollectionID,
-        [Query.orderDesc('$createdAt'), Query.equal('user_name', user_name)]
+        [Query.orderDesc('$createdAt'), Query.equal('user_tag', user_tag)]
       ) as Promise<{ documents: Array<any> }>
     );
   }
