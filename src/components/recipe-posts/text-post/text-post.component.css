@@ -10,7 +10,7 @@ mat-card.posts-card {
 
 
 .profile-header-image {
-    background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg');
+    /* background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg'); */
     background-size: cover;
 }
 
@@ -54,12 +54,10 @@ mat-card.posts-card {
 
 
 @media screen and (max-width: 576px) {
-    .card-content{
+    .card-content {
         font-size: 16px;
         word-wrap: break-word;
     }
 }
 
-@media screen and (max-width: 768px) {
-    
-}
+@media screen and (max-width: 768px) {}

@@ -67,8 +67,9 @@
             <span>Add New Post</span>
           </button>
         </div>
-        <app-text-post *ngIf="textPosts.length > 0" [posts]="textPosts"></app-text-post>
-        <app-with-img-post *ngIf="withImgPosts.length > 0" [posts]="withImgPosts"></app-with-img-post>
+        <app-text-post *ngIf="textPosts.length > 0" [posts]="textPosts" [userData]="userData"></app-text-post>
+        <app-with-img-post *ngIf="withImgPosts.length > 0" [posts]="withImgPosts"
+          [userData]="userData"></app-with-img-post>
         <!-- <app-text-post [posts]="posts"></app-text-post>
         <app-with-img-post [posts]="posts"></app-with-img-post> -->
       </div>
@@ -91,7 +92,7 @@
             <span>Add New Post</span>
           </button>
         </div>
-        <app-blog-post [blogPosts]="blogPosts"></app-blog-post>
+        <app-blog-post [blogPosts]="blogPosts" [userData]="userData"></app-blog-post>
       </div>
     </mat-tab>
 

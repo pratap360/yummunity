@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AppwriteService } from '../../../lib/appwrite.service';
 import { BlogPost } from '../../../app/interface/blog-post';
 import { CommonModule } from '@angular/common';
+import { UserData } from '../../../app/interface/user-data';
 
 @Component({
   selector: 'app-blog-post',
@@ -34,6 +35,8 @@ import { CommonModule } from '@angular/common';
 })
 export class BlogPostComponent {
   @Input() blogPosts: BlogPost[] = [];
+  @Input() userData: any;
+  @Input() alluserData: { [postId: string]: UserData } = {};
 
   //   constructor(private appwriteService: AppwriteService){}
 

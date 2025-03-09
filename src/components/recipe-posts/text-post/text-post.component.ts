@@ -13,6 +13,7 @@ import { AppwriteService } from '../../../lib/appwrite.service';
 import { SharePostComponent } from '../../post-activity/share-post/share-post.component';
 import { RecipePost } from '../../../app/interface/recipe-post';
 import { MarkdownModule } from 'ngx-markdown';
+import { UserData } from '../../../app/interface/user-data';
 
 @Component({
   selector: 'app-text-post',
@@ -51,23 +52,15 @@ export class TextPostComponent {
   // ngOnInit(): void {
   //   this.fetchAllPosts();
   // }
+  @Input() userData: any;
+  @Input() alluserData: { [postId: string]: UserData } = {};
 
-  ngOnint(): void {
+  ngOnInit(): void {
     console.log('Post id is there on text-post:', this.posts);
+    console.log('User data in text-post:', this.userData);
   }
 
-  // fetchAllPosts(): void {
-  //   this.appwriteService.getAllPosts().subscribe({
-  //     next: (data) => {
-  //       // console.log('Data:', data);
-  //       this.posts = data.documents;
-  //       console.log( 'All Posts :', this.posts);
-  //     },
-  //     error: (error) => {
-  //       console.error('Error fetching posts:', error);
-  //     }
-  //   })
-  // }
+  // @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger;
 
   readonly menuTrigger = viewChild.required(MatMenuTrigger);
 

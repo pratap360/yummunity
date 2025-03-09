@@ -59,8 +59,8 @@
           *ngIf="!(isLoading | async) && (!textPosts || textPosts.length === 0) && (!withImgPosts || withImgPosts.length === 0)">
           <span>No Posts Yet...</span>
         </div>
-        <app-text-post *ngIf="textPosts.length > 0" [posts]="textPosts"></app-text-post>
-        <app-with-img-post *ngIf="withImgPosts.length > 0" [posts]="withImgPosts"></app-with-img-post>
+        <app-text-post *ngIf="textPosts.length > 0" [posts]="textPosts" [userData]="user"></app-text-post>
+        <app-with-img-post *ngIf="withImgPosts.length > 0" [posts]="withImgPosts" [userData]="user"></app-with-img-post>
       </div>
     </mat-tab>
 
@@ -76,7 +76,7 @@
         <div class="no-post" *ngIf="!(isLoading | async) && (!textPosts || blogPosts.length === 0)">
           <span>No Blog Post Yet...</span>
         </div>
-        <app-blog-post [blogPosts]="blogPosts"></app-blog-post>
+        <app-blog-post [blogPosts]="blogPosts" [userData]="user"></app-blog-post>
       </div>
     </mat-tab>
   </mat-tab-group>

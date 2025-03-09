@@ -1,3 +1,4 @@
+import { UsercontextService } from './../../../app/services/users/usercontext.service';
 import {
   Component,
   Input,
@@ -23,6 +24,7 @@ import { SharePostComponent } from '../../post-activity/share-post/share-post.co
 import { CommonModule } from '@angular/common';
 import { RecipePost } from '../../../app/interface/recipe-post';
 import { MarkdownModule } from 'ngx-markdown';
+import { UserData } from '../../../app/interface/user-data';
 
 @Component({
   selector: 'app-with-img-post',
@@ -39,19 +41,25 @@ import { MarkdownModule } from 'ngx-markdown';
     MatDialogContent,
     MatDialogActions,
     PostActivityComponent,
-    MarkdownModule
+    MarkdownModule,
   ],
   templateUrl: './with-img-post.component.html',
   styleUrl: './with-img-post.component.css',
 })
-export class WithImgPostComponent {
+export class WithImgPostComponent implements OnInit {
   @Input() posts: RecipePost[] = [];
+  @Input() userData: any;
+  // @Input() alluserData: { [postId: string]: UserData } = {};
+  postUserData: { [postId: string]: UserData } = {};
 
-  // constructor(private appwriteService: AppwriteService) {}
-  // ngOnInit(): void {
-  //   this.fetchAllPosts();
-  // }
-
+  constructor(private UserContextService: UsercontextService) {}
+  ngOnInit(): void {
+    this.UserContextService.postUserData$.subscribe((data) => {
+      this.postUserData = data;
+    });
+    console.log('Post id is there on text-post:', this.posts);
+    console.log('User data in text-post:', this.userData);
+  }
   // fetchAllPosts(): void {
   //   this.appwriteService.getAllPosts().subscribe({
   //     next: (data) => {
@@ -63,6 +71,12 @@ export class WithImgPostComponent {
   //       console.error('Error fetching posts:', error);
   //     }
   //   })
+  // }
+  getUserData(postId: string): UserData {
+    return this.postUserData[postId] || {};
+  }
+  // getUserData(post: RecipePost): UserData {
+  //   return this.userData[post.id] || {}; // Return empty object if no user data found
   // }
 
   readonly menuTrigger = viewChild.required(MatMenuTrigger);

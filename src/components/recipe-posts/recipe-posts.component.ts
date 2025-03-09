@@ -1,3 +1,5 @@
+import { UsercontextService } from './../../app/services/users/usercontext.service';
+import { UserData } from './../../app/interface/user-data';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -26,6 +28,7 @@ import { catchError, tap, throttleTime, filter } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { Router, RouterModule } from '@angular/router';
 import { FullPostComponent } from '../full-post/full-post.component';
+import { use } from 'marked';
 
 @Component({
   selector: 'app-recipe-posts',
@@ -55,6 +58,12 @@ export class RecipePostsComponent implements OnInit, OnDestroy {
   isLoading = new BehaviorSubject<boolean>(false);
   posts: RecipePost[] = [];
   blogPosts: BlogPost[] = [];
+
+  // userData: any[] = [];
+  // userData!: UserData;
+  user: any;
+  // userDataMap: { [postId: string]: UserData } = {};
+
   limit = 5;
   offset = 0;
   allPostsLoaded = false;
@@ -65,7 +74,8 @@ export class RecipePostsComponent implements OnInit, OnDestroy {
   private postsSubscription: Subscription | undefined;
   constructor(
     private appwriteService: AppwriteService,
-    private router: Router
+    private router: Router,
+    private userContextService: UsercontextService
   ) {}
 
   ngOnInit(): void {
@@ -110,17 +120,84 @@ export class RecipePostsComponent implements OnInit, OnDestroy {
           if (data.documents.length < this.limit) {
             this.allPostsLoaded = true; //all post are loaded
           }
+
+          const userDataMap: { [postId: string]: UserData } = {};
+          data.documents.forEach((post) => {
+            if (post.users && post.users.length > 0) {
+              userDataMap[post.$id || post.id] = {
+                id: post.users[0].id,
+                user_tag: post.users[0].user_tag,
+                user_name: post.users[0].user_name,
+                user_bio: post.users[0].user_bio,
+                user_profile_pic: post.users[0].user_profile_pic,
+                user_dob: post.users[0].user_dob,
+                user_gender: post.users[0].user_gender,
+                user_phone_no: post.users[0].user_phone_no,
+                user_email: post.users[0].user_email,
+                user_password: post.users[0].user_password,
+                user_location: post.users[0].user_location,
+                user_url: post.users[0].user_url,
+                user_fav_food_recipe: post.users[0].user_fav_food_recipe,
+                yummunity_rating: post.users[0].yummunity_rating,
+                user_following_count: post.users[0].user_following_count,
+                user_followers_count: post.users[0].user_followers_count,
+              };
+            }
+          });
+
+          // Update user context service
+          this.userContextService.updateBulkPostUserData(userDataMap);
+
           this.posts = [...this.posts, ...data.documents];
           this.offset += this.limit;
+
           this.isLoading.next(false);
-          console.log('Spinner hidden');
-          console.log('All Posts :', this.posts);
+          console.log('All Posts:', this.posts);
+
           this.textPosts = (this.posts || []).filter(
             (post) => !post.post_Content_Pictures
           );
           this.withImgPosts = (this.posts || []).filter(
             (post) => post.post_Content_Pictures
           );
+          this.isLoading.next(false);
+          // data.documents.forEach((post) => {
+          //   if (post.users && post.users.length > 0) {
+          //     this.userDataMap[post.id] = {
+          //       id: post.users[0].id,
+          //       user_tag: post.users[0].user_tag,
+          //       user_name: post.users[0].user_name,
+          //       user_bio: post.users[0].user_bio,
+          //       user_profile_pic: post.users[0].user_profile_pic,
+
+          //       user_dob: post.users[0].user_dob,
+          //       user_gender: post.users[0].user_gender,
+          //       user_phone_no: post.users[0].user_phone_no,
+          //       user_email: post.users[0].user_email,
+          //       user_password: post.users[0].user_password,
+          //       user_location: post.users[0].user_location,
+          //       user_url: post.users[0].user_url,
+          //       user_fav_food_recipe: post.users[0].user_fav_food_recipe,
+          //       yummunity_rating: post.users[0].yummunity_rating,
+          //       user_following_count: post.users[0].user_following_count,
+          //       user_followers_count: post.users[0].user_followers_count,
+          //     };
+          //   }
+          // });
+
+          // this.userData = this.posts.map((post) => ({
+          //   user_name: post.users?.[0]?.user_name,
+          //   user_bio: post.users?.[0]?.user_bio,
+          //   user_profile_pic: post.users?.[0]?.user_profile_pic,
+          //   user_tag: post.users?.[0].user_tag,
+          // }));
+
+          // this.userData = this.posts.map((post) => ({
+          //   user_tag: post && post.users[0].user_tag,
+          //   user_name: post && post.users[0].user_name,
+          //   user_bio: post && post.users[0].user_bio,
+          //   user_profile_pic: post && post.users[0].user_profile_pic,
+          // }));
         },
         error: (error) => {
           console.error('Error fetching posts:', error);
