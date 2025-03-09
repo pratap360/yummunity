@@ -136,7 +136,7 @@ div.profile-info-container {
   align-items: center;
 }
 
-div.account-card-header{
+div.account-card-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -262,10 +262,24 @@ div.profile-tab-container {
   margin-right: 4px;
 }
 
-p.tab-grp-tittle{
+p.tab-grp-tittle {
   margin: auto;
 }
 
+.no-post {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 3rem;
+}
+
+.no-post span {
+  margin-bottom: 2rem;
+}
 
 @media screen and (max-width: 768px) {
 
@@ -312,7 +326,7 @@ p.tab-grp-tittle{
     margin-right: 0;
   }
 
-  .profile-post-tab{
+  .profile-post-tab {
     width: 100%;
   }
 
@@ -334,18 +348,20 @@ p.tab-grp-tittle{
     -webkit-overflow-scrolling: touch;
   }
 
-  div.account-card-header{
+  div.account-card-header {
     display: grid;
     justify-content: space-around;
   }
 
-  .edit-button span{
+  .edit-button span {
     display: none;
   }
-  .card-content-wrapper{
-    padding:0px 10px;
+
+  .card-content-wrapper {
+    padding: 0px 10px;
   }
-  p.tab-grp-tittle{
+
+  p.tab-grp-tittle {
     display: none;
   }
 }

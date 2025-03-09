@@ -138,6 +138,22 @@ p.tab-grp-tittle {
     margin: auto;
 }
 
+
+.no-post {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 3rem;
+}
+
+.no-post span {
+    margin-bottom: 2rem;
+}
+
 @media screen and (max-width: 768px) {
 
     .profile-card {

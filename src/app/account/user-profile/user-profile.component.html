@@ -51,10 +51,17 @@
         <mat-icon class="profile-tab-icon">mood</mat-icon>
         <p class="tab-grp-tittle">Recipes Shares</p>
       </ng-template>
-      <!-- <app-text-post [posts]="posts"></app-text-post>
-        <app-with-img-post [posts]="posts"></app-with-img-post> -->
-      <app-text-post *ngIf="textPosts.length > 0" [posts]="textPosts"></app-text-post>
-      <app-with-img-post *ngIf="withImgPosts.length > 0" [posts]="withImgPosts"></app-with-img-post>
+      <div class="card-content-wrapper">
+        <div>
+          <mat-spinner *ngIf="isLoading | async"></mat-spinner>
+        </div>
+        <div class="no-post"
+          *ngIf="!(isLoading | async) && (!textPosts || textPosts.length === 0) && (!withImgPosts || withImgPosts.length === 0)">
+          <span>No Posts Yet...</span>
+        </div>
+        <app-text-post *ngIf="textPosts.length > 0" [posts]="textPosts"></app-text-post>
+        <app-with-img-post *ngIf="withImgPosts.length > 0" [posts]="withImgPosts"></app-with-img-post>
+      </div>
     </mat-tab>
 
     <mat-tab label="Blogs">
@@ -62,7 +69,15 @@
         <mat-icon class="profile-tab-icon">library_books</mat-icon>
         <p class="tab-grp-tittle">Blogs</p>
       </ng-template>
-      <app-blog-post [blogPosts]="blogPosts"></app-blog-post>
+      <div class="card-content-wrapper">
+        <div>
+          <mat-spinner *ngIf="isLoading | async"></mat-spinner>
+        </div>
+        <div class="no-post" *ngIf="!(isLoading | async) && (!textPosts || blogPosts.length === 0)">
+          <span>No Blog Post Yet...</span>
+        </div>
+        <app-blog-post [blogPosts]="blogPosts"></app-blog-post>
+      </div>
     </mat-tab>
   </mat-tab-group>
 

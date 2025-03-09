@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterModule } from '@angular/router';
 import { OnSearchGetUserService } from '../../services/appwrite/userdata/on-search-get-user.service';
-import { switchMap } from 'rxjs';
+import { BehaviorSubject, switchMap } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { SidenavComponent } from '../../../components/sidenav/sidenav.component';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,6 +25,7 @@ import {
   MatSnackBarHorizontalPosition,
   MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-user-profile',
   standalone: true,
@@ -45,6 +46,7 @@ import {
     TextPostComponent,
     WithImgPostComponent,
     BlogPostComponent,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './user-profile.component.html',
   styleUrl: './user-profile.component.css',
@@ -63,6 +65,7 @@ export class UserProfileComponent implements OnInit {
 
   textPosts: any[] = [];
   withImgPosts: any[] = [];
+  isLoading = new BehaviorSubject<boolean>(false);
 
   durationInSeconds = 5;
   // private router = inject(Router);

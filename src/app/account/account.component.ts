@@ -48,6 +48,8 @@ import {
 } from '@angular/material/snack-bar';
 import { BehaviorSubject } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AddPostsComponent } from '../../components/add-posts/add-posts.component';
+import { MatDialog } from '@angular/material/dialog';
 @Component({
   selector: 'app-account',
   standalone: true,
@@ -242,6 +244,18 @@ export class AccountComponent implements OnInit {
           }
         );
       },
+    });
+  }
+
+  readonly dialog = inject(MatDialog);
+  AddPostfromAcc(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
+    this.dialog.open(AddPostsComponent, {
+      width: '800px',
+      enterAnimationDuration,
+      exitAnimationDuration,
     });
   }
 }
