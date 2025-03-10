@@ -108,21 +108,29 @@ export class AppwriteService {
 
   // ! updateProfilePic method bana hai baki
 
-  createPost(data: any) {
+  // createPost(data: any) {
+  //   return this.database.createDocument(
+  //     environment.appwrite_DatabaseID,
+  //     environment.post_CollectionID,
+  //     ID.unique(),
+  //     data
+  //   );
+  // }
+  createPost(postData: RecipePost): Promise<any> {
     return this.database.createDocument(
       environment.appwrite_DatabaseID,
       environment.post_CollectionID,
       ID.unique(),
-      data
+      postData
     );
   }
 
-  createBlogPost(data: any) {
+  createBlogPost(blogData: any): Promise<any> {
     return this.database.createDocument(
       environment.appwrite_DatabaseID,
       environment.blogpost_CollectionID,
       ID.unique(),
-      data
+      blogData
     );
   }
 

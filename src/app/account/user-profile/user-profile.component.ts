@@ -17,9 +17,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { BottomNavComponent } from '../../../components/bottom-nav/bottom-nav.component';
 import { BlogPost } from '../../interface/blog-post';
 import { RecipePost } from '../../interface/recipe-post';
-import { TextPostComponent } from '../../../components/recipe-posts/text-post/text-post.component';
-import { WithImgPostComponent } from '../../../components/recipe-posts/with-img-post/with-img-post.component';
-import { BlogPostComponent } from '../../../components/recipe-posts/blog-post/blog-post.component';
+import { TextPostComponent } from '../components/text-post/text-post.component';
+import { WithImgPostComponent } from '../components/with-img-post/with-img-post.component';
+import { BlogPostComponent } from '../components/blog-post/blog-post.component';
 import {
   MatSnackBar,
   MatSnackBarHorizontalPosition,

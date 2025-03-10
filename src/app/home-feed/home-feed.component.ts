@@ -1,4 +1,9 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import {
+  Component,
+  ChangeDetectionStrategy,
+  inject,
+  OnInit,
+} from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { SidenavComponent } from '../../components/sidenav/sidenav.component';
 import { RecipePostsComponent } from '../../components/recipe-posts/recipe-posts.component';
@@ -12,7 +17,9 @@ import { RouterModule } from '@angular/router';
 import { AddPostsComponent } from '../../components/add-posts/add-posts.component';
 import { PostContainerComponent } from '../../components/post-container/post-container.component';
 import { BottomNavComponent } from '../../components/bottom-nav/bottom-nav.component';
-import { FullPostComponent } from "../../components/full-post/full-post.component";
+import { FullPostComponent } from '../../components/full-post/full-post.component';
+import { UserData } from '../interface/user-data';
+import { AppwriteService } from '../../lib/appwrite.service';
 
 @Component({
   selector: 'app-home-feed',
@@ -31,15 +38,33 @@ import { FullPostComponent } from "../../components/full-post/full-post.componen
     RouterModule,
     PostContainerComponent,
     BottomNavComponent,
-    FullPostComponent
-],
+    FullPostComponent,
+  ],
   templateUrl: './home-feed.component.html',
   styleUrl: './home-feed.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HomeFeedComponent {
+export class HomeFeedComponent implements OnInit {
+  userData!: UserData;
+
   readonly dialog = inject(MatDialog);
 
+  constructor(private appwriteService: AppwriteService) {}
+  ngOnInit() {
+    this.fetchUserData();
+  }
+
+  fetchUserData() {
+    this.appwriteService.getCurrentUser().subscribe({
+      next: (data: UserData) => {
+        this.userData = data;
+        console.log('User data:', this.userData);
+      },
+      error: (err) => {
+        console.error('Failed to fetch user data:', err);
+      },
+    });
+  }
   onAddPost(
     enterAnimationDuration: string,
     exitAnimationDuration: string
@@ -48,6 +73,7 @@ export class HomeFeedComponent {
       width: '800px',
       enterAnimationDuration,
       exitAnimationDuration,
+      data: { userData: this.userData },
     });
   }
 

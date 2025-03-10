@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
+  Inject,
   OnInit,
   signal,
   ViewChild,
@@ -50,6 +51,8 @@ import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MarkdownModule, MarkdownService } from 'ngx-markdown';
 import { Parser } from 'marked';
+import { UserData } from '../../app/interface/user-data';
+import { RecipePost } from '../../app/interface/recipe-post';
 export interface Tag {
   name: string;
 }
@@ -94,7 +97,6 @@ export class AddPostsComponent implements OnInit {
 
   client = new Client();
   account: any;
-
   formvalue: any;
 
   isBlogMode = false;
@@ -113,43 +115,63 @@ export class AddPostsComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   constructor(
     private fb: FormBuilder,
-    // private userService: UsersService,
-    // private http: HttpClient,
     private dialogRef: MatDialogRef<AddPostsComponent>,
     private appwriteService: AppwriteService,
+    @Inject(MAT_DIALOG_DATA) public data: { userData: UserData },
     private markdownService: MarkdownService
   ) {
+    // this.userData = data.userData;
     this.initializeForm();
   }
 
   ngOnInit(): void {
-  //   this.markdownService.renderer.heading = ({ tokens, depth }) => {
-  //     const text = Parser.parseInline(tokens);
-  //     const escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
-  //     return '<h' + depth + '>' +
-  //     '<a name="' + escapedText + '" class="anchor" href="#' + escapedText + '">' +
-  //       '<span class="header-link"></span>' +
-  //     '</a>' + text +
-  //   '</h' + depth + '>'; 
-  //  };
-  
+    if (this.data?.userData) {
+      this.postRecipeForm.patchValue({
+        user_name: this.data.userData.user_name,
+        user_tag: this.data.userData.user_tag,
+        user_bio: this.data.userData.user_bio || '',
+      });
+      this.postBlogForm.patchValue({
+        user_name: this.data.userData.user_name,
+        user_tag: this.data.userData.user_tag,
+        user_bio: this.data.userData.user_bio || '',
+      });
+    }
+    //   this.markdownService.renderer.heading = ({ tokens, depth }) => {
+    //     const text = Parser.parseInline(tokens);
+    //     const escapedText = text.toLowerCase().replace(/[^\w]+/g, '-');
+    //     return '<h' + depth + '>' +
+    //     '<a name="' + escapedText + '" class="anchor" href="#' + escapedText + '">' +
+    //       '<span class="header-link"></span>' +
+    //     '</a>' + text +
+    //   '</h' + depth + '>';
+    //  };
   }
 
   private initializeForm() {
     this.postRecipeForm = this.fb.group({
-      postContent: ['', Validators.required],
+      postContent: ['', [Validators.required, Validators.maxLength(2000)]],
       postImages: [null],
+      user_name: [{ value: '', disabled: true }], // Disabled to prevent editing
+      user_tag: [{ value: '', disabled: true }],
+      user_bio: [{ value: '', disabled: true }],
     });
 
     // this is for blog post
     this.postBlogForm = this.fb.group({
-      blogTitle: [''],
-      blogLink: [''],
+      blogTitle: ['', Validators.required],
+      blogLink: ['', Validators.required],
       summary: [''],
       blogTags: [''],
-      blogThumbnail: [''],
+      blogThumbnail: [null],
+      user_name: [{ value: '', disabled: true }],
+      user_tag: [{ value: '', disabled: true }],
+      user_bio: [{ value: '', disabled: true }],
     });
   }
+
+  postRecipeForm: FormGroup = new FormGroup({});
+  postBlogForm: FormGroup = new FormGroup({});
 
   toggleBlogMode() {
     this.isBlogMode = !this.isBlogMode;
@@ -189,21 +211,21 @@ export class AddPostsComponent implements OnInit {
     this.postBlogForm.get('blogLink')?.updateValueAndValidity();
   }
 
-  postRecipeForm: FormGroup = new FormGroup({
-    postContent: new FormControl('', [
-      Validators.required,
-      Validators.maxLength(2000),
-    ]),
-    postImages: new FormControl(''),
-  });
+  // postRecipeForm: FormGroup = new FormGroup({
+  //   postContent: new FormControl('', [
+  //     Validators.required,
+  //     Validators.maxLength(2000),
+  //   ]),
+  //   postImages: new FormControl(''),
+  // });
 
-  postBlogForm: FormGroup = new FormGroup({
-    blogTitle: new FormControl(''),
-    blogLink: new FormControl('', [Validators.required]),
-    summary: new FormControl(''),
-    blogTags: new FormControl(''),
-    blogThumbnail: new FormControl('', [Validators.required]),
-  });
+  // postBlogForm: FormGroup = new FormGroup({
+  //   blogTitle: new FormControl(''),
+  //   blogLink: new FormControl('', [Validators.required]),
+  //   summary: new FormControl(''),
+  //   blogTags: new FormControl(''),
+  //   blogThumbnail: new FormControl('', [Validators.required]),
+  // });
 
   onSelectedImages(event: Event): void {
     const files = (event.target as HTMLInputElement).files;
@@ -256,23 +278,21 @@ export class AddPostsComponent implements OnInit {
       return alert('You can only upload a maximum of 4 images');
     }
 
-    // const recipeData = {
-    //   post_Content: this.postRecipeForm.get('postContent')?.value,
-    //   post_Content_Pictures: this.postRecipeForm.get('postImages')?.value,
-
-    //   // user_name:
-    //   // user_bio:
-    //   // post_comments:
-    //   // post_likes:
-    //   // post_saves:
-    // };
-
     this.appwriteService
       .uploadFiles(fileArray)
       .then((imageUrls) => {
-        const recipeData = {
+        const recipeData: RecipePost = {
+          id: '', // Appwrite will generate this
+          createdAt: new Date().toISOString(),
+          users: [], // This might need adjustment based on your Appwrite schema
+          user_name: this.postRecipeForm.get('user_name')?.value,
+          user_tag: this.postRecipeForm.get('user_tag')?.value,
+          user_bio: this.postRecipeForm.get('user_bio')?.value || null,
+          post_Content_Pictures: imageUrls,
           post_Content: this.postRecipeForm.get('postContent')?.value,
-          post_Content_Pictures: imageUrls, // Use uploaded image URLs
+          post_likes: 0,
+          post_comments: 0,
+          post_saves: 0,
         };
 
         return this.appwriteService.createPost(recipeData);
@@ -299,8 +319,7 @@ export class AddPostsComponent implements OnInit {
     if (this.postBlogForm.untouched) {
       return alert('Please fill in all the required fields'); // Stop if form is invalid
     }
-    const tagsArray = this.blogTags().map(tag => tag.name);
-
+    const tagsArray = this.blogTags().map((tag) => tag.name);
 
     const thumbnail = (
       document.getElementById('blogThumbnail') as HTMLInputElement
@@ -316,9 +335,10 @@ export class AddPostsComponent implements OnInit {
           blog_post_link: this.postBlogForm.get('blogLink')?.value,
           blog_post_summary: this.postBlogForm.get('summary')?.value,
           blog_post_tags: tagsArray,
-          // blog_post_tags: this.blogTags(),
-          // blog_post_tags: this.postBlogForm.get('blogTags')?.value,
           blog_post_thumbnail: thumbnailUrls,
+          user_name: this.postBlogForm.get('user_name')?.value,
+          user_tag: this.postBlogForm.get('user_tag')?.value,
+          user_bio: this.postBlogForm.get('user_bio')?.value || null,
         };
 
         return this.appwriteService.createBlogPost(blogData);
@@ -413,8 +433,4 @@ export class AddPostsComponent implements OnInit {
     this.thumbnailPreview.splice(index, 1);
     this.fileInput.nativeElement.value = '';
   }
-
-
-
-  
 }

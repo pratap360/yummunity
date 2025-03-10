@@ -7,7 +7,6 @@ import {
 } from '@angular/core';
 // import { SideNavBarComponent } from '../../components/side-nav-bar/side-nav-bar.component';
 import { SidenavComponent } from '../../components/sidenav/sidenav.component';
-
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -21,9 +20,6 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatChipsModule } from '@angular/material/chips';
-import { BlogPostComponent } from '../../components/recipe-posts/blog-post/blog-post.component';
-import { TextPostComponent } from '../../components/recipe-posts/text-post/text-post.component';
-import { WithImgPostComponent } from '../../components/recipe-posts/with-img-post/with-img-post.component';
 import { PostContainerComponent } from '../../components/post-container/post-container.component';
 import { PostActivityComponent } from '../../components/post-activity/post-activity.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
@@ -50,6 +46,10 @@ import { BehaviorSubject } from 'rxjs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { AddPostsComponent } from '../../components/add-posts/add-posts.component';
 import { MatDialog } from '@angular/material/dialog';
+import { TextPostComponent } from './components/text-post/text-post.component';
+import { WithImgPostComponent } from './components/with-img-post/with-img-post.component';
+import { BlogPostComponent } from './components/blog-post/blog-post.component';
+
 @Component({
   selector: 'app-account',
   standalone: true,
@@ -123,6 +123,8 @@ export class AccountComponent implements OnInit {
 
   textPosts: any[] = [];
   withImgPosts: any[] = [];
+
+  readonly dialog = inject(MatDialog);
   constructor(
     private appwriteService: AppwriteService,
     private route: ActivatedRoute
@@ -247,7 +249,6 @@ export class AccountComponent implements OnInit {
     });
   }
 
-  readonly dialog = inject(MatDialog);
   AddPostfromAcc(
     enterAnimationDuration: string,
     exitAnimationDuration: string
@@ -256,6 +257,7 @@ export class AccountComponent implements OnInit {
       width: '800px',
       enterAnimationDuration,
       exitAnimationDuration,
+      data: { userData: this.userData },
     });
   }
 }
