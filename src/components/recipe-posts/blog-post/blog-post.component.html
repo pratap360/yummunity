@@ -1,12 +1,8 @@
 <mat-card class="posts-card" appearance="outlined" *ngFor="let blog of blogPosts">
   <mat-card-header>
-    <img mat-card-avatar class="profile-header-image" [src]="userData?.user_profile_pic" [alt]="userData?.user_tag">
-    <mat-card-title>{{userData?.user_name}}</mat-card-title>
-    <mat-card-subtitle>{{userData?.user_bio}}</mat-card-subtitle>
-    <!-- <img mat-card-avatar class="profile-header-image" [src]="userData ? userData.user_profile_pic : ''"
-      [alt]="userData ? userData.user_name : ''">
-    <mat-card-title>{{userData ? userData.user_name : ''}}</mat-card-title>
-    <mat-card-subtitle>{{userData ? userData.user_bio : ''}}</mat-card-subtitle> -->
+    <img mat-card-avatar class="profile-header-image" [src]="blog?.user_profile_pic" [alt]="blog?.user_tag">
+    <mat-card-title>{{blog?.user_name}}</mat-card-title>
+    <mat-card-subtitle>{{blog?.user_bio}}</mat-card-subtitle>
     <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
       <mat-icon>more_vert</mat-icon>
     </button>
