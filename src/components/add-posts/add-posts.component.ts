@@ -282,18 +282,15 @@ export class AddPostsComponent implements OnInit {
       .uploadFiles(fileArray)
       .then((imageUrls) => {
         const recipeData: RecipePost = {
-          id: '', // Appwrite will generate this
-          createdAt: new Date().toISOString(),
-          users: [], // This might need adjustment based on your Appwrite schema
-          user_name: this.postRecipeForm.get('user_name')?.value,
-          user_tag: this.postRecipeForm.get('user_tag')?.value,
-          user_bio: this.postRecipeForm.get('user_bio')?.value || null,
+          user_name: this.data.userData.user_name,
+          user_tag: this.data.userData.user_tag,
+          user_bio: this.data.userData.user_bio || undefined,
+          user_profile_pic: this.data.userData.user_profile_pic || undefined,
           post_Content_Pictures: imageUrls,
           post_Content: this.postRecipeForm.get('postContent')?.value,
-          post_likes: 0,
-          post_comments: 0,
-          post_saves: 0,
         };
+
+        console.log('Getting full Recipe Data with user data:', recipeData);
 
         return this.appwriteService.createPost(recipeData);
       })
@@ -336,10 +333,12 @@ export class AddPostsComponent implements OnInit {
           blog_post_summary: this.postBlogForm.get('summary')?.value,
           blog_post_tags: tagsArray,
           blog_post_thumbnail: thumbnailUrls,
-          user_name: this.postBlogForm.get('user_name')?.value,
-          user_tag: this.postBlogForm.get('user_tag')?.value,
-          user_bio: this.postBlogForm.get('user_bio')?.value || null,
+          user_name: this.data.userData.user_name,
+          user_tag: this.data.userData.user_tag,
+          user_bio: this.data.userData.user_bio || undefined,
+          user_profile_pic: this.data.userData.user_profile_pic || undefined,
         };
+        console.log('Getting full Blog Data with user data:', blogData);
 
         return this.appwriteService.createBlogPost(blogData);
       })

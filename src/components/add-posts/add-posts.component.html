@@ -1,9 +1,10 @@
 <mat-dialog-content class="add-post">
   <!-- <mat-card class="post-card"> -->
   <span class="post-tittle" *ngIf="!isBlogMode">What Type of food you are cooking?
-    <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank" matTooltip="Markdown Accepted" matTooltipPosition="right">  
+    <a href="https://www.markdownguide.org/cheat-sheet/" target="_blank" matTooltip="Markdown Accepted"
+      matTooltipPosition="right">
       <!-- <mat-icon>info</mat-icon> -->
-       <img src="../../assets/markdown-img-red.png" alt="Markdown-img">
+      <img src="../../assets/markdown-img-red.png" alt="Markdown-img">
     </a>
   </span>
   <!-- <span class="markdown-info" *ngIf="!isBlogMode">
@@ -28,8 +29,8 @@
                 placeholder="what are the health benfits of eating..." rows="2"></textarea>
               @if ( postRecipeForm.controls['postContent'].touched &&
               postRecipeForm.controls['postContent'].errors?.['required']){
-                <mat-hint align="start" color="primary">
-                  <strong>Try to write some Hot Recipes</strong>
+              <mat-hint align="start" color="primary">
+                <strong>Try to write some Hot Recipes</strong>
               </mat-hint>
               }
               <mat-hint align="end">{{post.value.length}} / 2000</mat-hint>
@@ -96,22 +97,24 @@
         <!-- thumbnail/image selection -->
         <!-- Hidden file input -->
         <div class="image-preview-container" [formGroup]="postBlogForm">
-          <input mat-flat-button aria-label="Insert Thumbnail" class="thumbnail-field" id="blogThumbnail" #fileInput type="file" accept="image/*" hidden (change)="onBlogThumbnail($event)" formControlName="blogThumbnail"/>
+          <input mat-flat-button aria-label="Insert Thumbnail" class="thumbnail-field" id="blogThumbnail" #fileInput
+            type="file" accept="image/*" hidden (change)="onBlogThumbnail($event)" formControlName="blogThumbnail" />
           <!-- Button that opens the file input -->
-          <button mat-flat-button type="button" class="thumbnail-button" (click)="fileInput.click()" [hidden]="thumbnailPreview.length > 0" >
+          <button mat-flat-button type="button" class="thumbnail-button" (click)="fileInput.click()"
+            [hidden]="thumbnailPreview.length > 0">
             <!--or this can be implemeted [disabled]="thumbnailPreview.length > 0" -->
             <mat-icon>image</mat-icon>Add Images
           </button>
           <div *ngIf="thumbnailPreview.length" class="thumbnail-preview">
             <div class="preview-container">
-            <img [src]="thumbnailPreview[0]" alt="Thumbnail preview"
-              style="max-width: 430px; height: auto; margin: 10px 0;" />
-            <div class="preview-actions">
-              <button mat-icon-button (click)="removeBlogThumbnail(0)" aria-label="Remove image" class="close-button">
-                <mat-icon>close</mat-icon>
-              </button>
+              <img [src]="thumbnailPreview[0]" alt="Thumbnail preview"
+                style="max-width: 430px; height: auto; margin: 10px 0;" />
+              <div class="preview-actions">
+                <button mat-icon-button (click)="removeBlogThumbnail(0)" aria-label="Remove image" class="close-button">
+                  <mat-icon>close</mat-icon>
+                </button>
+              </div>
             </div>
-          </div>
           </div>
         </div>
 
@@ -177,5 +180,6 @@
   <button *ngIf="isBlogMode" mat-button color="primary" class="post-button" (click)="postBlog()">Post Blog</button>
 </mat-dialog-actions>
 
-
-<!-- {{postRecipeForm.value | json}} -->
+<!-- 
+{{postRecipeForm.value | json}}
+{{postBlogForm.value | json}} -->

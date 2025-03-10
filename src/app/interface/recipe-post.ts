@@ -1,15 +1,15 @@
 export interface RecipePost {
   // documentId: string;
-  id: string;
+  id?: string;
   createdAt?: string;
-  users: any[];
+  users?: any[];
   user_name: string | null;
   user_bio?: string | null;
-  user_tag: string | null;
-  user_profile_pic?: string;
+  user_tag?: string | null;
+  user_profile_pic?: string | null;
   post_Content_Pictures: any[];
   post_Content: string;
-  post_likes: number;
+  post_likes?: number;
   post_comments?: number;
-  post_saves: number;
+  post_saves?: number;
 }
