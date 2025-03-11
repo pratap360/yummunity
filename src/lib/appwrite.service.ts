@@ -270,6 +270,33 @@ export class AppwriteService {
     );
   }
 
+  async getCurrentUserId(): Promise<string | null> {
+    try {
+      const session = await this.account.get();
+      return session.$id;
+    } catch (error) {
+      console.error('User not logged in');
+      return null;
+    }
+  }
+
+  // async updateLikes(postId: string, likes: number, likedBy: string[]) {
+  async updateLikes(postId: string, likes: number) {
+    try {
+      await this.database.updateDocument(
+        environment.appwrite_DatabaseID,
+        environment.post_CollectionID,
+        postId,
+        {
+          likes: likes,
+          // likedBy: likedBy
+        }
+      );
+    } catch (error) {
+      console.error('Error updating likes:', error);
+    }
+  }
+
   getUserData(userId: string): Observable<UserData> {
     return from(
       this.database.getDocument(

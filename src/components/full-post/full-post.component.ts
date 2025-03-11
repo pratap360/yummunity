@@ -2,6 +2,7 @@ import { FullpostService } from './../../app/services/appwrite/fullpost/fullpost
 import {
   Component,
   inject,
+  Input,
   OnDestroy,
   OnInit,
   signal,
@@ -85,8 +86,9 @@ export class FullPostComponent implements OnInit, OnDestroy {
   fullpostId!: string;
   isLoading = true;
   isError = false;
-
-  post: RecipePost | null = null; // To store post data
+  post: any = null;
+  // post: RecipePost | null = null; // To store post data
+  @Input() postId: string | null = null;
   private postSubscription: Subscription | null = null;
   private routeSubscription: Subscription | null = null;
   constructor(
@@ -96,21 +98,42 @@ export class FullPostComponent implements OnInit, OnDestroy {
     private FullpostService: FullpostService
   ) {}
 
-  ngOnInit(): void {
-    const navigationPost = this.FullpostService.getCurrentPost();
+  // ngOnInit(): void {
+  //   const navigationPost = this.FullpostService.getCurrentPost();
 
-    if (navigationPost) {
-      this.post = navigationPost;
-      return;
+  //   if (navigationPost) {
+  //     this.post = navigationPost;
+  //     return;
+  //   }
+
+  //   this.routeSubscription = this.route.paramMap.subscribe((params) => {
+  //     const postId = params.get('postId');
+
+  //     if (postId) {
+  //       this.fetchPostDetials(postId);
+  //     }
+  //   });
+  // }
+
+  // ngOnInit() {
+  //   // Get the post ID from the route parameters
+  //   this.postId = this.route.snapshot.paramMap.get('id');
+
+  //   if (!this.postId) {
+  //     console.error('Error: Post ID is missing');
+  //   } else {
+  //     console.log('FullPostComponent loaded with postId:', this.postId);
+  //   }
+  // }
+
+  ngOnInit() {
+    this.post = this.FullpostService.getPost(); // Retrieve post data from service
+
+    if (!this.post) {
+      console.error('Error: No post data found!');
+    } else {
+      console.log('FullPostComponent Loaded with Post:', this.post);
     }
-
-    this.routeSubscription = this.route.paramMap.subscribe((params) => {
-      const postId = params.get('postId');
-
-      if (postId) {
-        this.fetchPostDetials(postId);
-      }
-    });
   }
 
   fetchPostDetials(postId: string) {
@@ -125,7 +148,7 @@ export class FullPostComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.FullpostService.clearCurrentPost();
+    // this.FullpostService.clearCurrentPost();
 
     if (this.postSubscription) {
       this.postSubscription.unsubscribe();

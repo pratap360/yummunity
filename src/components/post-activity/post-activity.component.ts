@@ -1,3 +1,4 @@
+import { AppwriteService } from './../../lib/appwrite.service';
 import { FullpostService } from './../../app/services/appwrite/fullpost/fullpost.service';
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
@@ -43,10 +44,14 @@ export class PostActivityComponent {
   newComment = '';
 
   comments: string[] = [];
+
+  userId: string = '';
+  hasliked: boolean = false;
   constructor(
     public dialog: MatDialog,
     private router: Router,
-    private FullpostService: FullpostService
+    private FullpostService: FullpostService,
+    private AppwriteService: AppwriteService
   ) {}
 
   // ngOnChanges(changes: SimpleChanges) {
@@ -58,6 +63,11 @@ export class PostActivityComponent {
   // }
 
   ngOnInit(): void {
+    this.AppwriteService.getCurrentUserId().then((userId) => {
+      this.userId = userId || '';
+      // this.hasLiked = this.post.likedBy?.includes(this.userId) || false;
+    }); // Fetch logged-in user ID
+
     const comments = JSON.parse(localStorage.getItem('comments_1') || '[]');
     this.comments_counter = comments.length;
 
@@ -68,6 +78,37 @@ export class PostActivityComponent {
       console.error('Post is undefined in PostActivityComponent');
     }
   }
+
+  async toggleLike() {
+    if (!this.userId) {
+      alert('You must be logged in to like posts!');
+      return;
+    }
+    let updatedLikes = this.post.post_likes || 0;
+    // let updatedLikedBy = [...(this.post.likedBy || [])];
+
+    if (this.hasliked) {
+      // User already liked → Remove like
+      updatedLikes -= 1;
+      // updatedLikedBy = updatedLikedBy.filter(id => id !== this.userId);
+    } else {
+      // User has not liked → Add like
+      updatedLikes += 1;
+      // updatedLikedBy.push(this.userId);
+    }
+
+    // Update in UI
+    this.post.post_likes = updatedLikes;
+    // this.hasLiked = !this.hasLiked;
+
+    // Send to Appwrite Database
+    if (this.post.id) {
+      await this.AppwriteService.updateLikes(this.post.id, updatedLikes);
+    } else {
+      console.error('Post ID is undefined');
+    }
+  }
+
   openCommentModal(): void {
     const dialogRef = this.dialog.open(CommentsComponent, {
       width: '500px', // Set the modal width
@@ -94,11 +135,11 @@ export class PostActivityComponent {
   //   this.router.navigate([`/user/${userTag}/${postId}`]);
   // }
 
-  navigateToFullPost() {
-    if (this.post) {
-      this.FullpostService.navigateToFullPost(this.post);
-    }
-  }
+  // navigateToFullPost() {
+  //   if (this.post) {
+  //     this.FullpostService.navigateToFullPost(this.post);
+  //   }
+  // }
 
   get commentCount(): number {
     return this.comments.length;
