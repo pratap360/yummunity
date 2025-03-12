@@ -386,4 +386,79 @@ export class AppwriteService {
       )
     ) as Observable<RecipePost>;
   }
+
+  getSavedPosts(userId: string, postId: string): Observable<any> {
+    return from(
+      this.database.listDocuments(
+        environment.appwrite_DatabaseID,
+        environment.savespost_CollectionID,
+        [Query.equal('user_id', userId), Query.equal('post_id', postId)]
+      )
+    ).pipe(
+      map((response: any) => {
+        return response.documents;
+      })
+    ) as Observable<any>;
+  }
+
+  savePost(
+    userId: string,
+    postId: string,
+    postType: string = 'text'
+  ): Observable<any> {
+    const saveData = {
+      user_id: userId,
+      post_id: postId,
+      post_type: postType,
+      // saved_date: new Date().toISOString()
+    };
+    return this.database.createDocument(
+      environment.appwrite_DatabaseID,
+      environment.savespost_CollectionID,
+      ID.unique(),
+      saveData
+    );
+  }
+
+  async removeSavedPost(userId: string, postId: string): Promise<void> {
+    try {
+      // First get the saved post document
+      const response = await this.database.listDocuments(
+        environment.appwrite_DatabaseID,
+        environment.savespost_CollectionID,
+        [Query.equal('user_id', userId), Query.equal('post_id', postId)]
+      );
+
+      const documents = response.documents;
+      if (documents.length > 0) {
+        const documentId = documents[0].$id;
+        await this.database.deleteDocument(
+          environment.appwrite_DatabaseID,
+          environment.savespost_CollectionID,
+          documentId
+        );
+      }
+    } catch (error) {
+      console.error('Error removing saved post:', error);
+    }
+  }
+
+  // async removeSavedPost(userId: string, postId: string) {
+  //   const docs = await this.getSavedPosts(userId, postId).toPromise();
+  //   if (docs.documents.length) {
+  //     return await this.database.deleteDocument(
+  //       environment.appwrite_DatabaseID,
+  //       environment.savespost_CollectionID,
+  //       docs[0].$id
+  //     );
+  //   }
+  // }
+
+  async getUserSavedPosts(userId: string) {
+    return await this.database.listDocuments(
+      environment.appwrite_DatabaseID,
+      environment.savespost_CollectionID,
+      [Query.equal('user_id', userId)]
+    );
+  }
 }

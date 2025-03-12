@@ -101,12 +101,53 @@
         <mat-icon class="profile-tab-icon">bookmarks</mat-icon>
         <p class="tab-grp-tittle">Saves</p>
       </ng-template>
+
       <div class="card-content-wrapper">
-        <div>
-          <mat-spinner *ngIf="isLoading | async"></mat-spinner>
-          <div class="no-post" *ngIf="!isLoading && posts.length === 0">Not Saves Yet</div>
+        <div *ngIf="isLoading | async; else savedPostsTemplate">
+          <mat-spinner></mat-spinner>
         </div>
-        <app-text-post></app-text-post>
+        <!-- <div>
+          <mat-spinner *ngIf="isLoading | async"></mat-spinner>
+          <div class="no-post" *ngIf="!isLoading && savedPost.length === 0">
+            <span>No saved posts yet...</span>
+          </div>
+        </div> -->
+
+        <ng-template #savedPostsTemplate>
+          <div *ngIf="savedPost && savedPost.length > 0; else noSaved">
+            <ng-container *ngFor="let post of savedPost">
+              <!-- For text posts -->
+              <app-text-post *ngIf="post.post_type === 'text'" [posts]="[getPostById(post.post_id, 'text')]"
+                [userData]="userData">
+              </app-text-post>
+
+              <!-- For image posts -->
+              <app-with-img-post *ngIf="post.post_type === 'image'" [posts]="[getPostById(post.post_id, 'image')]"
+                [userData]="userData">
+              </app-with-img-post>
+
+              <!-- For blog posts -->
+              <app-blog-post *ngIf="post.post_type === 'blog'" [blogPosts]="[getPostById(post.post_id, 'blog')]"
+                [userData]="userData">
+              </app-blog-post>
+              <!-- <app-text-post *ngIf="post.post_type  === 'text'" [posts]="textPosts"></app-text-post>
+              <app-with-img-post *ngIf="post.type === 'image'" [posts]="withImgPosts"></app-with-img-post>
+              <app-blog-post *ngIf="post.type === 'blog'" [blogPosts]="blogPosts"></app-blog-post> -->
+            </ng-container>
+          </div>
+        </ng-template>
+
+        <ng-template #noSaved>
+          <div class="no-post">
+            <span>No saved posts yet... <br>
+              use post Save Button</span>
+            <button mat-raised-button disabled>
+              <mat-icon>bookmark_added</mat-icon>
+              <span>Saved</span>
+            </button>
+          </div>
+        </ng-template>
+
       </div>
     </mat-tab>
   </mat-tab-group>

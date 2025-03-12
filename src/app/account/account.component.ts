@@ -49,6 +49,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TextPostComponent } from './components/text-post/text-post.component';
 import { WithImgPostComponent } from './components/with-img-post/with-img-post.component';
 import { BlogPostComponent } from './components/blog-post/blog-post.component';
+import { error } from 'console';
 
 @Component({
   selector: 'app-account',
@@ -123,6 +124,8 @@ export class AccountComponent implements OnInit {
 
   textPosts: any[] = [];
   withImgPosts: any[] = [];
+  savedPost: any[] = [];
+  userId: string = '';
 
   readonly dialog = inject(MatDialog);
   constructor(
@@ -159,6 +162,7 @@ export class AccountComponent implements OnInit {
 
         this.allPostsData();
         this.fetchBlogPosts();
+        this.getSavedPosts();
 
         this.isLoading.next(false);
       },
@@ -249,6 +253,65 @@ export class AccountComponent implements OnInit {
     });
   }
 
+  getPostById(postId: string, type: string): any {
+    // Find the post in the appropriate array based on type
+    if (type === 'text') {
+      return this.textPosts.find((post) => post.$id === postId) || {};
+    } else if (type === 'image') {
+      return this.withImgPosts.find((post) => post.$id === postId) || {};
+    } else if (type === 'blog') {
+      return this.blogPosts.find((post) => post.id === postId) || {};
+    }
+    return {};
+  }
+
+  // async getSavedPosts() {
+  //   const saves = await this.appwriteService.getUserSavedPosts(
+  //     this.profileUserTag
+  //   );
+  //   this.savedPost = saves.documents;
+  //   console.log('Saved Posts:', this.savedPost);
+  // }
+  getSavedPosts() {
+    this.isLoading.next(true);
+    this.appwriteService
+      .getUserSavedPosts(this.profileUserTag)
+      .then((response) => {
+        this.savedPost = response.documents;
+        if (this.savedPost) {
+          console.log('Saved Posts:', this.savedPost);
+          this.isLoading.next(false);
+          // Fetch the full post data for each saved post
+          if (this.savedPost && this.savedPost.length > 0) {
+            // Make sure we have all posts loaded first
+            this.fetchAllPosts();
+          }
+        }
+      })
+      .catch((error: any) => {
+        this.isLoading.next(false);
+        console.error('Error fetching saved posts:', error);
+        this.account_snackBar.open(
+          'Failed to load saved posts. Please try again later.',
+          'OK',
+          {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration: this.durationInSeconds * 1000,
+          }
+        );
+      });
+  }
+
+  fetchAllPosts() {
+    if (this.textPosts.length === 0 && this.withImgPosts.length === 0) {
+      this.allPostsData();
+    }
+
+    if (this.blogPosts.length === 0) {
+      this.fetchBlogPosts();
+    }
+  }
   AddPostfromAcc(
     enterAnimationDuration: string,
     exitAnimationDuration: string
