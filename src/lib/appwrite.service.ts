@@ -13,7 +13,7 @@ import {
 } from 'appwrite';
 import { environment } from '../environments/environment';
 import { from, Observable, of, timer } from 'rxjs';
-import { switchMap, map } from 'rxjs/operators';
+import { switchMap, map, catchError } from 'rxjs/operators';
 import { UserData } from '../app/interface/user-data';
 import { faThemeisle } from '@fortawesome/free-brands-svg-icons';
 import { RecipePost } from '../app/interface/recipe-post';
@@ -200,6 +200,207 @@ export class AppwriteService {
       ) as Promise<{ documents: Array<any> }>
     );
   }
+
+  // ! save post api logic is here
+  // * 👇 the below method return all the post which is created by the user it working but not correctly
+  getUserSavedPosts(user_tag: string): Observable<{ documents: Array<any> }> {
+    return from(
+      this.database.listDocuments(
+        environment.appwrite_DatabaseID,
+        environment.post_CollectionID,
+        [Query.orderDesc('$createdAt'), Query.search('post_whoSaved', user_tag)]
+      ) as Promise<{ documents: Array<any> }>
+    );
+  }
+
+  // toogleSavePost(post: any, user_tag: string): Observable<any> {
+  //   const postId = post.id;
+  //   const isSaved = (post.post_whoSaved || []).includes(user_tag);
+  //   let updatedSavedArray = [...(post.post_whoSaved || [])];
+  //   let newSaveCount = post.post_saves || 0;
+
+  //   if (isSaved) {
+  //     updatedSavedArray = updatedSavedArray.filter((tag) => tag !== user_tag);
+  //     newSaveCount--;
+  //   } else {
+  //     updatedSavedArray.push(user_tag);
+  //     newSaveCount += 1;
+  //   }
+
+  //   return from(
+  //     this.database.updateDocument(
+  //       environment.appwrite_DatabaseID,
+  //       environment.post_CollectionID,
+  //       postId,
+  //       {
+  //         post_whoSaved: updatedSavedArray,
+  //         post_saves: newSaveCount,
+  //       }
+  //     )
+  //   );
+  // }
+
+  toogleSavePost(post: any, user_tag: string): Observable<any> {
+    if (!post || (!post.id && !post.$id)) {
+      console.error('Post is missing ID:', post);
+      return of(null);
+    }
+
+    const postId = post.id || post.$id;
+    const isBlogPost = post.blog_post_title !== undefined;
+    const collectionId = isBlogPost
+      ? environment.blogpost_CollectionID
+      : environment.post_CollectionID;
+
+    // Determine which fields to use based on post type
+    const whoSavedField = isBlogPost ? 'blog_post_whoSaved' : 'post_whoSaved';
+    const savesField = isBlogPost ? 'blog_post_saves' : 'post_saves';
+
+    // Get existing saved array and count
+    const savedArray = post[whoSavedField] || [];
+    const isSaved = savedArray.includes(user_tag);
+    let updatedSavedArray = [...savedArray];
+    let newSaveCount = post[savesField] || 0;
+
+    // Update saved array
+    if (isSaved) {
+      updatedSavedArray = updatedSavedArray.filter((tag) => tag !== user_tag);
+      newSaveCount = Math.max(0, newSaveCount - 1);
+    } else {
+      updatedSavedArray.push(user_tag);
+      newSaveCount += 1;
+    }
+
+    // Create update object
+    const updateData: any = {};
+    updateData[whoSavedField] = updatedSavedArray;
+    updateData[savesField] = newSaveCount;
+
+    // Perform update
+    return from(
+      this.database.updateDocument(
+        environment.appwrite_DatabaseID,
+        collectionId,
+        postId,
+        updateData
+      )
+    );
+  }
+
+  isPostSavedByUser(post: any, user_tag: string): boolean {
+    // return (post.post_whoSaved || []).includes(user_tag);
+    if (!post) return false;
+
+    // Check if it's a blog post or a recipe post
+    if (post.blog_post_title !== undefined) {
+      return (post.blog_post_whoSaved || []).includes(user_tag);
+    } else {
+      return (post.post_whoSaved || []).includes(user_tag);
+    }
+  }
+
+  // getUserSavedPosts(user_tag: string): Observable<any> {
+  //   // Get saved recipe posts
+  //   const savedRecipePosts = from(
+  //     this.database
+  //       .listDocuments(
+  //         environment.appwrite_DatabaseID,
+  //         environment.post_CollectionID,
+  //         [
+  //           Query.orderDesc('$createdAt'),
+  //           Query.contains('post_whoSaved', [user_tag]),
+  //         ]
+  //       )
+  //       .pipe(
+  //         catchError((error) => {
+  //           console.error('Error fetching saved recipes:', error);
+  //           return of({ documents: [] });
+  //         })
+  //       )
+  //   );
+
+  //   // Get saved blog posts
+  //   const savedBlogPosts = from(
+  //     this.database
+  //       .listDocuments(
+  //         environment.appwrite_DatabaseID,
+  //         environment.blogpost_CollectionID,
+  //         [
+  //           Query.orderDesc('$createdAt'),
+  //           Query.contains('blog_post_whoSaved', [user_tag]),
+  //         ]
+  //       )
+  //       .pipe(
+  //         catchError((error) => {
+  //           console.error('Error fetching saved recipes:', error);
+  //           return of({ documents: [] });
+  //         })
+  //       )
+  //   );
+
+  //   // Combine both results
+  //   return savedRecipePosts.pipe(
+  //     switchMap((recipePosts: any) => {
+  //       return savedBlogPosts.pipe(
+  //         map((blogPosts: any) => {
+  //           const combinedResults = {
+  //             documents: [...recipePosts.documents, ...blogPosts.documents],
+  //           };
+  //           return combinedResults;
+  //         })
+  //       );
+  //     })
+  //   );
+  // }
+
+  // getUserSavedPosts(user_tag: string): Observable<any> {
+  //   // const savedRecipesPost = from(
+  //   return from(
+  //     this.database
+  //       .listDocuments(
+  //         environment.appwrite_DatabaseID,
+  //         environment.post_CollectionID,
+  //         [
+  //           Query.orderDesc('$createdAt'),
+  //           // Query.equal('post_whoSaved', [user_tag]),
+  //           Query.contains('post_whoSaved', [user_tag]),
+  //         ]
+  //       )
+  //       .pipe(
+  //         catchError((error) => {
+  //           console.error('Error fetching saved recipes:', error);
+  //           return of({ documents: [] });
+  //         })
+  //       )
+  //   );
+
+  //   // const savedBlogsPost = from(
+  //   //   this.database.listDocuments(
+  //   //     environment.appwrite_DatabaseID,
+  //   //     environment.blogpost_CollectionID,
+  //   //     [
+  //   //       Query.orderDesc('$createdAt'),
+  //   //       Query.search('blog_post_whoSaved', user_tag),
+  //   //     ]
+  //   //   ).pipe(
+  //   //     catchError(error => {
+  //   //       console.error('Error fetching saved blogs Post:', error);
+  //   //       return of({ documents: [] });
+  //   //     })
+  //   //   )
+  //   // );
+
+  //   // return savedRecipesPost.pipe(
+  //   //   switchMap((recipePosts: any) => {
+  //   //     return savedBlogsPost.pipe(
+  //   //       map((blogPosts: any) => {
+  //   //         return [...recipePosts.documents, ...blogPosts.documents];
+  //   //       })
+  //   //     );
+  //   //   })
+  //   // );
+  // }
+
   // async getUserPosts(userId: string) {
   //   try {
   //     const response = await this.database.listDocuments(
@@ -454,7 +655,7 @@ export class AppwriteService {
   //   }
   // }
 
-  async getUserSavedPosts(userId: string) {
+  async getUserSavedPost(userId: string) {
     return await this.database.listDocuments(
       environment.appwrite_DatabaseID,
       environment.savespost_CollectionID,

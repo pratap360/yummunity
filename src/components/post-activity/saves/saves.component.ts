@@ -21,6 +21,7 @@ export class SavesComponent implements OnInit {
   @Input() saved: boolean = false; // Change to input
   @Input() userId: string = '';
   @Input() postId!: string;
+  @Input() post: any;
 
   durationInSeconds = 5;
   private router = inject(Router);
@@ -37,8 +38,19 @@ export class SavesComponent implements OnInit {
       // Get current user ID if not provided
       this.AppwriteService.getCurrentUser().subscribe((userData) => {
         this.userId = userData.user_tag;
-        this.checkIfSaved();
+        // this.checkIfSaved();
+        this.checkSavedStatus();
       });
+    }
+  }
+
+  checkSavedStatus(): void {
+    if (this.post && this.userId) {
+      this.saved = this.AppwriteService.isPostSavedByUser(
+        this.post,
+        this.userId
+      );
+      // this.saves = this.saved ? 1 : 0;
     }
   }
 
@@ -55,8 +67,9 @@ export class SavesComponent implements OnInit {
     );
   }
 
-  toggleSave(): void {
+  toggleSave(post: any): void {
     if (!this.userId) {
+      console.log('checking with the user id', this.userId);
       this._snackBar.open('Please login to save posts', 'OK', {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
@@ -64,42 +77,61 @@ export class SavesComponent implements OnInit {
       });
       return;
     }
+    if (!post || (!post.id && !post.$id)) {
+      console.error('Post is undefined or missing ID:', post);
+      // return;
+    } else {
+      console.log('this is the post from line 83', post, post.id);
+    }
 
-    if (!this.saved) {
-      // Save the post
-      this.AppwriteService.savePost(this.userId, this.postId).subscribe(() => {
-        this.saved = true;
-        this.saves = 1;
+    const postWithId = {
+      ...post,
+      id: post.id || post.$id,
+    };
 
-        const snackBarRef = this._snackBar.open(
-          'Saved to your profile !!',
-          'SEE PROFILE',
-          {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-            duration: this.durationInSeconds * 1000,
-          }
+    this.AppwriteService.toogleSavePost(postWithId, this.userId).subscribe({
+      next: (updatedPost) => {
+        this.post = updatedPost;
+        this.saved = this.AppwriteService.isPostSavedByUser(
+          updatedPost,
+          this.userId
         );
 
-        snackBarRef.onAction().subscribe(() => {
-          this.router.navigate(['/account']);
-        });
-      });
-    } else {
-      // Remove the saved post
-      this.AppwriteService.removeSavedPost(this.userId, this.postId).then(
-        () => {
-          this.saved = false;
-          this.saves = 0;
+        if (this.saved) {
+          const snackBarRef = this._snackBar.open(
+            'Saved to your profile !!',
+            'SEE PROFILE',
+            {
+              horizontalPosition: this.horizontalPosition,
+              verticalPosition: this.verticalPosition,
+              duration: this.durationInSeconds * 1000,
+            }
+          );
 
+          snackBarRef.onAction().subscribe(() => {
+            this.router.navigate(['/account']);
+          });
+        } else {
           this._snackBar.open('Removed from your profile !!', 'OK', {
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
             duration: this.durationInSeconds * 1000,
           });
         }
-      );
-    }
+      },
+      error: (error) => {
+        console.error('Error toggling save status:', error);
+        this._snackBar.open(
+          'Error updating save status. Please try again.',
+          'OK',
+          {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration: this.durationInSeconds * 1000,
+          }
+        );
+      },
+    });
   }
 
   // toggleSave(): void {

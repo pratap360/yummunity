@@ -12,4 +12,5 @@ export interface RecipePost {
   post_likes?: number;
   post_comments?: number;
   post_saves?: number;
+  post_whoSaved?: string[];
 }

@@ -72,8 +72,8 @@ export class PostActivityComponent {
     this.comments_counter = comments.length;
 
     if (this.post) {
-      console.log('Received Post in PostActivityComponent:', this.post);
-      console.log('Post ID:', this.post.id);
+      // console.log('Received Post in PostActivityComponent:', this.post);
+      // console.log('Post ID:', this.post.id);
     } else {
       console.error('Post is undefined in PostActivityComponent');
     }
