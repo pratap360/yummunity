@@ -212,7 +212,20 @@ export class AppwriteService {
       ) as Promise<{ documents: Array<any> }>
     );
   }
-
+  getUserBlogSavedPosts(
+    user_tag: string
+  ): Observable<{ documents: Array<any> }> {
+    return from(
+      this.database.listDocuments(
+        environment.appwrite_DatabaseID,
+        environment.blogpost_CollectionID,
+        [
+          Query.orderDesc('$createdAt'),
+          Query.search('blog_post_whoSaved', user_tag),
+        ]
+      ) as Promise<{ documents: Array<any> }>
+    );
+  }
   // toogleSavePost(post: any, user_tag: string): Observable<any> {
   //   const postId = post.id;
   //   const isSaved = (post.post_whoSaved || []).includes(user_tag);
@@ -288,7 +301,6 @@ export class AppwriteService {
   }
 
   isPostSavedByUser(post: any, user_tag: string): boolean {
-    // return (post.post_whoSaved || []).includes(user_tag);
     if (!post) return false;
 
     // Check if it's a blog post or a recipe post

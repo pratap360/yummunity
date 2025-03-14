@@ -114,30 +114,21 @@
         </div> -->
 
         <ng-template #savedPostsTemplate>
-          <div *ngIf="savedPost && savedPost.length > 0; else noSaved">
+          <div *ngIf="savedPost && savedPost.length > 0 || savedBlogPost && savedBlogPost.length > 0; else noSaved">
             <ng-container *ngFor="let post of savedPost">
-              <app-text-post [posts]="textPosts" [userData]="userData"></app-text-post>
-              <app-with-img-post [posts]="withImgPosts" [userData]="userData"></app-with-img-post>
-              <app-blog-post [blogPosts]="blogPosts" [userData]="userData"></app-blog-post>
-
-              <!-- For text posts -->
-              <!-- <app-text-post *ngIf="post.post_type === 'text'" [posts]="[getPostById(post.post_id, 'text')]"
-                [userData]="userData">
-              </app-text-post> -->
-
-              <!-- For image posts -->
-              <!-- <app-with-img-post *ngIf="post.post_type === 'image'" [posts]="[getPostById(post.post_id, 'image')]"
-                [userData]="userData">
-              </app-with-img-post> -->
-
-              <!-- For blog posts -->
-              <!-- <app-blog-post *ngIf="post.post_type === 'blog'" [blogPosts]="[getPostById(post.post_id, 'blog')]"
-                [userData]="userData">
-              </app-blog-post> -->
-              <!-- <app-text-post *ngIf="post.post_type  === 'text'" [posts]="textPosts"></app-text-post>
-              <app-with-img-post *ngIf="post.type === 'image'" [posts]="withImgPosts"></app-with-img-post>
-              <app-blog-post *ngIf="post.type === 'blog'" [blogPosts]="blogPosts"></app-blog-post> -->
+              <!-- {{ post | json }} -->
+              <app-text-post *ngIf="!post.post_Content_Pictures && !post.blog_content" [posts]="[post]"
+                [userData]="userData"></app-text-post>
+              <app-with-img-post *ngIf="post.post_Content_Pictures" [posts]="[post]"
+                [userData]="userData"></app-with-img-post>
             </ng-container>
+            <ng-container *ngFor="let blogpost of savedBlogPost">
+              <!-- {{ blogpost | json }} -->
+              <app-blog-post [blogPosts]="[blogpost]" [userData]="userData"></app-blog-post>
+            </ng-container>
+            <!-- <app-text-post [posts]="textPosts" [userData]="userData"></app-text-post>
+              <app-with-img-post [posts]="withImgPosts" [userData]="userData"></app-with-img-post>
+              <app-blog-post [blogPosts]="blogPosts [userData]="userData"></app-blog-post> -->
           </div>
         </ng-template>
 

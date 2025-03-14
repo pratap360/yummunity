@@ -125,6 +125,7 @@ export class AccountComponent implements OnInit {
   withImgPosts: any[] = [];
 
   savedPost: any[] = [];
+  savedBlogPost: any[] = [];
 
   readonly dialog = inject(MatDialog);
   constructor(
@@ -154,32 +155,28 @@ export class AccountComponent implements OnInit {
     this.appwriteService.getCurrentUser().subscribe({
       next: (data) => {
         this.userData = data;
-        console.log('User Data:', this.userData);
-
+        // console.log('User Data:', this.userData);
         this.profileUserTag = this.userData.user_tag;
-        console.log('Profile User ID:', this.profileUserTag);
-
+        // console.log('Profile User ID:', this.profileUserTag);
         this.allPostsData();
         this.fetchBlogPosts();
         this.getSavedPosts();
-
+        this.getSaveBlogPosts();
         this.isLoading.next(false);
       },
       error: (error) => {
         this.isLoading.next(false);
         console.error('getting error on method loggedInUserData()', error);
-        const snackBarRef = this.account_snackBar.open(
-          'Your Session has been Expired kinldy login again',
-          'OK',
-          {
+        this.account_snackBar
+          .open('Your Session has been Expired kinldy login again', 'OK', {
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
             duration: this.durationInSeconds * 1000,
-          }
-        );
-        snackBarRef.onAction().subscribe(() => {
-          this.router.navigate(['/login']);
-        });
+          })
+          .onAction()
+          .subscribe(() => {
+            this.router.navigate(['/login']);
+          });
       },
     });
   }
@@ -217,19 +214,6 @@ export class AccountComponent implements OnInit {
       },
     });
   }
-
-  //   fetchBlogPosts(): void {
-  //     this.appwriteService.getBlogPosts().subscribe({
-  //       next: (data) => {
-  //         this.blogPosts = data.documents;
-  //         console.log('All Blog Posts:', this.blogPosts);
-  //       },
-  //       error: (error) => {
-  //         console.error('Error:', error);
-  //       },
-  //     });
-  //   }
-  // }
 
   fetchBlogPosts(): void {
     this.appwriteService.getUserBlogPosts(this.profileUserTag).subscribe({
@@ -277,66 +261,27 @@ export class AccountComponent implements OnInit {
     });
   }
 
-  // getPostById(postId: string, type: string): any {
-  //   // Find the post in the appropriate array based on type
-  //   if (type === 'text') {
-  //     return this.textPosts.find((post) => post.$id === postId) || {};
-  //   } else if (type === 'image') {
-  //     return this.withImgPosts.find((post) => post.$id === postId) || {};
-  //   } else if (type === 'blog') {
-  //     return this.blogPosts.find((post) => post.id === postId) || {};
-  //   }
-  //   return {};
-  // }
+  getSaveBlogPosts(): void {
+    this.isLoading.next(true);
+    this.appwriteService.getUserBlogSavedPosts(this.profileUserTag).subscribe({
+      next: (data) => {
+        console.log('Raw data from getSaveBlogPosts:', data); // Log the full data
+        this.savedBlogPost = data.documents || []; // Add fallback to empty array
+        console.log('Saved Blog Posts:', this.savedBlogPost);
+        this.isLoading.next(false);
+      },
+      error: (error) => {
+        this.isLoading.next(false);
+        console.error('Error fetching saved posts:', error);
+        this.account_snackBar.open(
+          'Failed to load saved posts. Please try again later.',
+          'OK',
+          {}
+        );
+      },
+    });
+  }
 
-  // async getSavedPosts() {
-  //   const saves = await this.appwriteService.getUserSavedPosts(
-  //     this.profileUserTag
-  //   );
-  //   this.savedPost = saves.documents;
-  //   console.log('Saved Posts:', this.savedPost);
-  // }
-
-  // getSavedPosts() {
-  //   this.isLoading.next(true);
-  //   this.appwriteService
-  //     .getUserSavedPosts(this.profileUserTag)
-  //     .then((response) => {
-  //       this.savedPost = response.documents;
-  //       if (this.savedPost) {
-  //         console.log('Saved Posts:', this.savedPost);
-  //         this.isLoading.next(false);
-  //         // Fetch the full post data for each saved post
-  //         if (this.savedPost && this.savedPost.length > 0) {
-  //           // Make sure we have all posts loaded first
-  //           this.fetchAllPosts();
-  //         }
-  //       }
-  //     })
-  //     .catch((error: any) => {
-  //       this.isLoading.next(false);
-  //       console.error('Error fetching saved posts:', error);
-  //       this.account_snackBar.open(
-  //         'Failed to load saved posts. Please try again later.',
-  //         'OK',
-  //         {
-  //           horizontalPosition: this.horizontalPosition,
-  //           verticalPosition: this.verticalPosition,
-  //           duration: this.durationInSeconds * 1000,
-  //         }
-  //       );
-  //     });
-  // }
-
-  // fetchAllPosts() {
-  //   if (this.textPosts.length === 0 && this.withImgPosts.length === 0) {
-  //     this.allPostsData();
-  //   }
-
-  //   if (this.blogPosts.length === 0) {
-  //     this.fetchBlogPosts();
-  //   }
-  // }
   AddPostfromAcc(
     enterAnimationDuration: string,
     exitAnimationDuration: string

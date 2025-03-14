@@ -35,39 +35,46 @@ export class SavesComponent implements OnInit {
     if (this.userId) {
       this.checkIfSaved();
     } else {
-      // Get current user ID if not provided
       this.AppwriteService.getCurrentUser().subscribe((userData) => {
         this.userId = userData.user_tag;
-        // this.checkIfSaved();
-        this.checkSavedStatus();
+        this.checkIfSaved();
       });
     }
   }
 
-  checkSavedStatus(): void {
+  checkIfSaved(): void {
     if (this.post && this.userId) {
       this.saved = this.AppwriteService.isPostSavedByUser(
         this.post,
         this.userId
       );
-      // this.saves = this.saved ? 1 : 0;
     }
   }
 
-  checkIfSaved() {
-    if (!this.userId || !this.postId) return;
-    this.AppwriteService.getSavedPosts(this.userId, this.postId).subscribe(
-      (response) => {
-        this.saved = response.length > 0;
-        this.saves = this.saved ? this.saves + 1 : this.saves - 1;
-      },
-      (error) => {
-        console.error('Error checking if saved:', error);
-      }
-    );
-  }
+  // checkSavedStatus(): void {
+  //   if (this.post && this.userId) {
+  //     this.saved = this.AppwriteService.isPostSavedByUser(
+  //       this.post,
+  //       this.userId
+  //     );
+  //     // this.saves = this.saved ? 1 : 0;
+  //   }
+  // }
 
-  toggleSave(post: any): void {
+  // checkIfSaved() {
+  //   if (!this.userId || !this.postId) return;
+  //   this.AppwriteService.getSavedPosts(this.userId, this.postId).subscribe(
+  //     (response) => {
+  //       this.saved = response.length > 0;
+  //       this.saves = this.saved ? this.saves + 1 : this.saves - 1;
+  //     },
+  //     (error) => {
+  //       console.error('Error checking if saved:', error);
+  //     }
+  //   );
+  // }
+
+  toggleSave(): void {
     if (!this.userId) {
       console.log('checking with the user id', this.userId);
       this._snackBar.open('Please login to save posts', 'OK', {
@@ -77,16 +84,21 @@ export class SavesComponent implements OnInit {
       });
       return;
     }
-    if (!post || (!post.id && !post.$id)) {
-      console.error('Post is undefined or missing ID:', post);
-      // return;
-    } else {
-      console.log('this is the post from line 83', post, post.id);
+
+    if (!this.post || (!this.post.id && !this.post.$id)) {
+      console.error('Post is undefined or missing ID:', this.post);
+      return;
     }
+    // if (!post || (!post.id && !post.$id)) {
+    //   console.error('Post is undefined or missing ID:', post);
+    //   // return;
+    // } else {
+    //   console.log('this is the post from line 83', post, post.id);
+    // }
 
     const postWithId = {
-      ...post,
-      id: post.id || post.$id,
+      ...this.post,
+      id: this.post.id || this.post.$id,
     };
 
     this.AppwriteService.toogleSavePost(postWithId, this.userId).subscribe({
@@ -96,6 +108,7 @@ export class SavesComponent implements OnInit {
           updatedPost,
           this.userId
         );
+        this.saves = updatedPost.post_saves || updatedPost.blog_post_saves || 0;
 
         if (this.saved) {
           const snackBarRef = this._snackBar.open(
