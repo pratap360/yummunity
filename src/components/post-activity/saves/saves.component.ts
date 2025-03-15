@@ -76,6 +76,85 @@ export class SavesComponent implements OnInit {
 
   toggleSave(): void {
     if (!this.userId) {
+      console.log('Checking with the user id:', this.userId);
+      this._snackBar.open('Please login to save posts', 'OK', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration: this.durationInSeconds * 1000,
+      });
+      return;
+    }
+
+    if (!this.post || (!this.post.id && !this.post.$id)) {
+      console.error('Post is undefined or missing ID:', this.post);
+      return;
+    }
+
+    const postId = this.post.id || this.post.$id;
+    const previousSavedState = this.saved;
+    const previousSavesCount = this.saves;
+
+    // Optimistically update the UI
+    this.saved = !this.saved;
+    this.saves = this.saved ? this.saves + 1 : this.saves - 1;
+
+    this.AppwriteService.toogleSavePost(
+      { ...this.post, id: postId },
+      this.userId
+    ).subscribe({
+      next: (updatedPost) => {
+        this.post = updatedPost;
+        this.saved = this.AppwriteService.isPostSavedByUser(
+          updatedPost,
+          this.userId
+        );
+        this.saves = updatedPost.post_saves || updatedPost.blog_post_saves || 0;
+
+        if (this.saved) {
+          const snackBarRef = this._snackBar.open(
+            'Saved to your profile !!',
+            'SEE PROFILE',
+            {
+              horizontalPosition: this.horizontalPosition,
+              verticalPosition: this.verticalPosition,
+              duration: this.durationInSeconds * 1000,
+            }
+          );
+
+          snackBarRef.onAction().subscribe(() => {
+            this.router.navigate(['/account']);
+          });
+        } else {
+          this._snackBar.open('Removed from your profile !!', 'OK', {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration: this.durationInSeconds * 1000,
+          });
+        }
+      },
+      error: (error) => {
+        console.error('Error toggling save status:', error);
+
+        // Revert UI changes on error
+        this.saved = previousSavedState;
+        this.saves = previousSavesCount;
+
+        this._snackBar.open(
+          'Error updating save status. Please try again.',
+          'OK',
+          {
+            horizontalPosition: this.horizontalPosition,
+            verticalPosition: this.verticalPosition,
+            duration: this.durationInSeconds * 1000,
+          }
+        );
+      },
+    });
+  }
+
+  // ** proper working method just remove the s form end of the method
+  toggleSaves(): void {
+    if (!this.userId) {
       console.log('checking with the user id', this.userId);
       this._snackBar.open('Please login to save posts', 'OK', {
         horizontalPosition: this.horizontalPosition,

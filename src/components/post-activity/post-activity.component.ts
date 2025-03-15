@@ -47,6 +47,7 @@ export class PostActivityComponent {
 
   userId: string = '';
   hasliked: boolean = false;
+  userData: { user_tag: string } = { user_tag: '' };
   constructor(
     public dialog: MatDialog,
     private router: Router,

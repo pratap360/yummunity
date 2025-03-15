@@ -304,7 +304,7 @@ export class AppwriteService {
     if (!post) return false;
 
     // Check if it's a blog post or a recipe post
-    if (post.blog_post_title !== undefined) {
+    if (post.blog_post_title) {
       return (post.blog_post_whoSaved || []).includes(user_tag);
     } else {
       return (post.post_whoSaved || []).includes(user_tag);

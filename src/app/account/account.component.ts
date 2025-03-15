@@ -236,13 +236,51 @@ export class AccountComponent implements OnInit {
     });
   }
 
+  // ** working good method to get saved posts
+  // getSavedPosts(): void {
+  //   this.isLoading.next(true);
+  //   this.appwriteService.getUserSavedPosts(this.profileUserTag).subscribe({
+  //     next: (data) => {
+  //       console.log('Raw data from getUserSavedPosts:', data); // Log the full data object
+  //       this.savedPost = data.documents || []; // Add fallback to empty array
+  //       console.log('Saved Posts:', this.savedPost);
+  //       this.isLoading.next(false);
+  //     },
+  //     error: (error) => {
+  //       this.isLoading.next(false);
+  //       console.error('Error fetching saved posts:', error);
+  //       this.account_snackBar.open(
+  //         'Failed to load saved posts. Please try again later.',
+  //         'OK',
+  //         {
+  //           horizontalPosition: this.horizontalPosition,
+  //           verticalPosition: this.verticalPosition,
+  //           duration: this.durationInSeconds * 1000,
+  //         }
+  //       );
+  //     },
+  //   });
+  // }
+
   getSavedPosts(): void {
     this.isLoading.next(true);
     this.appwriteService.getUserSavedPosts(this.profileUserTag).subscribe({
       next: (data) => {
         console.log('Raw data from getUserSavedPosts:', data); // Log the full data object
-        this.savedPost = data.documents || []; // Add fallback to empty array
-        console.log('Saved Posts:', this.savedPost);
+
+        // Ensure 'data.documents' is an array, or default to an empty array
+        this.savedPost = (data.documents || []).map((post) => ({
+          ...post,
+          // Use the original author data from the nested users property
+          user_name: post.users?.user_name || post.user_name,
+          user_tag: post.users?.user_tag || post.user_tag,
+          user_profile_pic:
+            post.users?.user_profile_pic || post.user_profile_pic,
+          // Keep additional user properties if needed
+          user_bio: post.users?.user_bio || post.user_bio,
+        }));
+
+        console.log('Mapped Saved Posts:', this.savedPost); // Log the mapped data
         this.isLoading.next(false);
       },
       error: (error) => {
@@ -266,7 +304,17 @@ export class AccountComponent implements OnInit {
     this.appwriteService.getUserBlogSavedPosts(this.profileUserTag).subscribe({
       next: (data) => {
         console.log('Raw data from getSaveBlogPosts:', data); // Log the full data
-        this.savedBlogPost = data.documents || []; // Add fallback to empty array
+        // Map blog posts to preserve author data
+        this.savedBlogPost = (data.documents || []).map((post) => ({
+          ...post,
+          // Use author data from nested users object if available
+          user_name: post.users?.user_name || post.user_name,
+          user_tag: post.users?.user_tag || post.user_tag,
+          user_profile_pic:
+            post.users?.user_profile_pic || post.user_profile_pic,
+          user_bio: post.users?.user_bio || post.user_bio,
+        }));
+        // this.savedBlogPost = data.documents || []; // Add fallback to empty array
         console.log('Saved Blog Posts:', this.savedBlogPost);
         this.isLoading.next(false);
       },

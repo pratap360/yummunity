@@ -1,9 +1,10 @@
 <!-- <button mat-raised-button [color]="saved ? 'warn' : null" (click)="toggleSave()"> -->
 <button mat-raised-button [ngClass]="{'saved': saved}" (click)="toggleSave()">
   <mat-icon>{{saved? 'bookmark_added': 'bookmark'}}</mat-icon>
-  {{ saves }}
+  <!-- {{ saves }} -->
   <!-- {{ post?.post_saves || 0}} -->
   <span>
     {{ saves ? 'Saved' : 'Save' }}
   </span>
+  <!-- <span>{{ saves > 0 ? 'Saved' : 'Save' }}</span> -->
 </button>
