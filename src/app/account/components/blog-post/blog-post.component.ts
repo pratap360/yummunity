@@ -7,7 +7,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { BlogActivityComponent } from '../../../../components/post-activity/blog-activity/blog-activity.component';
+import { BlogActivityComponent } from '../../../../components/blog-activity/blog-activity.component';
 import { SharePostComponent } from '../../../../components/post-activity/share-post/share-post.component';
 import { MatDialog } from '@angular/material/dialog';
 import { BlogPost } from '../../../interface/blog-post';

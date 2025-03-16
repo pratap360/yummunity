@@ -283,16 +283,21 @@ export class AppwriteService {
     );
   }
 
-  isPostSavedByUser(post: any, user_tag: string): boolean {
-    if (!post) return false;
-
-    // Check if it's a blog post or a recipe post
-    if (post.blog_post_title) {
-      return (post.blog_post_whoSaved || []).includes(user_tag);
-    } else {
-      return (post.post_whoSaved || []).includes(user_tag);
-    }
+  isPostSavedByUser(post: any, userId: string): boolean {
+    // Check if the post has savedBy array
+    const savedBy = post.savedBy || post.blog_post_savedBy || [];
+    return savedBy.includes(userId);
   }
+  // isPostSavedByUser(post: any, user_tag: string): boolean {
+  //   if (!post) return false;
+
+  //   // Check if it's a blog post or a recipe post
+  //   if (post.blog_post_title) {
+  //     return (post.blog_post_whoSaved || []).includes(user_tag);
+  //   } else {
+  //     return (post.post_whoSaved || []).includes(user_tag);
+  //   }
+  // }
 
   // getUserSavedPosts(user_tag: string): Observable<any> {
   //   // Get saved recipe posts

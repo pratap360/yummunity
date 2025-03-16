@@ -39,7 +39,6 @@ import { BlogPost } from '../../app/interface/blog-post';
 })
 export class PostActivityComponent {
   @Input() post!: RecipePost;
-  @Input() blogpost!: BlogPost;
   // @Input() post: any;
   comments_counter = 0;
   commentModalOpen = false;

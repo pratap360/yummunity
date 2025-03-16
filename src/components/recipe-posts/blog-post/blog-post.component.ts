@@ -6,7 +6,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
-import { BlogActivityComponent } from '../../post-activity/blog-activity/blog-activity.component';
+import { BlogActivityComponent } from '../../blog-activity/blog-activity.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { SharePostComponent } from '../../post-activity/share-post/share-post.component';
 import { MatDialog } from '@angular/material/dialog';

@@ -52,27 +52,28 @@ export class SavesComponent implements OnInit {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (
-      (changes['post'] && changes['post'].currentValue) ||
-      (changes['blogpost'] && changes['blogpost'].currentValue)
-    ) {
-      const postToCheck = this.post || this.blogpost;
-      if (postToCheck) {
-        console.log('Post received in SavesComponent:', postToCheck);
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (
+  //     (changes['post'] && changes['post'].currentValue) ||
+  //     (changes['blogpost'] && changes['blogpost'].currentValue)
+  //   ) {
+  //     const postToCheck = this.post || this.blogpost;
+  //     if (postToCheck) {
+  //       console.log('Post received in SavesComponent:', postToCheck);
 
-        // Check if ID exists
-        if (postToCheck && !postToCheck.id && !postToCheck.$id) {
-          console.warn('Post has no ID property:', postToCheck);
-        }
-        // Update save status and count
-        this.checkIfSaved();
-      }
-    }
-  }
+  //       // Check if ID exists
+  //       if (postToCheck && !postToCheck.id && !postToCheck.$id) {
+  //         console.warn('Post has no ID property:', postToCheck);
+  //       }
+  //       // Update save status and count
+  //       this.checkIfSaved();
+  //     }
+  //   }
+  // }
   checkIfSaved(): void {
     const postToCheck = this.post || this.blogpost;
     if (postToCheck && this.userId) {
+      console.log('Checking if saved:', postToCheck, 'User ID:', this.userId);
       this.saved = this.AppwriteService.isPostSavedByUser(
         postToCheck,
         this.userId
@@ -87,6 +88,9 @@ export class SavesComponent implements OnInit {
     }
   }
   toggleSave(): void {
+    debugger;
+    console.log('Toggling save for post:', this.post || this.blogpost);
+    console.log('Current user ID:', this.userId);
     // First check if user is logged in
     if (!this.userId) {
       console.log('Checking with the user id:', this.userId);

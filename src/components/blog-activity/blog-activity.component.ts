@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -7,10 +7,11 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { CommentsComponent } from '../comments/comments.component';
-import { LikesComponent } from '../likes/likes.component';
-import { SavesComponent } from '../saves/saves.component';
-
+import { CommentsComponent } from '../post-activity/comments/comments.component';
+import { LikesComponent } from '../post-activity/likes/likes.component';
+import { SavesComponent } from '../post-activity/saves/saves.component';
+import { BlogPost } from '../../app/interface/blog-post';
+import { AppwriteService } from '../../lib/appwrite.service';
 @Component({
   selector: 'app-blog-activity',
   standalone: true,
@@ -35,11 +36,36 @@ export class BlogActivityComponent {
   commentModalOpen = false;
   newComment = '';
 
+  @Input() blogpost!: BlogPost;
+  userId: string = '';
+  userData: { user_tag: string } = { user_tag: '' };
   comments: string[] = [];
-  constructor(public dialog: MatDialog) {}
+  constructor(
+    public dialog: MatDialog,
+    private AppwriteService: AppwriteService
+  ) {}
   ngOnInit(): void {
+    this.AppwriteService.getCurrentUserId().then((userId) => {
+      this.userId = userId || '';
+      this.userData.user_tag = userId || '';
+      this.checkIfSaved();
+    });
+
     const comments = JSON.parse(localStorage.getItem('comments_1') || '[]');
     this.comments_counter = comments.length;
+
+    if (this.blogpost) {
+      console.log('Received Post in Blog Activity Component:', this.blogpost);
+    } else {
+      console.error('Post is undefined in Blog Activity Component');
+    }
+  }
+
+  checkIfSaved(): void {
+    if (this.blogpost && this.userId) {
+      // Check if the post is saved by the current user
+      this.AppwriteService.isPostSavedByUser(this.blogpost, this.userId);
+    }
   }
   openCommentModal(): void {
     const dialogRef = this.dialog.open(CommentsComponent, {
