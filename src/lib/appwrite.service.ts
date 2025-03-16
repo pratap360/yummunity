@@ -226,33 +226,8 @@ export class AppwriteService {
       ) as Promise<{ documents: Array<any> }>
     );
   }
-  // toogleSavePost(post: any, user_tag: string): Observable<any> {
-  //   const postId = post.id;
-  //   const isSaved = (post.post_whoSaved || []).includes(user_tag);
-  //   let updatedSavedArray = [...(post.post_whoSaved || [])];
-  //   let newSaveCount = post.post_saves || 0;
 
-  //   if (isSaved) {
-  //     updatedSavedArray = updatedSavedArray.filter((tag) => tag !== user_tag);
-  //     newSaveCount--;
-  //   } else {
-  //     updatedSavedArray.push(user_tag);
-  //     newSaveCount += 1;
-  //   }
-
-  //   return from(
-  //     this.database.updateDocument(
-  //       environment.appwrite_DatabaseID,
-  //       environment.post_CollectionID,
-  //       postId,
-  //       {
-  //         post_whoSaved: updatedSavedArray,
-  //         post_saves: newSaveCount,
-  //       }
-  //     )
-  //   );
-  // }
-
+  // ! save post api logic is here
   toogleSavePost(post: any, user_tag: string): Observable<any> {
     if (!post || (!post.id && !post.$id)) {
       console.error('Post is missing ID:', post);
@@ -260,10 +235,16 @@ export class AppwriteService {
     }
 
     const postId = post.id || post.$id;
-    const isBlogPost = post.blog_post_title !== undefined;
+    // Determine if it's a blog post by checking for blog-specific fields
+    const isBlogPost =
+      post.blog_post_title !== undefined ||
+      post.blog_post_whoSaved !== undefined;
     const collectionId = isBlogPost
       ? environment.blogpost_CollectionID
       : environment.post_CollectionID;
+
+    console.log('Saving post type:', isBlogPost ? 'Blog Post' : 'Recipe Post');
+    console.log('Post ID:', postId);
 
     // Determine which fields to use based on post type
     const whoSavedField = isBlogPost ? 'blog_post_whoSaved' : 'post_whoSaved';
@@ -288,6 +269,8 @@ export class AppwriteService {
     const updateData: any = {};
     updateData[whoSavedField] = updatedSavedArray;
     updateData[savesField] = newSaveCount;
+
+    console.log('Updating document with:', updateData);
 
     // Perform update
     return from(

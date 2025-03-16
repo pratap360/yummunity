@@ -1,5 +1,5 @@
 import { AppwriteService } from './../../../lib/appwrite.service';
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit, SimpleChanges } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import {
@@ -9,6 +9,8 @@ import {
 } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { BlogPost } from '../../../app/interface/blog-post';
+import { RecipePost } from '../../../app/interface/recipe-post';
 @Component({
   selector: 'app-saves',
   standalone: true,
@@ -21,7 +23,10 @@ export class SavesComponent implements OnInit {
   @Input() saved: boolean = false; // Change to input
   @Input() userId: string = '';
   @Input() postId!: string;
-  @Input() post: any;
+  @Input() post!: any;
+  @Input() blogpost!: any;
+  // @Input() post: RecipePost | null = null;
+  // @Input() blogpost: BlogPost | null = null;
 
   durationInSeconds = 5;
   private router = inject(Router);
@@ -35,46 +40,54 @@ export class SavesComponent implements OnInit {
     if (this.userId) {
       this.checkIfSaved();
     } else {
-      this.AppwriteService.getCurrentUser().subscribe((userData) => {
-        this.userId = userData.user_tag;
-        this.checkIfSaved();
+      this.AppwriteService.getCurrentUser().subscribe({
+        next: (userData) => {
+          this.userId = userData.user_tag;
+          this.checkIfSaved();
+        },
+        error: (error) => {
+          console.error('Error getting current user:', error);
+        },
       });
     }
   }
 
-  checkIfSaved(): void {
-    if (this.post && this.userId) {
-      this.saved = this.AppwriteService.isPostSavedByUser(
-        this.post,
-        this.userId
-      );
+  ngOnChanges(changes: SimpleChanges) {
+    if (
+      (changes['post'] && changes['post'].currentValue) ||
+      (changes['blogpost'] && changes['blogpost'].currentValue)
+    ) {
+      const postToCheck = this.post || this.blogpost;
+      if (postToCheck) {
+        console.log('Post received in SavesComponent:', postToCheck);
+
+        // Check if ID exists
+        if (postToCheck && !postToCheck.id && !postToCheck.$id) {
+          console.warn('Post has no ID property:', postToCheck);
+        }
+        // Update save status and count
+        this.checkIfSaved();
+      }
     }
   }
+  checkIfSaved(): void {
+    const postToCheck = this.post || this.blogpost;
+    if (postToCheck && this.userId) {
+      this.saved = this.AppwriteService.isPostSavedByUser(
+        postToCheck,
+        this.userId
+      );
 
-  // checkSavedStatus(): void {
-  //   if (this.post && this.userId) {
-  //     this.saved = this.AppwriteService.isPostSavedByUser(
-  //       this.post,
-  //       this.userId
-  //     );
-  //     // this.saves = this.saved ? 1 : 0;
-  //   }
-  // }
-
-  // checkIfSaved() {
-  //   if (!this.userId || !this.postId) return;
-  //   this.AppwriteService.getSavedPosts(this.userId, this.postId).subscribe(
-  //     (response) => {
-  //       this.saved = response.length > 0;
-  //       this.saves = this.saved ? this.saves + 1 : this.saves - 1;
-  //     },
-  //     (error) => {
-  //       console.error('Error checking if saved:', error);
-  //     }
-  //   );
-  // }
-
+      // Set the saves count based on post type
+      if (this.post) {
+        this.saves = this.post.post_saves || 0;
+      } else if (this.blogpost) {
+        this.saves = this.blogpost.blog_post_saves || 0;
+      }
+    }
+  }
   toggleSave(): void {
+    // First check if user is logged in
     if (!this.userId) {
       console.log('Checking with the user id:', this.userId);
       this._snackBar.open('Please login to save posts', 'OK', {
@@ -85,12 +98,33 @@ export class SavesComponent implements OnInit {
       return;
     }
 
-    if (!this.post || (!this.post.id && !this.post.$id)) {
-      console.error('Post is undefined or missing ID:', this.post);
+    // Check both post and blogpost objects
+
+    console.log('this.post:', this.post);
+    console.log('this.blogpost:', this.blogpost);
+    const postToSave = this.post || this.blogpost;
+    // Check if any post exists
+    if (!postToSave) {
+      console.error('Post and blogpost are both undefined');
+      this._snackBar.open('Error: Unable to save post', 'OK', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration: this.durationInSeconds * 1000,
+      });
       return;
     }
 
-    const postId = this.post.id || this.post.$id;
+    const postId = postToSave.id || postToSave.$id;
+    if (!postId) {
+      console.error('Post is missing ID:', postToSave);
+      this._snackBar.open('Error: Unable to save post (missing ID)', 'OK', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration: this.durationInSeconds * 1000,
+      });
+      return;
+    }
+
     const previousSavedState = this.saved;
     const previousSavesCount = this.saves;
 
@@ -98,17 +132,44 @@ export class SavesComponent implements OnInit {
     this.saved = !this.saved;
     this.saves = this.saved ? this.saves + 1 : this.saves - 1;
 
+    // Create a copy of the post with a consistent ID format
+    const postWithConsistentId = {
+      ...postToSave,
+      id: postId,
+      $id: postId, // Add both formats to ensure consistency
+    };
+
     this.AppwriteService.toogleSavePost(
-      { ...this.post, id: postId },
+      postWithConsistentId,
       this.userId
     ).subscribe({
       next: (updatedPost) => {
-        this.post = updatedPost;
+        console.log('Updated post:', updatedPost);
+        // Update the correct post object based on post type
+        if (updatedPost.blog_post_title !== undefined) {
+          this.blogpost = updatedPost;
+        } else {
+          this.post = updatedPost;
+        }
+
+        // Make sure we're using the correct post object for the checks
+        const currentPost = this.blogpost || this.post;
         this.saved = this.AppwriteService.isPostSavedByUser(
-          updatedPost,
+          currentPost,
           this.userId
         );
-        this.saves = updatedPost.post_saves || updatedPost.blog_post_saves || 0;
+        // Update saves count based on post type
+        if (this.blogpost) {
+          this.saves = this.blogpost.blog_post_saves || 0;
+        } else {
+          this.saves = this.post.post_saves || 0;
+        }
+
+        // this.saved = this.AppwriteService.isPostSavedByUser(
+        //   updatedPost,
+        //   this.userId
+        // );
+        // this.saves = updatedPost.post_saves || updatedPost.blog_post_saves || 0;
 
         if (this.saved) {
           const snackBarRef = this._snackBar.open(
@@ -151,108 +212,4 @@ export class SavesComponent implements OnInit {
       },
     });
   }
-
-  // ** proper working method just remove the s form end of the method
-  toggleSaves(): void {
-    if (!this.userId) {
-      console.log('checking with the user id', this.userId);
-      this._snackBar.open('Please login to save posts', 'OK', {
-        horizontalPosition: this.horizontalPosition,
-        verticalPosition: this.verticalPosition,
-        duration: this.durationInSeconds * 1000,
-      });
-      return;
-    }
-
-    if (!this.post || (!this.post.id && !this.post.$id)) {
-      console.error('Post is undefined or missing ID:', this.post);
-      return;
-    }
-    // if (!post || (!post.id && !post.$id)) {
-    //   console.error('Post is undefined or missing ID:', post);
-    //   // return;
-    // } else {
-    //   console.log('this is the post from line 83', post, post.id);
-    // }
-
-    const postWithId = {
-      ...this.post,
-      id: this.post.id || this.post.$id,
-    };
-
-    this.AppwriteService.toogleSavePost(postWithId, this.userId).subscribe({
-      next: (updatedPost) => {
-        this.post = updatedPost;
-        this.saved = this.AppwriteService.isPostSavedByUser(
-          updatedPost,
-          this.userId
-        );
-        this.saves = updatedPost.post_saves || updatedPost.blog_post_saves || 0;
-
-        if (this.saved) {
-          const snackBarRef = this._snackBar.open(
-            'Saved to your profile !!',
-            'SEE PROFILE',
-            {
-              horizontalPosition: this.horizontalPosition,
-              verticalPosition: this.verticalPosition,
-              duration: this.durationInSeconds * 1000,
-            }
-          );
-
-          snackBarRef.onAction().subscribe(() => {
-            this.router.navigate(['/account']);
-          });
-        } else {
-          this._snackBar.open('Removed from your profile !!', 'OK', {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-            duration: this.durationInSeconds * 1000,
-          });
-        }
-      },
-      error: (error) => {
-        console.error('Error toggling save status:', error);
-        this._snackBar.open(
-          'Error updating save status. Please try again.',
-          'OK',
-          {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-            duration: this.durationInSeconds * 1000,
-          }
-        );
-      },
-    });
-  }
-
-  // toggleSave(): void {
-  //   this.saved = !this.saved;
-  //   this.saves = this.saved ? this.saves + 1 : this.saves - 1;
-  //   if (!this.saved) {
-  //     this.AppwriteService.savePost(this.userId, this.postId);
-  //     // this.AppwriteService.removeSavedPost(this.userId, this.postId);
-  //     const snackBarRef = this._snackBar.open(
-  //       'Saved to your profile !!',
-  //       'SEE PROFILE',
-  //       {
-  //         horizontalPosition: this.horizontalPosition,
-  //         verticalPosition: this.verticalPosition,
-  //         duration: this.durationInSeconds * 1000,
-  //       }
-  //     );
-  //     // Subscribe to the snackbar action to navigate to the profile page
-  //     snackBarRef.onAction().subscribe(() => {
-  //       this.router.navigate(['/account']);
-  //     });
-  //   } else {
-  //     this.AppwriteService.removeSavedPost(this.userId, this.postId);
-  //     // this.AppwriteService.savePost(this.userId, this.postId);
-  //     this._snackBar.open('Removed from your profile !!', 'OK', {
-  //       horizontalPosition: this.horizontalPosition,
-  //       verticalPosition: this.verticalPosition,
-  //       duration: this.durationInSeconds * 1000,
-  //     });
-  //   }
-  // }
 }

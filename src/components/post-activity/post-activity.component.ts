@@ -15,6 +15,7 @@ import { ReadMoreComponent } from './read-more/read-more.component';
 import { SavesComponent } from './saves/saves.component';
 import { RecipePost } from '../../app/interface/recipe-post';
 import { Router } from '@angular/router';
+import { BlogPost } from '../../app/interface/blog-post';
 
 @Component({
   selector: 'app-post-activity',
@@ -38,6 +39,7 @@ import { Router } from '@angular/router';
 })
 export class PostActivityComponent {
   @Input() post!: RecipePost;
+  @Input() blogpost!: BlogPost;
   // @Input() post: any;
   comments_counter = 0;
   commentModalOpen = false;

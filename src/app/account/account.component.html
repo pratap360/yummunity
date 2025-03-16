@@ -116,16 +116,14 @@
         <ng-template #savedPostsTemplate>
           <div *ngIf="savedPost && savedPost.length > 0 || savedBlogPost && savedBlogPost.length > 0; else noSaved">
             <ng-container *ngFor="let save_post of savedPost">
-              <!-- {{ post | json }} -->
               <app-text-post *ngIf="!save_post.post_Content_Pictures && !save_post.blog_content" [posts]="[save_post]"
-                [userData]="userData"></app-text-post>
+                [userData]="save_post.users || save_post"></app-text-post>
               <app-with-img-post *ngIf="save_post.post_Content_Pictures" [posts]="[save_post]"
-                [userData]="userData"></app-with-img-post>
+                [userData]="save_post.users || save_post"></app-with-img-post>
             </ng-container>
             <ng-container *ngFor="let blog_save_post of savedBlogPost">
-              <!-- {{ blogpost | json }} -->
               <app-blog-post *ngIf="blog_save_post.blog_post_title" [blogPosts]="[blog_save_post]"
-                [userData]="userData"></app-blog-post>
+                [userData]="blog_save_post.users || blog_save_post"></app-blog-post>
             </ng-container>
             <!-- <app-text-post [posts]="textPosts" [userData]="userData"></app-text-post>
               <app-with-img-post [posts]="withImgPosts" [userData]="userData"></app-with-img-post>
