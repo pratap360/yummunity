@@ -1,0 +1,26 @@
+button {
+    background-color: #f3f3f3; /* Default color */
+    color: #000;
+  }
+  
+  button.saved {
+    background-color: #BA005C; /* Change to your desired color */
+    color: white;
+  }
+
+  
+  @media screen and (max-width: 576px) {
+    span {
+      display: none;
+    }
+
+    button{
+      z-index: 0;
+    }
+  }
+  
+  @media screen and (max-width: 768px) {
+    span {
+      display: none;
+    }
+  }

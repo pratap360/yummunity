@@ -1,0 +1,16 @@
+<!-- <button mat-raised-button [ngClass]="{'saved': saved}" (click)="toggleSave()">
+  <mat-icon>{{saved? 'bookmark_added': 'bookmark'}}</mat-icon>
+  {{ saves }}
+  {{ post?.post_saves || 0}}
+  <span>
+    {{ saves ? 'Saved' : 'Save' }}
+  </span>
+  <span>{{ saves > 0 ? 'Saved' : 'Save' }}</span>
+</button> -->
+
+<button mat-raised-button [ngClass]="{'saved': saved}" (click)="toggleBlogSave()">
+  <mat-icon>{{saved ? 'bookmark_added' : 'bookmark'}}</mat-icon>
+  <span>
+    {{ saved ? 'Saved' : 'Save' }}
+  </span>
+</button>

@@ -227,7 +227,7 @@ export class AppwriteService {
     );
   }
 
-  // ! save post api logic is here
+  // ! save post api logic is here for both posts and blog posts working condition
   toogleSavePost(post: any, user_tag: string): Observable<any> {
     if (!post || (!post.id && !post.$id)) {
       console.error('Post is missing ID:', post);
@@ -282,6 +282,107 @@ export class AppwriteService {
       )
     );
   }
+
+// ! two separte method for  post and blog post 
+
+toggleSavePost(post: any, user_tag: string): Observable<any> {
+  if (!post || (!post.id && !post.$id)) {
+    console.error('Post is missing ID:', post);
+    return of(null);
+  }
+  
+  const postId = post.id || post.$id;
+  
+  // Check if it's a blog post
+  const isBlogPost = 
+    post.blog_post_title !== undefined || 
+    post.blog_post_whoSaved !== undefined;
+    
+  // Route to the appropriate method based on post type
+  if (isBlogPost) {
+    return this.toggleSaveBlog(post, user_tag);
+  } else {
+    // Regular post handling
+    const whoSavedField = 'post_whoSaved';
+    const savesField = 'post_saves';
+    
+    // Get existing saved array and count
+    const savedArray = post[whoSavedField] || [];
+    const isSaved = savedArray.includes(user_tag);
+    let updatedSavedArray = [...savedArray];
+    let newSaveCount = post[savesField] || 0;
+    
+    // Update saved array
+    if (isSaved) {
+      updatedSavedArray = updatedSavedArray.filter((tag) => tag !== user_tag);
+      newSaveCount = Math.max(0, newSaveCount - 1);
+    } else {
+      updatedSavedArray.push(user_tag);
+      newSaveCount += 1;
+    }
+    
+    // Create update object
+    const updateData: any = {};
+    updateData[whoSavedField] = updatedSavedArray;
+    updateData[savesField] = newSaveCount;
+    
+    console.log('Updating recipe post document with:', updateData);
+    
+    // Perform update
+    return from(
+      this.database.updateDocument(
+        environment.appwrite_DatabaseID,
+        environment.post_CollectionID,
+        postId,
+        updateData
+      )
+    );
+  }
+}
+
+toggleSaveBlog(post: any, user_tag: string): Observable<any> {
+  if (!post || (!post.id && !post.$id)) {
+    console.error('Blog post is missing ID:', post);
+    return of(null);
+  }
+  
+  const postId = post.id || post.$id;
+  const whoSavedField = 'blog_post_whoSaved';
+  const savesField = 'blog_post_saves';
+  
+  // Get existing saved array and count
+  const savedArray = post[whoSavedField] || [];
+  const isSaved = savedArray.includes(user_tag);
+  let updatedSavedArray = [...savedArray];
+  let newSaveCount = post[savesField] || 0;
+  
+  // Update saved array
+  if (isSaved) {
+    updatedSavedArray = updatedSavedArray.filter((tag) => tag !== user_tag);
+    newSaveCount = Math.max(0, newSaveCount - 1);
+  } else {
+    updatedSavedArray.push(user_tag);
+    newSaveCount += 1;
+  }
+  
+  // Create update object
+  const updateData: any = {};
+  updateData[whoSavedField] = updatedSavedArray;
+  updateData[savesField] = newSaveCount;
+  
+  console.log('Updating blog post document with:', updateData);
+  
+  // Perform update
+  return from(
+    this.database.updateDocument(
+      environment.appwrite_DatabaseID,
+      environment.blogpost_CollectionID,
+      postId,
+      updateData
+    )
+  );
+}
+
 
   isPostSavedByUser(post: any, userId: string): boolean {
     // Check if the post has savedBy array
@@ -586,80 +687,5 @@ export class AppwriteService {
         postId
       )
     ) as Observable<RecipePost>;
-  }
-
-  getSavedPosts(userId: string, postId: string): Observable<any> {
-    return from(
-      this.database.listDocuments(
-        environment.appwrite_DatabaseID,
-        environment.savespost_CollectionID,
-        [Query.equal('user_id', userId), Query.equal('post_id', postId)]
-      )
-    ).pipe(
-      map((response: any) => {
-        return response.documents;
-      })
-    ) as Observable<any>;
-  }
-
-  savePost(
-    userId: string,
-    postId: string,
-    postType: string = 'text'
-  ): Observable<any> {
-    const saveData = {
-      user_id: userId,
-      post_id: postId,
-      post_type: postType,
-      // saved_date: new Date().toISOString()
-    };
-    return this.database.createDocument(
-      environment.appwrite_DatabaseID,
-      environment.savespost_CollectionID,
-      ID.unique(),
-      saveData
-    );
-  }
-
-  async removeSavedPost(userId: string, postId: string): Promise<void> {
-    try {
-      // First get the saved post document
-      const response = await this.database.listDocuments(
-        environment.appwrite_DatabaseID,
-        environment.savespost_CollectionID,
-        [Query.equal('user_id', userId), Query.equal('post_id', postId)]
-      );
-
-      const documents = response.documents;
-      if (documents.length > 0) {
-        const documentId = documents[0].$id;
-        await this.database.deleteDocument(
-          environment.appwrite_DatabaseID,
-          environment.savespost_CollectionID,
-          documentId
-        );
-      }
-    } catch (error) {
-      console.error('Error removing saved post:', error);
-    }
-  }
-
-  // async removeSavedPost(userId: string, postId: string) {
-  //   const docs = await this.getSavedPosts(userId, postId).toPromise();
-  //   if (docs.documents.length) {
-  //     return await this.database.deleteDocument(
-  //       environment.appwrite_DatabaseID,
-  //       environment.savespost_CollectionID,
-  //       docs[0].$id
-  //     );
-  //   }
-  // }
-
-  async getUserSavedPost(userId: string) {
-    return await this.database.listDocuments(
-      environment.appwrite_DatabaseID,
-      environment.savespost_CollectionID,
-      [Query.equal('user_id', userId)]
-    );
   }
 }

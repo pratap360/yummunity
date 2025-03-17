@@ -7,9 +7,9 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule, MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { CommentsComponent } from '../post-activity/comments/comments.component';
-import { LikesComponent } from '../post-activity/likes/likes.component';
-import { SavesComponent } from '../post-activity/saves/saves.component';
+import { LikesComponent } from '../blog-activity/likes/likes.component';
+import { CommentsComponent } from '../blog-activity/comments/comments.component';
+import { SavesComponent } from '../blog-activity/saves/saves.component';
 import { BlogPost } from '../../app/interface/blog-post';
 import { AppwriteService } from '../../lib/appwrite.service';
 @Component({

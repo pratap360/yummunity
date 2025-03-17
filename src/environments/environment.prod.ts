@@ -4,11 +4,10 @@ export const environment = {
   appwrite_ProjectID: 'yummunity',
   appwrite_DatabaseID: 'yummunity-data',
 
-  post_CollectionID: 'posts',
-  comments_CollectionID: 'comments',
   users_CollectionID: 'users',
+  post_CollectionID: 'posts',
   blogpost_CollectionID: 'blog_post',
-  savespost_CollectionID: 'saves',
+  comments_CollectionID: 'comments',
 
   PostImages_BucketID: 'PostImages',
   Profile_pictures_BucketID: 'profile_pictures',
