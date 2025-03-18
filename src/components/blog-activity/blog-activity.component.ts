@@ -37,8 +37,10 @@ export class BlogActivityComponent {
   newComment = '';
 
   @Input() blogpost!: BlogPost;
+
   userId: string = '';
   userData: { user_tag: string } = { user_tag: '' };
+  
   comments: string[] = [];
   constructor(
     public dialog: MatDialog,
@@ -47,26 +49,24 @@ export class BlogActivityComponent {
   ngOnInit(): void {
     this.AppwriteService.getCurrentUserId().then((userId) => {
       this.userId = userId || '';
-      this.userData.user_tag = userId || '';
-      this.checkIfSaved();
+      // this.userData.user_tag = userId || '';
+      // this.checkIfSaved();
     });
 
     const comments = JSON.parse(localStorage.getItem('comments_1') || '[]');
     this.comments_counter = comments.length;
 
-    // if (this.blogpost) {
-    //   console.log('Received Post in Blog Activity Component:', this.blogpost);
-    // } else {
-    //   console.error('Post is undefined in Blog Activity Component');
-    // }
+    if (!this.blogpost) {
+      console.error('Post is undefined in Blog Activity Component');
+    } 
   }
 
-  checkIfSaved(): void {
-    if (this.blogpost && this.userId) {
-      // Check if the post is saved by the current user
-      this.AppwriteService.isPostSavedByUser(this.blogpost, this.userId);
-    }
-  }
+  // checkIfSaved(): void {
+  //   if (this.blogpost && this.userId) {
+  //     // Check if the post is saved by the current user
+  //     this.AppwriteService.isPostSavedByUser(this.blogpost, this.userId);
+  //   }
+  // }
   openCommentModal(): void {
     const dialogRef = this.dialog.open(CommentsComponent, {
       width: '500px', // Set the modal width

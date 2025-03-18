@@ -159,9 +159,9 @@ export class AccountComponent implements OnInit {
         this.profileUserTag = this.userData.user_tag;
         // console.log('Profile User ID:', this.profileUserTag);
         this.allPostsData();
-        this.fetchBlogPosts();
-        this.getSavedPosts();
-        this.getSaveBlogPosts();
+        // this.fetchBlogPosts();
+        // this.getSavedPosts();
+        // this.getSaveBlogPosts();
         this.isLoading.next(false);
       },
       error: (error) => {
@@ -179,6 +179,17 @@ export class AccountComponent implements OnInit {
           });
       },
     });
+  }
+
+
+  onTabChange(tabIndex: number): void {
+    if(tabIndex === 1){
+      this.fetchBlogPosts();
+    }
+    if (tabIndex === 2) {
+      this.getSavedPosts();
+      this.getSaveBlogPosts();
+    }
   }
 
   allPostsData(): void {
@@ -263,7 +274,7 @@ export class AccountComponent implements OnInit {
   // }
 
   getSavedPosts(): void {
-    this.isLoading.next(true);
+    // this.isLoading.next(true);
     this.appwriteService.getUserSavedPosts(this.profileUserTag).subscribe({
       next: (data) => {
         console.log('Raw data from getUserSavedPosts:', data); // Log the full data object
@@ -300,7 +311,7 @@ export class AccountComponent implements OnInit {
   }
 
   getSaveBlogPosts(): void {
-    this.isLoading.next(true);
+    // this.isLoading.next(true);
     this.appwriteService.getUserBlogSavedPosts(this.profileUserTag).subscribe({
       next: (data) => {
         console.log('Raw data from getSaveBlogPosts:', data); // Log the full data

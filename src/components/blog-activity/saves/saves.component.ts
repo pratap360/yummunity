@@ -24,8 +24,6 @@ export class SavesComponent implements OnInit {
   @Input() userId: string = '';
   // @Input() postId!: string;
   @Input() blogpost!: any;
-  // @Input() post: RecipePost | null = null;
-  // @Input() blogpost: BlogPost | null = null;
 
   durationInSeconds = 5;
   private router = inject(Router);
@@ -37,11 +35,13 @@ export class SavesComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.userId) {
+      console.log('User ID is set at line 40:', this.userId);
       this.checkIfSaved();      
     } else {
       this.AppwriteService.getCurrentUser().subscribe({
         next: (userData) => {
             this.userId = userData.user_tag;
+            console.log('User ID is set at line 46:', this.userId);
             this.checkIfSaved();
         },
         error: (error) => {
@@ -87,18 +87,7 @@ export class SavesComponent implements OnInit {
   toggleBlogSave(): void {
     console.log('Toggling save for blogpost:', this.blogpost);
     console.log('Current user ID at blog post save btn:', this.userId);
-      // Check if blogpost exists and has an ID
-  if (!this.blogpost || (!this.blogpost.id && !this.blogpost.$id)) {
-    console.error('Blog post is missing or has no ID');
-    this._snackBar.open('Error: Cannot save this post', 'OK', {
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-      duration: this.durationInSeconds * 1000,
-    });
-    return;
-  }
 
-    
     // First check if user is logged in
     if (!this.userId) {
       console.log('Checking with the user id:', this.userId);
@@ -110,7 +99,31 @@ export class SavesComponent implements OnInit {
       return;
     }
 
-  
+    const postToSaveBlog = this.blogpost;
+
+// Check if blogpost exists and has an ID
+  if (!postToSaveBlog) {
+    console.error('Blog post is missing or has no ID');
+    this._snackBar.open('Error: Cannot save this post', 'OK', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration: this.durationInSeconds * 1000,
+    });
+    return;
+  }
+
+  const postBlogId = postToSaveBlog.id || postToSaveBlog.$id;
+
+  if (!postBlogId) {
+    console.error('Blog post has no ID:', postToSaveBlog);
+    this._snackBar.open('Error: Cannot save this post', 'OK', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration: this.durationInSeconds * 1000,
+    });
+    return;
+  }
+
 
     // Store previous state
     const previousSavedState = this.saved;
@@ -120,9 +133,17 @@ export class SavesComponent implements OnInit {
     this.saved = !this.saved;
     this.saves += this.saved ? 1 : -1;
 
-    this.AppwriteService.toggleSaveBlog(this.blogpost, this.userId).subscribe({
+
+    const postCorrectBlogId = {
+      ...postToSaveBlog,
+      id: postBlogId,
+      $id: postBlogId,
+    }
+
+    this.AppwriteService.toggleSaveBlog(postCorrectBlogId, this.userId).subscribe({
       next: (updatedPost) => {
         console.log('Save status updated successfully for blog Post:',updatedPost);
+        console.log('User ID used for toggle save:', this.userId);
         this.blogpost = updatedPost;
         this.saved = this.AppwriteService.isPostSavedByUser(this.blogpost,this.userId);
 

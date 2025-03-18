@@ -73,12 +73,11 @@ export class PostActivityComponent {
     const comments = JSON.parse(localStorage.getItem('comments_1') || '[]');
     this.comments_counter = comments.length;
 
-    if (this.post) {
+    if (!this.post) {
+      console.error('Post is undefined in PostActivityComponent');
       // console.log('Received Post in PostActivityComponent:', this.post);
       // console.log('Post ID:', this.post.id);
-    } else {
-      console.error('Post is undefined in PostActivityComponent');
-    }
+    } 
   }
 
   async toggleLike() {
