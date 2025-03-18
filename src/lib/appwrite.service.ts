@@ -228,7 +228,7 @@ export class AppwriteService {
   }
 
   // ! save post api logic is here for both posts and blog posts working condition
-  toogleSavePost(post: any, user_tag: string): Observable<any> {
+  toggleSavedPost(post: any, user_tag: string): Observable<any> {
     if (!post || (!post.id && !post.$id)) {
       console.error('Post is missing ID:', post);
       return of(null);
@@ -340,21 +340,21 @@ toggleSavePost(post: any, user_tag: string): Observable<any> {
   }
 }
 
-toggleSaveBlog(post: any, user_tag: string): Observable<any> {
-  if (!post || (!post.id && !post.$id)) {
-    console.error('Blog post is missing ID:', post);
+toggleSaveBlog(blogpost: any, user_tag: string): Observable<any> {
+  if (!blogpost || (!blogpost.id && !blogpost.$id)) {
+    console.error('Blog post is missing ID:', blogpost);
     return of(null);
   }
   
-  const postId = post.id || post.$id;
+  const blogPostId = blogpost.id || blogpost.$id;
   const whoSavedField = 'blog_post_whoSaved';
   const savesField = 'blog_post_saves';
   
   // Get existing saved array and count
-  const savedArray = post[whoSavedField] || [];
+  const savedArray = blogpost[whoSavedField] || [];
   const isSaved = savedArray.includes(user_tag);
   let updatedSavedArray = [...savedArray];
-  let newSaveCount = post[savesField] || 0;
+  let newSaveCount = blogpost[savesField] || 0;
   
   // Update saved array
   if (isSaved) {
@@ -377,155 +377,28 @@ toggleSaveBlog(post: any, user_tag: string): Observable<any> {
     this.database.updateDocument(
       environment.appwrite_DatabaseID,
       environment.blogpost_CollectionID,
-      postId,
+      blogPostId,
       updateData
     )
-  );
+  ).pipe(
+    catchError((error) => {
+      console.error('Error updating blog post:', error);
+      return of(null);
+    })
+  )
 }
 
-
-  isPostSavedByUser(post: any, userId: string): boolean {
-    // Check if the post has savedBy array
-    const savedBy = post.savedBy || post.blog_post_savedBy || [];
-    return savedBy.includes(userId);
+  isPostSavedByUser(post: any, user_tag: string): boolean {
+    if (!post || !user_tag) return false;
+    // Check if it's a blog post or a recipe post
+    if (post.blog_post_title) {
+      return (post.blog_post_whoSaved || []).includes(user_tag);
+    } else {
+      return (post.post_whoSaved || []).includes(user_tag);
+    }
   }
-  // isPostSavedByUser(post: any, user_tag: string): boolean {
-  //   if (!post) return false;
 
-  //   // Check if it's a blog post or a recipe post
-  //   if (post.blog_post_title) {
-  //     return (post.blog_post_whoSaved || []).includes(user_tag);
-  //   } else {
-  //     return (post.post_whoSaved || []).includes(user_tag);
-  //   }
-  // }
-
-  // getUserSavedPosts(user_tag: string): Observable<any> {
-  //   // Get saved recipe posts
-  //   const savedRecipePosts = from(
-  //     this.database
-  //       .listDocuments(
-  //         environment.appwrite_DatabaseID,
-  //         environment.post_CollectionID,
-  //         [
-  //           Query.orderDesc('$createdAt'),
-  //           Query.contains('post_whoSaved', [user_tag]),
-  //         ]
-  //       )
-  //       .pipe(
-  //         catchError((error) => {
-  //           console.error('Error fetching saved recipes:', error);
-  //           return of({ documents: [] });
-  //         })
-  //       )
-  //   );
-
-  //   // Get saved blog posts
-  //   const savedBlogPosts = from(
-  //     this.database
-  //       .listDocuments(
-  //         environment.appwrite_DatabaseID,
-  //         environment.blogpost_CollectionID,
-  //         [
-  //           Query.orderDesc('$createdAt'),
-  //           Query.contains('blog_post_whoSaved', [user_tag]),
-  //         ]
-  //       )
-  //       .pipe(
-  //         catchError((error) => {
-  //           console.error('Error fetching saved recipes:', error);
-  //           return of({ documents: [] });
-  //         })
-  //       )
-  //   );
-
-  //   // Combine both results
-  //   return savedRecipePosts.pipe(
-  //     switchMap((recipePosts: any) => {
-  //       return savedBlogPosts.pipe(
-  //         map((blogPosts: any) => {
-  //           const combinedResults = {
-  //             documents: [...recipePosts.documents, ...blogPosts.documents],
-  //           };
-  //           return combinedResults;
-  //         })
-  //       );
-  //     })
-  //   );
-  // }
-
-  // getUserSavedPosts(user_tag: string): Observable<any> {
-  //   // const savedRecipesPost = from(
-  //   return from(
-  //     this.database
-  //       .listDocuments(
-  //         environment.appwrite_DatabaseID,
-  //         environment.post_CollectionID,
-  //         [
-  //           Query.orderDesc('$createdAt'),
-  //           // Query.equal('post_whoSaved', [user_tag]),
-  //           Query.contains('post_whoSaved', [user_tag]),
-  //         ]
-  //       )
-  //       .pipe(
-  //         catchError((error) => {
-  //           console.error('Error fetching saved recipes:', error);
-  //           return of({ documents: [] });
-  //         })
-  //       )
-  //   );
-
-  //   // const savedBlogsPost = from(
-  //   //   this.database.listDocuments(
-  //   //     environment.appwrite_DatabaseID,
-  //   //     environment.blogpost_CollectionID,
-  //   //     [
-  //   //       Query.orderDesc('$createdAt'),
-  //   //       Query.search('blog_post_whoSaved', user_tag),
-  //   //     ]
-  //   //   ).pipe(
-  //   //     catchError(error => {
-  //   //       console.error('Error fetching saved blogs Post:', error);
-  //   //       return of({ documents: [] });
-  //   //     })
-  //   //   )
-  //   // );
-
-  //   // return savedRecipesPost.pipe(
-  //   //   switchMap((recipePosts: any) => {
-  //   //     return savedBlogsPost.pipe(
-  //   //       map((blogPosts: any) => {
-  //   //         return [...recipePosts.documents, ...blogPosts.documents];
-  //   //       })
-  //   //     );
-  //   //   })
-  //   // );
-  // }
-
-  // async getUserPosts(userId: string) {
-  //   try {
-  //     const response = await this.database.listDocuments(
-  //       environment.appwrite_DatabaseID,
-  //       environment.post_CollectionID,
-  //       [Query.equal('creator', userId)]
-  //     );
-  //     return response.documents;
-  //   } catch (error) {
-  //     console.error('Appwrite service :: getUserPosts :: error', error);
-  //     return [];
-  //   }
-  // }
-
-  // getPostById(postId: string): Observable<any> {
-  //   return from(
-  //     this.database.getDocument(
-  //     environment.appwrite_DatabaseID,
-  //     environment.post_CollectionID,
-  //     postId
-  //     )
-  //   );
-  // }
-
+  
   getPostById(documentId: string): Observable<any> {
     return from(
       this.database.getDocument(

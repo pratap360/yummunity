@@ -54,11 +54,11 @@ export class BlogActivityComponent {
     const comments = JSON.parse(localStorage.getItem('comments_1') || '[]');
     this.comments_counter = comments.length;
 
-    if (this.blogpost) {
-      console.log('Received Post in Blog Activity Component:', this.blogpost);
-    } else {
-      console.error('Post is undefined in Blog Activity Component');
-    }
+    // if (this.blogpost) {
+    //   console.log('Received Post in Blog Activity Component:', this.blogpost);
+    // } else {
+    //   console.error('Post is undefined in Blog Activity Component');
+    // }
   }
 
   checkIfSaved(): void {

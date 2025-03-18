@@ -56,13 +56,13 @@ export class PostActivityComponent {
     private AppwriteService: AppwriteService
   ) {}
 
-  // ngOnChanges(changes: SimpleChanges) {
-  //   if (changes['post'] && changes['post'].currentValue) {
-  //     console.log('Post received in PostActivityComponent:', this.post);
-  //   } else {
-  //     console.error('Post is undefined in PostActivityComponent');
-  //   }
-  // }
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['post'] && changes['post'].currentValue) {
+      console.log('Post received in PostActivityComponent:', this.post);
+    } else {
+      console.error('Post is undefined in PostActivityComponent');
+    }
+  }
 
   ngOnInit(): void {
     this.AppwriteService.getCurrentUserId().then((userId) => {

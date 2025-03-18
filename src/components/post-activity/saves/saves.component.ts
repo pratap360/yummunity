@@ -22,11 +22,8 @@ export class SavesComponent implements OnInit {
   @Input() saves: number = 0; // Change to input so parent can pass it
   @Input() saved: boolean = false; // Change to input
   @Input() userId: string = '';
-  @Input() postId!: string;
+  // @Input() postId!: string;
   @Input() post!: any;
-  @Input() blogpost!: any;
-  // @Input() post: RecipePost | null = null;
-  // @Input() blogpost: BlogPost | null = null;
 
   durationInSeconds = 5;
   private router = inject(Router);
@@ -52,45 +49,42 @@ export class SavesComponent implements OnInit {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (
-      (changes['post'] && changes['post'].currentValue) ||
-      (changes['blogpost'] && changes['blogpost'].currentValue)
-    ) {
-      const postToCheck = this.post || this.blogpost;
-      if (postToCheck) {
-        console.log('Post received in SavesComponent:', postToCheck);
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (
+  //     (changes['post'] && changes['post'].currentValue) ||
+  //     (changes['blogpost'] && changes['blogpost'].currentValue)
+  //   ) {
+  //     const postToCheck = this.post || this.blogpost;
+  //     if (postToCheck) {
+  //       console.log('Post received in SavesComponent:', postToCheck);
 
-        // Check if ID exists
-        if (postToCheck && !postToCheck.id && !postToCheck.$id) {
-          console.warn('Post has no ID property:', postToCheck);
-        }
-        // Update save status and count
-        this.checkIfSaved();
-      }
-    }
-  }
+  //       // Check if ID exists
+  //       if (postToCheck && !postToCheck.id && !postToCheck.$id) {
+  //         console.warn('Post has no ID property:', postToCheck);
+  //       }
+  //       // Update save status and count
+  //       this.checkIfSaved();
+  //     }
+  //   }
+  // }
   checkIfSaved(): void {
-    const postToCheck = this.post || this.blogpost;
+    const postToCheck = this.post
     if (postToCheck && this.userId) {
       console.log('Checking if saved:', postToCheck, 'User ID:', this.userId);
-      this.saved = this.AppwriteService.isPostSavedByUser(
-        postToCheck,
-        this.userId
-      );
+      this.saved = this.AppwriteService.isPostSavedByUser(postToCheck,this.userId);
 
       // Set the saves count based on post type
       if (this.post) {
         this.saves = this.post.post_saves || 0;
-      } else if (this.blogpost) {
-        this.saves = this.blogpost.blog_post_saves || 0;
       }
     }
   }
+
+
   toggleSave(): void {
     // debugger;
-    console.log('Toggling save for post:', this.post || this.blogpost);
-    console.log('Current user ID:', this.userId);
+    console.log('Toggling save for post:', this.post);
+    console.log('Current user ID on post save:', this.userId);
     // First check if user is logged in
     if (!this.userId) {
       console.log('Checking with the user id:', this.userId);
@@ -105,8 +99,7 @@ export class SavesComponent implements OnInit {
     // Check both post and blogpost objects
 
     console.log('this.post:', this.post);
-    console.log('this.blogpost:', this.blogpost);
-    const postToSave = this.post || this.blogpost;
+    const postToSave = this.post 
     // Check if any post exists
     if (!postToSave) {
       console.error('Post and blogpost are both undefined');
@@ -143,39 +136,20 @@ export class SavesComponent implements OnInit {
       $id: postId, // Add both formats to ensure consistency
     };
 
-    this.AppwriteService.toogleSavePost(
+    this.AppwriteService.toggleSavePost(
       postWithConsistentId,
       this.userId
     ).subscribe({
       next: (updatedPost) => {
-        console.log('Updated post:', updatedPost);
-        // Update the correct post object based on post type
-        if (updatedPost.blog_post_title !== undefined) {
-          this.blogpost = updatedPost;
-        } else {
+        // console.log('Updated post:', updatedPost);
           this.post = updatedPost;
-        }
-
-        // Make sure we're using the correct post object for the checks
-        const currentPost = this.blogpost || this.post;
-        this.saved = this.AppwriteService.isPostSavedByUser(
-          currentPost,
-          this.userId
-        );
-        // Update saves count based on post type
-        if (this.blogpost) {
-          this.saves = this.blogpost.blog_post_saves || 0;
-        } else {
-          this.saves = this.post.post_saves || 0;
-        }
-
-        // this.saved = this.AppwriteService.isPostSavedByUser(
-        //   updatedPost,
-        //   this.userId
-        // );
-        // this.saves = updatedPost.post_saves || updatedPost.blog_post_saves || 0;
-
-        if (this.saved) {
+      
+        const currentPost =  this.post;
+        this.saved = this.AppwriteService.isPostSavedByUser(currentPost,this.userId);
+        this.saves = this.post.post_saves || 0;
+        // console.log(this.saved);
+        
+        if (this.saved === true) {
           const snackBarRef = this._snackBar.open(
             'Saved to your profile !!',
             'SEE PROFILE',

@@ -22,8 +22,8 @@ export class SavesComponent implements OnInit {
   @Input() saves: number = 0; // Change to input so parent can pass it
   @Input() saved: boolean = false; // Change to input
   @Input() userId: string = '';
-  @Input() postId!: string;
-  @Input() blogpost: any = null;
+  // @Input() postId!: string;
+  @Input() blogpost!: any;
   // @Input() post: RecipePost | null = null;
   // @Input() blogpost: BlogPost | null = null;
 
@@ -37,17 +37,12 @@ export class SavesComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.userId) {
-      // this.checkIfSaved();
-      if (this.blogpost) {
-        this.checkIfSaved();
-      } else {
-        console.log('Blog post data not available yet');
-      }
+      this.checkIfSaved();      
     } else {
       this.AppwriteService.getCurrentUser().subscribe({
         next: (userData) => {
-          this.userId = userData.user_tag;
-          this.checkIfSaved();
+            this.userId = userData.user_tag;
+            this.checkIfSaved();
         },
         error: (error) => {
           console.error('Error getting current user:', error);
@@ -78,13 +73,32 @@ export class SavesComponent implements OnInit {
     const postToCheck = this.blogpost;
     if (postToCheck && this.userId) {
       console.log('Checking if saved:', postToCheck, 'User ID:', this.userId);
+      if(!postToCheck || (!postToCheck.id && !postToCheck.$id)){
+        console.warn('Post has no ID property:', postToCheck);
+        this.saved = false;
+        return;
+      }
       this.saved = this.AppwriteService.isPostSavedByUser(postToCheck,this.userId);
+    }else{
+      this.saved = false;
     }
   }
 
   toggleBlogSave(): void {
     console.log('Toggling save for blogpost:', this.blogpost);
-    console.log('Current user ID:', this.userId);
+    console.log('Current user ID at blog post save btn:', this.userId);
+      // Check if blogpost exists and has an ID
+  if (!this.blogpost || (!this.blogpost.id && !this.blogpost.$id)) {
+    console.error('Blog post is missing or has no ID');
+    this._snackBar.open('Error: Cannot save this post', 'OK', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration: this.durationInSeconds * 1000,
+    });
+    return;
+  }
+
+    
     // First check if user is logged in
     if (!this.userId) {
       console.log('Checking with the user id:', this.userId);
@@ -95,6 +109,8 @@ export class SavesComponent implements OnInit {
       });
       return;
     }
+
+  
 
     // Store previous state
     const previousSavedState = this.saved;
@@ -108,8 +124,9 @@ export class SavesComponent implements OnInit {
       next: (updatedPost) => {
         console.log('Save status updated successfully for blog Post:',updatedPost);
         this.blogpost = updatedPost;
-        this.saves = updatedPost.blog_post_saves || 0;
-        this.saved = this.AppwriteService.isPostSavedByUser(updatedPost,this.userId);
+        this.saved = this.AppwriteService.isPostSavedByUser(this.blogpost,this.userId);
+
+        this.saves = this.blogpost.blog_post_saves || 0;
 
         if (this.saved) {
           this._snackBar.open(
