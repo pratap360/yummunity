@@ -7,7 +7,6 @@ export const environment = {
   users_CollectionID: 'users',
   post_CollectionID: 'posts',
   blogpost_CollectionID: 'blog_post',
-  comments_CollectionID: 'comments',
 
   PostImages_BucketID: 'PostImages',
   Profile_pictures_BucketID: 'profile_pictures',

@@ -1,5 +1,5 @@
 <mat-card-actions class="action-buttons">
-    <app-likes></app-likes>
+    <app-likes [post]="post" [userId]="userData.user_tag"></app-likes>
     <button mat-raised-button (click)="openCommentModal()">
         <mat-icon>comment</mat-icon>
         {{ comments_counter }}

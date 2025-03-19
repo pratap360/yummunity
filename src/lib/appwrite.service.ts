@@ -227,64 +227,63 @@ export class AppwriteService {
     );
   }
 
-  // ! save post api logic is here for both posts and blog posts working condition
-  toggleSavedPost(post: any, user_tag: string): Observable<any> {
-    if (!post || (!post.id && !post.$id)) {
-      console.error('Post is missing ID:', post);
-      return of(null);
-    }
+  // // ! save post api logic is here for both posts and blog posts working condition
+  // toggleSavedPost(post: any, user_tag: string): Observable<any> {
+  //   if (!post || (!post.id && !post.$id)) {
+  //     console.error('Post is missing ID:', post);
+  //     return of(null);
+  //   }
 
-    const postId = post.id || post.$id;
-    // Determine if it's a blog post by checking for blog-specific fields
-    const isBlogPost =
-      post.blog_post_title !== undefined ||
-      post.blog_post_whoSaved !== undefined;
-    const collectionId = isBlogPost
-      ? environment.blogpost_CollectionID
-      : environment.post_CollectionID;
+  //   const postId = post.id || post.$id;
+  //   // Determine if it's a blog post by checking for blog-specific fields
+  //   const isBlogPost =
+  //     post.blog_post_title !== undefined ||
+  //     post.blog_post_whoSaved !== undefined;
+  //   const collectionId = isBlogPost
+  //     ? environment.blogpost_CollectionID
+  //     : environment.post_CollectionID;
 
-    console.log('Saving post type:', isBlogPost ? 'Blog Post' : 'Recipe Post');
-    console.log('Post ID:', postId);
+  //   console.log('Saving post type:', isBlogPost ? 'Blog Post' : 'Recipe Post');
+  //   console.log('Post ID:', postId);
 
-    // Determine which fields to use based on post type
-    const whoSavedField = isBlogPost ? 'blog_post_whoSaved' : 'post_whoSaved';
-    const savesField = isBlogPost ? 'blog_post_saves' : 'post_saves';
+  //   // Determine which fields to use based on post type
+  //   const whoSavedField = isBlogPost ? 'blog_post_whoSaved' : 'post_whoSaved';
+  //   const savesField = isBlogPost ? 'blog_post_saves' : 'post_saves';
 
-    // Get existing saved array and count
-    const savedArray = post[whoSavedField] || [];
-    const isSaved = savedArray.includes(user_tag);
-    let updatedSavedArray = [...savedArray];
-    let newSaveCount = post[savesField] || 0;
+  //   // Get existing saved array and count
+  //   const savedArray = post[whoSavedField] || [];
+  //   const isSaved = savedArray.includes(user_tag);
+  //   let updatedSavedArray = [...savedArray];
+  //   let newSaveCount = post[savesField] || 0;
 
-    // Update saved array
-    if (isSaved) {
-      updatedSavedArray = updatedSavedArray.filter((tag) => tag !== user_tag);
-      newSaveCount = Math.max(0, newSaveCount - 1);
-    } else {
-      updatedSavedArray.push(user_tag);
-      newSaveCount += 1;
-    }
+  //   // Update saved array
+  //   if (isSaved) {
+  //     updatedSavedArray = updatedSavedArray.filter((tag) => tag !== user_tag);
+  //     newSaveCount = Math.max(0, newSaveCount - 1);
+  //   } else {
+  //     updatedSavedArray.push(user_tag);
+  //     newSaveCount += 1;
+  //   }
 
-    // Create update object
-    const updateData: any = {};
-    updateData[whoSavedField] = updatedSavedArray;
-    updateData[savesField] = newSaveCount;
+  //   // Create update object
+  //   const updateData: any = {};
+  //   updateData[whoSavedField] = updatedSavedArray;
+  //   updateData[savesField] = newSaveCount;
 
-    console.log('Updating document with:', updateData);
+  //   console.log('Updating document with:', updateData);
 
-    // Perform update
-    return from(
-      this.database.updateDocument(
-        environment.appwrite_DatabaseID,
-        collectionId,
-        postId,
-        updateData
-      )
-    );
-  }
+  //   // Perform update
+  //   return from(
+  //     this.database.updateDocument(
+  //       environment.appwrite_DatabaseID,
+  //       collectionId,
+  //       postId,
+  //       updateData
+  //     )
+  //   );
+  // }
 
-// ! two separte method for  post and blog post 
-
+// ! two separte method for  post and blog post for saving and unsave
 toggleSavePost(post: any, user_tag: string): Observable<any> {
   if (!post || (!post.id && !post.$id)) {
     console.error('Post is missing ID:', post);
@@ -561,4 +560,121 @@ toggleSaveBlog(blogpost: any, user_tag: string): Observable<any> {
       )
     ) as Observable<RecipePost>;
   }
+
+
+
+  toggleLikePost(post:any, user_tag:string): Observable<any>{
+    if (!post || (!post.id && !post.$id)) {
+      console.error('Post is missing ID:', post);
+      return of(null);
+    }
+  
+   const postId = post.id || post.$id;
+     const isBlogPost = 
+      post.blog_post_title !== undefined || 
+      post.blog_post_whoLiked !== undefined;
+  
+  
+  // Route to the appropriate method based on post type
+    if (isBlogPost) {
+      return this.toggleLikeBlog(post, user_tag);
+    } else {
+      // Regular post handling
+      const whoLikedField = 'post_whoLiked';
+      const likesField = 'post_likes';
+      
+      // Get existing liked array and count
+      const likedArray = post[whoLikedField] || [];
+      const isLiked = likedArray.includes(user_tag);
+      let updatedLikedArray = [...likedArray];
+      let newLikeCount = post[likesField] || 0;
+      
+      // Update liked array
+      if (isLiked) {
+        updatedLikedArray = updatedLikedArray.filter((tag) => tag !== user_tag);
+        newLikeCount = Math.max(0, newLikeCount - 1);
+      } else {
+        updatedLikedArray.push(user_tag);
+        newLikeCount += 1;
+      }
+      
+      // Create update object
+      const updateData: any = {};
+      updateData[whoLikedField] = updatedLikedArray;
+      updateData[likesField] = newLikeCount;
+      
+      console.log('Updating recipe post document with:', updateData);
+      
+      // Perform update
+      return from(
+        this.database.updateDocument(
+          environment.appwrite_DatabaseID,
+          environment.post_CollectionID,
+          postId,
+          updateData
+        )
+      );
+    }
+  }
+
+  toggleLikeBlog(blogpost: any, user_tag: string): Observable<any> {
+    if (!blogpost || (!blogpost.id && !blogpost.$id)) {
+      console.error('Blog post is missing ID:', blogpost);
+      return of(null);
+    }
+
+    const blogPostId = blogpost.id || blogpost.$id;
+    const whoLikedField = 'blog_post_whoLiked';
+    const likesField = 'blog_post_likes';
+
+    // Get existing liked array and count
+    const likedArray = blogpost[whoLikedField] || [];
+    const isLiked = likedArray.includes(user_tag);
+    let updatedLikedArray = [...likedArray];
+    let newLikeCount = blogpost[likesField] || 0;
+
+    // Update liked array
+    if (isLiked) {
+      updatedLikedArray = updatedLikedArray.filter((tag) => tag !== user_tag);
+      newLikeCount = Math.max(0, newLikeCount - 1);
+    } else {
+      updatedLikedArray.push(user_tag);
+      newLikeCount += 1;
+    }
+
+    // Create update object
+    const updateData: any = {};
+    updateData[whoLikedField] = updatedLikedArray;
+    updateData[likesField] = newLikeCount;
+
+    console.log('Updating blog post document with:', updateData);
+    // Perform update
+    return from(
+      this.database.updateDocument(
+        environment.appwrite_DatabaseID,
+        environment.blogpost_CollectionID,
+        blogPostId,
+        updateData
+      )
+    ).pipe(
+      catchError((error) => {
+        console.error('Error updating blog post:', error);
+        return of(null);
+      })
+    )
+  }
+
+
+  
+  isPostLikedByUser(post: any, user_tag: string): boolean {
+  if (!post || !user_tag) return false;
+  // Check if it's a blog post or a recipe post
+  if (post.blog_post_title) {
+    return (post.blog_post_whoLiked || []).includes(user_tag);
+  } else {
+    return (post.post_whoLiked || []).includes(user_tag);
+  }
+}
+
+
 }

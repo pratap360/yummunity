@@ -146,8 +146,7 @@ export class SavesComponent implements OnInit {
         console.log('User ID used for toggle save:', this.userId);
         this.blogpost = updatedPost;
         this.saved = this.AppwriteService.isPostSavedByUser(this.blogpost,this.userId);
-
-        this.saves = this.blogpost.blog_post_saves || 0;
+        this.saves = this.blogpost.blog_post_saves || 0
 
         if (this.saved) {
           this._snackBar.open(

@@ -10,6 +10,7 @@ export interface RecipePost {
   post_Content_Pictures: any[];
   post_Content: string;
   post_likes?: number;
+  post_whoLiked?: string[];
   post_comments?: number;
   post_saves?: number;
   post_whoSaved?: string[];
