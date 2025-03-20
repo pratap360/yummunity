@@ -16,12 +16,14 @@
   <div *ngIf="comments.length > 0" class="comment-section">
     <div class="comment-box" *ngFor="let comment of comments">
       <div class="user_comment_data">
-        <div mat-card-avatar class="profile-comment-image"></div>
-        <h4 class="commented-user-id">Pratap Parui</h4>
-        <h4 class="commented-datetime">{{ dateTime }}</h4>
+        <!-- <div mat-card-avatar class="profile-comment-image"></div> -->
+         <img [src]="comment.userProfilePic"  class="profile-comment-image" alt="comment.user_name">
+        <h4 class="commented-user-id">&#64;{{ comment.userTag }}</h4>
+        <h4 class="commented-datetime">{{ comment.date | date: 'short' }}</h4>
+        <!-- <h4 class="commented-datetime">{{ dateTime }}</h4> -->
       </div>
       <!-- <p *ngFor="">{{ comments[0] }}</p> -->
-      <p class="user_comment">{{comment}}</p>
+      <p class="user_comment">{{ comment.comment }}</p>
     </div>
   </div>
 
@@ -34,6 +36,6 @@
 </mat-dialog-content>
 
 <mat-dialog-actions>
-  <button mat-flat-button color="primary" (click)="postComment()">Post</button>
+  <button mat-flat-button color="primary" (click)="BlogpostComment()">Post</button>
   <button mat-button (click)="onCancel()">Cancel</button>
 </mat-dialog-actions>

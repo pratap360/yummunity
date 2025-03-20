@@ -14,6 +14,7 @@ export interface BlogPost {
   blog_post_likes: number;
   blog_post_whoLiked?: string[];
   blog_post_comments?: number;
+  blog_post_whoComments?: string[];
   blog_post_saves: number;
   blog_post_whoSaved?: string[];
 }

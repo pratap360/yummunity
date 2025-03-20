@@ -1,39 +1,36 @@
-<!-- Comment Modal Dialog -->
-<!-- <mat-dialog-content *ngIf="commentModalOpen"> -->
-<mat-dialog-content>
-  <span class="comment-tittle">Post a Comment</span>
-  <form class="recipe-post-comments">
-    <mat-form-field appearance="outline" class="recipe-post-comments-area">
-      <mat-label>Write your comment</mat-label>
-      <textarea matInput #comment [(ngModel)]="newComment" [ngModelOptions]="{standalone: true}" maxlength="200"
-        placeholder="comment your thoughs..."></textarea>
-      <mat-hint align="end">{{comment.value.length}} / 200</mat-hint>
-    </mat-form-field>
-  </form>
-
-
-  <!-- Display existing comments if available -->
-  <div *ngIf="comments.length > 0" class="comment-section">
-    <div class="comment-box" *ngFor="let comment of comments">
-      <div class="user_comment_data">
-        <div mat-card-avatar class="profile-comment-image"></div>
-        <h4 class="commented-user-id">Pratap Parui</h4>
-        <h4 class="commented-datetime">{{ dateTime }}</h4>
+  <mat-dialog-content>
+    <span class="comment-tittle">Post a Comment</span>
+    <form class="recipe-post-comments">
+      <mat-form-field appearance="outline" class="recipe-post-comments-area">
+        <mat-label>Write your comment</mat-label>
+        <textarea matInput #comment [(ngModel)]="newComment" [ngModelOptions]="{standalone: true}" maxlength="200"
+          placeholder="comment your thoughs..."></textarea>
+        <mat-hint align="end">{{comment.value.length}} / 200</mat-hint>
+      </mat-form-field>
+    </form>
+  
+    <!-- Display existing comments if available -->
+    <div *ngIf="comments.length > 0" class="comment-section">
+      <div class="comment-box" *ngFor="let comment of comments">
+        <div class="user_comment_data">
+          <!-- <div mat-card-avatar class="profile-comment-image"></div> -->
+           <img [src]="comment.userProfilePic"  class="profile-comment-image" alt="comment.user_name">
+          <h4 class="commented-user-id">&#64;{{ comment.userTag }}</h4>
+          <h4 class="commented-datetime">{{ comment.date | date: 'short' }}</h4>
+          <!-- <h4 class="commented-datetime">{{ dateTime }}</h4> -->
+        </div>
+        <!-- <p *ngFor="">{{ comments[0] }}</p> -->
+        <p class="user_comment">{{ comment.comment }}</p>
       </div>
-      <!-- <p *ngFor="">{{ comments[0] }}</p> -->
-      <p class="user_comment">{{comment}}</p>
     </div>
-  </div>
-
-  <!-- If no comments, show nothing -->
-  <div *ngIf="comments.length === 0">
-    <p>No comments yet. Be the first to comment!</p>
-  </div>
-
-
-</mat-dialog-content>
-
-<mat-dialog-actions>
-  <button mat-flat-button color="primary" (click)="postComment()">Post</button>
-  <button mat-button (click)="onCancel()">Cancel</button>
-</mat-dialog-actions>
+  
+    <!-- If no comments, show nothing -->
+    <div *ngIf="comments.length === 0">
+      <p>No comments yet. Be the first to comment!</p>
+    </div>
+  </mat-dialog-content>
+  
+  <mat-dialog-actions>
+    <button mat-flat-button color="primary" (click)="postComment()">Post</button>
+    <button mat-button (click)="onCancel()">Cancel</button>
+  </mat-dialog-actions>

@@ -33,7 +33,7 @@
 
 
 .profile-comment-image {
-  background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg');
+  /* background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg'); */
   background-size: cover;
   height: 35px;
   width: 35px;

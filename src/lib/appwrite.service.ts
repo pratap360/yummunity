@@ -677,4 +677,30 @@ toggleSaveBlog(blogpost: any, user_tag: string): Observable<any> {
 }
 
 
+ // Add a comment to a post and update `post_comments`
+ async addCommentToPost(postId: string, comment: any) {
+  try {
+    this.getPostById(postId).subscribe(post => {
+      if (!post) throw new Error('Post not found');
+
+      const updatedComments = [...(post.post_whoComments || []), comment];
+      const updatedCommentCount = updatedComments.length;
+
+      this.database.updateDocument(environment.appwrite_DatabaseID, environment.post_CollectionID, postId, {
+        post_whoComments: updatedComments,
+        post_comments: updatedCommentCount
+      }).then(() => {
+        return true;
+      }).catch((error: any)  => {
+        console.error('Error adding comment:', error);
+        return false;
+      });
+    });
+    return true;
+  } catch (error) {
+    console.error('Error adding comment:', error);
+    return false;
+  }
+}
+
 }
