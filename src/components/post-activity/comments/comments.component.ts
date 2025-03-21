@@ -32,7 +32,7 @@ export class CommentsComponent  {
   comments: any[] = []; // Hold the list of comments
   currentUser: any = {}
   @Input() postId!: any;
-  postData: RecipePost | null = null;
+  postData!: RecipePost 
   dateTime: string = new Date().toLocaleString();
   
   commentModalOpen = false;
@@ -62,7 +62,7 @@ export class CommentsComponent  {
 
 
   async fetchPostData() {
-    const postId = this.postData?.id;
+    const postId = this.postId || this.postData?.id;
     if (!postId) {
       console.error('Post ID is undefined', postId);
       return;
@@ -98,8 +98,15 @@ export class CommentsComponent  {
     comment: this.newComment.trim(),
   }
 
+  const postId = this.postId?.id || this.postId || this.postData?.id;
+
+  if (!postId) {
+    console.error('Post ID is undefined');
+    return;
+  }
+
   try { 
-    await this.appwriteService.addCommentToPost(this.postId.id!, newCommentObj);
+    await this.appwriteService.addCommentToPost(postId, newCommentObj);
     this.comments.unshift(newCommentObj);
     this.newComment = '';
     // this.dialogRef.close(this.comments.length);
