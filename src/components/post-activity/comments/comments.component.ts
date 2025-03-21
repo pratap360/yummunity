@@ -1,13 +1,13 @@
 import { AppwriteService } from './../../../lib/appwrite.service';
 import { CommonModule } from '@angular/common';
-import { Component,Inject, Input   } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, Output } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { MatDialogRef ,MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { FormsModule } from '@angular/forms';
 import { RecipePost } from '../../../app/interface/recipe-post';
 
@@ -16,7 +16,7 @@ import { RecipePost } from '../../../app/interface/recipe-post';
   standalone: true,
   imports: [
     CommonModule,
-    FormsModule,  
+    FormsModule,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
@@ -25,31 +25,34 @@ import { RecipePost } from '../../../app/interface/recipe-post';
     MatDialogModule,
   ],
   templateUrl: './comments.component.html',
-  styleUrl: './comments.component.css'
+  styleUrl: './comments.component.css',
 })
-export class CommentsComponent  {
-  newComment:string = '';
+export class CommentsComponent {
+  newComment: string = '';
   comments: any[] = []; // Hold the list of comments
-  currentUser: any = {}
+  currentUser: any = {};
   @Input() postId!: any;
-  postData!: RecipePost 
+  postData!: RecipePost;
   dateTime: string = new Date().toLocaleString();
-  
+  @Output() commentAdded = new EventEmitter<number>();
   commentModalOpen = false;
-  
+  comments_counter: number = 0;
 
   constructor(
-    private  appwriteService: AppwriteService,
-  public dialogRef: MatDialogRef<CommentsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+    private appwriteService: AppwriteService,
+    public dialogRef: MatDialogRef<CommentsComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: { comments_counter: number }
+  ) {
+    // this.postId = data.postId;
+    // this.postData = data.postData;
+    this.comments_counter = data.comments_counter;
+  }
 
   ngOnInit(): void {
     // this.loadComments();
     this.getCurrentUser();
     this.fetchPostData();
   }
-
 
   async getCurrentUser() {
     try {
@@ -58,8 +61,6 @@ export class CommentsComponent  {
       console.error('Error fetching user:', error);
     }
   }
-
-
 
   async fetchPostData() {
     const postId = this.postId || this.postData?.id;
@@ -73,51 +74,61 @@ export class CommentsComponent  {
           this.postData = data;
           if (this.postData) {
             this.comments = this.postData.post_whoComments || [];
-            this.comments.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime()); // Sort desc
+            this.comments.sort(
+              (a: any, b: any) =>
+                new Date(b.date).getTime() - new Date(a.date).getTime()
+            ); // Sort desc
           }
         },
         error: (error) => {
           console.error('Error fetching post data:', error);
-        }
-    });
+        },
+      });
     } catch (error) {
       console.error('Error fetching post data:', error);
     }
   }
 
- async postComment(){
-  if (!this.newComment.trim() || !this.currentUser)
-    return;
+  async postComment() {
+    if (!this.newComment.trim() || !this.currentUser) {
+      console.error('Comment is empty', this.newComment);
+      return;
+    }
 
-  const newCommentObj = {
-    user_id: this.currentUser.$id,
-    user_name: this.currentUser.user_name,
-    user_tag: this.currentUser.user_tag,
-    user_profile_pic: this.currentUser.user_profile_pic,
-    date : new Date().toISOString(),
-    comment: this.newComment.trim(),
+    const newCommentObj = {
+      user_id: this.currentUser.$id,
+      user_name: this.currentUser.user_name,
+      user_tag: this.currentUser.user_tag,
+      user_profile_pic: this.currentUser.user_profile_pic,
+      date: new Date().toISOString(),
+      comment: this.newComment.trim(),
+    };
+
+    if (this.newComment.trim()) {
+      this.comments.push(newCommentObj);
+      this.newComment = '';
+      this.comments_counter++;
+      this.commentAdded.emit(this.comments.length);
+    }
+
+    const postId = this.postId?.id || this.postId || this.postData?.id;
+
+    if (!postId) {
+      console.error('Post ID is undefined');
+      return;
+    }
+
+    try {
+      await this.appwriteService.addCommentToPost(postId, newCommentObj);
+      this.comments.unshift(newCommentObj);
+      this.newComment = '';
+      // this.dialogRef.close(this.comments.length);
+      // Update post data after posting
+      this.fetchPostData();
+    } catch (error) {
+      console.error('Error posting comment:', error);
+    }
   }
-
-  const postId = this.postId?.id || this.postId || this.postData?.id;
-
-  if (!postId) {
-    console.error('Post ID is undefined');
-    return;
-  }
-
-  try { 
-    await this.appwriteService.addCommentToPost(postId, newCommentObj);
-    this.comments.unshift(newCommentObj);
-    this.newComment = '';
-    // this.dialogRef.close(this.comments.length);
-    // Update post data after posting
-    this.fetchPostData();
-  } catch (error) {
-    console.error('Error posting comment:', error);
-  }
-
- }
-
 
   // loadComments():void{
   //   const storedComments = localStorage.getItem(`comments_${this.data.postId}`);
@@ -141,12 +152,12 @@ export class CommentsComponent  {
   //     // this.comments++;
   //     this.comments.push(this.newComment);
   //     this.newComment = '';
-  //     // this.dialogRef.close(this.comments); 
+  //     // this.dialogRef.close(this.comments);
   //     // this.closeCommentModal();
 
   //     localStorage.setItem(`comments_${this.data.postId}`, JSON.stringify(this.comments));
   //     console.log(this.comments);
-      
+
   //     this.dialogRef.close(this.comments.length);
   //   }
   // }
@@ -156,7 +167,7 @@ export class CommentsComponent  {
   }
 
   onCancel(): void {
-    this.dialogRef.close(); // Close without doing anything
+    this.dialogRef.close(this.comments_counter); // Close without doing anything
   }
 
   // closeCommentModal(): void {

@@ -113,14 +113,14 @@ export class PostActivityComponent {
   openCommentModal(): void {
     const dialogRef = this.dialog.open(CommentsComponent, {
       width: '500px', // Set the modal width
-      data: { postId: 1 },
+      // data: { postId: 1 },
+      data: { comments_counter: this.comments_counter }
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.comments_counter = result;
-        console.log('Posted comment:', result);
-      }
+    dialogRef.afterClosed().subscribe((updatedCount) => {
+      if (updatedCount !== undefined) {
+        this.comments_counter = updatedCount; // Update count after modal is closed
+    }
     });
   }
 
@@ -141,6 +141,11 @@ export class PostActivityComponent {
   //     this.FullpostService.navigateToFullPost(this.post);
   //   }
   // }
+
+  updateCommentCount(newCount: number) {
+    this.comments_counter = newCount;
+}
+
 
   get commentCount(): number {
     return this.comments.length;
