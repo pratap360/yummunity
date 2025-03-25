@@ -38,7 +38,7 @@ import { BlogPost } from '../../app/interface/blog-post';
   styleUrl: './post-activity.component.css',
 })
 export class PostActivityComponent {
-  @Input() post!: RecipePost;
+  @Input() post!: any;
   // @Input() post: any;
   comments_counter = 0;
   commentModalOpen = false;
@@ -56,28 +56,29 @@ export class PostActivityComponent {
     private AppwriteService: AppwriteService
   ) {}
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['post'] && changes['post'].currentValue) {
-      console.log('Post received in PostActivityComponent:', this.post);
-    } else {
-      console.error('Post is undefined in PostActivityComponent');
-    }
-  }
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (changes['post'] && changes['post'].currentValue) {
+  //     console.log('Post received in Post-Activity-Component:', this.post);
+  //   } else {
+  //     console.error('Post is undefined in Post-Activity-Component');
+  //   }
+  // }
 
   ngOnInit(): void {
     this.AppwriteService.getCurrentUserId().then((userId) => {
       this.userId = userId || '';
       // this.hasLiked = this.post.likedBy?.includes(this.userId) || false;
-    }); // Fetch logged-in user ID
+    });
 
     const comments = JSON.parse(localStorage.getItem('comments_1') || '[]');
     this.comments_counter = comments.length;
 
     if (!this.post) {
-      console.error('Post is undefined in PostActivityComponent');
-      // console.log('Received Post in PostActivityComponent:', this.post);
+      console.error('Post is undefined in Post-Activity-Component');
       // console.log('Post ID:', this.post.id);
-    } 
+    } else {
+      console.log('Received Post in Post-Activity-Component:', this.post);
+    }
   }
 
   async toggleLike() {
@@ -111,10 +112,19 @@ export class PostActivityComponent {
   }
 
   openCommentModal(): void {
+    if (!this.post) {
+      console.error('No post available to open comment modal');
+      return;
+    }
+  
     const dialogRef = this.dialog.open(CommentsComponent, {
       width: '500px', // Set the modal width
-      // data: { postId: 1 },
-      data: { comments_counter: this.comments_counter }
+      data: {  postId: this.post.$id },
+      // data: { 
+      //   postId: this.post.id, 
+      //   post: this.post,
+      //   comments_counter: this.comments_counter 
+      // }
     });
 
     dialogRef.afterClosed().subscribe((updatedCount) => {
