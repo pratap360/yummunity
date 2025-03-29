@@ -55,3 +55,7 @@
   padding: 7px;
   font-size: 17px;
 }
+
+.mat-mdc-dialog-actions{
+  justify-content: flex-start;
+}

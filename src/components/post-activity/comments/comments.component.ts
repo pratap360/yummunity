@@ -1,4 +1,3 @@
-import { UserData } from './../../../app/interface/user-data';
 import { AppwriteService } from './../../../lib/appwrite.service';
 import { CommonModule } from '@angular/common';
 import {
@@ -61,13 +60,8 @@ export class CommentsComponent implements OnInit {
     public dialog: MatDialog,
     private appwriteService: AppwriteService,
     public dialogRef: MatDialogRef<CommentsComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { postId?: string; userId?: string; }
-  ) // @Inject(MAT_DIALOG_DATA) public data: { postId?: string, post?: RecipePost,comments_counter: number }
-  {
-    // this.postId = data.postId;
-    // this.postData = data.postData;
-    // this.comments_counter = data.comments_counter || 0;
-  }
+    @Inject(MAT_DIALOG_DATA) public data: { postId?: string}
+  ){}
 
   ngOnInit(): void {
     this.postId = this.data.postId || '';
@@ -79,14 +73,6 @@ export class CommentsComponent implements OnInit {
     } else {
       console.error('Post ID is undefined in CommentsComponent');
     }
-
-    // this.loadComments();
-    // this.getCurrentUser();
-    // if (!this.postId) {
-    //   console.error('Post ID is undefined');
-    // } else {
-    //   this.fetchPostData();
-    // }
   }
 
    getCurrentUser() {
@@ -105,181 +91,93 @@ export class CommentsComponent implements OnInit {
     }
   }
 
-  async fetchPostData() {
-    const postId = this.data.postId;
-    if (!postId) {
-      console.error('Post ID is undefined', postId);
-      return;
-    }
-    try {
-      this.appwriteService.getPostById(postId).subscribe({
-        next: (data: RecipePost) => {
-          this.postData = data;
-          if (this.postData) {
-            this.comments = Array.isArray(this.postData.post_whoComments) 
-            ? this.postData.post_whoComments 
-            : [];
-            this.comments_counter = this.comments.length;
-            this.comments.sort(
-              (a: any, b: any) =>
-                new Date(b.date).getTime() - new Date(a.date).getTime()
-            ); // Sort desc
+    // In your comments.component.ts
+fetchPostData() {
+  this.appwriteService.getPostById(this.postId).subscribe({
+    next: (data) => {
+      // Parse the string comments back to objects if they're not already
+      if (data.post_whoComments) {
+        this.comments = data.post_whoComments.map((comment: any) => {
+          if (typeof comment === 'string') {
+            try {
+              return JSON.parse(comment);
+            } catch (e) {
+              return comment;
+            }
           }
-        },
-        error: (error) => {
-          console.error('Error fetching post data:', error);
-        },
-      });
-    } catch (error) {
-      console.error('Error fetching post data:', error);
-    }
-  }
-
-  // async postComment() {
-  //   if (!this.newComment.trim() || !this.userId) {
-  //     // console.error('Comment is empty', this.newComment);
-  //     alert('Please enter any comment');
-  //     return;
-  //   }
-
-  //   const postId = this.data.postId;
-  //   if (!postId) {
-  //     console.error('Post ID is undefined when posting comment');
-  //     return;
-  //   }
-
-  //   const newCommentObj = {
-  //     user_id: this.currentUser.$id,
-  //     user_name: this.currentUser.user_name,
-  //     user_tag: this.currentUser.user_tag,
-  //     user_profile_pic: this.currentUser.user_profile_pic,
-  //     date: new Date().toISOString(),
-  //     comment: this.newComment.trim(),
-  //   };
-
-  //   // if (this.newComment.trim()) {
-  //   //   this.comments.push(newCommentObj);
-  //   //   this.newComment = '';
-  //   //   this.comments_counter++;
-  //   //   this.commentAdded.emit(this.comments.length);
-  //   // }
-  //   try {
-  //     const updatedComments = [newCommentObj, ...this.comments];
-  //     await this.appwriteService.addCommentToPost(postId, updatedComments);
-  //     this.comments = updatedComments;
-  //     this.newComment = '';
-  //     this.comments_counter = this.comments.length;
-  //     this.commentAdded.emit(this.comments_counter);
+          return comment;
+        });
+      } else {
+        this.comments = [];
+      }
       
-  //     this._snackBar.open('Comment added successfully!!', 'OK', {
-  //       horizontalPosition: this.horizontalPosition,
-  //       verticalPosition: this.verticalPosition,
-  //       duration: this.durationInSeconds * 1000,
-  //     });
-  //     this.dialogRef.close(this.comments_counter);
-  //     // this.fetchPostData();
-  //   } catch (error) {
-  //     console.error('Error posting comment:', error);
-  //     this._snackBar.open('Removed from your profile !!', 'OK', {
-  //       horizontalPosition: this.horizontalPosition,
-  //       verticalPosition: this.verticalPosition,
-  //       duration: this.durationInSeconds * 1000,
-  //     });
-  //   }
-  // }
+      this.comments_counter = this.comments.length;
+      this.comments.sort(
+        (a: any, b: any) =>
+          new Date(b.date).getTime() - new Date(a.date).getTime()
+      );
+    },
+    error: (error) => {
+      console.error('Error fetching post data:', error);
+    },
+  });
+}
 
-  // loadComments():void{
-  //   const storedComments = localStorage.getItem(`comments_${this.data.postId}`);
-  //   this.comments = storedComments ? JSON.parse(storedComments) : [];
-  // }
-
-  // onPostComment(): void {
-  //   if (this.newComment.trim()) {
-  //         this.comments++;
-  //         this.newComment = '';
-  //         this.dialogRef.close(this.newComment);
-  //       }
-  // }
-
-  //   closeCommentModal(): void {
-  //   this.commentModalOpen = false;
-  // }
-
-  // postComment(): void {
-  //   if (this.newComment.trim()) {
-  //     // this.comments++;
-  //     this.comments.push(this.newComment);
-  //     this.newComment = '';
-  //     // this.dialogRef.close(this.comments);
-  //     // this.closeCommentModal();
-
-  //     localStorage.setItem(`comments_${this.data.postId}`, JSON.stringify(this.comments));
-  //     console.log(this.comments);
-
-  //     this.dialogRef.close(this.comments.length);
-  //   }
-  // }
 
   postComment() {
-    const postId = this.data.postId;
-    if (!postId) {
-      console.error('Post ID is undefined when posting comment');
-      return;
-    }
-
+    // debugger;
     if (!this.newComment.trim() || !this.userId) {
-      alert('Please enter any comment');
+      this._snackBar.open('Please enter a comment', 'OK', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
+      });
       return;
     }
-
     const newCommentObj = {
       user_id: this.currentUser.$id,
       user_name: this.currentUser.user_name,
       user_tag: this.currentUser.user_tag,
       user_profile_pic: this.currentUser.user_profile_pic,
-      date: new Date().toISOString(),
       comment: this.newComment.trim(),
+      date: new Date().toISOString()
     };
-  
-      // Create an updated comments array
-      // const updatedComments = [newCommentObj, ...this.comments];
-      
-      // Use the Observable-based method from the service
-      this.appwriteService.addComment(postId, newCommentObj).subscribe({
-        next: (response) => {
 
-          if (response || response.post_whoComments) {
-            this.comments = response.post_whoComments || [];
-            this.comments_counter = this.comments.length;
-            this.commentAdded.emit(this.comments_counter);
-            console.log('Comments after adding LINE 255:', this.comments);
-          }else{
-            console.error('No comments found in response:', response);
-            console.log('Comments after adding LINE 258:', this.comments);
-          }
+    const commentString = JSON.stringify(newCommentObj);
+    console.log('Comment to be added:', commentString);
+    
+    this.appwriteService.addComment(this.postId, commentString).subscribe({
+      next: (response) => {
 
-          // this.comments.unshift(updatedComments);
-          // this.newComment = '';
-          // this.comments_counter = this.comments.length;
-          // this.commentAdded.emit(this.comments_counter);
-          this.newComment = '';
-          this._snackBar.open('Comment added successfully!!', 'OK', {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-            duration: this.durationInSeconds * 1000,
-          });
-          this.dialogRef.close(this.comments_counter);
-        },
-        error: (error) => {
-          console.error('Error posting comment:', error);
-          this._snackBar.open('Failed to add comment', 'OK', {
-            horizontalPosition: this.horizontalPosition,
-            verticalPosition: this.verticalPosition,
-            duration: this.durationInSeconds * 1000,
-          });
+        if (!response || !response.post_whoComments) {
+          throw new Error('Invalid response from server');
         }
-      });
+        // Update comments locally
+        this.comments = response.post_whoComments || [];
+        this.comments_counter = this.comments.length;
+        // Reset new comment input
+        this.newComment = '';
+
+        // Show success message
+        this._snackBar.open('Comment added successfully!', 'OK', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+
+        this.dialogRef.close(this.comments_counter);
+      },
+      error: (error) => {
+        console.error('Error posting comment:', error);
+        this._snackBar.open('Failed to add comment', 'OK', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+      }
+    });
   }
+
   onCancel(): void {
     this.dialogRef.close(this.comments_counter); // Close without doing anything
   }
@@ -287,36 +185,4 @@ export class CommentsComponent implements OnInit {
   get commentCount(): number {
     return this.comments.length;
   }
-
-  // openCommentModal(): void {
-  //   if (!this.postData) {
-  //     console.error('No post available to open comment modal');
-  //     return;
-  //   }
-
-  //   const dialogRef = this.dialog.open(CommentsComponent, {
-  //     width: '500px',
-  //     data: {
-  //       postId: this.postData.id,
-  //       post: this.postData,
-  //       comments_counter: this.comments_counter,
-  //     },
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((updatedCount) => {
-  //     if (updatedCount !== undefined) {
-  //       this.comments_counter = updatedCount; // Update count after modal is closed
-  //     }
-  //   });
-  // }
-  // closeCommentModal(): void {
-  //   this.commentModalOpen = false;
-  // }
-  // postComment(): void {
-  //   if (this.newComment.trim()) {
-  //     this.comments++;
-  //     this.newComment = '';
-  //     this.closeCommentModal();
-  //   }
-  // }
 }

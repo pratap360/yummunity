@@ -32,16 +32,15 @@ import { AppwriteService } from '../../lib/appwrite.service';
   styleUrl: './blog-activity.component.css',
 })
 export class BlogActivityComponent {
+  @Input() blogpost!: any;
   comments_counter = 0;
   commentModalOpen = false;
   newComment = '';
-
-  @Input() blogpost!: BlogPost;
+  comments: string[] = [];
 
   userId: string = '';
   userData: { user_tag: string } = { user_tag: '' };
   
-  comments: string[] = [];
   constructor(
     public dialog: MatDialog,
     private AppwriteService: AppwriteService
@@ -68,18 +67,27 @@ export class BlogActivityComponent {
   //   }
   // }
   openCommentModal(): void {
+    if(!this.blogpost){
+      console.error('No blog post is available to open comment modal');
+      return;
+    }
+
     const dialogRef = this.dialog.open(CommentsComponent, {
       width: '500px', // Set the modal width
-      data: { postId: 1 },
+      data: {  blogpostId: this.blogpost.$id },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
+      if (result !== undefined) {
         this.comments_counter = result;
         console.log('Posted comment:', result);
       }
     });
   }
+
+  updateCommentCount(newCount: number) {
+    this.comments_counter = newCount;
+}
 
   get commentCount(): number {
     return this.comments.length;

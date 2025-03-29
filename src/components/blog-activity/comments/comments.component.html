@@ -1,5 +1,3 @@
-<!-- Comment Modal Dialog -->
-<!-- <mat-dialog-content *ngIf="commentModalOpen"> -->
 <mat-dialog-content>
   <span class="comment-tittle">Post a Comment</span>
   <form class="recipe-post-comments">
@@ -10,15 +8,18 @@
       <mat-hint align="end">{{comment.value.length}} / 200</mat-hint>
     </mat-form-field>
   </form>
-
+  <mat-dialog-actions>
+    <button mat-flat-button color="primary" (click)="BlogpostComment()">Post</button>
+    <button mat-button (click)="onCancel()">Cancel</button>
+  </mat-dialog-actions>
 
   <!-- Display existing comments if available -->
   <div *ngIf="comments.length > 0" class="comment-section">
     <div class="comment-box" *ngFor="let comment of comments">
       <div class="user_comment_data">
         <!-- <div mat-card-avatar class="profile-comment-image"></div> -->
-         <img [src]="comment.userProfilePic"  class="profile-comment-image" alt="comment.user_name">
-        <h4 class="commented-user-id">&#64;{{ comment.userTag }}</h4>
+         <img [src]="comment.user_profile_pic"  class="profile-comment-image" [alt]="comment.user_name">
+        <h4 class="commented-user-id">&#64;{{ comment.user_tag }}</h4>
         <h4 class="commented-datetime">{{ comment.date | date: 'short' }}</h4>
         <!-- <h4 class="commented-datetime">{{ dateTime }}</h4> -->
       </div>
@@ -26,16 +27,10 @@
       <p class="user_comment">{{ comment.comment }}</p>
     </div>
   </div>
-
+  {{ blogpostId | json}}
+  {{ userId | json}}
   <!-- If no comments, show nothing -->
   <div *ngIf="comments.length === 0">
     <p>No comments yet. Be the first to comment!</p>
   </div>
-
-
 </mat-dialog-content>
-
-<mat-dialog-actions>
-  <button mat-flat-button color="primary" (click)="BlogpostComment()">Post</button>
-  <button mat-button (click)="onCancel()">Cancel</button>
-</mat-dialog-actions>

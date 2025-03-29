@@ -406,6 +406,15 @@ export class AppwriteService {
       )
     );
   }
+  getBlogPostById(documentId: string): Observable<any> {
+    return from(
+      this.database.getDocument(
+        environment.appwrite_DatabaseID,
+        environment.blogpost_CollectionID,
+        documentId
+      )
+    );
+  }
 
   createNewUser(data: any): Observable<any> {
     return this.database.createDocument(
@@ -479,15 +488,6 @@ export class AppwriteService {
       ) as Promise<UserData>
     );
   }
-
-  // updateUserData(userId: string, userData: any): Observable<any> {
-  //   return this.database.updateDocument(
-  //     environment.appwrite_DatabaseID,
-  //     environment.users_CollectionID,
-  //     userId,
-  //     userData
-  //   );
-  // }
 
   updateUserData(userId: string, userData: any): Observable<any> {
     // Check if there's a new profile pic to upload
@@ -670,15 +670,21 @@ export class AppwriteService {
     }
   }
 
-  // Add a comment to a post and update `post_comments`
-  async addCommentToPost(postId: string, comment: any) {
-    try {
-      this.getPostById(postId).subscribe((post) => {
-        if (!post) throw new Error('Post not found');
+  // ! adding comments to the post and blog post featuere is here. 
 
-        const updatedComments = [...(post.post_whoComments || []), comment];
-        const updatedCommentCount = updatedComments.length;
-
+addComment(postId: string, commentObj: any) {
+  return new Observable<any>((observer) => {
+    // First get the existing post data
+    this.getPostById(postId).subscribe({
+      next: (postData) => {
+        // Initialize comments array if it doesn't exist
+        const currentComments = Array.isArray(postData.post_whoComments) 
+          ? postData.post_whoComments 
+          : [];
+        
+        const updatedComments = [commentObj, ...currentComments];
+        
+        // Update the post with the new comments array
         this.database
           .updateDocument(
             environment.appwrite_DatabaseID,
@@ -686,104 +692,86 @@ export class AppwriteService {
             postId,
             {
               post_whoComments: updatedComments,
-              post_comments: updatedCommentCount,
+              post_comments: updatedComments.length,
             }
           )
-          .then(() => {
-            return true;
+          .then((response: any) => {
+            // On success, parse the comments back to objects for the UI
+            if (response.post_whoComments) {
+              response.post_whoComments = response.post_whoComments.map(
+                (comment: string) => {
+                  try {
+                    return JSON.parse(comment);
+                  } catch (e) {
+                    return comment; // Keep as is if it's not JSON
+                  }
+                }
+              );
+            }
+            observer.next(response);
+            observer.complete();
           })
           .catch((error: any) => {
-            console.error('Error adding comment:', error);
-            return false;
+            observer.error(error);
           });
-      });
-      return true;
-    } catch (error) {
-      console.error('Error adding comment:', error);
-      return false;
-    }
-  }
-
-  // Method to update comments for a specific post
-  updatePostComments(postId: string, newComment: any): Observable<any> {
-    try {
-      return from(
-        this.database.getDocument(
-          environment.appwrite_DatabaseID,
-          environment.post_CollectionID,
-          postId
-        )
-      ).pipe(
-        map((post: any) => {
-          const existingComments = Array.isArray(post.post_whoComments)
-            ? post.post_whoComments
-            : [];
-
-          const updatedComments = [newComment, ...existingComments];
-
-          return this.database.updateDocument(
-            environment.appwrite_DatabaseID,
-            environment.post_CollectionID,
-            postId,
-            {
-              post_whoComments: updatedComments,
-            }
-          );
-        }),
-        catchError((error) => {
-          console.error('Error updating post comments:', error);
-          throw error;
-        })
-      );
-    } catch (error) {
-      console.error('Error in updatePostComments method:', error);
-      return throwError(() => new Error('Failed to update comments'));
-    }
-  }
-
-  addComment(postId: string, newComment: any): Observable<any> {
-    return from(
-      this.database.getDocument(
-        environment.appwrite_DatabaseID,
-        environment.post_CollectionID,
-        postId
-      )
-    ).pipe(
-      map((post: any) => {
-        // Ensure post_whoComments is an array, initialize if not
-        const existingComments = Array.isArray(post.post_whoComments) 
-          ? post.post_whoComments 
+      },
+      error: (error) => {
+        observer.error(error);
+      }
+    });
+  });
+}
+addBlogComment(blogpostId: string, commentObj: any){
+  return new Observable<any>((observer) => {
+    // First get the existing post data
+    this.getBlogPostById(blogpostId).subscribe({
+      next: (blogPostData) => {
+        // Initialize comments array if it doesn't exist
+        const currentComments = Array.isArray(blogPostData.blog_post_whoComments) 
+          ? blogPostData.blog_post_whoComments 
           : [];
+        
+        const updatedComments = [commentObj, ...currentComments];
+        
+        // Update the post with the new comments array
+        this.database
+          .updateDocument(
+            environment.appwrite_DatabaseID,
+            environment.blogpost_CollectionID,
+            blogpostId,
+            {
+              blog_post_whoComments: updatedComments,
+              blog_post_comments: updatedComments.length,
+            }
+          )
+          .then((response: any) => {
+            // On success, parse the comments back to objects for the UI
+            if (response.blog_post_whoComments) {
+              response.blog_post_whoComments = response.blog_post_whoComments.map(
+                (comment: string) => {
+                  try {
+                    return JSON.parse(comment);
+                  } catch (e) {
+                    return comment; // Keep as is if it's not JSON
+                  }
+                }
+              );
+            }
+            observer.next(response);
+            observer.complete();
+          })
+          .catch((error: any) => {
+            observer.error(error);
+          });
+      },
+      error: (error) => {
+        observer.error(error);
+      }
+    });
+  });
+}
 
-        // Add the new comment to the beginning of the array
-        const updatedComments = [newComment, ...existingComments];
-
-        // Update the document with the new comments array
-        return this.database.updateDocument(
-          environment.appwrite_DatabaseID,
-          environment.post_CollectionID,
-          postId,
-          {
-            post_whoComments: updatedComments,
-            post_comments: updatedComments.length // Update comment count
-          }
-        );
-      }),
-      catchError((error) => {
-        console.error('Error in addComment method:', error);
-        return throwError(() => new Error('Failed to add comment'));
-      })
-    );
-  }
 
 
-  getComments(postId: string): Observable<any> {
-    return from(
-      this.database.getDocument(
-        environment.appwrite_DatabaseID,
-        environment.post_CollectionID,
-        postId
-      )
-    );
-  }
+
 }
