@@ -39,11 +39,10 @@ import { BlogPost } from '../../app/interface/blog-post';
 })
 export class PostActivityComponent {
   @Input() post!: any;
-  // @Input() post: any;
-  comments_counter = 0;
+
+  post_comments: number = 0;
   commentModalOpen = false;
   newComment = '';
-
   comments: string[] = [];
 
   userId: string = '';
@@ -70,14 +69,18 @@ export class PostActivityComponent {
       // this.hasLiked = this.post.likedBy?.includes(this.userId) || false;
     });
 
-    const comments = JSON.parse(localStorage.getItem('comments_1') || '[]');
-    this.comments_counter = comments.length;
+    // const comments = JSON.parse(localStorage.getItem('comments_1') || '[]');
+    // this.comments_counter = comments.length;
 
     if (!this.post) {
       console.error('Post is undefined in Post-Activity-Component');
       // console.log('Post ID:', this.post.id);
     } else {
       console.log('Received Post in Post-Activity-Component:', this.post);
+    }
+
+    if (this.post && this.post.post_comments === undefined) {
+      this.post.post_comments = 0;
     }
   }
 
@@ -120,18 +123,17 @@ export class PostActivityComponent {
     const dialogRef = this.dialog.open(CommentsComponent, {
       width: '500px', // Set the modal width
       data: {  postId: this.post.$id },
-      // data: { 
-      //   postId: this.post.id, 
-      //   post: this.post,
-      //   comments_counter: this.comments_counter 
-      // }
     });
 
-    dialogRef.afterClosed().subscribe((updatedCount) => {
-      if (updatedCount !== undefined) {
-        this.comments_counter = updatedCount; // Update count after modal is closed
-    }
+    dialogRef.afterClosed().subscribe((commentCount: number) => {
+      console.log('Dialog closed with comment count:', commentCount);
+      if (commentCount !== undefined) {
+        console.log('Updating post comments from', this.post.post_comments, 'to', commentCount);
+        this.post.post_comments = commentCount;
+        console.log('Post after update:', this.post);
+      }
     });
+
   }
 
   // viewFullPost(documentId: string) {
@@ -151,10 +153,6 @@ export class PostActivityComponent {
   //     this.FullpostService.navigateToFullPost(this.post);
   //   }
   // }
-
-  updateCommentCount(newCount: number) {
-    this.comments_counter = newCount;
-}
 
 
   get commentCount(): number {

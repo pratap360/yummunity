@@ -3,9 +3,10 @@
     <!-- <app-comments [postId]="post.id"></app-comments> -->
     <button mat-raised-button (click)="openCommentModal()">
         <mat-icon>comment</mat-icon>
-        {{ comments_counter }}
+        <!-- {{ comments_counter }} -->
+        {{ post.post_comments }}
         <span>
-            Comment{{ comments_counter > 1 ? 's' : '' }}
+        Comment{{ (post.post_comments || 0) !== 1 ? 's' : '' }}
         </span>
     </button>
     <app-saves [post]="post" [userId]="userData.user_tag"></app-saves>

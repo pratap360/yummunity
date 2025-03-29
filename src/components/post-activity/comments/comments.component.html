@@ -24,8 +24,8 @@
       <p class="user_comment">{{ comment.comment }}</p>
     </div>
   </div>
-  {{ postId | json}}
-  {{ userId | json}}
+  <!-- {{ postId | json}}
+  {{ userId | json}} -->
   <!-- If no comments, show nothing -->
   <div *ngIf="comments.length === 0">
     <p>No comments yet. Be the first to comment!</p>

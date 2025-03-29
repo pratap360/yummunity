@@ -33,7 +33,7 @@ import { AppwriteService } from '../../lib/appwrite.service';
 })
 export class BlogActivityComponent {
   @Input() blogpost!: any;
-  comments_counter = 0;
+  blog_post_comments: number = 0;
   commentModalOpen = false;
   newComment = '';
   comments: string[] = [];
@@ -48,24 +48,17 @@ export class BlogActivityComponent {
   ngOnInit(): void {
     this.AppwriteService.getCurrentUserId().then((userId) => {
       this.userId = userId || '';
-      // this.userData.user_tag = userId || '';
-      // this.checkIfSaved();
     });
-
-    const comments = JSON.parse(localStorage.getItem('comments_1') || '[]');
-    this.comments_counter = comments.length;
 
     if (!this.blogpost) {
       console.error('Post is undefined in Blog Activity Component');
     } 
+
+    if(this.blogpost && this.blogpost.blog_post_comments === undefined){
+      this.blogpost.blog_post_comments = 0;
+    }
   }
 
-  // checkIfSaved(): void {
-  //   if (this.blogpost && this.userId) {
-  //     // Check if the post is saved by the current user
-  //     this.AppwriteService.isPostSavedByUser(this.blogpost, this.userId);
-  //   }
-  // }
   openCommentModal(): void {
     if(!this.blogpost){
       console.error('No blog post is available to open comment modal');
@@ -77,17 +70,17 @@ export class BlogActivityComponent {
       data: {  blogpostId: this.blogpost.$id },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result !== undefined) {
-        this.comments_counter = result;
-        console.log('Posted comment:', result);
+    dialogRef.afterClosed().subscribe((BlogcommentCount: number) => {
+      console.log('this is what i get in blog comment count', BlogcommentCount);
+      if(BlogcommentCount !== undefined){
+        console.log('updating blog comment count from', this.blog_post_comments, 'to', BlogcommentCount);
+        this.blog_post_comments = BlogcommentCount;
+        console.log('blog post after update:', this.blogpost);
       }
     });
   }
 
-  updateCommentCount(newCount: number) {
-    this.comments_counter = newCount;
-}
+
 
   get commentCount(): number {
     return this.comments.length;
