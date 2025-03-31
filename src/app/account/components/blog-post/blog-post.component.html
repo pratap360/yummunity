@@ -3,15 +3,11 @@
     <img mat-card-avatar class="profile-header-image" [src]="userData?.user_profile_pic" [alt]="userData?.user_tag">
     <mat-card-title>{{userData?.user_name}}</mat-card-title>
     <mat-card-subtitle>{{userData?.user_bio}}</mat-card-subtitle>
-    <!-- <img mat-card-avatar class="profile-header-image" [src]="userData ? userData.user_profile_pic : ''"
-      [alt]="userData ? userData.user_name : ''">
-    <mat-card-title>{{userData ? userData.user_name : ''}}</mat-card-title>
-    <mat-card-subtitle>{{userData ? userData.user_bio : ''}}</mat-card-subtitle> -->
     <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #menu="matMenu">
-      <button mat-menu-item (click)="sharePost()">
+      <button mat-menu-item (click)="sharePost(blog)">
         <mat-icon>share</mat-icon>
         <span>Share Post</span>
       </button>

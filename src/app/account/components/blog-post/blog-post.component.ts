@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { BlogPost } from '../../../interface/blog-post';
 import { CommonModule } from '@angular/common';
 import { UserData } from '../../../interface/user-data';
+import { ShareBlogPostComponent } from '../../../../components/blog-activity/share-blog-post/share-blog-post.component';
 
 @Component({
   selector: 'app-blog-post',
@@ -37,34 +38,25 @@ export class BlogPostComponent {
   @Input() userData: any;
   @Input() alluserData: { [postId: string]: UserData } = {};
 
-  //   constructor(private appwriteService: AppwriteService){}
-
-  //   ngOnInit(): void {
-  //     this.fetchBlogPosts();
-  //   }
-
-  // fetchBlogPosts(): void {
-  //   this.appwriteService.getBlogPosts().subscribe({
-  //     next:(data) => {
-  //       this.blogPosts = data.documents;
-  //       console.log('All Blog Posts:', this.blogPosts);
-  //     },
-  //     error:(error) => {
-  //       console.error('Error:', error);
-  //     }
-  //   })
-  // }
-
-  // blog post component
-  // blogTitle = 'Summer Chipotle Chicken Cobb Salad with Cilantro Vinaigrette';
-  // longText = `This juicy salad tastes like summer! With chipotle chicken, sweet corn, avocado, cilantro vinaigrette, bacon crumbles, and fresh strawberries for a pop of sweetness.`;
-
   readonly menuTrigger = viewChild.required(MatMenuTrigger);
   readonly dialog = inject(MatDialog);
-  sharePost() {
-    const dialogRef = this.dialog.open(SharePostComponent, {
+  sharePost(blog: any): void {
+    const shareUrl = `${window.location.origin}/user/${blog.user_tag}/blog_post/${blog.$id}`;
+    if (!this.blogPosts) {
+      console.error('Post ID is undefined in TextPostComponent');
+      return;
+    }
+
+    const dialogRef = this.dialog.open(ShareBlogPostComponent, {
       restoreFocus: false,
+      width: '500px',
+      data: {
+        postId: blog.$id,
+        userTag: blog.user_tag,
+        shareUrl: shareUrl,
+      },
     });
+
     dialogRef.afterClosed().subscribe(() => this.menuTrigger().focus());
   }
 }

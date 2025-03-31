@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, viewChild } from '@angular/core';
+import { Component, inject, Input, OnInit, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -34,24 +34,10 @@ import { UserData } from '../../../app/interface/user-data';
   templateUrl: './text-post.component.html',
   styleUrl: './text-post.component.css',
 })
-export class TextPostComponent {
-  // comments_counter = 0;
+export class TextPostComponent implements OnInit {
 
-  // constructor(public dialog: MatDialog) {}
-
-  // ngOnInit(): void {
-  //   const comments = JSON.parse(localStorage.getItem('comments_1') || '[]');
-  //   this.comments_counter = comments.length;
-  // }
-  // @Input() postsId: any;
   @Input() posts: RecipePost[] = [];
-  // user_name: string = 'Pratap Parui';
-  // user_bio: string = 'Developer|Food Critics';
-  // post_id: string = '678ea60e001c28e7b3f9';
-  // constructor(private appwriteService: AppwriteService) {}
-  // ngOnInit(): void {
-  //   this.fetchAllPosts();
-  // }
+
   @Input() userData: any;
   @Input() alluserData: { [postId: string]: UserData } = {};
 
@@ -65,10 +51,23 @@ export class TextPostComponent {
   readonly menuTrigger = viewChild.required(MatMenuTrigger);
 
   readonly dialog = inject(MatDialog);
-  sharePost() {
-    const dialogRef = this.dialog.open(SharePostComponent, {
-      restoreFocus: false,
-    });
-    dialogRef.afterClosed().subscribe(() => this.menuTrigger().focus());
-  }
+  sharePost(post:any): void {
+    const shareUrl = `${window.location.origin}/user/${post.user_tag}/post/${post.$id}`;
+   if(!this.posts){
+     console.error('Post ID is undefined in TextPostComponent');
+     return;
+   }
+
+   const dialogRef = this.dialog.open(SharePostComponent, {
+     restoreFocus: false,
+     width: '500px',
+     data: {
+       postId: post.$id,
+       userTag: post.user_tag,
+       shareUrl: shareUrl
+     },
+   });
+
+   dialogRef.afterClosed().subscribe(() => this.menuTrigger().focus());
+ }
 }

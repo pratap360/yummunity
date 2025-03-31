@@ -60,32 +60,31 @@ export class WithImgPostComponent implements OnInit {
     console.log('Post id is there on text-post:', this.posts);
     console.log('User data in text-post:', this.userData);
   }
-  // fetchAllPosts(): void {
-  //   this.appwriteService.getAllPosts().subscribe({
-  //     next: (data) => {
-  //       // console.log('Data:', data);
-  //       this.posts = data.documents;
-  //       console.log( 'All Posts:', this.posts);
-  //     },
-  //     error: (error) => {
-  //       console.error('Error fetching posts:', error);
-  //     }
-  //   })
-  // }
+
   getUserData(postId: string): UserData {
     return this.postUserData[postId] || {};
   }
-  // getUserData(post: RecipePost): UserData {
-  //   return this.userData[post.id] || {}; // Return empty object if no user data found
-  // }
 
   readonly menuTrigger = viewChild.required(MatMenuTrigger);
 
   readonly dialog = inject(MatDialog);
-  sharePost() {
-    const dialogRef = this.dialog.open(SharePostComponent, {
-      restoreFocus: false,
-    });
-    dialogRef.afterClosed().subscribe(() => this.menuTrigger().focus());
-  }
+  sharePost(post:any): void {
+    const shareUrl = `${window.location.origin}/user/${post.user_tag}/post/${post.$id}`;
+   if(!this.posts){
+     console.error('Post ID is undefined in TextPostComponent');
+     return;
+   }
+
+   const dialogRef = this.dialog.open(SharePostComponent, {
+     restoreFocus: false,
+     width: '500px',
+     data: {
+       postId: post.$id,
+       userTag: post.user_tag,
+       shareUrl: shareUrl
+     },
+   });
+
+   dialogRef.afterClosed().subscribe(() => this.menuTrigger().focus());
+ }
 }

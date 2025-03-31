@@ -8,12 +8,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { BlogActivityComponent } from '../../blog-activity/blog-activity.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { SharePostComponent } from '../../post-activity/share-post/share-post.component';
 import { MatDialog } from '@angular/material/dialog';
-import { AppwriteService } from '../../../lib/appwrite.service';
 import { BlogPost } from '../../../app/interface/blog-post';
 import { CommonModule } from '@angular/common';
 import { UserData } from '../../../app/interface/user-data';
+import { UsercontextService } from '../../../app/services/users/usercontext.service';
+import { ShareBlogPostComponent } from '../../blog-activity/share-blog-post/share-blog-post.component';
 
 @Component({
   selector: 'app-blog-post',
@@ -38,34 +38,38 @@ export class BlogPostComponent {
   @Input() userData: any;
   @Input() alluserData: { [postId: string]: UserData } = {};
 
-  //   constructor(private appwriteService: AppwriteService){}
+  constructor(private UserContextService: UsercontextService) {}
 
-  //   ngOnInit(): void {
-  //     this.fetchBlogPosts();
-  //   }
+  ngOnInit(): void {
+    this.UserContextService.postUserData$.subscribe((data) => {
+      this.alluserData = data;
+    });
+    console.log('Post id is there on text-post:', this.blogPosts);
+    console.log('User data in blog-post:', this.userData);
 
-  // fetchBlogPosts(): void {
-  //   this.appwriteService.getBlogPosts().subscribe({
-  //     next:(data) => {
-  //       this.blogPosts = data.documents;
-  //       console.log('All Blog Posts:', this.blogPosts);
-  //     },
-  //     error:(error) => {
-  //       console.error('Error:', error);
-  //     }
-  //   })
-  // }
-
-  // blog post component
-  // blogTitle = 'Summer Chipotle Chicken Cobb Salad with Cilantro Vinaigrette';
-  // longText = `This juicy salad tastes like summer! With chipotle chicken, sweet corn, avocado, cilantro vinaigrette, bacon crumbles, and fresh strawberries for a pop of sweetness.`;
+  }
 
   readonly menuTrigger = viewChild.required(MatMenuTrigger);
   readonly dialog = inject(MatDialog);
-  sharePost() {
-    const dialogRef = this.dialog.open(SharePostComponent, {
-      restoreFocus: false,
-    });
-    dialogRef.afterClosed().subscribe(() => this.menuTrigger().focus());
-  }
+
+
+  sharePost(blog:any): void {
+    const shareUrl = `${window.location.origin}/user/${blog.user_tag}/blog_post/${blog.$id}`;
+   if(!this.blogPosts){
+     console.error('Post ID is undefined in TextPostComponent');
+     return;
+   }
+
+   const dialogRef = this.dialog.open(ShareBlogPostComponent, {
+     restoreFocus: false,
+     width: '500px',
+     data: {
+       postId: blog.$id,
+       userTag: blog.user_tag,
+       shareUrl: shareUrl
+     },
+   });
+
+   dialogRef.afterClosed().subscribe(() => this.menuTrigger().focus());
+ }
 }
