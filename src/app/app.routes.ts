@@ -31,11 +31,11 @@ export const routes: Routes = [
 
   {
     // path: 'user/:user_tag/fullpostID',
-    path: 'fullpost/:postId',
-    loadComponent: () =>
-      import('../components/full-post/full-post.component').then(
-        (m) => m.FullPostComponent
-      ),
+    path: 'user/:user_tag/post/:post_id', component: FullPostComponent,
+    // loadComponent: () =>
+    //   import('../components/full-post/full-post.component').then(
+    //     (m) => m.FullPostComponent
+    //   ),
   },
 
   { path: 'not-found', component: NotFoundComponent },

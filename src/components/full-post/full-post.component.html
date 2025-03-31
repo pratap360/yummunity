@@ -2,18 +2,17 @@
 
 <div class="container">
 
-  <mat-card appearance="outlined" class="posts-card" *ngIf="fullPost; else loading">
+  <mat-card appearance="outlined" class="posts-card" *ngIf="post; else loading">
     <mat-card-header>
-      <!-- <div mat-card-avatar class="profile-header-image"></div> -->
-      <img *ngIf="user.user_profile_pic" [src]="user.user_profile_pic" class="profile-header-image" alt="User Profile">
-      <mat-card-title>{{user.user_name}}</mat-card-title>
-      <mat-card-subtitle>{{user.user_bio}}</mat-card-subtitle>
+      <img mat-card-avatar class="profile-header-image" [src]="post?.user_profile_pic" [alt]="post?.user_tag">
+      <mat-card-title>{{post?.user_name}}</mat-card-title>
+      <mat-card-subtitle>{{post?.user_bio}}</mat-card-subtitle>
       <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
         <mat-icon>more_vert</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
         <!-- implement copy to clipboard properly  -->
-        <button mat-menu-item (click)="sharePost()">
+        <button mat-menu-item (click)="sharePost(post)">
           <mat-icon>share</mat-icon>
           <span>Share Post</span>
         </button>
@@ -28,10 +27,10 @@
       </mat-menu>
     </mat-card-header>
     <mat-card-content class="card-content">
-      <ng-container *ngIf="fullPost.post_Content_Pictures.length > 0">
-        <img *ngFor="let image of fullPost.post_Content_Pictures" [src]="image" alt="Post Image" class="post-image" />
+      <ng-container *ngIf="post.post_Content_Pictures.length > 0">
+        <img *ngFor="let image of post.post_Content_Pictures" [src]="image" alt="Post Image" class="post-image" />
       </ng-container>
-      <markdown [data]="fullPost.post_Content" ngPreserveWhitespaces></markdown>
+      <markdown [data]="post.post_Content" ngPreserveWhitespaces></markdown>
     </mat-card-content>
     <mat-card-actions class="action-buttons">
       <app-likes></app-likes>
@@ -39,10 +38,8 @@
     </mat-card-actions>
 
     <mat-accordion>
-      <!-- <mat-expansion-panel hideToggle> -->
       <mat-expansion-panel>
         <mat-expansion-panel-header>
-          <!-- <mat-panel-title> Comment on this post </mat-panel-title> -->
           <mat-panel-title> Comment on this post </mat-panel-title>
         </mat-expansion-panel-header>
         <form class="recipe-post-comments">
@@ -66,7 +63,7 @@
             Total comments on this Post
             <mat-icon>comment</mat-icon>
             {{ comments_counter }}
-            <!-- Currently I am {{panelOpenState() ? 'open' : 'closed'}} -->
+
           </mat-panel-description>
         </mat-expansion-panel-header>
         <p>Add the comment section here ....</p>

@@ -1,6 +1,5 @@
 <mat-card-actions class="action-buttons">
     <app-likes [post]="post" [userId]="userData.user_tag"></app-likes>
-    <!-- <app-comments [postId]="post.id"></app-comments> -->
     <button mat-raised-button (click)="openCommentModal()">
         <mat-icon>comment</mat-icon>
         <!-- {{ comments_counter }} -->
@@ -10,7 +9,6 @@
         </span>
     </button>
     <app-saves [post]="post" [userId]="userData.user_tag"></app-saves>
-    <!-- <app-saves [post]="post" [blogpost]="blogpost" [userId]="userData.user_tag"></app-saves> -->
     <app-read-more [post]="post"></app-read-more>
     <!-- <app-read-more [post]="post" [blogpost]="blogpost"></app-read-more> -->
     <!-- <app-read-more [post]="post" (click)="navigateToFullPost()"></app-read-more> -->

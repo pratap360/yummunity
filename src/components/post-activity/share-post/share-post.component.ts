@@ -14,7 +14,6 @@ import {MatInputModule} from '@angular/material/input';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {FormsModule} from '@angular/forms';
 import { RecipePost } from '../../../app/interface/recipe-post';
-import { AppwriteService } from '../../../lib/appwrite.service';
 import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-share-post',
@@ -47,7 +46,6 @@ export class SharePostComponent{
 
   constructor(
     public dialog: MatDialog,
-    private appwriteService: AppwriteService,
     public dialogRef: MatDialogRef<SharePostComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ){

@@ -69,10 +69,6 @@ export class FullPostComponent implements OnInit, OnDestroy {
   }
 
   comments_counter = 0;
-  // postId!: string;
-  // username!: string;
-  user_name: string = 'Pratap Parui';
-  user_bio: string = 'Developer|Food Critics';
 
   postData: any;
   documentId!: string;
@@ -82,11 +78,14 @@ export class FullPostComponent implements OnInit, OnDestroy {
 
   fullPost!: RecipePost;
   user!: UserData;
+  post!: any;
+
+  post_id!: string;
   user_tag!: string;
+
   fullpostId!: string;
   isLoading = true;
   isError = false;
-  post: any = null;
   // post: RecipePost | null = null; // To store post data
   @Input() postId: string | null = null;
   private postSubscription: Subscription | null = null;
@@ -95,8 +94,8 @@ export class FullPostComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private appwriteService: AppwriteService,
-    private FullpostService: FullpostService
   ) {}
+
 
   // ngOnInit(): void {
   //   const navigationPost = this.FullpostService.getCurrentPost();
@@ -127,13 +126,21 @@ export class FullPostComponent implements OnInit, OnDestroy {
   // }
 
   ngOnInit() {
-    this.post = this.FullpostService.getPost(); // Retrieve post data from service
+    this.user_tag = this.route.snapshot.paramMap.get('user_tag') || '';
+    this.post_id = this.route.snapshot.paramMap.get('post_id') || '';
 
-    if (!this.post) {
-      console.error('Error: No post data found!');
-    } else {
-      console.log('FullPostComponent Loaded with Post:', this.post);
-    }
+    this.appwriteService.getPostById(this.post_id).subscribe((data) => {
+      this.post = data;
+      this.isLoading = false;
+      console.log('fetched post data from full post component:', data);
+    });
+    // this.post = this.FullpostService.getPost(); // Retrieve post data from service
+
+    // if (!this.post) {
+    //   console.error('Error: No post data found!');
+    // } else {
+    //   console.log('FullPostComponent Loaded with Post:', this.post);
+    // }
   }
 
   fetchPostDetials(postId: string) {
@@ -230,10 +237,23 @@ export class FullPostComponent implements OnInit, OnDestroy {
   readonly menuTrigger = viewChild.required(MatMenuTrigger);
 
   readonly dialog = inject(MatDialog);
-  sharePost() {
-    const dialogRef = this.dialog.open(SharePostComponent, {
-      restoreFocus: false,
-    });
-    dialogRef.afterClosed().subscribe(() => this.menuTrigger().focus());
-  }
+  sharePost(post:any): void {
+    const shareUrl = `${window.location.origin}/user/${post.user_tag}/post/${post.$id}`;
+   if(!this.post){
+     console.error('Post ID is undefined in TextPostComponent');
+     return;
+   }
+
+   const dialogRef = this.dialog.open(SharePostComponent, {
+     restoreFocus: false,
+     width: '500px',
+     data: {
+       postId: post.$id,
+       userTag: post.user_tag,
+       shareUrl: shareUrl
+     },
+   });
+
+   dialogRef.afterClosed().subscribe(() => this.menuTrigger().focus());
+ }
 }

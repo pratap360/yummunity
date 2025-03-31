@@ -30,32 +30,20 @@ export class ReadMoreComponent implements OnInit {
     private FullpostService: FullpostService
   ) {}
   ngOnInit() {}
-  // navigateToPost(): void {
-  //   const postId = this.generatePostId();
-  //   const username = 'user_name';
-  //   window.location.href = `/@${username}/post/${postId}`;
-  //   window.location.href = `http://localhost:4200/@${username}/post/${postId}`;
-  // }
 
-  // generatePostId(): string {
-  //   return Math.random().toString(36).substring(2, 12);
-  // }
+  navigateToFullPost(post: any): void {
 
-  // goToPost(documentId:string): void {
-  //   console.log(documentId);
-  //   this.router.navigate(['/post', documentId]);
-  // }
+    // const readMoreUrl = `${window.location.origin}/user/${post.user_tag}/post/${post.$id}`
+    const readMoreUrl = `/user/${post.user_tag}/post/${post.$id}`
 
-  navigateToFullPost() {
-    // if (!this.post || !this.post.id) {
     if (!this.post) {
       console.error('Post does not have an ID');
       return;
     }
-    console.log('Storing Post Data in Service:', this.post);
-    this.FullpostService.setPost(this.post);
-    console.log('Navigating to full post with ID:', this.post.id);
-    this.router.navigate(['/full-post', this.post.id]);
+    console.log('Storing Post Data in Service:',readMoreUrl);
+    // this.FullpostService.setPost(readMoreUrl);
+    // console.log('Navigating to full post with ID:', this.post.id);
+    this.router.navigate([readMoreUrl]);
   }
 
   // viewFullPost() {
