@@ -1,4 +1,3 @@
-import { FullpostService } from './../../app/services/appwrite/fullpost/fullpost.service';
 import {
   Component,
   inject,
@@ -34,6 +33,7 @@ import { RecipePost } from '../../app/interface/recipe-post';
 import { UserData } from '../../app/interface/user-data';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Subscription } from 'rxjs';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-full-post',
@@ -61,86 +61,83 @@ import { Subscription } from 'rxjs';
   styleUrl: './full-post.component.css',
 })
 export class FullPostComponent implements OnInit, OnDestroy {
-  onCancel() {
-    throw new Error('Method not implemented.');
-  }
-  postComment() {
-    throw new Error('Method not implemented.');
-  }
 
-  comments_counter = 0;
+  panelOpenState = signal(false);
+  isError = false;
+  isLoading = true;
 
   postData: any;
   documentId!: string;
-  // isLoading: boolean = true; // Loading state
-  panelOpenState = signal(false);
-  newComment: any;
-
-  fullPost!: RecipePost;
-  user!: UserData;
-  post!: any;
-
   post_id!: string;
-  user_tag!: string;
+  post!: any;
+  fullPost!: RecipePost;
 
-  fullpostId!: string;
-  isLoading = true;
-  isError = false;
-  // post: RecipePost | null = null; // To store post data
+  currentUser: any = {};
+  user_tag!: string;
+  userId: string = '';
+  user!: UserData;
+  userData: { user_tag: string } = { user_tag: '' };
+  
+  newComment: string = '';
+  comments: any[] = [];
+  comments_counter: number = 0;
+
+
   @Input() postId: string | null = null;
   private postSubscription: Subscription | null = null;
   private routeSubscription: Subscription | null = null;
+
+    durationInSeconds = 5;
+  // private router = inject(Router);
+  private _snackBar = inject(MatSnackBar);
+  horizontalPosition: MatSnackBarHorizontalPosition = 'right';
+  verticalPosition: MatSnackBarVerticalPosition = 'top';
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private appwriteService: AppwriteService,
   ) {}
 
-
-  // ngOnInit(): void {
-  //   const navigationPost = this.FullpostService.getCurrentPost();
-
-  //   if (navigationPost) {
-  //     this.post = navigationPost;
-  //     return;
-  //   }
-
-  //   this.routeSubscription = this.route.paramMap.subscribe((params) => {
-  //     const postId = params.get('postId');
-
-  //     if (postId) {
-  //       this.fetchPostDetials(postId);
-  //     }
-  //   });
-  // }
-
-  // ngOnInit() {
-  //   // Get the post ID from the route parameters
-  //   this.postId = this.route.snapshot.paramMap.get('id');
-
-  //   if (!this.postId) {
-  //     console.error('Error: Post ID is missing');
-  //   } else {
-  //     console.log('FullPostComponent loaded with postId:', this.postId);
-  //   }
-  // }
-
   ngOnInit() {
     this.user_tag = this.route.snapshot.paramMap.get('user_tag') || '';
     this.post_id = this.route.snapshot.paramMap.get('post_id') || '';
-
+  
+    // Get current user first
+    this.getCurrentUser();
+  
+    // Then fetch post data
     this.appwriteService.getPostById(this.post_id).subscribe((data) => {
       this.post = data;
       this.isLoading = false;
       console.log('fetched post data from full post component:', data);
+      
+      // Process comments if they exist
+      if (this.post.post_whoComments) {
+        try {
+          // Handle both array of objects and array of strings (JSON strings)
+          this.comments = this.post.post_whoComments.map((comment: any) => {
+            if (typeof comment === 'string') {
+              try {
+                return JSON.parse(comment);
+              } catch (e) {
+                console.error('Error parsing comment:', e);
+                return null;
+              }
+            } else {
+              return comment; // Already an object
+            }
+          }).filter((comment: any) => comment !== null);
+          
+          this.comments_counter = this.comments.length;
+          console.log('Processed comments:', this.comments);
+        } catch (e) {
+          console.error('Error processing comments:', e);
+          this.comments = [];
+        }
+      } else {
+        this.comments = [];
+      }
     });
-    // this.post = this.FullpostService.getPost(); // Retrieve post data from service
-
-    // if (!this.post) {
-    //   console.error('Error: No post data found!');
-    // } else {
-    //   console.log('FullPostComponent Loaded with Post:', this.post);
-    // }
   }
 
   fetchPostDetials(postId: string) {
@@ -166,58 +163,6 @@ export class FullPostComponent implements OnInit, OnDestroy {
     }
   }
 
-  // ngOnInit(): void {
-  //   this.route.paramMap.subscribe((params) => {
-  //     this.documentId = params.get('documentId');
-  //     console.log('Document ID:', this.documentId); // Debugging
-
-  //     if (this.documentId) {
-  //       this.readfullpost();
-  //     }
-  //   });
-  // }
-  // ngOnInit() {
-  //   this.route.paramMap.subscribe((params) => {
-  //     this.user_tag = params.get('user_tag') || '';
-  //     this.fullpostId = params.get('fullpostId') || '';
-
-  //     console.log('Getting data in fullpost:', this.user_tag, this.fullpostId);
-
-  //     if (this.fullpostId) {
-  //       this.fetchFullPost();
-  //     } else {
-  //       console.error('Missing post ID parameter');
-  //       this.isError = true;
-  //       this.isLoading = false;
-  //     }
-  //   });
-  // }
-
-  fetchFullPost() {
-    this.appwriteService.getFullPost(this.fullpostId).subscribe({
-      next: (post: RecipePost) => {
-        this.fullPost = post;
-        this.isLoading = false;
-        console.log('fetched post data:', post);
-        if (post.user_name) {
-          this.user.user_name = post.user_name;
-        }
-
-        if (post.user_bio) {
-          this.user.user_bio = post.user_bio;
-        }
-
-        // Set the user_tag from the route parameter
-        this.user.user_tag = this.user_tag;
-      },
-      error: (error) => {
-        console.error('Error fetching post:', error);
-        this.isError = true;
-        this.isLoading = false;
-      },
-    });
-  }
-
   readfullpost(): void {
     this.appwriteService.getPostById(this.documentId).subscribe({
       next: (data) => {
@@ -228,6 +173,103 @@ export class FullPostComponent implements OnInit, OnDestroy {
         console.error('Error fetching post:', error);
         // this.isLoading = false;
       },
+    });
+  }
+
+  getCurrentUser() {
+    if (!this.userId){
+      // console.log('User ID received in dialog:', this.userId);
+      this.appwriteService.getCurrentUser().subscribe({
+        next: (userData) => {
+          this.currentUser = userData;
+          this.userId = userData.id || userData.user_tag;
+          this.userData = {
+            user_tag: userData.user_tag || ''
+          };
+          console.log('User ID is set in dialog:', this.currentUser ,this.userId);
+        },
+        error: (error) => {
+          console.error('Error fetching user data:', error);
+        }
+      })
+    }
+  }
+
+  postComment() {
+    // debugger;
+    if (!this.newComment.trim()) {
+      this._snackBar.open('Please enter a comment', 'OK', {
+        duration: 3000,
+        horizontalPosition: 'right',
+        verticalPosition: 'top'
+      });
+      return;
+    }
+
+     // Check if user is logged in
+  if (!this.currentUser || !this.currentUser.$id) {
+    this._snackBar.open('Please log in to comment', 'OK', {
+      duration: 3000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top'
+    });
+    return;
+  }
+    const newCommentObj = {
+      user_id: this.currentUser.$id,
+      user_name: this.currentUser.user_name,
+      user_tag: this.currentUser.user_tag,
+      user_profile_pic: this.currentUser.user_profile_pic,
+      comment: this.newComment.trim(),
+      date: new Date().toISOString()
+    };
+
+    const commentString = JSON.stringify(newCommentObj);
+    console.log('Comment to be added:', commentString);
+    
+    this.appwriteService.addComment(this.post_id, commentString).subscribe({
+      next: (response) => {
+        if (!response) {
+          throw new Error('Invalid response from server');
+        }
+
+        // Update comments locally
+        if (response.post_whoComments) {
+          this.comments = response.post_whoComments.map((comment: any) => {
+            if (typeof comment === 'string') {
+              try {
+                return JSON.parse(comment);
+              } catch (e) {
+                console.error('Error parsing comment:', e);
+                return null;
+              }
+            }else {
+              return comment;
+            }
+          }).filter((comment: any) => comment !== null);
+        } else {
+          // If server doesn't return updated comments, add the new one locally
+          this.comments.push(newCommentObj);
+        }
+
+        this.comments_counter = this.comments.length;
+        this.newComment = '';
+
+        // Show success message
+        this._snackBar.open('Comment added successfully!', 'OK', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+      },
+      error: (error) => {
+        console.error('Error posting comment:', error);
+        this._snackBar.open('Failed to add comment', 'OK', {
+          duration: 3000,
+          horizontalPosition: 'right',
+          verticalPosition: 'top'
+        });
+      }
     });
   }
 

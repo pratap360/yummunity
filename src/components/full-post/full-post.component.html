@@ -33,8 +33,8 @@
       <markdown [data]="post.post_Content" ngPreserveWhitespaces></markdown>
     </mat-card-content>
     <mat-card-actions class="action-buttons">
-      <app-likes></app-likes>
-      <app-saves></app-saves>
+      <app-likes [post]="post" [userId]="userData.user_tag"></app-likes>
+      <app-saves [post]="post" [userId]="userData.user_tag"></app-saves>
     </mat-card-actions>
 
     <mat-accordion>
@@ -45,8 +45,8 @@
         <form class="recipe-post-comments">
           <mat-form-field appearance="outline" class="recipe-post-comments-area">
             <mat-label>Write your comment</mat-label>
-            <textarea matInput #comment class="comment-box" maxlength="200"
-              placeholder="comment your thoughs..."></textarea>
+            <textarea matInput #comment [(ngModel)]="newComment" [ngModelOptions]="{standalone: true}"
+              class="comment-box" maxlength="200" placeholder="comment your thoughs..."></textarea>
             <mat-hint align="end">{{comment.value.length}} / 200</mat-hint>
           </mat-form-field>
         </form>
@@ -62,11 +62,42 @@
           <mat-panel-description>
             Total comments on this Post
             <mat-icon>comment</mat-icon>
-            {{ comments_counter }}
-
+            {{ comments.length || post?.post_comments || 0 }}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <p>Add the comment section here ....</p>
+
+        <!-- Debug information (remove in production) -->
+        <!-- <div *ngIf="comments.length > 0" style="margin-bottom: 10px; color: #666; font-size: 12px;">
+          Showing {{ comments.length }} comments
+        </div> -->
+
+        <!-- Show loading indicator if comments are being fetched -->
+        <div *ngIf="isLoading" class="comment-loading">
+          <mat-spinner diameter="30"></mat-spinner>
+          <p>Loading comments...</p>
+        </div>
+
+        <!-- Show message if no comments -->
+        <div *ngIf="!isLoading && (!comments || comments.length === 0)" class="no-comments">
+          <p>No comments yet. Be the first to comment!</p>
+        </div>
+
+        <!-- Show comments when available -->
+        <div *ngIf="!isLoading && comments && comments.length > 0" class="comment-section">
+          <div class="comment-box" *ngFor="let comment of comments">
+            <!-- Output raw comment data for debugging (remove in production) -->
+            <pre *ngIf="false"
+              style="font-size: 10px; color: #999; overflow: auto; max-height: 100px;">{{ comment | json }}</pre>
+
+            <div class="user_comment_data">
+              <img [src]="comment.user_profile_pic || 'assets/default-avatar.png'" class="profile-comment-image"
+                [alt]="comment.user_tag || 'User'">
+              <h4 class="commented-user-id">&#64;{{ comment.user_tag || 'anonymous' }}</h4>
+              <h4 class="commented-datetime">{{ comment.date | date: 'short' }}</h4>
+            </div>
+            <p class="user_comment">{{ comment.comment }}</p>
+          </div>
+        </div>
       </mat-expansion-panel>
 
       <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">

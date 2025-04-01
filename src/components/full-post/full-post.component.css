@@ -24,7 +24,6 @@ mat-card.posts-card {
 } */
 
 .profile-header-image {
-  background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg');
   background-size: cover;
 }
 
@@ -45,17 +44,91 @@ mat-card.posts-card {
   margin: 10px;
 }
 
-
 .menu-button {
   margin-left: auto;
 }
-
-
 
 .recipe-post-comments-area {
   width: 100%;
 }
 
+/* Add these styles to your component CSS to improve comment display */
+.comment-section {
+  max-height: 400px;
+  overflow-y: auto;
+  margin-top: 10px;
+  padding: 10px;
+  border-top: 1px solid #eee;
+}
+
+.comment-box {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 15px;
+  /* background-color: #fafafa; */
+  border-radius: 8px;
+}
+
+.user_comment_data {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.profile-comment-image {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 10px;
+  border: 1px solid #eee;
+  object-fit: cover; /* Ensures the image is properly displayed */
+}
+
+.commented-user-id {
+  margin: 0 10px 0 0;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+.commented-datetime {
+  margin: 0;
+  font-size: 12px;
+  color: #777;
+  font-weight: normal;
+}
+
+.user_comment {
+  margin: 0;
+  padding-left: 46px; /* Aligns with the user image */
+  line-height: 1.5;
+  word-break: break-word; /* Prevents comment text from overflowing */
+  color: #333;
+  font-size: 14px;
+}
+
+mat-panel-description{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.no-comments {
+  padding: 20px;
+  text-align: center;
+  color: #777;
+  font-style: italic;
+}
+
+.comment-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+.full-width {
+  width: 100%;
+}
 
 @media screen and (max-width: 576px) {
   .card-content {
@@ -76,3 +149,4 @@ mat-card.posts-card {
     margin-bottom: 40px;
   }
 }
+
