@@ -4,9 +4,9 @@
 
   <mat-card appearance="outlined" class="posts-card" *ngIf="post; else loading">
     <mat-card-header>
-      <img mat-card-avatar class="profile-header-image" [src]="post?.user_profile_pic" [alt]="post?.user_tag">
-      <mat-card-title>{{post?.user_name}}</mat-card-title>
-      <mat-card-subtitle>{{post?.user_bio}}</mat-card-subtitle>
+      <img mat-card-avatar class="profile-header-image" [src]="post?.user_profile_pic" [alt]="post?.user_tag" (click)="goToProfile(post?.user_tag)">
+      <mat-card-title (click)="goToProfile(post?.user_tag)">{{post?.user_name}}</mat-card-title>
+      <mat-card-subtitle (click)="goToProfile(post?.user_tag)">{{post?.user_bio}}</mat-card-subtitle>
       <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
         <mat-icon>more_vert</mat-icon>
       </button>
@@ -27,9 +27,41 @@
       </mat-menu>
     </mat-card-header>
     <mat-card-content class="card-content">
-      <ng-container *ngIf="post.post_Content_Pictures.length > 0">
+
+      <!-- <ng-container *ngIf="post.post_Content_Pictures.length > 0">
         <img *ngFor="let image of post.post_Content_Pictures" [src]="image" alt="Post Image" class="post-image" />
-      </ng-container>
+      </ng-container> -->
+
+          <!-- Image Slider -->
+          <div class="image-slider-container" *ngIf="post.post_Content_Pictures && post.post_Content_Pictures.length > 0">
+            <div class="image-slider">
+              <div class="slider-controls">
+                <button mat-mini-fab color="primary" class="slider-nav-button prev-button" (click)="prevImage(); resetAutoSlide()" *ngIf="post.post_Content_Pictures.length > 1">
+                  <mat-icon>chevron_left</mat-icon>
+                </button>
+                <button mat-mini-fab color="primary" class="slider-nav-button next-button" (click)="nextImage(); resetAutoSlide()" *ngIf="post.post_Content_Pictures.length > 1">
+                  <mat-icon>chevron_right</mat-icon>
+                </button>
+              </div>
+              
+              <div class="slider-images">
+                <img [src]="post.post_Content_Pictures[currentImageIndex]" alt="Post Image" class="slider-image"/>
+              </div>
+              
+              <!-- Image indicator dots -->
+              <div class="slider-indicators" *ngIf="post.post_Content_Pictures.length > 1">
+                <span 
+                  *ngFor="let image of post.post_Content_Pictures; let i = index" 
+                  class="indicator-dot" 
+                  [class.active]="i === currentImageIndex"
+                  (click)="setCurrentImage(i); resetAutoSlide()">
+                </span>
+              </div>
+            </div>
+          </div>
+
+
+
       <markdown [data]="post.post_Content" ngPreserveWhitespaces></markdown>
     </mat-card-content>
     <mat-card-actions class="action-buttons">
@@ -92,7 +124,7 @@
             <div class="user_comment_data">
               <img [src]="comment.user_profile_pic || 'assets/default-avatar.png'" class="profile-comment-image"
                 [alt]="comment.user_tag || 'User'">
-              <h4 class="commented-user-id">&#64;{{ comment.user_tag || 'anonymous' }}</h4>
+              <h4 class="commented-user-id" (click)="goToProfile(comment.user_tag)">&#64;{{ comment.user_tag || 'anonymous' }}</h4>
               <h4 class="commented-datetime">{{ comment.date | date: 'short' }}</h4>
             </div>
             <p class="user_comment">{{ comment.comment }}</p>

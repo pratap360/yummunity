@@ -1,9 +1,9 @@
 <mat-card *ngFor="let post of posts" class="posts-card" appearance="outlined">
   <mat-card-header>
 
-    <img mat-card-avatar class="profile-header-image" [src]="post?.user_profile_pic" [alt]="post?.user_tag">
-    <mat-card-title>{{post?.user_name}}</mat-card-title>
-    <mat-card-subtitle>{{post?.user_bio}}</mat-card-subtitle>
+    <img mat-card-avatar class="profile-header-image" [src]="post?.user_profile_pic" [alt]="post?.user_tag" (click)="goToProfile(post.user_tag ?? '')">
+    <mat-card-title (click)="goToProfile(post.user_tag?? '')">{{post?.user_name}}</mat-card-title>
+    <mat-card-subtitle (click)="goToProfile(post.user_tag ?? '')">{{post?.user_bio}}</mat-card-subtitle>
 
     <!-- <mat-card-subtitle>{{userData ? userData.user_bio : ''}}</mat-card-subtitle> -->
     <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">

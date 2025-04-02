@@ -39,11 +39,17 @@
   width: 35px;
 }
 
+.commented-user-id{
+  text-decoration: underline;
+  font-weight: bold;
+}
+
 .commented-user-id ,.commented-datetime{
   font-size: 14px;
   font-weight: 400;
   font-style: italic;
   margin-left: 12px;
+  cursor: pointer;
 }
 
 .user_comment_data {

@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 import { UserData } from '../../../app/interface/user-data';
 import { UsercontextService } from '../../../app/services/users/usercontext.service';
 import { ShareBlogPostComponent } from '../../blog-activity/share-blog-post/share-blog-post.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-blog-post',
@@ -38,7 +39,9 @@ export class BlogPostComponent {
   @Input() userData: any;
   @Input() alluserData: { [postId: string]: UserData } = {};
 
-  constructor(private UserContextService: UsercontextService) {}
+  constructor(private UserContextService: UsercontextService,
+    private router : Router
+  ) {}
 
   ngOnInit(): void {
     this.UserContextService.postUserData$.subscribe((data) => {
@@ -71,5 +74,10 @@ export class BlogPostComponent {
    });
 
    dialogRef.afterClosed().subscribe(() => this.menuTrigger().focus());
+ }
+
+ goToProfile(userTag: string): void {
+  console.log('Navigating to user profile:', userTag);
+  this.router.navigate(['/user', userTag]);
  }
 }

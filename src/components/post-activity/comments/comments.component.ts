@@ -185,4 +185,11 @@ fetchPostData() {
   get commentCount(): number {
     return this.comments.length;
   }
+
+  goToProfile(userTag: string): void {
+    console.log('Navigating to user profile:', userTag);
+    this.router.navigate(['/user', userTag]);
+    this.dialogRef.close(this.comments_counter);
+   }
+
 }

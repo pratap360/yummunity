@@ -22,9 +22,14 @@ mat-card.posts-card {
     font-size: 18px;
 }
 
+mat-card-title, mat-card-subtitle{
+    cursor: pointer;
+  }
+  
 .profile-header-image {
     /* background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg'); */
     background-size: cover;
+    cursor: pointer;
 }
 
 .action-buttons {

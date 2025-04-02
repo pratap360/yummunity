@@ -1,8 +1,8 @@
 <mat-card class="posts-card" appearance="outlined" *ngFor="let blog of blogPosts">
   <mat-card-header>
-    <img mat-card-avatar class="profile-header-image" [src]="blog?.user_profile_pic" [alt]="blog?.user_tag">
-    <mat-card-title>{{blog?.user_name}}</mat-card-title>
-    <mat-card-subtitle>{{blog?.user_bio}}</mat-card-subtitle>
+    <img mat-card-avatar class="profile-header-image" [src]="blog?.user_profile_pic" [alt]="blog?.user_tag" (click)="goToProfile(blog.user_tag?? '')">
+    <mat-card-title (click)="goToProfile(blog.user_tag?? '')">{{blog?.user_name}}</mat-card-title>
+    <mat-card-subtitle (click)="goToProfile(blog.user_tag?? '')">{{blog?.user_bio}}</mat-card-subtitle>
     <button mat-icon-button [matMenuTriggerFor]="menu" class="menu-button">
       <mat-icon>more_vert</mat-icon>
     </button>
@@ -35,7 +35,7 @@
   </mat-card-content>
 
   <mat-card-footer class="blog-post-card-footer">
-    <mat-chip-set aria-label="Chihuahua traits">
+    <mat-chip-set>
       <mat-chip *ngFor="let tag of blog.blog_post_tags">{{tag}}</mat-chip>
       <!-- <mat-chip>Non-Veg</mat-chip>
       <mat-chip>Chicken recipe</mat-chip> -->

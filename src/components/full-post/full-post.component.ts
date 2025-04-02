@@ -83,6 +83,10 @@ export class FullPostComponent implements OnInit, OnDestroy {
   comments_counter: number = 0;
 
 
+  currentImageIndex = 0;
+  autoSlideInterval: any;
+
+
   @Input() postId: string | null = null;
   private postSubscription: Subscription | null = null;
   private routeSubscription: Subscription | null = null;
@@ -137,6 +141,10 @@ export class FullPostComponent implements OnInit, OnDestroy {
       } else {
         this.comments = [];
       }
+
+      if (this.post?.post_Content_Pictures?.length > 1) {
+        this.startAutoSlide();
+      }
     });
   }
 
@@ -152,6 +160,7 @@ export class FullPostComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.stopAutoSlide();
     // this.FullpostService.clearCurrentPost();
 
     if (this.postSubscription) {
@@ -161,6 +170,44 @@ export class FullPostComponent implements OnInit, OnDestroy {
     if (this.routeSubscription) {
       this.routeSubscription.unsubscribe();
     }
+  }
+
+   // Image slider functions
+   nextImage(): void {
+    if (this.post?.post_Content_Pictures?.length > 0) {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.post.post_Content_Pictures.length;
+    }
+  }
+
+  prevImage(): void {
+    if (this.post?.post_Content_Pictures?.length > 0) {
+      this.currentImageIndex = this.currentImageIndex === 0 
+        ? this.post.post_Content_Pictures.length - 1 
+        : this.currentImageIndex - 1;
+    }
+  }
+
+  setCurrentImage(index: number): void {
+    this.currentImageIndex = index;
+  }
+
+  startAutoSlide(): void {
+    this.stopAutoSlide(); // Clear any existing interval
+    this.autoSlideInterval = setInterval(() => {
+      this.nextImage();
+    }, 5000); // Change slide every 5 seconds
+  }
+
+  stopAutoSlide(): void {
+    if (this.autoSlideInterval) {
+      clearInterval(this.autoSlideInterval);
+    }
+  }
+
+  // Reset auto slide timer when manually changing slides
+  resetAutoSlide(): void {
+    this.stopAutoSlide();
+    this.startAutoSlide();
   }
 
   readfullpost(): void {
@@ -298,4 +345,10 @@ export class FullPostComponent implements OnInit, OnDestroy {
 
    dialogRef.afterClosed().subscribe(() => this.menuTrigger().focus());
  }
+
+ goToProfile(userTag: string): void {
+  console.log('Navigating to user profile:', userTag);
+  this.router.navigate(['/user', userTag]);
+ }
+
 }

@@ -25,6 +25,7 @@ import { CommonModule } from '@angular/common';
 import { RecipePost } from '../../../app/interface/recipe-post';
 import { MarkdownModule } from 'ngx-markdown';
 import { UserData } from '../../../app/interface/user-data';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-with-img-post',
@@ -52,7 +53,9 @@ export class WithImgPostComponent implements OnInit {
   // @Input() alluserData: { [postId: string]: UserData } = {};
   postUserData: { [postId: string]: UserData } = {};
 
-  constructor(private UserContextService: UsercontextService) {}
+  constructor(private UserContextService: UsercontextService,
+    private router: Router,
+  ) {}
   ngOnInit(): void {
     this.UserContextService.postUserData$.subscribe((data) => {
       this.postUserData = data;
@@ -86,5 +89,9 @@ export class WithImgPostComponent implements OnInit {
    });
 
    dialogRef.afterClosed().subscribe(() => this.menuTrigger().focus());
+ }
+ goToProfile(userTag: string): void {
+  console.log('Navigating to user profile:', userTag);
+  this.router.navigate(['/user', userTag]);
  }
 }

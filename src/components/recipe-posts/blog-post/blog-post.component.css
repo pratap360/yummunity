@@ -9,9 +9,14 @@ mat-card.posts-card {
 
 }
 
+mat-card-title, mat-card-subtitle{
+    cursor: pointer;
+  }
+  
 .profile-header-image {
     /* background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg'); */
     background-size: cover;
+    cursor: pointer;
 }
 
 .blog-title {

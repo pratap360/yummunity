@@ -23,14 +23,119 @@ mat-card.posts-card {
   left: 10px;
 } */
 
+mat-card-title, mat-card-subtitle{
+  cursor: pointer;
+}
+
 .profile-header-image {
   background-size: cover;
+  cursor: pointer;
 }
 
 .card-content {
   padding: 7px;
   margin: 10px;
   font-size: 18px;
+}
+
+
+/* Image Slider Styles */
+.image-slider-container {
+  width: 100%;
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.image-slider {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.slider-images {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.slider-image {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  max-height: 400px;
+  display: block;
+  border-radius: 8px;
+  transition: opacity 0.5s ease;
+}
+
+/* Mobile optimization for image height */
+@media (max-width: 600px) {
+  .slider-image {
+    max-height: 250px;
+  }
+}
+
+/* Navigation controls */
+.slider-controls {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+  z-index: 10;
+  /* padding: 0 10px; */
+}
+
+.slider-nav-button {
+  width: 40px;
+  height: 40px;
+  min-width: unset;
+  margin: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.slider-nav-button:hover {
+  opacity: 1;
+}
+
+.slider-nav-button mat-icon {
+  font-size: 18px;
+  height: 18px;
+  width: 18px;
+  line-height: 18px;
+}
+
+/* Indicator dots */
+.slider-indicators {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+
+.indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.indicator-dot.active {
+  background-color: white;
+  transform: scale(1.2);
 }
 
 
@@ -89,6 +194,8 @@ mat-card.posts-card {
   font-weight: bold;
   font-size: 14px;
   color: #333;
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .commented-datetime {

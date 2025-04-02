@@ -18,8 +18,8 @@
     <div class="comment-box" *ngFor="let comment of comments">
       <div class="user_comment_data">
         <img [src]="comment.user_profile_pic"  class="profile-comment-image" [alt]="comment.user_name">
-        <h4 class="commented-user-id">&#64;{{ comment.user_tag }}</h4>
-        <h4 class="commented-datetime">{{ comment.date | date: 'short' }}</h4>
+        <h4 class="commented-user-id" (click)="goToProfile(comment.user_tag)">&#64;{{ comment.user_tag }}</h4>
+        <h4 class="commented-datetime" (click)="goToProfile(comment.user_tag)">{{ comment.date | date: 'short' }}</h4>
       </div>
       <p class="user_comment">{{ comment.comment }}</p>
     </div>
