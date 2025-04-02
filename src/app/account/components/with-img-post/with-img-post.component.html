@@ -29,8 +29,25 @@
   <ng-container *ngIf="post.post_Content_Pictures.length > 0">
     <img mat-card-image [src]="post.post_Content_Pictures[0]" alt="Post Image">
   </ng-container>
-  <mat-card-content class="card-content">
+
+  <!-- <mat-card-content class="card-content">
     <markdown [data]="post.post_Content" ngPreserveWhitespaces></markdown>
+  </mat-card-content> -->
+
+  <mat-card-content class="card-content">
+    <ng-container *ngIf="!shouldTruncate(post.post_Content) || isExpanded(post.id ?? '')">
+      <markdown [data]="post.post_Content" ngPreserveWhitespaces></markdown>
+    </ng-container>
+    <ng-container *ngIf="shouldTruncate(post.post_Content) && !isExpanded(post.id ?? '')">
+      <markdown [data]="getTruncatedContent(post.post_Content)" ngPreserveWhitespaces></markdown>
+    </ng-container>
+  
+    <div *ngIf="shouldTruncate(post.post_Content)" class="read-more-section">
+      <button mat-button color="primary" (click)="toggleExpand(post.id ?? '')">
+        <mat-icon>read_more</mat-icon>  {{ isExpanded(post.id ?? '') ? 'Read Less' : 'Read More' }}
+      </button>
+    </div>
   </mat-card-content>
+
   <app-post-activity [post]="post"></app-post-activity>
 </mat-card>

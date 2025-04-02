@@ -53,6 +53,8 @@ export class WithImgPostComponent implements OnInit {
   // @Input() alluserData: { [postId: string]: UserData } = {};
   postUserData: { [postId: string]: UserData } = {};
 
+  maxLength = 250; // Characters to show before "Read More"
+  expandedPosts: { [postId: string]: boolean } = {}; // Track expanded state by post ID
   constructor(private UserContextService: UsercontextService,
     private router: Router,
   ) {}
@@ -94,4 +96,27 @@ export class WithImgPostComponent implements OnInit {
   console.log('Navigating to user profile:', userTag);
   this.router.navigate(['/user', userTag]);
  }
+
+ shouldTruncate(content: string): boolean {
+  return content.length > this.maxLength;
+}
+
+// Method to get truncated content
+getTruncatedContent(content: string): string {
+  if (this.shouldTruncate(content)) {
+    return content.substring(0, this.maxLength) + '...';
+  }
+  return content;
+}
+
+// Toggle expanded state
+toggleExpand(postId: string): void {
+  this.expandedPosts[postId] = !this.expandedPosts[postId];
+}
+
+// Check if post is expanded
+isExpanded(postId: string): boolean {
+  return this.expandedPosts[postId] === true;
+}
+
 }

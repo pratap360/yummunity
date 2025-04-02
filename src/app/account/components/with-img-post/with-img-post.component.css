@@ -48,6 +48,18 @@ mat-card.posts-card {
 
 } */
 
+.read-more-section {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.read-more-section button {
+    background-color: transparent;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
 
 @media screen and (max-width: 576px) {
     .card-content {

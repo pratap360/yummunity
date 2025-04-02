@@ -145,6 +145,6 @@ export class UserProfileComponent implements OnInit {
     });
   }
   followUser() {
-    alert('following user is working');
+    alert('following user feature is under development');
   }
 }
