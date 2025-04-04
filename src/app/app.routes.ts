@@ -13,21 +13,25 @@ import { EditComponent } from './account/edit/edit.component';
 import { WelcomeComponent } from './signup/welcome/welcome.component';
 import { UserProfileComponent } from './account/user-profile/user-profile.component';
 import { authGuard } from './services/Auth/auth.guard';
+import { publicGuardGuard } from './services/public-guard.guard';
+import { sign } from 'crypto';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
-  { path: 'forget-pwd', component: ForgetPwdComponent },
+  { path: 'login', component: LoginComponent,canActivate: [publicGuardGuard]},
+  { path: 'forget-pwd', component: ForgetPwdComponent ,canActivate: [publicGuardGuard]},
+  { path: 'signup', component: SignupComponent, canActivate: [publicGuardGuard]},  
 
-  { path: 'signup', component: SignupComponent },  
-  { path: 'welcome', component: WelcomeComponent },
-  { path: 'home-feed', component: HomeFeedComponent,},
+  // !! both guard implemented but getting error while going form signup to welcome for the below line 👇
+  // { path: 'welcome', component: WelcomeComponent, canActivate: [authGuard,publicGuardGuard]},
+  { path: 'welcome', component: WelcomeComponent,},
 
-  { path: 'search', component: SearchComponent },
-  { path: 'notifications', component: NotificationComponent },
+  { path: 'home-feed', component: HomeFeedComponent, canActivate: [authGuard]},
+  { path: 'search', component: SearchComponent, canActivate: [authGuard] },
+  { path: 'notifications', component: NotificationComponent, canActivate: [authGuard] },
   { path: 'account', component: AccountComponent , canActivate: [authGuard]  },
-  { path: 'account/edit-profile', component: EditComponent },
-  { path: 'user/:user_tag', component: UserProfileComponent },
+  { path: 'account/edit-profile', component: EditComponent, canActivate: [authGuard] },
+  { path: 'user/:user_tag', component: UserProfileComponent, canActivate: [authGuard] },
 
   {
     // path: 'user/:user_tag/fullpostID',
