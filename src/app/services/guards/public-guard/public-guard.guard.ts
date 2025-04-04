@@ -1,6 +1,6 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AppwriteService } from '../../lib/appwrite.service';
+import { AppwriteService } from '../../../../lib/appwrite.service';
 import { lastValueFrom } from 'rxjs';
 
 export const publicGuardGuard: CanActivateFn =  async (route, state) => {

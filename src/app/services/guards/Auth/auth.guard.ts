@@ -1,10 +1,10 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { AppwriteService } from '../../../lib/appwrite.service';
-import { AuthService } from '../../../lib/appwrite/auth'
+import { AppwriteService } from '../../../../lib/appwrite.service';
+import { AuthService } from '../../../../lib/appwrite/auth'
 import { lastValueFrom } from 'rxjs';
 export const authGuard: CanActivateFn = async (route, state) => {
-  debugger
+  // debugger
   const router: Router = inject(Router);
   const appwriteService: AppwriteService = inject(AppwriteService);
 

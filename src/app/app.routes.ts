@@ -12,9 +12,10 @@ import { RecipePostsComponent } from '../components/recipe-posts/recipe-posts.co
 import { EditComponent } from './account/edit/edit.component';
 import { WelcomeComponent } from './signup/welcome/welcome.component';
 import { UserProfileComponent } from './account/user-profile/user-profile.component';
-import { authGuard } from './services/Auth/auth.guard';
-import { publicGuardGuard } from './services/public-guard.guard';
-import { sign } from 'crypto';
+import { authGuard } from './services/guards/Auth/auth.guard';
+import { publicGuardGuard } from './services/guards/public-guard/public-guard.guard';
+import { welcomeGuard } from './services/guards/welcome-guard/welcome.guard';
+
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -24,23 +25,20 @@ export const routes: Routes = [
 
   // !! both guard implemented but getting error while going form signup to welcome for the below line 👇
   // { path: 'welcome', component: WelcomeComponent, canActivate: [authGuard,publicGuardGuard]},
-  { path: 'welcome', component: WelcomeComponent,},
+  { path: 'welcome', component: WelcomeComponent,canActivate: [welcomeGuard]},
 
   { path: 'home-feed', component: HomeFeedComponent, canActivate: [authGuard]},
   { path: 'search', component: SearchComponent, canActivate: [authGuard] },
   { path: 'notifications', component: NotificationComponent, canActivate: [authGuard] },
-  { path: 'account', component: AccountComponent , canActivate: [authGuard]  },
+  { path: 'account', component: AccountComponent , canActivate: [authGuard]},
   { path: 'account/edit-profile', component: EditComponent, canActivate: [authGuard] },
-  { path: 'user/:user_tag', component: UserProfileComponent, canActivate: [authGuard] },
 
-  {
-    // path: 'user/:user_tag/fullpostID',
-    path: 'user/:user_tag/post/:post_id', component: FullPostComponent,
+  { path: 'user/:user_tag', component: UserProfileComponent},
+  { path: 'user/:user_tag/post/:post_id', component: FullPostComponent,},
     // loadComponent: () =>
     //   import('../components/full-post/full-post.component').then(
     //     (m) => m.FullPostComponent
     //   ),
-  },
 
   { path: 'not-found', component: NotFoundComponent },
   { path: '**', redirectTo: '/not-found' },

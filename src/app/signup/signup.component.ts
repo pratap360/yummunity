@@ -83,7 +83,9 @@ export class SignupComponent implements OnInit {
       });
     } else {
       this.userData.setSignupData(this.signupForm.value);
+      sessionStorage.setItem('signupFlow', 'true');
       console.log(this.signupForm.value);
+
       this._snackBar.open(
         'Account Created Successfully, Kindly Fill All Detials',
         'OK',
@@ -96,31 +98,6 @@ export class SignupComponent implements OnInit {
       this.router.navigate(['/welcome'])
     }
   }
-
-  // onSignUp() {
-  //   if (this.signupForm.valid) {
-  //     console.log(this.signupForm.value);
-  //     this._snackBar.open('Account Created Successfully, Kindly Fill All Detials', 'OK', {
-  //       horizontalPosition: this.horizontalPosition,
-  //       verticalPosition: this.verticalPosition,
-  //       duration: this.durationInSeconds * 1000,
-  //     });
-  //     this.createUserAccount();
-  //   }
-  // }
-
-  // createAccount() {
-  //   this.account.create(ID.unique(), this.signupForm.value.user_email, this.signupForm.value.user_password, this.signupForm.value.user_name)
-  //     .then(
-  //       function (response: any) {
-  //         console.log(response);
-  //       },
-  //       function (error: any) {
-  //         console.log(error);
-  //       }
-  //     );
-  // }
-  //  password : "Pratap@1234"
 
   createUserAccount() {
     if (this.signupForm.invalid) {
@@ -149,6 +126,7 @@ export class SignupComponent implements OnInit {
               verticalPosition: this.verticalPosition,
               duration: this.durationInSeconds * 1000,
             });
+            sessionStorage.setItem('signupFlow', 'true');
           })
           .catch((error) => {
             this._snackBar.open('Failed to Sign Up', 'Close', {
@@ -160,4 +138,8 @@ export class SignupComponent implements OnInit {
           })
       );
   }
+
+  
+
+
 }
