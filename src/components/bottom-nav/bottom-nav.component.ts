@@ -4,7 +4,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import {MatTabsModule} from '@angular/material/tabs';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
-// import { SidenavComponent } from '../sidenav/sidenav.component';
+import { Client, Account } from 'appwrite';
+
 @Component({
   selector: 'app-bottom-nav',
   standalone: true,
@@ -23,8 +24,13 @@ import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 export class BottomNavComponent implements OnInit {
 
   isMobile = false;
+  client = new Client();
+  account: any;
 
-  constructor() { }
+  constructor() {
+    this.client.setProject('yummunity');
+    this.account = new Account(this.client);
+  }
   ngOnInit() {
     this.checkScreenSize();
   }
@@ -35,13 +41,15 @@ export class BottomNavComponent implements OnInit {
   }
 
   checkScreenSize() {
-    this.isMobile = window.innerWidth <= 768; // Adjust breakpoint as needed
+    this.isMobile = window.innerWidth <= 768; 
   }
 
-  logout() {
-    // this.Sidenav.logout();
-    console.log('logout works');
-    
+  async logout() {
+    try {
+        await this.account.deleteSessions()
+    } catch (error) {
+        console.log("Appwrite Service :: logout()", error);
+    }
   }
 
 }

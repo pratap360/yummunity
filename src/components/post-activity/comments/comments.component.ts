@@ -125,7 +125,6 @@ fetchPostData() {
 
 
   postComment() {
-    // debugger;
     if (!this.newComment.trim() || !this.userId) {
       this._snackBar.open('Please enter a comment', 'OK', {
         duration: 3000,

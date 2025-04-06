@@ -1,66 +1,10 @@
-
-/* .bottom-nav {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: #fff;
-  border-top: 1px solid #ddd;
-  display: flex;
-  justify-content: space-around;
-  padding: 10px 0;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-}
-
-.bottom-nav a {
-  text-decoration: none;
-  color: #000;
-  font-size: 14px;
-}
- */
-
-
-/* .bottom-nav {
-    position: fixed;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    background-color: #fff8f8;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 7px 0;
-    z-index: 1000;
-  }
-  
-  .bottom-nav nav a {
-    text-decoration: none;
-    color: #000;
-    font-size: 14px; 
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .bottom-nav nav a mat-icon {
-    font-size: 24px; 
-    margin-bottom: 4px;
-    color: #555;
-  }
-  
-
-  .bottom-nav nav a span {
-    font-size: 12px;
-  } */
-
-
   .bottom-nav {
     position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
     display: flex;
-    justify-content: space-evenly; /* Distribute buttons evenly */
+    justify-content: space-evenly;
     align-items: center;
     padding: 0;
     margin: 0;
@@ -68,7 +12,7 @@
     background-color: #fff8f8;
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
   }
-  
+
   .bottom-nav nav a {
     text-decoration: none;
     color: #555;
@@ -76,37 +20,40 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: relative; /* Required for underline effect */
+    position: relative;
   }
-  
+
   .bottom-nav nav a mat-icon {
     font-size: 24px;
     margin-bottom: 4px;
     color: #555;
     transition: color 0.3s ease;
   }
-  
+
   .bottom-nav nav a span {
     font-size: 12px;
   }
-  
+
   .bottom-nav nav a.active-link {
-    color: #ba005c; /* Highlight active link text and icon */
+    color: #ba005c;
+    /* Highlight active link text and icon */
   }
-  
+
   .bottom-nav nav a.active-link mat-icon {
-    color: #ba005c; /* Highlight active link icon */
+    color: #ba005c;
+    /* Highlight active link icon */
   }
-  
+
   .bottom-nav nav a.active-link::after {
     content: "";
     position: absolute;
-    bottom: -2px; /* Adjust to align with the bottom */
+    bottom: -2px;
+    /* Adjust to align with the bottom */
     left: 50%;
     transform: translateX(-50%);
-    width: 50%; /* Underline width */
+    width: 50%;
+    /* Underline width */
     height: 2px;
     background-color: #ba005c;
     border-radius: 2px;
   }
-  

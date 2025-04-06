@@ -148,6 +148,19 @@ mat-form-field {
     width: 100%;
 }
 
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.8);
+    z-index: 1000;
+  }
+
 @media screen and (max-width: 768px) {
     mat-card {
         max-width: 450px;

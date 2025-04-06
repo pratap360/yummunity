@@ -137,53 +137,58 @@ export class EditComponent {
       }
 
       const reader = new FileReader();
+
       reader.onload = () => {
         this.imagePreview = reader.result as string;
-        // Update form control with the base64 string
-        this.editProfileForm.patchValue({
-          user_profile_pic: this.imagePreview,
-        });
       };
       reader.readAsDataURL(file);
+
+      // Store the file object directly in the form
+    this.editProfileForm.patchValue({
+      user_profile_pic: file  // Store the file object, not the base64 string
+    });
     }
   }
 
   saveChanges(): void {
     if (this.editProfileForm.invalid) {
-      this.edit_snackBar.open('Kindly Fill All Detials', 'OK', {
+      this.edit_snackBar.open('Please fill in all required fields', 'OK', {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
         duration: this.durationInSeconds * 1000,
       });
+      return; // Add this to prevent further execution
     }
-    this.edit_snackBar.open('Your Data has been Updated', 'OK', {
+  
+    // Show loading indicator
+    this.edit_snackBar.open('Updating your profile...', '', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,
-      duration: this.durationInSeconds * 1000,
+      duration: undefined, // No auto-dismiss
     });
-    this.goBack();
-
+  
     const updatedUserData: UserData = this.editProfileForm.value;
     this.appwriteService
       .updateUserData(this.userId, updatedUserData)
       .subscribe({
-        next: () => {
-          this.edit_snackBar.open('Profile Updated Successfully!!', 'OK', {
+        next: (response) => {
+          console.log('Profile updated successfully:', response);
+          this.edit_snackBar.dismiss(); // Dismiss the loading indicator
+          this.edit_snackBar.open('Profile Updated Successfully!', 'OK', {
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
             duration: this.durationInSeconds * 1000,
           });
           this.goBack();
         },
-
         error: (error: any) => {
           console.error('Error updating user data:', error);
-          this.edit_snackBar.open('Unable to Update Profile due to:', error, {
+          this.edit_snackBar.dismiss(); // Dismiss the loading indicator
+          this.edit_snackBar.open('Unable to update profile: ' + (error.message || 'Unknown error'), 'OK', {
             horizontalPosition: this.horizontalPosition,
             verticalPosition: this.verticalPosition,
             duration: this.durationInSeconds * 3000,
           });
-          this.goBack();
         },
       });
   }

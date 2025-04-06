@@ -15,10 +15,10 @@
                 <div class="profile-image-wrapper">
                     <img [src]="imagePreview ||''" alt="Profile picture">
                     <div class="image-upload-overlay">
-                        <input type="file" #fileInput (change)="onImageSelected($event)" accept="image/*">
+                        <input type="file" #fileInput (change)="onImageSelected($event)" accept="image/*" id="profile_pic">
                         <!-- formControlName="user_profile_pic" -->
-                        <mat-icon>photo_camera</mat-icon>
-                        <span>Change Photo</span>
+                        <mat-icon matTooltip="jpg and png images are supported" matTooltipPosition="below">photo_camera</mat-icon>
+                        <span matTooltip="jpg and png images are supported" matTooltipPosition="below">Change Photo</span>
                     </div>
                 </div>
             </div>
@@ -101,7 +101,7 @@
             </mat-form-field>
 
             <div class="button-container">
-                <button mat-flat-button type="submit" [disabled]="editProfileForm.invalid"
+                <button mat-flat-button type="button" [disabled]="editProfileForm.invalid"
                     (click)="saveChanges()">Update Changes</button>
             </div>
         </form>

@@ -82,7 +82,6 @@ export class SavesComponent implements OnInit {
 
 
   toggleSave(): void {
-    // debugger;
     console.log('Toggling save for post:', this.post);
     console.log('Current user ID on post save:', this.userId);
     // First check if user is logged in

@@ -12,15 +12,19 @@
             </mat-card-title>
         </mat-card-header>
 
+        <div *ngIf="isLoading" class="spinner-container">
+            <mat-spinner></mat-spinner>
+        </div>
+
         <form [formGroup]="welcomeForm" class="welcome-card">
             <div class="profile-image-container">
                 <div class="profile-image-wrapper">
                     <img [src]="imagePreview || ''" alt="Profile picture">
                     <div class="image-upload-overlay">
-                        <input type="file" (change)="onImageSelected($event)" accept="image/*" #fileInput id="profile_pic"
-                            formControlName="user_profile_pic">
-                        <mat-icon>photo_camera</mat-icon>
-                        <span>Change Photo</span>
+                        <input type="file" (change)="onImageSelected($event)" accept="image/*" #fileInput id="profile_pic">
+                            <!-- formControlName="user_profile_pic"> -->
+                            <mat-icon matTooltip="jpg and png images are supported" matTooltipPosition="below">photo_camera</mat-icon>
+                            <span matTooltip="jpg and png images are supported" matTooltipPosition="below">Change Photo</span>
                     </div>
                 </div>
             </div>
@@ -115,7 +119,7 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline">
-                <mat-label>Website</mat-label>
+                <mat-label>Website*</mat-label>
                 <input matInput formControlName="user_url" placeholder="Your website"><mat-icon matSuffix>web</mat-icon>
             </mat-form-field>
 

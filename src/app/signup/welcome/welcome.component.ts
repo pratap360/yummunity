@@ -19,6 +19,7 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { Router } from '@angular/router';
 import { AppwriteService } from '../../../lib/appwrite.service';
 import { UserdataService } from '../../services/appwrite/userdata/userdata.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 @Component({
   selector: 'app-welcome',
   standalone: true,
@@ -32,6 +33,7 @@ import { UserdataService } from '../../services/appwrite/userdata/userdata.servi
     ReactiveFormsModule,
     MatSelectModule,
     MatDatepickerModule,
+    MatProgressSpinnerModule,
   ],
   providers: [provideNativeDateAdapter()],
   templateUrl: './welcome.component.html',
@@ -47,6 +49,7 @@ export class WelcomeComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
 
   selectedFile: File | null = null;
+  isLoading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -76,12 +79,12 @@ export class WelcomeComponent implements OnInit {
     ],
     user_password: [{ value: '', disabled: true }],
     user_bio: [''],
-    user_profile_pic: [null],
+    // user_profile_pic: [''],
     user_phone_no: ['', [Validators.pattern('^((\\+91-?)|0)?[0-9]{10}$')]],
     user_gender: ['', Validators.required],
     user_dob: [''],
     user_location: [''],
-    user_url: [''],
+    user_url: ['https://yummunity.vercel.app/'],
     user_fav_food_recipe: [''],
   });
 
@@ -94,34 +97,29 @@ export class WelcomeComponent implements OnInit {
       };
       reader.readAsDataURL(file);
       this.selectedFile = file;
-      // this.welcomeForm.patchValue({
-      //   user_profile_pic: file
-      // });
     }
   }
 
-  // onFileSelected(event: any) {
-  //   const file = event.target.files[0];
-  //   if (file) {
-  //     this.selectedFile = file;
-  //     this.welcomeForm.patchValue({
-  //       user_profile_pic: file
-  //     });
-  //   }
-  // }
 
   async onSubmit() {
+    console.log(this.welcomeForm.value);
+    // console.log(this.welcomeForm.get('user_profile_pic')?.value);
     if (this.welcomeForm.valid && this.signupData) {
+      this.isLoading = true;
       try {
         const profile_pic = (
           document.getElementById('profile_pic') as HTMLInputElement
         ).files;
-        const userProfilePic = profile_pic ? Array.from(profile_pic) : [];
+        // const userProfilePic = profile_pic ? Array.from(profile_pic) : [];
+        const userProfilePic = profile_pic && profile_pic.length > 0 ? Array.from(profile_pic) : [];
 
-        const profilePicUrl = await this.appwriteService.uploadProfilePic(
-          userProfilePic
-        );
+        let profilePicUrl: string[] = [];
+        if (userProfilePic.length > 0) {
+          profilePicUrl = await this.appwriteService.uploadProfilePic(userProfilePic);
+        }
 
+        console.log('Profile Pic URL:', profilePicUrl);
+        
         const account = await this.appwriteService.createAccount(
           this.signupData.user_email,
           this.signupData.user_password,
@@ -137,7 +135,8 @@ export class WelcomeComponent implements OnInit {
           user_password: this.signupData.user_password,
           user_tag: this.welcomeForm.value.user_tag,
           user_bio: this.welcomeForm.value.user_bio,
-          user_profile_pic: profilePicUrl,
+          // user_profile_pic: profilePicUrl,
+          user_profile_pic: profilePicUrl.length > 0 ? profilePicUrl[0] : '',
           user_phone_no: this.welcomeForm.value.user_phone_no,
           user_gender: this.welcomeForm.value.user_gender,
           user_dob: this.welcomeForm.value.user_dob,
@@ -164,57 +163,59 @@ export class WelcomeComponent implements OnInit {
           horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition,
         });
+      } finally{
+        this.isLoading = false;
       }
     }
     // this.router.navigate(['/home-feed'])
   }
-  saveChanges() {
-    const profile_pic = (
-      document.getElementById('profile_pic') as HTMLInputElement
-    ).files;
+  // saveChanges() {
+  //   const profile_pic = (
+  //     document.getElementById('profile_pic') as HTMLInputElement
+  //   ).files;
 
-    const userProfilePic = profile_pic ? Array.from(profile_pic) : [];
+  //   const userProfilePic = profile_pic ? Array.from(profile_pic) : [];
 
-    this.appwriteService
-      .uploadProfilePic(userProfilePic)
-      .then((profilePicUrl) => {
-        // const userData = this.welcomeForm.value;
-        const userData = {
-          user_name: this.welcomeForm.get('user_name')?.value,
-          user_email: this.welcomeForm.get('user_email')?.value,
-          user_password: this.welcomeForm.get('user_password')?.value,
-          user_tag: this.welcomeForm.get('user_tag')?.value,
-          user_bio: this.welcomeForm.get('user_bio')?.value,
-          user_profile_pic: profilePicUrl,
-          user_phone_no: this.welcomeForm.get('user_phone_no')?.value,
-          user_gender: this.welcomeForm.get('user_gender')?.value,
-          user_dob: this.welcomeForm.get('user_dob')?.value,
-          user_location: this.welcomeForm.get('user_location')?.value,
-          user_url: this.welcomeForm.get('user_url')?.value,
-          user_fav_food_recipe: this.welcomeForm.get('user_fav_food_recipe')
-            ?.value,
-        };
-        return this.appwriteService.createNewUser(userData);
-      })
-      .then(() => {
-        console.log(this.welcomeForm.value);
-        this.user_snackBar.open('Changes Saved', 'Close', {
-          duration: this.durationInSeconds * 1000,
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        });
-      })
-      .catch((error) => {
-        console.log(this.welcomeForm.value);
-        console.error('Failed to Create New user: ', error);
-        this.user_snackBar.open('check console for errors', 'Close', {
-          duration: this.durationInSeconds * 1000,
-          horizontalPosition: this.horizontalPosition,
-          verticalPosition: this.verticalPosition,
-        });
-      });
+  //   this.appwriteService
+  //     .uploadProfilePic(userProfilePic)
+  //     .then((profilePicUrl) => {
+  //       // const userData = this.welcomeForm.value;
+  //       const userData = {
+  //         user_name: this.welcomeForm.get('user_name')?.value,
+  //         user_email: this.welcomeForm.get('user_email')?.value,
+  //         user_password: this.welcomeForm.get('user_password')?.value,
+  //         user_tag: this.welcomeForm.get('user_tag')?.value,
+  //         user_bio: this.welcomeForm.get('user_bio')?.value,
+  //         user_profile_pic: profilePicUrl,
+  //         user_phone_no: this.welcomeForm.get('user_phone_no')?.value,
+  //         user_gender: this.welcomeForm.get('user_gender')?.value,
+  //         user_dob: this.welcomeForm.get('user_dob')?.value,
+  //         user_location: this.welcomeForm.get('user_location')?.value,
+  //         user_url: this.welcomeForm.get('user_url')?.value,
+  //         user_fav_food_recipe: this.welcomeForm.get('user_fav_food_recipe')
+  //           ?.value,
+  //       };
+  //       return this.appwriteService.createNewUser(userData);
+  //     })
+  //     .then(() => {
+  //       console.log(this.welcomeForm.value);
+  //       this.user_snackBar.open('Changes Saved', 'Close', {
+  //         duration: this.durationInSeconds * 1000,
+  //         horizontalPosition: this.horizontalPosition,
+  //         verticalPosition: this.verticalPosition,
+  //       });
+  //     })
+  //     .catch((error) => {
+  //       console.log(this.welcomeForm.value);
+  //       console.error('Failed to Create New user: ', error);
+  //       this.user_snackBar.open('check console for errors', 'Close', {
+  //         duration: this.durationInSeconds * 1000,
+  //         horizontalPosition: this.horizontalPosition,
+  //         verticalPosition: this.verticalPosition,
+  //       });
+  //     });
 
-    // console.log(this.welcomeForm.value);
-    // this.router.navigate(['/home-feed']);
-  }
+  //   // console.log(this.welcomeForm.value);
+  //   // this.router.navigate(['/home-feed']);
+  // }
 }

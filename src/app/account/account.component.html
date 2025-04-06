@@ -1,6 +1,5 @@
-<!-- <app-side-nav-bar></app-side-nav-bar> -->
+
 <app-sidenav></app-sidenav>
-<!-- <app-post-container></app-post-container> -->
 <mat-spinner *ngIf="isLoading | async"></mat-spinner>
 <div class="content-wrapper">
   <div class="account-container">
@@ -44,12 +43,7 @@
   </mat-card>
 </div>
 
-<!-- <app-bottom-nav></app-bottom-nav> -->
-
 <div class="profile-tab-container">
-
-  <!-- <mat-tab-group color="accent" class="profile-post-tab" mat-align-tabs="center" dynamicHeight
-    (selectedIndexChange)="selectedTabIndex.set($event)"> -->
     <mat-tab-group color="accent" class="profile-post-tab" mat-align-tabs="center" dynamicHeight
     (selectedIndexChange)="onTabChange($event); selectedTabIndex.set($event)">
     <mat-tab label="Recipes Shares">
@@ -108,13 +102,6 @@
         <div *ngIf="isLoading | async; else savedPostsTemplate">
           <mat-spinner></mat-spinner>
         </div>
-        <!-- <div>
-          <mat-spinner *ngIf="isLoading | async"></mat-spinner>
-          <div class="no-post" *ngIf="!isLoading && savedPost.length === 0">
-            <span>No saved posts yet...</span>
-          </div>
-        </div> -->
-
         <ng-template #savedPostsTemplate>
           <div *ngIf="savedPost && savedPost.length > 0 || savedBlogPost && savedBlogPost.length > 0; else noSaved">
             <ng-container *ngFor="let save_post of savedPost">
@@ -143,11 +130,9 @@
             </button>
           </div>
         </ng-template>
-
       </div>
     </mat-tab>
   </mat-tab-group>
-
 </div>
 
 <app-bottom-nav></app-bottom-nav>

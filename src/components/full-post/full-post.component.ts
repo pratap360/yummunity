@@ -243,7 +243,7 @@ export class FullPostComponent implements OnInit, OnDestroy {
   }
 
   postComment() {
-    // debugger;
+
     if (!this.newComment.trim()) {
       this._snackBar.open('Please enter a comment', 'OK', {
         duration: 3000,
