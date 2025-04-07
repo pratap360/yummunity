@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { AsyncPipe } from '@angular/common';
@@ -39,6 +39,8 @@ export class SidenavComponent {
   isCollapsed = false;
   client = new Client();
   account: any;
+  @Input() notifications: any[] = [];
+  hidden: boolean = false
 
   toggleSidenav() {
     // this.opened = !this.opened;

@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, signal } from '@angular/core';
 // import { SideNavBarComponent } from '../../components/side-nav-bar/side-nav-bar.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -35,11 +35,14 @@ import { BottomNavComponent } from "../../components/bottom-nav/bottom-nav.compo
   styleUrl: './notification.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NotificationComponent {
+export class NotificationComponent implements OnInit{
   // Likes: boolean | undefined;
-
-  hideSingleSelectionIndicator = signal(false);
   hideMultipleSelectionIndicator = signal(true);
+  hideSingleSelectionIndicator = signal(false);
+  
+  notifications : any [] = []
+
+  ngOnInit(): void {}
 
 
   toggleSingleSelectionIndicator() {

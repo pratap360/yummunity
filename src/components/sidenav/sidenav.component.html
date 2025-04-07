@@ -23,8 +23,13 @@
         <a mat-list-item routerLink="/search" matTooltip="Search" matTooltipPosition="right">
           <mat-icon>search</mat-icon><span class="nav-text" *ngIf="!isCollapsed">Search</span>
         </a>
-        <a mat-list-item routerLink="/notifications" matTooltip="Notifications" matTooltipPosition="right" >
+        <!-- <a mat-list-item routerLink="/notifications" matTooltip="Notifications" matTooltipPosition="right" >
           <mat-icon>notifications</mat-icon><span class="nav-text" *ngIf="!isCollapsed">Notifications</span>
+        </a> -->
+        <a mat-list-item routerLink="/notifications" matTooltip="Notifications" matTooltipPosition="right">
+          <mat-icon matBadge="3" matBadgeColor="warn" [matBadgeHidden]="hidden" matBadgeSize="medium">notifications</mat-icon>
+          <!-- <mat-icon matBadge="{{ notifications.length }}" matBadgeColor="warn" [matBadgeHidden]="hidden" matBadgeSize="medium">notifications</mat-icon> -->
+          <span class="nav-text" *ngIf="!isCollapsed">Notifications</span>
         </a>
         <a mat-list-item routerLink="/account" matTooltip="Account" matTooltipPosition="right">
           <mat-icon>account_circle</mat-icon><span class="nav-text" *ngIf="!isCollapsed">Account</span>

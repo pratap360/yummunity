@@ -89,6 +89,12 @@ mat-icon {
   vertical-align: middle;
 }
 
+.matBadge{
+  top: 12px;
+  left: 24px;
+}
+
+
 @media (max-width: 768px) {
 
   .hamburger , .sidenav-container{

@@ -1,4 +1,3 @@
-<!-- <app-side-nav-bar></app-side-nav-bar> -->
 
 <app-sidenav></app-sidenav>
 <app-post-container></app-post-container>
@@ -10,29 +9,28 @@
     </mat-card-content>
   </mat-card>
 </div> -->
-
-
-<div class="notification-container">
-
+<!-- <div class="notification-container">
   <mat-button-toggle-group name="ingredients" aria-label="Ingredients" 
     [hideMultipleSelectionIndicator]="hideMultipleSelectionIndicator()" multiple>
     <mat-button-toggle value="likes" checked="true"  matTooltip="Likes" ><mat-icon>favorite</mat-icon></mat-button-toggle>
     <mat-button-toggle value="comments"  checked="true" matTooltip="Comments" ><mat-icon>comment</mat-icon></mat-button-toggle>
     <mat-button-toggle value="following" checked="true" matTooltip="Following" ><mat-icon>groups</mat-icon></mat-button-toggle>
   </mat-button-toggle-group>
-
-
-</div>
+</div> -->
 
 <div class="notification-activity-container">
 
   <mat-card class="liked-card-notification" appearance="outlined">
     <mat-card-header class="profile-header">
-      <div mat-card-avatar class="profile-header-image"></div>
-      <div class="profile-info">
-        <mat-card-title>pratap360</mat-card-title>
-        <mat-card-subtitle>liked your post</mat-card-subtitle>
+      <div class="noti-icon">
+        <mat-icon>favorite</mat-icon>
       </div>
+      <div class="profile-info">
+        <p>1 hour ago</p>
+        <mat-card-title>'pratap360' liked your post</mat-card-title>
+        <mat-card-subtitle>'post url/title'</mat-card-subtitle>
+      </div>
+      <!--** thumnail if exists -->
       <div class="post-image">
         <img mat-card-image src="/assets/posts-img/food1.jpg" alt="Photo of a Shiba Inu">
       </div>
@@ -41,10 +39,13 @@
 
   <mat-card class="commented-card-notification" appearance="outlined">
     <mat-card-header class="profile-header">
-      <div mat-card-avatar class="profile-header-image"></div>
+      <div class="noti-icon">
+        <mat-icon>comment</mat-icon>
+      </div>
       <div class="profile-info">
-      <mat-card-title>pratap360</mat-card-title>
-      <mat-card-subtitle>commented in your post</mat-card-subtitle>
+        <p>1 hour ago</p>
+      <mat-card-title>pratap360 commented in your post</mat-card-title>
+      <mat-card-subtitle>'post url/title'</mat-card-subtitle>
     </div>
     <div class="post-image">
       <img mat-card-image src="/assets/posts-img/food1.jpg" alt="Photo of a Shiba Inu">
@@ -54,29 +55,33 @@
 
   <mat-card class="saved-card-notification" appearance="outlined">
     <mat-card-header class="profile-header">
-      <div mat-card-avatar class="profile-header-image"></div>
-    <div class="profile-info">
-      <mat-card-title>pratap360</mat-card-title>
-      <mat-card-subtitle>saved your post</mat-card-subtitle>
-    </div>
-          <div class="post-image">
-        <img mat-card-image src="/assets/posts-img/food1.jpg" alt="Photo of a Shiba Inu">
+      <div class="noti-icon">
+        <mat-icon>bookmark_added</mat-icon>
       </div>
+    <div class="profile-info">
+      <p>1 hour ago</p>
+      <mat-card-title>pratap360 saved your post</mat-card-title>
+      <mat-card-subtitle>'post url/title'</mat-card-subtitle>
+    </div>
+          <!-- <div class="post-image">
+        <img mat-card-image src="/assets/posts-img/food1.jpg" alt="Photo of a Shiba Inu">
+      </div> -->
     </mat-card-header>
     </mat-card>
 
-  <mat-card class="following-card-notification" appearance="outlined">
+  <!-- <mat-card class="following-card-notification" appearance="outlined">
     <mat-card-header class="profile-header">
-      <div mat-card-avatar class="profile-header-image"></div>
       <mat-card-title>pratap360</mat-card-title>
       <mat-card-subtitle>Developer|Food Critics</mat-card-subtitle>
       <button mat-button><mat-icon class="follow-icon">person</mat-icon>Followed You</button>
     </mat-card-header>
-    </mat-card>
+   </mat-card> -->
 
-  <mat-card class="rated-card-notification" appearance="outlined">
+  <!-- <mat-card class="rated-card-notification" appearance="outlined">
     <mat-card-header class="profile-header">
-      <div mat-card-avatar class="profile-header-image"></div>
+      <div class="noti-icon">
+        <mat-icon>comment</mat-icon>
+      </div>
       <div class="profile-info">
       <mat-card-title>pratap360</mat-card-title>
       <mat-card-subtitle>Rated your post</mat-card-subtitle>
@@ -85,10 +90,10 @@
         <img mat-card-image src="/assets/posts-img/food1.jpg" alt="Photo of a Shiba Inu">
       </div>
     </mat-card-header>
-    </mat-card>
+  </mat-card> -->
 
     <!-- not image card  -->
-    <mat-card class="liked-card-notification" appearance="outlined">
+    <!-- <mat-card class="liked-card-notification" appearance="outlined">
       <mat-card-header class="profile-header">
         <div mat-card-avatar class="profile-header-image"></div>
         <div class="profile-info">
@@ -97,6 +102,6 @@
         </div>
         <p class="post-text">A hen lays around 300 to 325 eggs per year, and it takes her 24 to 26 hours to produce each egg</p>
       </mat-card-header>
-      </mat-card>
+    </mat-card> -->
 
 </div>

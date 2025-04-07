@@ -33,11 +33,6 @@
 </mat-grid-list>
 </div>
 
-<!-- Show "No results found" only after loading and when there are no meals -->
-<!-- <div class="text-info-spinner" *ngIf="hideShowText || !isLoading && meals.length == 0">
-  No meals found.
-</div> -->
-
 <div *ngIf="hideShowText">
   Nothing founded for "{{ searchQuery }}". Please try a something different.
 </div>
@@ -47,23 +42,10 @@
   <mat-divider></mat-divider>
 </div>
   
-<p class="suggestions-header" *ngIf="isSearchSuggestions">Users whom to follow</p>
+<p class="suggestions-header" *ngIf="isSearchSuggestions">Recently Account Created</p>
 
 <app-search-suggestion-profile *ngIf="isSearchSuggestions"></app-search-suggestion-profile>
 
-<!-- <app-search-suggestion-profile *ngIf="isSearchSuggestions"></app-search-suggestion-profile> -->
-
 <app-trending-recipes-list *ngIf="isSearchSuggestions"></app-trending-recipes-list>
 
-
 <app-bottom-nav></app-bottom-nav>
-<!-- <div class="suggestions-container">
-  <app-search-suggestion-profile></app-search-suggestion-profile>
-</div> -->
-
-
-<!-- <div class="divider">
-  <mat-divider></mat-divider>
-</div>
-  
-<p class="suggestions-header">Trending Recipes</p> -->

@@ -43,16 +43,37 @@ mat-button-toggle {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: flex-start;
 }
 
-.profile-header-image {
-    background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg');
+.noti-icon {
+    /* background-image: url('https://portfolio.paruidev.com/resources/about-me.jpg'); */
     background-size: cover;
     height: 50px;
     width: 50px;
     margin: 12px;
 }
+
+.noti-icon mat-icon {
+    width: 100%;
+    height: 100%;
+    font-size: 3rem;
+    color: #BA005C;
+}
+
+mat-card-title {
+    font-size: 20px;
+}
+
+mat-card-subtitle {
+    font-size: .9rem;
+}
+
+.profile-info p {
+    font-size: .8rem;
+    margin: 0px;
+}
+
 
 .following-card-notification button {
     margin-left: auto;
@@ -79,24 +100,29 @@ mat-button-toggle {
 }
 
 @media (max-width: 768px) {
-    
+
     div.notification-container {
         margin-top: 4rem;
-        /* margin: 28px 0px 20px 0px; */
     }
-    .follow-icon{
+
+    .follow-icon {
         display: none !important;
     }
-    .notification-activity-container{
+
+    .notification-activity-container {
         margin-bottom: 4rem;
+        margin-top: 4rem;
     }
-    mat-card-title{
-        font-size: 20px;
+
+    mat-card-title {
+        font-size: 1rem;
     }
-    mat-card-subtitle{
+
+    mat-card-subtitle {
         font-size: 12px;
     }
-    p .post-text{
+
+    p .post-text {
         font-size: 8px;
     }
 }

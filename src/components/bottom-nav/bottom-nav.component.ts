@@ -1,4 +1,4 @@
-import { Component,HostListener, OnInit } from '@angular/core';
+import { Component,HostListener, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
@@ -26,6 +26,8 @@ export class BottomNavComponent implements OnInit {
   isMobile = false;
   client = new Client();
   account: any;
+  @Input() notifications: any[] = [];
+
 
   constructor() {
     this.client.setProject('yummunity');
