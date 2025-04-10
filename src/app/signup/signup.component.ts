@@ -71,12 +71,12 @@ export class SignupComponent implements OnInit {
     user_password: ['', [Validators.required, Validators.minLength(8)]],
   });
 
-  private _snackBar = inject(MatSnackBar);
+  private signup_snackBar = inject(MatSnackBar);
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   onSignUp() {
     if (this.signupForm.invalid) {
-      this._snackBar.open('Kindly Fill All Detials', 'OK', {
+      this.signup_snackBar.open('Kindly Fill All Detials', 'OK', {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
         duration: this.durationInSeconds * 1000,
@@ -86,7 +86,7 @@ export class SignupComponent implements OnInit {
       sessionStorage.setItem('signupFlow', 'true');
       console.log(this.signupForm.value);
 
-      this._snackBar.open(
+      this.signup_snackBar.open(
         'Account Created Successfully, Kindly Fill All Detials',
         'OK',
         {
@@ -121,7 +121,7 @@ export class SignupComponent implements OnInit {
         this.appwriteService
           .userData(userInfo)
           .then(() => {
-            this._snackBar.open('Sign Up Successfully!!', 'OK', {
+            this.signup_snackBar.open('Sign Up Successfully!!', 'OK', {
               horizontalPosition: this.horizontalPosition,
               verticalPosition: this.verticalPosition,
               duration: this.durationInSeconds * 1000,
@@ -129,7 +129,7 @@ export class SignupComponent implements OnInit {
             sessionStorage.setItem('signupFlow', 'true');
           })
           .catch((error) => {
-            this._snackBar.open('Failed to Sign Up', 'Close', {
+            this.signup_snackBar.open('Failed to Sign Up', 'Close', {
               horizontalPosition: this.horizontalPosition,
               verticalPosition: this.verticalPosition,
               duration: this.durationInSeconds * 1000,
@@ -139,7 +139,13 @@ export class SignupComponent implements OnInit {
       );
   }
 
-  
+  googleLogin(): void {
+    this.signup_snackBar.open('This is under Devlopment, kindly use Basic Sign Up', 'OK', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration: this.durationInSeconds * 1000,
+    });
+  }
 
 
 }

@@ -17,8 +17,52 @@
     <mat-button-toggle value="following" checked="true" matTooltip="Following" ><mat-icon>groups</mat-icon></mat-button-toggle>
   </mat-button-toggle-group>
 </div> -->
-
 <div class="notification-activity-container">
+
+  <h4>This is still under Development</h4>
+
+  <ng-container *ngIf="notificationService.notifications().length > 0; else noNotifications">
+    <mat-card *ngFor="let notification of notificationService.notifications()" 
+             class="notification-card"
+             appearance="outlined">
+      <mat-card-header class="profile-header">
+        <div class="noti-icon">
+          <mat-icon>
+            {{ getNotificationIcon(notification.type) }}
+          </mat-icon>
+        </div>
+        
+        <div class="profile-info">
+          <!-- <p>{{ notification.createdAt | date:'shortTime' }}</p> -->
+          <p class="time">{{ getRelativeTime(notification.createdAt) }}</p>
+          <mat-card-title>
+            {{ notification.user.name }} {{ notification.type }} your post
+          </mat-card-title>
+          <mat-card-subtitle>
+            <span *ngIf="notification.comment">{{ notification.comment }}</span>
+            <span *ngIf="!notification.comment">&#64;{{ notification.userTag }}
+            </span>
+          </mat-card-subtitle>
+        </div>
+
+        <div class="post-image">
+          <a [routerLink]="[notification.postUrl]">
+            <ng-container *ngIf="notification.thumbnail; else noThumbnail">
+              <img mat-card-image [src]="notification.thumbnail" alt="See the Post">
+          </ng-container>
+          <ng-template #noThumbnail>
+            <button mat-flat-button class="view-post"><mat-icon>visibility</mat-icon>View Post</button>
+          </ng-template>
+              <!-- <img mat-card-image [src]="notification.thumbnail" alt="See the Post">
+              <button mat-flat-button *ngIf="notification.textThumbnail">See the Post
+              </button> -->
+          </a>
+        </div>
+      </mat-card-header>
+    </mat-card>
+  </ng-container>
+  
+
 
   <mat-card class="liked-card-notification" appearance="outlined">
     <mat-card-header class="profile-header">
@@ -30,7 +74,6 @@
         <mat-card-title>'pratap360' liked your post</mat-card-title>
         <mat-card-subtitle>'post url/title'</mat-card-subtitle>
       </div>
-      <!--** thumnail if exists -->
       <div class="post-image">
         <img mat-card-image src="/assets/posts-img/food1.jpg" alt="Photo of a Shiba Inu">
       </div>
@@ -103,5 +146,10 @@
         <p class="post-text">A hen lays around 300 to 325 eggs per year, and it takes her 24 to 26 hours to produce each egg</p>
       </mat-card-header>
     </mat-card> -->
-
+    <ng-template #noNotifications>
+      <div class="no-notifications">
+        <mat-icon>notifications_off</mat-icon>
+        <p>No notifications yet</p>
+      </div>
+    </ng-template>
 </div>

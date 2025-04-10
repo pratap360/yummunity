@@ -1,10 +1,11 @@
-import { Component,HostListener, Input, OnInit } from '@angular/core';
+import { Component,HostListener, Input, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import {MatTabsModule} from '@angular/material/tabs';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { Client, Account } from 'appwrite';
+import { NotificationService } from '../../app/services/appwrite/notification.service';
 
 @Component({
   selector: 'app-bottom-nav',
@@ -28,8 +29,10 @@ export class BottomNavComponent implements OnInit {
   account: any;
   @Input() notifications: any[] = [];
 
+  badgeCount = signal<number>(0);
+  hidden: boolean = false
 
-  constructor() {
+  constructor(public notificationService: NotificationService) {
     this.client.setProject('yummunity');
     this.account = new Account(this.client);
   }

@@ -10,7 +10,7 @@
         </a>
         <a mat-tab-link routerLink="/notifications" routerLinkActive="active-link" #rla3="routerLinkActive"
             [active]="rla3.isActive">
-            <mat-icon matBadge="{{ notifications.length }}" matBadgeColor="warn" matBadgeSize="medium">notifications</mat-icon>
+            <mat-icon [matBadge]="notificationService.badgeCount()" matBadgeColor="warn" [matBadgeHidden]="hidden" matBadgeSize="large">notifications</mat-icon>
         </a>
         <!-- <a mat-tab-link routerLink="/notifications" routerLinkActive="active-link" #rla3="routerLinkActive"
             [active]="rla3.isActive">
