@@ -19,7 +19,11 @@
 </div> -->
 <div class="notification-activity-container">
 
-  <h4>This is still under Development</h4>
+  <div class="noti-title">
+  <h5>All Notificaiton is here</h5> 
+  <button mat-flat-button class="mark-as-read" (click) ="markAsRead()"><mat-icon>done_all</mat-icon>Mark as Read</button>
+  </div>
+
 
   <ng-container *ngIf="notificationService.notifications().length > 0; else noNotifications">
     <mat-card *ngFor="let notification of notificationService.notifications()" 
@@ -39,9 +43,14 @@
             {{ notification.user.name }} {{ notification.type }} your post
           </mat-card-title>
           <mat-card-subtitle>
-            <span *ngIf="notification.comment">{{ notification.comment }}</span>
-            <span *ngIf="!notification.comment">&#64;{{ notification.userTag }}
+            <!-- <span *ngIf="notification.comment">{{ notification.comment }}</span> -->
+            <span *ngIf="notification.type === 'commented' && notification.comment">
+              "{{ notification.comment }}"
             </span>
+            <span *ngIf="notification.type !== 'commented' || !notification.comment">&#64;{{ notification.userTag }} do click on image/button
+            </span>
+            <!-- <span *ngIf="!notification.comment">&#64;{{ notification.userTag }}
+            </span> -->
           </mat-card-subtitle>
         </div>
 
@@ -62,56 +71,14 @@
     </mat-card>
   </ng-container>
   
-
-
-  <mat-card class="liked-card-notification" appearance="outlined">
-    <mat-card-header class="profile-header">
-      <div class="noti-icon">
-        <mat-icon>favorite</mat-icon>
-      </div>
-      <div class="profile-info">
-        <p>1 hour ago</p>
-        <mat-card-title>'pratap360' liked your post</mat-card-title>
-        <mat-card-subtitle>'post url/title'</mat-card-subtitle>
-      </div>
-      <div class="post-image">
-        <img mat-card-image src="/assets/posts-img/food1.jpg" alt="Photo of a Shiba Inu">
-      </div>
-    </mat-card-header>
-    </mat-card>
-
-  <mat-card class="commented-card-notification" appearance="outlined">
-    <mat-card-header class="profile-header">
-      <div class="noti-icon">
-        <mat-icon>comment</mat-icon>
-      </div>
-      <div class="profile-info">
-        <p>1 hour ago</p>
-      <mat-card-title>pratap360 commented in your post</mat-card-title>
-      <mat-card-subtitle>'post url/title'</mat-card-subtitle>
+  <ng-template #noNotifications>
+    <div class="no-notifications">
+      <mat-icon>notifications_off</mat-icon>
+      <p>No notifications yet</p>
     </div>
-    <div class="post-image">
-      <img mat-card-image src="/assets/posts-img/food1.jpg" alt="Photo of a Shiba Inu">
-    </div>
-    </mat-card-header>
-    </mat-card>
+  </ng-template>
 
-  <mat-card class="saved-card-notification" appearance="outlined">
-    <mat-card-header class="profile-header">
-      <div class="noti-icon">
-        <mat-icon>bookmark_added</mat-icon>
-      </div>
-    <div class="profile-info">
-      <p>1 hour ago</p>
-      <mat-card-title>pratap360 saved your post</mat-card-title>
-      <mat-card-subtitle>'post url/title'</mat-card-subtitle>
-    </div>
-          <!-- <div class="post-image">
-        <img mat-card-image src="/assets/posts-img/food1.jpg" alt="Photo of a Shiba Inu">
-      </div> -->
-    </mat-card-header>
-    </mat-card>
-
+  <!-- * template of notification card is here  -->
   <!-- <mat-card class="following-card-notification" appearance="outlined">
     <mat-card-header class="profile-header">
       <mat-card-title>pratap360</mat-card-title>
@@ -146,10 +113,56 @@
         <p class="post-text">A hen lays around 300 to 325 eggs per year, and it takes her 24 to 26 hours to produce each egg</p>
       </mat-card-header>
     </mat-card> -->
-    <ng-template #noNotifications>
-      <div class="no-notifications">
-        <mat-icon>notifications_off</mat-icon>
-        <p>No notifications yet</p>
+
+    <!-- <mat-card class="liked-card-notification" appearance="outlined">
+      <mat-card-header class="profile-header">
+        <div class="noti-icon">
+          <mat-icon>favorite</mat-icon>
+        </div>
+        <div class="profile-info">
+          <p>1 hour ago</p>
+          <mat-card-title>'pratap360' liked your post</mat-card-title>
+          <mat-card-subtitle>'post url/title'</mat-card-subtitle>
+        </div>
+        <div class="post-image">
+          <img mat-card-image src="/assets/posts-img/food1.jpg" alt="Photo of a Shiba Inu">
+        </div>
+      </mat-card-header>
+      </mat-card>
+  
+    <mat-card class="commented-card-notification" appearance="outlined">
+      <mat-card-header class="profile-header">
+        <div class="noti-icon">
+          <mat-icon>comment</mat-icon>
+        </div>
+        <div class="profile-info">
+          <p>1 hour ago</p>
+        <mat-card-title>pratap360 commented in your post</mat-card-title>
+        <mat-card-subtitle>'post url/title'</mat-card-subtitle>
       </div>
-    </ng-template>
+      <div class="post-image">
+        <img mat-card-image src="/assets/posts-img/food1.jpg" alt="Photo of a Shiba Inu">
+      </div>
+      </mat-card-header>
+      </mat-card>
+  
+    <mat-card class="saved-card-notification" appearance="outlined">
+      <mat-card-header class="profile-header">
+        <div class="noti-icon">
+          <mat-icon>bookmark_added</mat-icon>
+        </div>
+      <div class="profile-info">
+        <p>1 hour ago</p>
+        <mat-card-title>pratap360 saved your post</mat-card-title>
+        <mat-card-subtitle>'post url/title'</mat-card-subtitle>
+      </div>
+      </mat-card-header>
+      </mat-card> -->
+
+      <!-- * pagination in upcoming feature  -->
+<!-- <mat-paginator [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25]"
+              aria-label="Select page">
+</mat-paginator> -->
 </div>

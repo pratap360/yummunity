@@ -17,6 +17,7 @@ import { BottomNavComponent } from "../../components/bottom-nav/bottom-nav.compo
 import { NotificationService } from '../services/appwrite/notification.service';
 import { CommonModule,DatePipe } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import {MatPaginatorModule} from '@angular/material/paginator';
 @Component({
   selector: 'app-notification',
   standalone: true,
@@ -39,15 +40,16 @@ import { RouterLink } from '@angular/router';
     CommonModule,
     DatePipe,
     RouterLink,
+    MatPaginatorModule
   ],
   templateUrl: './notification.component.html',
   styleUrl: './notification.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NotificationComponent implements OnInit{
-  // Likes: boolean | undefined;
-  hideMultipleSelectionIndicator = signal(true);
-  hideSingleSelectionIndicator = signal(false);
+  
+hideMultipleSelectionIndicator = signal(true);
+hideSingleSelectionIndicator = signal(false);
   
 notifications : any [] = []
 notification: any;
@@ -78,12 +80,16 @@ notificationService = inject(NotificationService);
   getNotificationIcon(type: string): string {
     const iconMap: { [key: string]: string } = {
       'liked': 'favorite',
-      'saved': 'bookmark',
+      'saved': 'bookmark_added',
       'commented': 'comment',
       'default': 'notifications'
     };
     
     return iconMap[type] || iconMap['default'];
+  }
+
+  markAsRead():void {
+    alert('Mark as read is working');
   }
 
 }
