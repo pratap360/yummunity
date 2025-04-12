@@ -57,7 +57,8 @@ export class NotificationService {
   
       const processed = await this.processPosts(response.documents as unknown as RecipePost[]);
       this.notifications.set(processed); // Fixed indentation
-      this.badgeCount.set(processed.length); // Fixed indentation
+      // this.badgeCount.set(processed.length); // Fixed indentation
+      this.badgeCount.set(this.notifications().length)
   
       this.setupRealtimeUpdates();
     } catch (error) {
@@ -216,6 +217,17 @@ private createNotifications(post: any, action: string, users: any[]): any[] {
       userTag: post.user_tag
     };
   }).filter(notification => notification !== null);
+}
+
+markAllRead(){
+  const updatedNotifications = this.notifications().map(notification => ({
+    ...notification,
+    isRead: true
+  }));
+  this.notifications.set(updatedNotifications);
+  // Reset badge count to 0
+  this.badgeCount.set(0);
+  console.log('All notifications marked as read');
 }
 
 // private async processPosts(posts: RecipePost[]): Promise<any> {

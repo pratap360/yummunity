@@ -89,7 +89,7 @@ notificationService = inject(NotificationService);
   }
 
   markAsRead():void {
-    alert('Mark as read is working');
+    this.notificationService.markAllRead();
   }
 
 }
