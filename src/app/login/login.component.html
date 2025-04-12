@@ -50,7 +50,7 @@
       <button mat-raised-button class="login" color="primary" (click)="onLogin()" routerLink="/home-feed">
         <mat-icon fontIcon="login"></mat-icon>
 Login</button>
-      <button mat-flat-button color="secondary" class="google-login"><fa-icon [icon]="faGoogle"></fa-icon> Log in with Google</button>
+      <button mat-flat-button color="secondary" class="google-login" (click)="onGoogleLogin()"><fa-icon [icon]="faGoogle"></fa-icon> Log in with Google</button>
     </div>
     <div class="button-row">
       <p>Don't have an account?</p>

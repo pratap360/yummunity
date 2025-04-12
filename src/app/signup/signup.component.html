@@ -63,7 +63,7 @@
         <!-- routerLink="/welcome" -->
         <mat-icon fontIcon="login"></mat-icon>
 Sign Up</button>
-      <button mat-flat-button color="secondary" class="google-login"><fa-icon [icon]="faGoogle"></fa-icon> Sign up with Google</button>
+      <button mat-flat-button color="secondary" class="google-login" (click)="googleLogin()" ><fa-icon [icon]="faGoogle"></fa-icon> Sign up with Google</button>
     </div>
     <div class="button-row">
       <p>Already have an account?</p>

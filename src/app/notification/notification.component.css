@@ -85,6 +85,12 @@ mat-card-subtitle {
     margin-left: auto;
 }
 
+.view-post {
+    width: 100%;
+    margin: 1rem;
+    right: 1rem;
+}
+
 .post-image img {
     height: 100px;
     width: 100px;
@@ -98,6 +104,24 @@ mat-card-subtitle {
     margin-left: auto;
     text-align: left;
 }
+
+.notification-card {
+    margin: 1rem;
+    padding: 1rem;
+}
+
+.noti-title{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: space-between;
+    margin: 1rem;
+}
+
+.mark-as-read{
+    margin: 1rem;
+}
+
 
 @media (max-width: 768px) {
 
@@ -125,4 +149,22 @@ mat-card-subtitle {
     p .post-text {
         font-size: 8px;
     }
+
+    .notification-card {
+        margin: 0.6rem;
+        padding: 0.6rem;
+    }
+
+    .view-post {
+        width: 100%;
+        margin: 1rem;
+        padding: 0.8rem;
+        font-size: 0.9rem;
+        right: 1rem;
+    }
+    .mark-as-read{
+        margin: 1rem;
+        width: 55%;
+    }
+    
 }

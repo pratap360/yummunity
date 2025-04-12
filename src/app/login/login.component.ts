@@ -104,6 +104,15 @@ export class LoginComponent implements OnInit {
     );
   }
 
+
+  onGoogleLogin():void {
+    this.login_snackBar.open('This is under Devlopment, kindly use Basic Login', 'OK', {
+      horizontalPosition: this.horizontalPosition,
+      verticalPosition: this.verticalPosition,
+      duration: this.durationInSeconds * 1000,
+    });
+  }
+
   //  onSignUp() {
   //   this.account.create(ID.unique(), "pratap@yummunity.com", "Pratap@201", "Pratap")
   //   .then(function (response: any) {

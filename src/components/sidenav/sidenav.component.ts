@@ -14,6 +14,7 @@ import { Observable } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 import { Client, Account } from 'appwrite';
+import { NotificationService } from '../../app/services/appwrite/notification.service';
 @Component({
   selector: 'app-sidenav',
   standalone: true,
@@ -56,7 +57,7 @@ export class SidenavComponent {
       shareReplay()
     );
 
-  constructor() {
+  constructor(public notificationService: NotificationService) {
     this.client.setProject('yummunity');
     this.account = new Account(this.client);
   }

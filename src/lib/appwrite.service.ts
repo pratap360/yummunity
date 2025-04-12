@@ -15,13 +15,13 @@ import { environment } from '../environments/environment';
 import { from, Observable, of, throwError, timer } from 'rxjs';
 import { switchMap, map, catchError } from 'rxjs/operators';
 import { UserData } from '../app/interface/user-data';
-import { faThemeisle } from '@fortawesome/free-brands-svg-icons';
 import { RecipePost } from '../app/interface/recipe-post';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppwriteService {
+
   // private sdk: Client;
   client = new Client();
   database: any;

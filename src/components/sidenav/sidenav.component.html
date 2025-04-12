@@ -27,7 +27,10 @@
           <mat-icon>notifications</mat-icon><span class="nav-text" *ngIf="!isCollapsed">Notifications</span>
         </a> -->
         <a mat-list-item routerLink="/notifications" matTooltip="Notifications" matTooltipPosition="right">
-          <mat-icon matBadge="3" matBadgeColor="warn" [matBadgeHidden]="hidden" matBadgeSize="medium">notifications</mat-icon>
+          <mat-icon [matBadge]="notificationService.badgeCount()" 
+           matBadgeColor="warn" 
+           [matBadgeHidden]="notificationService.badgeCount() === 0" 
+           matBadgeSize="large">notifications</mat-icon>
           <!-- <mat-icon matBadge="{{ notifications.length }}" matBadgeColor="warn" [matBadgeHidden]="hidden" matBadgeSize="medium">notifications</mat-icon> -->
           <span class="nav-text" *ngIf="!isCollapsed">Notifications</span>
         </a>
