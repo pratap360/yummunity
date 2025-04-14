@@ -1,105 +1,122 @@
-# Yummunity = Yummy Food 🍲 + Community 🤝
+
+# Yummunity
+
+Yummunity = Yummy Food 🍲 + Community 🤝
+
+
+![Logo](/src/assets/readme%20img/yummunity%20placehoder.png)
 
 Yummunity is a dynamic and engaging food-based social media platform that allows users to share recipes, explore food content, and interact with a vibrant community of food enthusiasts. Built with Angular 18 and Appwrite, the project aims to provide a seamless and interactive experience for sharing culinary ideas.
 
-`note: this is still under Devlopment Phrase`<br>
 
-## 🚀 Project Overview
-Yummunity offers a platform for food lovers to:
-- Share recipes and food-related posts.
-- Explore random food images using Pexel Photo API.
-- Interact through likes, comments, and saved posts.
-- Experience a user-friendly UI with Angular Material.
+## Badges
 
-## 🛠️ Tech Stack
-- **Frontend:** Angular 18
-- **Backend:** Appwrite for custom API and data operations
-- **Styling:** Angular Material
-- **Markdown Rendering:** ngx-markdown
-- **Image API:** Pexel Photo API
-- **Responsive Design:** Flex Layout and Angular Material components
 
-## 📦 Features Implemented
-1. **Recipe Posting:**
-   - Three types of posts: `text-post`, `with-img-post`, and `blog-post`.
-   - Markdown support for blog posts.
-   - Emoji, poll, and rating options.
+[![made with angular](https://img.shields.io/badge/made_with_angular-purple?style=for-the-badge&logo=angular)](https://angular.dev/)
+![appwrite](https://img.shields.io/badge/appwrite-pink?style=for-the-badge&logo=appwrite)
+[![typescript](https://img.shields.io/badge/typescript-white?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![vercel](https://img.shields.io/badge/Vercel-black?style=for-the-badge&logo=vercel)](https://vercel.com/)
+[![GCP](https://img.shields.io/badge/GCP-cloud%20Run-20B2AA?style=for-the-badge&logo=googlecloud)](https://cloud.google.com/)
+[![Apache License](https://img.shields.io/badge/License-Apache-blue?style=for-the-badge)](https://cloud.google.com/)
 
-2. **Navigation and UI:**
-   - Responsive side navigation using `mat-sidenav` and `mat-nav-list`.
-   - Dynamic search bar centered like ChatGPT’s interface.
-   - Custom 404 error page with random background images.
+## Screenshots
 
-3. **Interactions:**
-   - Like and save buttons with dynamic color change.
-   - Commenting system with relative timestamp display (e.g., '2 hours ago').
-   - Modal pop-up for comments with scroll support for large comment lists.
+### Mobile
+![App Screenshot](/src/assets/readme%20img/mobile%20render.jpg)
 
-4. **Data Management:**
-   - Integration with Appwrite for fetching and posting data.
-   - AppwriteService for seamless backend interactions.
+### Desktop
+![Desktop Screenshot](/src/assets/readme%20img/Desktop%20render%201.jpg)
+![Desktop Screenshot](/src/assets/readme%20img/Desktop%20render%202.jpg)
 
-5. **Additional Functionalities:**
-   - Export tables to Excel with multi-tab selection.
-   - Markdown preview support using `ngx-markdown`.
-   - Image preview before upload.
+## Tech Stack
 
-## 📁 Project Structure (⚠ will update later)
+| Layer | Technology |
+| --- | --- |
+| **Frontend** | Angular 18, TypeScript, Angular Material, HTML , CSS |
+| **Backend** | Node js, Appwrite |
+| Storage | Appwrite bucket Storage |
+| **Auth** | Google oauth and Basic Auth |
+| **Hosting** | Google Cloud Run & Vercel |
+| **Others** | Angular CLI, RxJs, Ngx Markdown, TheMealDB, **Pexel Photo API** |
+
+## Features
+
+- User Authentication (via email or google auth)
+- Community Recipes Posts & Blog post sharing
+- Like, Comment, Save and Share functionality
+- User Account page
+- Responsive design
+- Recipe finder though search
+- post notification implementation
+
+
+## Contributing
+
+Contributions are always welcome!
+
+See `contributing.md` for ways to get started.
+
+Please adhere to this project's `code of conduct`.
+
+
+## Environment Variables
+
+Kindly replace all the id's from your accont written in **CAPITALS LETTERS** over here and make sure don't change any keyword names.
+
+If you have any doubt you can check out the offical documentation from the Appwrite [ Documentation](https://appwrite.io/docs)
+
+```env
+# Appwrite Setup  [DEV setup]
+export const environment = {
+  production: false,
+  appwrite_Endpoint: 'https://cloud.appwrite.io/v1',
+  appwrite_ProjectID: 'YOUR-PROJECT-ID',
+  appwrite_DatabaseID: 'YOUR-DATABASE-ID',
+
+  users_CollectionID: 'YOUR-COLLECTION-ID',
+  post_CollectionID: 'YOUR-POST-COLLECTION-ID',
+  blogpost_CollectionID: 'YOUR-BLOGPOST-COLLECTION-ID',
+
+  PostImages_BucketID: 'YOUR-POSTIMAGES-BUCKET-ID',
+  Profile_pictures_BucketID: 'YOUR-PROFILE-PICTURES-BUCKET-ID',
+  Blog_thumbnail_BucketID: 'YOUR-BLOG-THUMBNAIL-BUCKET-ID',
+
+    # not mandatory
+  Unsplash_AccessKey: 'YOUR-UNSPLASH_ACCESSKEY',
+};
+
 ```
-Yummunity/
-├─ src/
-│   ├─ app/
-│   |- assets/
-│   |- components/
-│   |- environments/
-│   |- libs/
-|   |- index.html
-|   |- main.ts
-│   └─ styles.css
-└─ README.md
+Similarly you have create another file for production environoments 
+
+```env
+# Appwrite Setup  [PROD setup]
+export const environment = {
+  production: true,
+  appwrite_Endpoint: 'https://cloud.appwrite.io/v1',
+  appwrite_ProjectID: 'YOUR-PROJECT-ID',
+  appwrite_DatabaseID: 'YOUR-DATABASE-ID',
+
+  users_CollectionID: 'YOUR-COLLECTION-ID',
+  post_CollectionID: 'YOUR-POST-COLLECTION-ID',
+  blogpost_CollectionID: 'YOUR-BLOGPOST-COLLECTION-ID',
+
+  PostImages_BucketID: 'YOUR-POSTIMAGES-BUCKET-ID',
+  Profile_pictures_BucketID: 'YOUR-PROFILE-PICTURES-BUCKET-ID',
+  Blog_thumbnail_BucketID: 'YOUR-BLOG-THUMBNAIL-BUCKET-ID',
+
+    # not mandatory
+  Unsplash_AccessKey: 'YOUR-UNSPLASH_ACCESSKEY',
+};
+
 ```
 
-## 🚀 Getting Started
-### Prerequisites
-- Node.js
-- Angular CLI
 
-### Installation
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/yummunity.git
+## 🔗 Links
+[![portfolio](https://img.shields.io/badge/my_portfolio-7003E9?style=for-the-badge&logo=devbox&logoColor=white)](https://portfolio.paruidev.com/)
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/pratap-parui)
+[![twitter](https://img.shields.io/badge/twitter-000?style=for-the-badge&logo=x&logoColor=white)](https://twitter.com/parui_pratap)
+[![biolink](https://img.shields.io/badge/biolink-222?style=for-the-badge&logo=biolink&logoColor=white)](https://pratapparui.bio.link/)
 
-# Navigate to the project directory
-cd yummunity
+## Appendix
 
-# Install dependencies
-npm install
-
-# Run the application
-ng serve
-```
-
-## 🔗 APIs Used
-- **Pexel Photo API:** To fetch random food images for the login page.
-- **Appwrite:** Custom APIs for data management.
-
-## 📄 Markdown Support
-Yummunity uses `ngx-markdown` for rendering markdown content in blog posts. This allows users to write posts in markdown format and preview them in real-time.
-
-## 📸 Screenshots 
-⚠ will update later
-
-## 🚧 Roadmap
-- Add more post formats.
-- Enhance the commenting system.
-- Implement advanced search and filter options.
-
-## 🤝 Contributing
-Feel free to contribute to Yummunity by opening issues or submitting pull requests!
-
-## 📝 License
-This project is licensed under the MIT License.
-
----
-
-Made with ❤️ by [Pratap Parui](https://portfolio.paruidev.com)
+Do Check out my In Depth Guide for this project [Click here to check](https://paruidev.com)
