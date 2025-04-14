@@ -53,6 +53,20 @@ export class AppwriteService {
     }
   }
 
+  async loginWithGoogle() {
+    try {
+      return await this.account.createOAuth2Session(
+        'google',
+        'http://localhost:4200/home-feed', 
+        'http://localhost:4200/login',    
+        ['profile', 'email']             
+      );
+    } catch (error) {
+      console.error('Google OAuth login error:', error);
+      throw error;
+    }
+  }
+
   uploadFiles(files: File[]): Promise<string[]> {
     const uploadPromises = files.map((file) =>
       this.storage.createFile(

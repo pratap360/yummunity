@@ -18,8 +18,9 @@ import {
 } from '@angular/material/snack-bar';
 import { RouterModule } from '@angular/router';
 import { ForgetPwdComponent } from './forget-pwd/forget-pwd.component';
-import { Client, Account} from 'appwrite';
+import { Client, Account } from 'appwrite';
 import { environment } from '../../environments/environment';
+import { AppwriteService } from '../../lib/appwrite.service';
 
 @Component({
   selector: 'app-login',
@@ -40,8 +41,8 @@ import { environment } from '../../environments/environment';
   styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
-  // loginForm!: FormGroup;
   hide: boolean = true;
+  // loginForm!: FormGroup;
 
   faGoogle = faGoogle;
   faHeart = faHeart;
@@ -53,9 +54,13 @@ export class LoginComponent implements OnInit {
   private login_snackBar = inject(MatSnackBar);
   horizontalPosition: MatSnackBarHorizontalPosition = 'right';
   verticalPosition: MatSnackBarVerticalPosition = 'top';
-  constructor(private fb: FormBuilder, private router: Router) {
+
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private appwriteService: AppwriteService
+  ) {
     this.client.setProject(environment.appwrite_ProjectID);
-    // .setEndpoint('https://cloud.appwrite.io/v1')
     this.account = new Account(this.client);
   }
 
@@ -65,10 +70,6 @@ export class LoginComponent implements OnInit {
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
   });
-  // loginForm: FormGroup = this.fb.group({
-  //   email: ['pratap@yummunity.com', [Validators.required, Validators.email]],
-  //   password: ['Pratap@1234', [Validators.required, Validators.minLength(6)]],
-  // });
 
   onLogin() {
     if (!this.loginForm.valid) {
@@ -88,37 +89,33 @@ export class LoginComponent implements OnInit {
       this.loginForm.value.password
     );
     session.then(
-       (response: any) => {
+      (response: any) => {
         console.log(response); // Success
         this.router.navigate(['/home-feed']);
       },
-       (error: any) => {
+      (error: any) => {
         console.log(error); // Failure
         this.router.navigate(['/login']);
         this.login_snackBar.open('Login Failed!!', 'OK', {
           horizontalPosition: this.horizontalPosition,
           verticalPosition: this.verticalPosition,
           duration: this.durationInSeconds * 1000,
-        })
+        });
       }
     );
   }
 
-
-  onGoogleLogin():void {
-    this.login_snackBar.open('This is under Devlopment, kindly use Basic Login', 'OK', {
-      horizontalPosition: this.horizontalPosition,
-      verticalPosition: this.verticalPosition,
-      duration: this.durationInSeconds * 1000,
-    });
+  async onGoogleLogin() {
+    try {
+      await this.appwriteService.loginWithGoogle();
+      // The page will automatically redirect to the success URL (account page)
+    } catch (error) {
+      console.error('Google login error:', error);
+      this.login_snackBar.open('Google login failed. Please try again.', 'OK', {
+        horizontalPosition: this.horizontalPosition,
+        verticalPosition: this.verticalPosition,
+        duration: this.durationInSeconds * 1000,
+      });
+    }
   }
-
-  //  onSignUp() {
-  //   this.account.create(ID.unique(), "pratap@yummunity.com", "Pratap@201", "Pratap")
-  //   .then(function (response: any) {
-  //       console.log(response);
-  //   }, function (error: any) {
-  //       console.log(error);
-  //   });
-  //  }
 }
