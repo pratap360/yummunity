@@ -35,13 +35,13 @@ export class SavesComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.userId) {
-      console.log('User ID is set at line 40:', this.userId);
+      // console.log('User ID is set at line 40:', this.userId);
       this.checkIfSaved();      
     } else {
       this.AppwriteService.getCurrentUser().subscribe({
         next: (userData) => {
             this.userId = userData.user_tag;
-            console.log('User ID is set at line 46:', this.userId);
+            // console.log('User ID is set at line 46:', this.userId);
             this.checkIfSaved();
         },
         error: (error) => {
@@ -72,7 +72,7 @@ export class SavesComponent implements OnInit {
   checkIfSaved(): void {
     const postToCheck = this.blogpost;
     if (postToCheck && this.userId) {
-      console.log('Checking if saved:', postToCheck, 'User ID:', this.userId);
+      // console.log('Checking if saved:', postToCheck, 'User ID:', this.userId);
       if(!postToCheck || (!postToCheck.id && !postToCheck.$id)){
         console.warn('Post has no ID property:', postToCheck);
         this.saved = false;
@@ -85,12 +85,12 @@ export class SavesComponent implements OnInit {
   }
 
   toggleBlogSave(): void {
-    console.log('Toggling save for blogpost:', this.blogpost);
-    console.log('Current user ID at blog post save btn:', this.userId);
+    // console.log('Toggling save for blogpost:', this.blogpost);
+    // console.log('Current user ID at blog post save btn:', this.userId);
 
     // First check if user is logged in
     if (!this.userId) {
-      console.log('Checking with the user id:', this.userId);
+      // console.log('Checking with the user id:', this.userId);
       this._snackBar.open('Please login to save posts', 'OK', {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
@@ -142,8 +142,8 @@ export class SavesComponent implements OnInit {
 
     this.AppwriteService.toggleSaveBlog(postCorrectBlogId, this.userId).subscribe({
       next: (updatedPost) => {
-        console.log('Save status updated successfully for blog Post:',updatedPost);
-        console.log('User ID used for toggle save:', this.userId);
+        // console.log('Save status updated successfully for blog Post:',updatedPost);
+        // console.log('User ID used for toggle save:', this.userId);
         this.blogpost = updatedPost;
         this.saved = this.AppwriteService.isPostSavedByUser(this.blogpost,this.userId);
         this.saves = this.blogpost.blog_post_saves || 0

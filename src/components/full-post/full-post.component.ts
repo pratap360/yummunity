@@ -113,7 +113,7 @@ export class FullPostComponent implements OnInit, OnDestroy {
     this.appwriteService.getPostById(this.post_id).subscribe((data) => {
       this.post = data;
       this.isLoading = false;
-      console.log('fetched post data from full post component:', data);
+      // console.log('fetched post data from full post component:', data);
       
       // Process comments if they exist
       if (this.post.post_whoComments) {
@@ -133,7 +133,7 @@ export class FullPostComponent implements OnInit, OnDestroy {
           }).filter((comment: any) => comment !== null);
           
           this.comments_counter = this.comments.length;
-          console.log('Processed comments:', this.comments);
+          // console.log('Processed comments:', this.comments);
         } catch (e) {
           console.error('Error processing comments:', e);
           this.comments = [];
@@ -233,7 +233,7 @@ export class FullPostComponent implements OnInit, OnDestroy {
           this.userData = {
             user_tag: userData.user_tag || ''
           };
-          console.log('User ID is set in dialog:', this.currentUser ,this.userId);
+          // console.log('User ID is set in dialog:', this.currentUser ,this.userId);
         },
         error: (error) => {
           console.error('Error fetching user data:', error);
@@ -272,7 +272,7 @@ export class FullPostComponent implements OnInit, OnDestroy {
     };
 
     const commentString = JSON.stringify(newCommentObj);
-    console.log('Comment to be added:', commentString);
+    // console.log('Comment to be added:', commentString);
     
     this.appwriteService.addComment(this.post_id, commentString).subscribe({
       next: (response) => {
@@ -347,7 +347,7 @@ export class FullPostComponent implements OnInit, OnDestroy {
  }
 
  goToProfile(userTag: string): void {
-  console.log('Navigating to user profile:', userTag);
+  // console.log('Navigating to user profile:', userTag);
   this.router.navigate(['/user', userTag]);
  }
 

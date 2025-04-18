@@ -9,7 +9,7 @@ export const authGuard: CanActivateFn = async (route, state) => {
 
   try {
     const loggedUser = await lastValueFrom (appwriteService.getCurrentUser());
-    console.log("Auth guard check:", loggedUser);
+    // console.log("Auth guard check:", loggedUser);
     if(loggedUser){
       return true;
     }else{

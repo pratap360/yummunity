@@ -120,7 +120,7 @@ export class EditComponent {
           console.error('Error fetching user data on edit component:', error);
         },
       });
-    console.log('all User Data Values:', allUserData);
+    // console.log('all User Data Values:', allUserData);
   }
 
   onImageSelected(event: Event): void {
@@ -172,7 +172,7 @@ export class EditComponent {
       .updateUserData(this.userId, updatedUserData)
       .subscribe({
         next: (response) => {
-          console.log('Profile updated successfully:', response);
+          // console.log('Profile updated successfully:', response);
           this.edit_snackBar.dismiss(); // Dismiss the loading indicator
           this.edit_snackBar.open('Profile Updated Successfully!', 'OK', {
             horizontalPosition: this.horizontalPosition,

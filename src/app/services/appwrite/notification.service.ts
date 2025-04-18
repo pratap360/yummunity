@@ -36,7 +36,7 @@ export class NotificationService {
     try {
       const userData = await firstValueFrom(this.appwriteService.getCurrentUser());
       this.currentUser = userData.user_tag || '';
-      console.log('Current User:', this.currentUser);
+      // console.log('Current User:', this.currentUser);
       return this.currentUser;
     } catch (error) {
       console.error('Error getting current user for notifications:', error);
@@ -113,7 +113,7 @@ private processPosts(posts: RecipePost[]): any {
         }
       }
 
-      console.log('post_whoComments structure:', post.post_whoComments);
+      // console.log('post_whoComments structure:', post.post_whoComments);
       
       // Process comments (exclude self-comments)
       if(post.post_whoComments && Array.isArray(post.post_whoComments)&& post.post_whoComments.length > 0) {
@@ -135,7 +135,7 @@ private processPosts(posts: RecipePost[]): any {
           return commentUserTag && commentUserTag !== this.currentUser;
         })
     
-        console.log('nonSelfComments:', nonSelfComments);
+        // console.log('nonSelfComments:', nonSelfComments);
         
         if(nonSelfComments.length > 0 ){
           interactions.push(...this.createNotifications(post, 'comments', nonSelfComments));
@@ -171,7 +171,7 @@ private processPosts(posts: RecipePost[]): any {
 private createNotifications(post: any, action: string, users: any[]): any[] {
   return users.map(user => {
     // Debug the user object to see structure
-    console.log(`Creating ${action} notification with user:`, user);
+    // console.log(`Creating ${action} notification with user:`, user);
 
     // Don't create notifications for the post owner's own actions
     if ((typeof user === 'string' && user === post.user_tag) ||
@@ -196,7 +196,7 @@ private createNotifications(post: any, action: string, users: any[]): any[] {
                    (typeof user.comment === 'object' ? JSON.stringify(user.comment) : '') ||
                    '';
                    
-      console.log('Extracted comment text:', commentText);
+      // console.log('Extracted comment text:', commentText);
     } else {
       userData = { 
         name: user.user_name || user.name || 'Anonymous',
@@ -227,7 +227,7 @@ markAllRead(){
   this.notifications.set(updatedNotifications);
   // Reset badge count to 0
   this.badgeCount.set(0);
-  console.log('All notifications marked as read');
+  // console.log('All notifications marked as read');
 }
 
 // private async processPosts(posts: RecipePost[]): Promise<any> {

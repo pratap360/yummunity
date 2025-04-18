@@ -109,7 +109,7 @@ export class UserProfileComponent implements OnInit {
     this.userprofile.getUserPostsByTag(user_tag).subscribe({
       next: (data) => {
         this.posts = data.documents;
-        console.log('All Posts:', this.posts);
+        // console.log('All Posts:', this.posts);
 
         this.textPosts = (this.posts || []).filter(
           (post) => !post.post_Content_Pictures
@@ -137,7 +137,7 @@ export class UserProfileComponent implements OnInit {
     this.userprofile.getUserBlogPostsByTag(user_tag).subscribe({
       next: (data) => {
         this.blogPosts = data.documents;
-        console.log('All Blog Posts:', this.blogPosts);
+        // console.log('All Blog Posts:', this.blogPosts);
       },
       error: (error) => {
         console.error('Error:', error);

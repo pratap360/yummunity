@@ -70,7 +70,7 @@ export class SavesComponent implements OnInit {
   checkIfSaved(): void {
     const postToCheck = this.post
     if (postToCheck && this.userId) {
-      console.log('Checking if saved:', postToCheck, 'User ID:', this.userId);
+      // console.log('Checking if saved:', postToCheck, 'User ID:', this.userId);
       this.saved = this.AppwriteService.isPostSavedByUser(postToCheck,this.userId);
 
       // Set the saves count based on post type
@@ -82,11 +82,11 @@ export class SavesComponent implements OnInit {
 
 
   toggleSave(): void {
-    console.log('Toggling save for post:', this.post);
-    console.log('Current user ID on post save:', this.userId);
+    // console.log('Toggling save for post:', this.post);
+    // console.log('Current user ID on post save:', this.userId);
     // First check if user is logged in
     if (!this.userId) {
-      console.log('Checking with the user id:', this.userId);
+      // console.log('Checking with the user id:', this.userId);
       this._snackBar.open('Please login to save posts', 'OK', {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
@@ -97,7 +97,7 @@ export class SavesComponent implements OnInit {
 
     // Check both post and blogpost objects
 
-    console.log('this.post:', this.post);
+    // console.log('this.post:', this.post);
     const postToSave = this.post 
     // Check if any post exists
     if (!postToSave) {

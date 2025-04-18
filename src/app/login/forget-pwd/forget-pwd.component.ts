@@ -55,7 +55,7 @@ export class ForgetPwdComponent implements OnInit {
   verticalPosition: MatSnackBarVerticalPosition = 'top';
   onforgetPwd() {
     if(!this.PwdForm.valid) {
-    console.log(this.PwdForm.value);
+    // console.log(this.PwdForm.value);
     this._snackBar.open('Password Update Successfully!!', 'OK', {
       horizontalPosition: this.horizontalPosition,
       verticalPosition: this.verticalPosition,

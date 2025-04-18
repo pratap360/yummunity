@@ -13,7 +13,7 @@ export class UnsplashService implements OnInit {
   constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
-    console.log('Unsplash Service is working');
+    // console.log('Unsplash Service is working');
   }
 
 

@@ -40,7 +40,7 @@ export class ReadMoreComponent implements OnInit {
       console.error('Post does not have an ID');
       return;
     }
-    console.log('Storing Post Data in Service:',readMoreUrl);
+    // console.log('Storing Post Data in Service:',readMoreUrl);
     // this.FullpostService.setPost(readMoreUrl);
     // console.log('Navigating to full post with ID:', this.post.id);
     this.router.navigate([readMoreUrl]);

@@ -76,7 +76,7 @@ export class PostActivityComponent {
       console.error('Post is undefined in Post-Activity-Component');
       // console.log('Post ID:', this.post.id);
     } else {
-      console.log('Received Post in Post-Activity-Component:', this.post);
+      // console.log('Received Post in Post-Activity-Component:', this.post);
     }
 
     if (this.post && this.post.post_comments === undefined) {
@@ -126,11 +126,11 @@ export class PostActivityComponent {
     });
 
     dialogRef.afterClosed().subscribe((commentCount: number) => {
-      console.log('Dialog closed with comment count:', commentCount);
+      // console.log('Dialog closed with comment count:', commentCount);
       if (commentCount !== undefined) {
-        console.log('Updating post comments from', this.post.post_comments, 'to', commentCount);
+        // console.log('Updating post comments from', this.post.post_comments, 'to', commentCount);
         this.post.post_comments = commentCount;
-        console.log('Post after update:', this.post);
+        // console.log('Post after update:', this.post);
       }
     });
 

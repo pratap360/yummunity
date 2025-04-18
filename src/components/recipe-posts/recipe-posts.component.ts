@@ -100,7 +100,7 @@ export class RecipePostsComponent implements OnInit, OnDestroy {
       this.postsSubscription.unsubscribe(); // Unsubscribe from previous subscription
     }
 
-    console.log('Fetching all posts');
+    // console.log('Fetching all posts');
     this.isLoading.next(true);
 
     // setTimeout(() => {
@@ -115,7 +115,7 @@ export class RecipePostsComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         next: (data) => {
-          console.log('Posts fetched:', data);
+          // console.log('Posts fetched:', data);
           // this.posts = data.documents;
           if (data.documents.length < this.limit) {
             this.allPostsLoaded = true; //all post are loaded
@@ -152,7 +152,7 @@ export class RecipePostsComponent implements OnInit, OnDestroy {
           this.offset += this.limit;
 
           this.isLoading.next(false);
-          console.log('All Posts:', this.posts);
+          // console.log('All Posts:', this.posts);
 
           this.textPosts = (this.posts || []).filter(
             (post) => !post.post_Content_Pictures
@@ -202,7 +202,7 @@ export class RecipePostsComponent implements OnInit, OnDestroy {
         error: (error) => {
           console.error('Error fetching posts:', error);
           this.isLoading.next(false);
-          console.log('Spinner hidden');
+          // console.log('Spinner hidden');
         },
       });
     // }, 2000);
@@ -212,7 +212,7 @@ export class RecipePostsComponent implements OnInit, OnDestroy {
     this.appwriteService.getBlogPosts().subscribe({
       next: (data) => {
         this.blogPosts = data.documents;
-        console.log('All Blog Posts:', this.blogPosts);
+        // console.log('All Blog Posts:', this.blogPosts);
       },
       error: (error) => {
         console.error('Error:', error);

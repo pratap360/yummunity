@@ -290,7 +290,7 @@ export class AddPostsComponent implements OnInit {
           post_Content: this.postRecipeForm.get('postContent')?.value,
         };
 
-        console.log('Getting full Recipe Data with user data:', recipeData);
+        // console.log('Getting full Recipe Data with user data:', recipeData);
 
         return this.appwriteService.createPost(recipeData);
       })
@@ -338,7 +338,7 @@ export class AddPostsComponent implements OnInit {
           user_bio: this.data.userData.user_bio || undefined,
           user_profile_pic: this.data.userData.user_profile_pic || undefined,
         };
-        console.log('Getting full Blog Data with user data:', blogData);
+        // console.log('Getting full Blog Data with user data:', blogData);
 
         return this.appwriteService.createBlogPost(blogData);
       })
@@ -359,15 +359,12 @@ export class AddPostsComponent implements OnInit {
         });
       });
     // console.table(this.postBlogForm.value);
-    console.log('post Blog is working');
-    console.log('Blog Title:', this.postBlogForm.get('blogTitle')?.value);
-    console.log('Blog Link:', this.postBlogForm.get('blogLink')?.value);
-    console.log('Summary:', this.postBlogForm.get('summary')?.value);
-    console.log('Blog Tags:', tagsArray);
-    console.log(
-      'Blog Thumbnail:',
-      this.postBlogForm.get('blogThumbnail')?.value
-    );
+    // console.log('post Blog is working');
+    // console.log('Blog Title:', this.postBlogForm.get('blogTitle')?.value);
+    // console.log('Blog Link:', this.postBlogForm.get('blogLink')?.value);
+    // console.log('Summary:', this.postBlogForm.get('summary')?.value);
+    // console.log('Blog Tags:', tagsArray);
+    // console.log('Blog Thumbnail:',this.postBlogForm.get('blogThumbnail')?.value);
   }
 
   // 👇 this is for input chips methods
@@ -413,7 +410,7 @@ export class AddPostsComponent implements OnInit {
   }
 
   onCancel(): void {
-    console.log('Appwrite Service :: onCancel() ::');
+    // console.log('Appwrite Service :: onCancel() ::');
     this.dialogRef.close();
   }
 

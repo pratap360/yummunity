@@ -84,7 +84,7 @@ export class SignupComponent implements OnInit {
     } else {
       this.userData.setSignupData(this.signupForm.value);
       sessionStorage.setItem('signupFlow', 'true');
-      console.log(this.signupForm.value);
+      // console.log(this.signupForm.value);
 
       this.signup_snackBar.open(
         'Account Created Successfully, Kindly Fill All Detials',
@@ -134,7 +134,7 @@ export class SignupComponent implements OnInit {
               verticalPosition: this.verticalPosition,
               duration: this.durationInSeconds * 1000,
             });
-            console.log("'Failed to create user account", error);
+            // console.log("'Failed to create user account", error);
           })
       );
   }

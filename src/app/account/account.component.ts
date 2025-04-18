@@ -197,7 +197,7 @@ export class AccountComponent implements OnInit {
     this.appwriteService.getUserPosts(this.profileUserTag).subscribe({
       next: (data) => {
         this.posts = data.documents;
-        console.log('All Posts:', this.posts);
+        // console.log('All Posts:', this.posts);
         this.isLoading.next(false);
 
         this.textPosts = (this.posts || []).filter(
@@ -230,7 +230,7 @@ export class AccountComponent implements OnInit {
     this.appwriteService.getUserBlogPosts(this.profileUserTag).subscribe({
       next: (data) => {
         this.blogPosts = data.documents;
-        console.log('User Blog Posts:', this.blogPosts);
+        // console.log('User Blog Posts:', this.blogPosts);
       },
       error: (error) => {
         console.error('Error fetching blog posts:', error);
@@ -277,7 +277,7 @@ export class AccountComponent implements OnInit {
     // this.isLoading.next(true);
     this.appwriteService.getUserSavedPosts(this.profileUserTag).subscribe({
       next: (data) => {
-        console.log('Raw data from getUserSavedPosts:', data); // Log the full data object
+        // console.log('Raw data from getUserSavedPosts:', data); // Log the full data object
 
         // Ensure 'data.documents' is an array, or default to an empty array
         this.savedPost = (data.documents || []).map((post) => ({
@@ -291,7 +291,7 @@ export class AccountComponent implements OnInit {
           user_bio: post.users?.user_bio || post.user_bio,
         }));
 
-        console.log('Mapped Saved Posts:', this.savedPost); // Log the mapped data
+        // console.log('Mapped Saved Posts:', this.savedPost); // Log the mapped data
         this.isLoading.next(false);
       },
       error: (error) => {
@@ -314,7 +314,7 @@ export class AccountComponent implements OnInit {
     // this.isLoading.next(true);
     this.appwriteService.getUserBlogSavedPosts(this.profileUserTag).subscribe({
       next: (data) => {
-        console.log('Raw data from getSaveBlogPosts:', data); // Log the full data
+        // console.log('Raw data from getSaveBlogPosts:', data); // Log the full data
         // Map blog posts to preserve author data
         this.savedBlogPost = (data.documents || []).map((post) => ({
           ...post,
@@ -326,7 +326,7 @@ export class AccountComponent implements OnInit {
           user_bio: post.users?.user_bio || post.user_bio,
         }));
         // this.savedBlogPost = data.documents || []; // Add fallback to empty array
-        console.log('Saved Blog Posts:', this.savedBlogPost);
+        // console.log('Saved Blog Posts:', this.savedBlogPost);
         this.isLoading.next(false);
       },
       error: (error) => {

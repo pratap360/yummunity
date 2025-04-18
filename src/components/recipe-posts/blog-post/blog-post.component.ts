@@ -47,8 +47,8 @@ export class BlogPostComponent {
     this.UserContextService.postUserData$.subscribe((data) => {
       this.alluserData = data;
     });
-    console.log('Post id is there on text-post:', this.blogPosts);
-    console.log('User data in blog-post:', this.userData);
+    // console.log('Post id is there on text-post:', this.blogPosts);
+    // console.log('User data in blog-post:', this.userData);
 
   }
 
@@ -77,7 +77,7 @@ export class BlogPostComponent {
  }
 
  goToProfile(userTag: string): void {
-  console.log('Navigating to user profile:', userTag);
+  // console.log('Navigating to user profile:', userTag);
   this.router.navigate(['/user', userTag]);
  }
 }

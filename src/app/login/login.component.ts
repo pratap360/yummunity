@@ -78,7 +78,7 @@ export class LoginComponent implements OnInit {
         duration: this.durationInSeconds * 1000,
       });
     }
-    console.log(this.loginForm.value);
+    // console.log(this.loginForm.value);
     this.LoginSession();
   }
 
@@ -89,7 +89,7 @@ export class LoginComponent implements OnInit {
     );
     session.then(
        (response: any) => {
-        console.log(response); // Success
+        // console.log(response); // Success
         this.router.navigate(['/home-feed']);
       },
        (error: any) => {

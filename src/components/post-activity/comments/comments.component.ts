@@ -65,7 +65,7 @@ export class CommentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.postId = this.data.postId || '';
-    console.log('Post ID received in dialog:', this.postId);
+    // console.log('Post ID received in dialog:', this.postId);
 
     if (this.postId) {
       this.getCurrentUser();
@@ -82,7 +82,7 @@ export class CommentsComponent implements OnInit {
         next: (userData) => {
           this.currentUser = userData;
           this.userId = userData.user_tag;
-          console.log('User ID is set in dialog:', this.currentUser ,this.userId);
+          // console.log('User ID is set in dialog:', this.currentUser ,this.userId);
         },
         error: (error) => {
           console.error('Error fetching user data:', error);
@@ -143,7 +143,7 @@ fetchPostData() {
     };
 
     const commentString = JSON.stringify(newCommentObj);
-    console.log('Comment to be added:', commentString);
+    // console.log('Comment to be added:', commentString);
     
     this.appwriteService.addComment(this.postId, commentString).subscribe({
       next: (response) => {
@@ -186,7 +186,7 @@ fetchPostData() {
   }
 
   goToProfile(userTag: string): void {
-    console.log('Navigating to user profile:', userTag);
+    // console.log('Navigating to user profile:', userTag);
     this.router.navigate(['/user', userTag]);
     this.dialogRef.close(this.comments_counter);
    }

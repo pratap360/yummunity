@@ -58,7 +58,7 @@ export class HomeFeedComponent implements OnInit {
     this.appwriteService.getCurrentUser().subscribe({
       next: (data: UserData) => {
         this.userData = data;
-        console.log('User data:', this.userData);
+        // console.log('User data:', this.userData);
       },
       error: (err) => {
         console.error('Failed to fetch user data:', err);

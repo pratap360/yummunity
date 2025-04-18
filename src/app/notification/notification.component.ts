@@ -57,7 +57,7 @@ notificationService = inject(NotificationService);
 
   ngOnInit(): void {
     this.notificationService.initNotifications();
-    console.log('Notifications:', this.notificationService.notifications());
+    // console.log('Notifications:', this.notificationService.notifications());
     // const postUrl = `/user/${this.notification.user.user_tag}/post/${this.notification.post.postId}`;
 
   }

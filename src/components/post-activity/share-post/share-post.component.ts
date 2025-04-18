@@ -57,7 +57,7 @@ export class SharePostComponent{
   copyToClipboard() {
 
     navigator.clipboard.writeText(this.shareUrl).then(() => {
-      console.log('URL copied to clipboard');
+      // console.log('URL copied to clipboard');
     }).catch(err => {
       console.error('Could not copy text: ', err);
     });

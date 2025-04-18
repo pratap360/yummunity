@@ -62,8 +62,8 @@ export class WithImgPostComponent implements OnInit {
     this.UserContextService.postUserData$.subscribe((data) => {
       this.postUserData = data;
     });
-    console.log('Post id is there on text-post:', this.posts);
-    console.log('User data in text-post:', this.userData);
+    // console.log('Post id is there on text-post:', this.posts);
+    // console.log('User data in text-post:', this.userData);
   }
 
   getUserData(postId: string): UserData {
@@ -93,7 +93,7 @@ export class WithImgPostComponent implements OnInit {
    dialogRef.afterClosed().subscribe(() => this.menuTrigger().focus());
  }
  goToProfile(userTag: string): void {
-  console.log('Navigating to user profile:', userTag);
+  // console.log('Navigating to user profile:', userTag);
   this.router.navigate(['/user', userTag]);
  }
 

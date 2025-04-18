@@ -46,7 +46,7 @@ export class AppwriteService {
         ID.unique(),
         userInfo
       );
-      return console.log('Appwrite Service Response:: userData() ::', response);
+      // return console.log('Appwrite Service Response:: userData() ::', response);
     } catch (error) {
       console.error('Appwrite Service :: userData() ::', error);
       throw error;
@@ -325,7 +325,7 @@ export class AppwriteService {
       updateData[whoSavedField] = updatedSavedArray;
       updateData[savesField] = newSaveCount;
 
-      console.log('Updating recipe post document with:', updateData);
+      // console.log('Updating recipe post document with:', updateData);
 
       // Perform update
       return from(
@@ -369,7 +369,7 @@ export class AppwriteService {
     updateData[whoSavedField] = updatedSavedArray;
     updateData[savesField] = newSaveCount;
 
-    console.log('Updating blog post document with:', updateData);
+    // console.log('Updating blog post document with:', updateData);
 
     // Perform update
     return from(
@@ -647,7 +647,7 @@ export class AppwriteService {
       updateData[whoLikedField] = updatedLikedArray;
       updateData[likesField] = newLikeCount;
 
-      console.log('Updating recipe post document with:', updateData);
+      // console.log('Updating recipe post document with:', updateData);
 
       // Perform update
       return from(
@@ -691,7 +691,7 @@ export class AppwriteService {
     updateData[whoLikedField] = updatedLikedArray;
     updateData[likesField] = newLikeCount;
 
-    console.log('Updating blog post document with:', updateData);
+    // console.log('Updating blog post document with:', updateData);
     // Perform update
     return from(
       this.database.updateDocument(

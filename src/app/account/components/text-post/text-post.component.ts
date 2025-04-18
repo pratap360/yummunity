@@ -55,8 +55,8 @@ export class TextPostComponent {
   @Input() alluserData: { [postId: string]: UserData } = {};
 
   ngOnInit(): void {
-    console.log('Post id is there on text-post:', this.posts);
-    console.log('User data in text-post:', this.userData);
+    // console.log('Post id is there on text-post:', this.posts);
+    // console.log('User data in text-post:', this.userData);
   }
 
   // @ViewChild(MatMenuTrigger) menuTrigger: MatMenuTrigger;

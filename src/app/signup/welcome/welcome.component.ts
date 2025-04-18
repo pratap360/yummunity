@@ -102,7 +102,7 @@ export class WelcomeComponent implements OnInit {
 
 
   async onSubmit() {
-    console.log(this.welcomeForm.value);
+    // console.log(this.welcomeForm.value);
     // console.log(this.welcomeForm.get('user_profile_pic')?.value);
     if (this.welcomeForm.valid && this.signupData) {
       this.isLoading = true;
@@ -118,7 +118,7 @@ export class WelcomeComponent implements OnInit {
           profilePicUrl = await this.appwriteService.uploadProfilePic(userProfilePic);
         }
 
-        console.log('Profile Pic URL:', profilePicUrl);
+        // console.log('Profile Pic URL:', profilePicUrl);
         
         const account = await this.appwriteService.createAccount(
           this.signupData.user_email,
@@ -126,7 +126,7 @@ export class WelcomeComponent implements OnInit {
           this.signupData.user_name
         );
 
-        console.log('Account Created:', account);
+        // console.log('Account Created:', account);
 
         const userData = {
           // user_id: account.$id,
@@ -146,7 +146,7 @@ export class WelcomeComponent implements OnInit {
         };
 
         await this.appwriteService.createUserDocument(account.$id, userData).then(() => {
-          console.log('submitting all data:', userData);
+          // console.log('submitting all data:', userData);
           this.user_snackBar.open('Account Created Successfully, Kindly Login', 'Close', {
             duration: this.durationInSeconds * 1000,
             horizontalPosition: this.horizontalPosition,

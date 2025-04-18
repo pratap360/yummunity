@@ -71,11 +71,11 @@ export class BlogActivityComponent {
     });
 
     dialogRef.afterClosed().subscribe((BlogcommentCount: number) => {
-      console.log('this is what i get in blog comment count', BlogcommentCount);
+      // console.log('this is what i get in blog comment count', BlogcommentCount);
       if(BlogcommentCount !== undefined){
-        console.log('updating blog comment count from', this.blog_post_comments, 'to', BlogcommentCount);
+        // console.log('updating blog comment count from', this.blog_post_comments, 'to', BlogcommentCount);
         this.blog_post_comments = BlogcommentCount;
-        console.log('blog post after update:', this.blogpost);
+        // console.log('blog post after update:', this.blogpost);
       }
     });
   }

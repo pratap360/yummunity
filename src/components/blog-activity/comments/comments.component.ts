@@ -66,7 +66,7 @@ export class CommentsComponent {
 
   ngOnInit(): void {
     this.blogpostId = this.data.blogpostId || '';
-    console.log('Blog Post ID:', this.blogpostId);
+    // console.log('Blog Post ID:', this.blogpostId);
 
     if (!this.blogpostId) {
       console.error('Post is undefined in Blog Activity Component');

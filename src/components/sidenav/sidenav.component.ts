@@ -66,7 +66,7 @@ export class SidenavComponent {
     try {
         await this.account.deleteSessions()
     } catch (error) {
-        console.log("Appwrite Service :: logout()", error);
+        // console.log("Appwrite Service :: logout()", error);
     }
   }
 }

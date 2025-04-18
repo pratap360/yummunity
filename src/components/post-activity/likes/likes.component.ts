@@ -30,7 +30,7 @@ export class LikesComponent {
 
   ngOnInit(): void {
     if (this.userId) {
-      console.log('User ID is set at line 34:', this.userId);
+      // console.log('User ID is set at line 34:', this.userId);
       
       this.checkIfLiked();
     } else {
@@ -66,11 +66,11 @@ export class LikesComponent {
   // }
 
   toggleLike(): void {
-    console.log('Toggling Like for post:', this.post);
-    console.log('Current user ID on Like:', this.userId);
+    // console.log('Toggling Like for post:', this.post);
+    // console.log('Current user ID on Like:', this.userId);
 
     if (!this.userId) {
-      console.log('Checking with the user id:', this.userId);
+      // console.log('Checking with the user id:', this.userId);
       this._snackBar.open('Please login to Like posts', 'OK', {
         horizontalPosition: this.horizontalPosition,
         verticalPosition: this.verticalPosition,
