@@ -19,6 +19,9 @@ Yummunity is a dynamic and engaging food-based social media platform that allows
 [![GCP](https://img.shields.io/badge/GCP-cloud%20Run-20B2AA?style=for-the-badge&logo=googlecloud)](https://cloud.google.com/)
 [![Apache License](https://img.shields.io/badge/License-Apache-blue?style=for-the-badge)](https://cloud.google.com/)
 
+[![Yummunity – Launch on Product Hunt](https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=954360&theme=light&t=1744994363531)](https://www.producthunt.com/posts/yummunity-beta-version?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-yummunity&#0045;beta&#0045;version)
+
+
 ## Screenshots
 
 ### Mobile
