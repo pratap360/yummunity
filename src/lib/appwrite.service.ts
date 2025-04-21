@@ -56,7 +56,7 @@ export class AppwriteService {
   uploadFiles(files: File[]): Promise<string[]> {
     const uploadPromises = files.map((file) =>
       this.storage.createFile(
-        environment.PostImages_BucketID,
+        environment.all_Images_BucketID,
         ID.unique(),
         file
       )
@@ -64,7 +64,7 @@ export class AppwriteService {
 
     return Promise.all(uploadPromises).then((responses) =>
       responses.map((response) =>
-        this.storage.getFileView(environment.PostImages_BucketID, response.$id)
+        this.storage.getFileView(environment.all_Images_BucketID, response.$id)
       )
     );
   }
@@ -72,7 +72,7 @@ export class AppwriteService {
   uploadBlogFiles(files: File[]): Promise<string[]> {
     const uploadPromises = files.map((file) =>
       this.storage.createFile(
-        environment.Blog_thumbnail_BucketID,
+        environment.all_Images_BucketID,
         ID.unique(),
         file
       )
@@ -81,7 +81,7 @@ export class AppwriteService {
     return Promise.all(uploadPromises).then((responses) =>
       responses.map((response) =>
         this.storage.getFileView(
-          environment.Blog_thumbnail_BucketID,
+          environment.all_Images_BucketID,
           response.$id
         )
       )
@@ -90,7 +90,7 @@ export class AppwriteService {
   uploadProfilePic(files: File[]): Promise<string[]> {
     const uploadPromises = files.map((file) =>
       this.storage.createFile(
-        environment.Profile_pictures_BucketID,
+        environment.all_Images_BucketID,
         ID.unique(),
         file
       )
@@ -99,7 +99,7 @@ export class AppwriteService {
     return Promise.all(uploadPromises).then((responses) =>
       responses.map((response) =>
         this.storage.getFileView(
-          environment.Profile_pictures_BucketID,
+          environment.all_Images_BucketID,
           response.$id
         )
       )
@@ -495,7 +495,7 @@ export class AppwriteService {
   //     // Step 1: Upload the new image
   //     return from(
   //       this.storage.createFile(
-  //         environment.Profile_pictures_BucketID,
+  //         environment.all_Images_BucketID,
   //         ID.unique(),
   //         userData.user_profile_pic
   //       )
@@ -517,7 +517,7 @@ export class AppwriteService {
   //               // Delete the old profile pic if it exists
   //               return from(
   //                 this.storage.deleteFile(
-  //                   environment.Profile_pictures_BucketID,
+  //                   environment.all_Images_BucketID,
   //                   oldPic
   //                 )
   //               ).pipe(map(() => newPicUrl));

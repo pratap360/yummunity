@@ -80,9 +80,9 @@ export const environment = {
   post_CollectionID: 'YOUR-POST-COLLECTION-ID',
   blogpost_CollectionID: 'YOUR-BLOGPOST-COLLECTION-ID',
 
-  PostImages_BucketID: 'YOUR-POSTIMAGES-BUCKET-ID',
-  Profile_pictures_BucketID: 'YOUR-PROFILE-PICTURES-BUCKET-ID',
-  Blog_thumbnail_BucketID: 'YOUR-BLOG-THUMBNAIL-BUCKET-ID',
+  all_Images_BucketID: 'YOUR-POSTIMAGES-BUCKET-ID',
+  all_Images_BucketID: 'YOUR-PROFILE-PICTURES-BUCKET-ID',
+  all_Images_BucketID: 'YOUR-BLOG-THUMBNAIL-BUCKET-ID',
 
     # not mandatory
   Unsplash_AccessKey: 'YOUR-UNSPLASH_ACCESSKEY',
@@ -103,9 +103,9 @@ export const environment = {
   post_CollectionID: 'YOUR-POST-COLLECTION-ID',
   blogpost_CollectionID: 'YOUR-BLOGPOST-COLLECTION-ID',
 
-  PostImages_BucketID: 'YOUR-POSTIMAGES-BUCKET-ID',
-  Profile_pictures_BucketID: 'YOUR-PROFILE-PICTURES-BUCKET-ID',
-  Blog_thumbnail_BucketID: 'YOUR-BLOG-THUMBNAIL-BUCKET-ID',
+  all_Images_BucketID: 'YOUR-POSTIMAGES-BUCKET-ID',
+  all_Images_BucketID: 'YOUR-PROFILE-PICTURES-BUCKET-ID',
+  all_Images_BucketID: 'YOUR-BLOG-THUMBNAIL-BUCKET-ID',
 
     # not mandatory
   Unsplash_AccessKey: 'YOUR-UNSPLASH_ACCESSKEY',
