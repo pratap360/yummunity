@@ -19,7 +19,6 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { BottomNavComponent } from '../../../components/bottom-nav/bottom-nav.component';
 import { AppwriteService } from '../../../lib/appwrite.service';
 import { UserData } from '../../interface/user-data';
-import { error } from 'console';
 @Component({
   selector: 'app-edit',
   standalone: true,
