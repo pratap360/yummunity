@@ -121,5 +121,4 @@ export const environment = {
 [![biolink](https://img.shields.io/badge/biolink-222?style=for-the-badge&logo=biolink&logoColor=white)](https://pratapparui.bio.link/)
 
 ## Appendix
-
-Do Check out my In Depth Guide for this project [Click here to check](https://paruidev.com)
+Do Check out my In Depth Guide for this project [Click here to check](https://www.paruidev.com/2025/04/building-food-platform-yummunity-as-%20a-side-project.html)
